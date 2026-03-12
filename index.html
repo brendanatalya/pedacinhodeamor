@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedacinho de Amor</title>
+    <link rel="stylesheet" href="css_pda/style_pda.css">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <style>
+    /* Carousel minimal styles */
+    .carousel { position: relative; width: 100%; max-width:900px; margin: 1rem auto; overflow: hidden; }
+    .slides { display: flex; transition: transform 0.5s ease; }
+    .slides img { width: 100%; flex-shrink: 0; display: block; object-fit: cover; }
+    .prev, .next { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: #fff; border: none; padding: 0.5rem 0.7rem; cursor: pointer; font-size: 1.2rem; }
+    .prev { left: 10px; }
+    .next { right: 10px; }
+    .dots { text-align: center; padding: .5rem 0; }
+    .dots button { width: 10px; height: 10px; border-radius: 50%; border: none; margin: 0 4px; background: #ccc; padding: 0; cursor: pointer; }
+    .dots button.active { background: #333; }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Pedacinho de Amor</h1>
+    <nav>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Produtos</a></li>
+            <li><a href="#">Sobre Mim</a></li>
+            <li><a href="#">Personalizados</a></li>
+            <button><li><a href="login.html">Login</a></li></button>
+        </ul>
+    </nav>
+</header>
+    <h1>Bem-vindo ao Pedacinho de Amor</h1>
+    <p>Neste site voce vera inumeros doces e pratos de dar agua na boca, 
+        com um tempero exclusivom no qual chamamos de amor.</p>
+
+    <h2>Carrossel</h2>
+    <div class="carousel" id="carousel" tabindex="0">
+    <div class="slides">
+        <img src="imagens/doce1.webp" alt="Imagem 1">
+        <img src="imagens/doce2.webp" alt="Imagem 2">
+        <img src="imagens/doce3.webp" alt="Imagem 3">
+    </div>
+    <button class="prev">&#10094;</button>
+    <button class="next">&#10095;</button>
+    <div class="dots"></div>
+    </div>
+
+
+
+    <script>
+    const carousel = document.getElementById('carousel');
+    const slides = document.querySelector('.slides');
+    const images = document.querySelectorAll('.slides img');
+    const prevBtn = document.querySelector('.prev');
+    const nextBtn = document.querySelector('.next');
+    const dotsContainer = document.querySelector('.dots');
+
+    let index = 0;
+    const total = images.length;
+    let intervalId = null;
+
+    function updateDots() {
+        const dots = dotsContainer.querySelectorAll('button');
+        dots.forEach((d, i) => d.classList.toggle('active', i === index));
+    }
+
+    function showImage(i) {
+        index = (i + total) % total;
+        slides.style.transform = `translateX(${-index * 100}%)`;
+        updateDots();
+    }
+
+    // Prev / Next
+    prevBtn.addEventListener('click', () => showImage(index - 1));
+    nextBtn.addEventListener('click', () => showImage(index + 1));
+
+    // Create dots
+    for (let i = 0; i < total; i++) {
+        const btn = document.createElement('button');
+        btn.setAttribute('aria-label', `Ir para slide ${i+1}`);
+        btn.addEventListener('click', () => showImage(i));
+        dotsContainer.appendChild(btn);
+    }
+
+    // Autoplay with pause on hover
+    function startAutoplay() { intervalId = setInterval(() => showImage(index + 1), 4000); }
+    function stopAutoplay() { if (intervalId) { clearInterval(intervalId); intervalId = null; } }
+
+    carousel.addEventListener('mouseenter', stopAutoplay);
+    carousel.addEventListener('mouseleave', startAutoplay);
+
+    // Keyboard accessibility
+    carousel.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') showImage(index - 1);
+        if (e.key === 'ArrowRight') showImage(index + 1);
+    });
+
+    // Init
+    showImage(0);
+    startAutoplay();
+    </script>
+</body>
+</html>
