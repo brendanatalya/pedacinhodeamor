@@ -1,44 +1,103 @@
-//executar o código quando o HTML estiver completamente carregado
-document.addEventListener('DOMContentLoaded', function() {
+// Executar quando o documento HTML for completamente carregado
+document.addEventListener('DOMContentLoaded', function () {
 
-    //receber o SELETOR calendar do atributo id 
+    // Receber o SELETOR calendar do atributo id
     var calendarEl = document.getElementById('calendar');
 
-    //instanciar o calendário e atribuir a variavel calendar
+    // Receber o SELETOR da janela modal cadastrar
+    const cadastrarModal = new bootstrap.Modal(document.getElementById("cadastrarModal"));
+
+    // Instanciar FullCalendar.Calendar e atribuir a variável calendar
     var calendar = new FullCalendar.Calendar(calendarEl, {
 
-      //criar o cabeçalho do calendário
-      headerToolbar: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'dayGridMonth,timeGridWeek,timeGridDay'
-      },
-      
-      //definir o idioma do calendário para português do Brasil
-      locale: 'pt-br',
+        // Incluir o bootstrap 5
+        themeSystem: 'bootstrap5',
 
-      //definir a data inicial do calendário
-      //initialDate: '2023-01-01',
+        // Criar o cabeçalho do calendário
+        headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+        },
 
-      //permitir a navegação entre os dias e semanas clicando nos nomes
-      navLinks: true, 
+        // Definir o idioma usado no calendário
+        locale: 'pt-br',
 
-      //permitir clicar e arrastar o mouse sobre um ou varios dias no calendario
-      selectable: true,
+        // Definir a data inicial
+        //initialDate: '2023-01-12',
+        //initialDate: '2023-10-12',
 
-      //indicare visualmente a area selecionada antes que o usuário solte o mouse para confirmar a seleção
-      selectMirror: true,
+        // Permitir clicar nos nomes dos dias da semana 
+        navLinks: true,
 
-      //permitir arrastar e redimensionar os eventos diretamente no calendário
-      editable: true,
+        // Permitir clicar e arrastar o mouse sobre um ou vários dias no calendário
+        selectable: true,
 
-      //numero maximo de eventos em um determindao dia , se for true, o numero de eventos 
-      // sera limitadoa altura da celula do dia
-      dayMaxEvents: true, 
+        // Indicar visualmente a área que será selecionada antes que o usuário solte o botão do mouse para confirmar a seleção
+        selectMirror: true,
 
-      // ajustar para o arquivo que existe no projeto (listar_evento.php)
-      events: 'listar_evento.php'
+        // Permitir arrastar e redimensionar os eventos diretamente no calendário.
+        editable: true,
+
+        // Número máximo de eventos em um determinado dia, se for true, o número de eventos será limitado à altura da célula do dia
+        dayMaxEvents: true,
+
+        // Chamar o arquivo PHP para recuperar os eventos
+        events: 'listar_evento.php',
+
+        // Identificar o clique do usuário sobre o evento
+        eventClick: function (info) {
+
+            // Receber o SELETOR da janela modal visualizar
+            const visualizarModal = new bootstrap.Modal(document.getElementById("visualizarModal"));
+
+            // Enviar para a janela modal os dados do evento
+            document.getElementById("visualizar_id").innerText = info.event.id;
+            document.getElementById("visualizar_title").innerText = info.event.title;
+            document.getElementById("visualizar_start").innerText = info.event.start.toLocaleString();
+            document.getElementById("visualizar_end").innerText = info.event.end !== null ? info.event.end.toLocaleString() : info.event.start.toLocaleString();
+
+            // Abrir a janela modal visualizar
+            visualizarModal.show();
+        },
+        // Abrir a janela modal cadastrar quando clicar sobre o dia no calendário
+        select: function (info) {
+            
+            
+            // Chamar a função para converter a data selecionada para ISO8601 e enviar para o formulário
+            document.getElementById("cad_start").value = converterData(info.start);
+            document.getElementById("cad_end").value = converterData(info.start);
+
+            // Abrir a janela modal cadastrar
+            cadastrarModal.show();
+        }
     });
 
+    // Renderizar o calendário
     calendar.render();
-  });
+
+    // Converter a data
+    function converterData(data) {
+
+        // Converter a string em um objeto Date
+        const dataObj = new Date(data);
+
+        // Extrair o ano da data
+        const ano = dataObj.getFullYear();
+
+        // Obter o mês, mês começa de 0, padStart adiciona zeros à esquerda para garantir que o mês tenha dígitos
+        const mes = String(dataObj.getMonth() + 1).padStart(2, '0');
+
+        // Obter o dia do mês, padStart adiciona zeros à esquerda para garantir que o dia tenha dois dígitos
+        const dia = String(dataObj.getDate()).padStart(2, '0');
+
+        // Obter a hora, padStart adiciona zeros à esquerda para garantir que a hora tenha dois dígitos
+        const hora = String(dataObj.getHours()).padStart(2, '0');
+
+        // Obter minuto, padStart adiciona zeros à esquerda para garantir que o minuto tenha dois dígitos
+        const minuto = String(dataObj.getMinutes()).padStart(2, '0');
+
+        // Retornar a data
+        return `${ano}-${mes}-${dia} ${hora}:${minuto}`;
+    }
+});
