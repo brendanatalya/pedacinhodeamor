@@ -1,4 +1,6 @@
 <?php
+    // Always send JSON header and avoid accidental output
+    header('Content-Type: application/json; charset=utf-8');
 
     // incluir o arquivo com a conexão com o banco de dados
     include_once "conexao.php";
@@ -31,5 +33,5 @@
 
     }
 
-    echo json_encode($eventos);
-?>
+    echo json_encode($eventos, JSON_UNESCAPED_UNICODE);
+    exit;

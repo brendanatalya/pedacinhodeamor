@@ -1,4 +1,3 @@
-
 <?php
 //inicio da conexão com o banco de dados utilizando PDO
 $host = 'localhost';
@@ -18,5 +17,4 @@ try {
     die ("Erro conexão com banco de dados não realizada com sucesso. 
     Erro gerado " . $err->getMessage());
 }
-    //fim da conexão com o banco de dados utilizando PDO
-?>
+//fim da conexão com o banco de dados utilizando PDO

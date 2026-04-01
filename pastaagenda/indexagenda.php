@@ -1,26 +1,28 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+<link href="../css_pda/style_pda.css" rel="stylesheet">
     <link href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css' rel='stylesheet'>
 
-    <link rel="stylesheet" href="../css_pda/style_pda.css">
-    <!--<link rel="stylesheet" href="../css_pda/fontawesome/css/all.min.css">-->
-   <title>Agenda Pedacinho</title>
+    <!--  -->
+    <title>Pedacinho de Amor</title>
 </head>
 
 <body>
 
-    <h2 class="mb-4">Agenda</h2>
+    <h2 class="mb-4" tabindex="-1">Agenda</h2>
 
     <span id="msg"></span>
 
     <div id='calendar'></div>
 
     <!-- Modal Visualizar -->
-    <div class="modal fade" id="visualizarModal" tabindex="-1" aria-labelledby="visualizarModalLabel">
+    <div class="modal fade" id="visualizarModal" tabindex="-1" aria-labelledby="visualizarModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -49,9 +51,8 @@
             </div>
         </div>
     </div>
-
-    <!-- Modal Cadastrar -->
-    <div class="modal fade" id="cadastrarModal" tabindex="-1" aria-labelledby="cadastrarModalLabel">
+   <!-- Modal Cadastrar -->
+    <div class="modal fade" id="cadastrarModal" tabindex="-1" aria-labelledby="cadastrarModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -120,4 +121,5 @@
     <script src='js/custom.js'></script>
 
 </body>
+
 </html>

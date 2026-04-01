@@ -62,8 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         // Abrir a janela modal cadastrar quando clicar sobre o dia no calendário
         select: function (info) {
-            
-            
+
             // Chamar a função para converter a data selecionada para ISO8601 e enviar para o formulário
             document.getElementById("cad_start").value = converterData(info.start);
             document.getElementById("cad_end").value = converterData(info.start);
@@ -99,5 +98,90 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Retornar a data
         return `${ano}-${mes}-${dia} ${hora}:${minuto}`;
+    }
+
+    // Receber o SELETOR do formulário cadastrar evento
+    const formCadEvento = document.getElementById("formCadEvento");
+
+    // Receber o SELETOR da mensagem genérica
+    const msg = document.getElementById("msg");
+
+    // Receber o SELETOR da mensagem cadastrar evento
+    const msgCadEvento = document.getElementById("msgCadEvento");
+
+    // Receber o SELETOR do botão da janela modal cadastrar evento
+    const btnCadEvento = document.getElementById("btnCadEvento");
+
+    // Somente acessa o IF quando existir o SELETOR "formCadEvento"
+    if (formCadEvento) {
+
+        // Aguardar o usuario clicar no botao cadastrar
+        formCadEvento.addEventListener("submit", async (e) => {
+
+            // Não permitir a atualização da pagina
+            e.preventDefault();
+
+            // Apresentar no botão o texto salvando
+            btnCadEvento.value = "Salvando...";
+
+            // Receber os dados do formulário
+            const dadosForm = new FormData(formCadEvento);
+
+            // Chamar o arquivo PHP responsável em salvar o evento
+            const dados = await fetch("cadastrar_evento.php", {
+                method: "POST",
+                body: dadosForm
+            });
+
+            // Realizar a leitura dos dados retornados pelo PHP
+            const resposta = await dados.json();
+
+            // Acessa o IF quando não cadastrar com sucesso
+            if (!resposta['status']) {
+
+                // Enviar a mensagem para o HTML
+                msgCadEvento.innerHTML = `<div class="alert alert-danger" role="alert">${resposta['msg']}</div>`;
+
+            }else{
+
+                // Enviar a mensagem para o HTML
+                msg.innerHTML = `<div class="alert alert-success" role="alert">${resposta['msg']}</div>`;
+
+                // Enviar a mensagem para o HTML
+                msgCadEvento.innerHTML = "";
+
+                // Limpar o formulário
+                formCadEvento.reset();
+
+                // Criar o objeto com os dados do evento
+                const novoEvento = {
+                    id: resposta['id'],
+                    title: resposta['title'],
+                    color: resposta['color'],
+                    start: resposta['start'],
+                    end: resposta['end'],
+                }
+
+                // Adicionar o evento ao calendário
+                calendar.addEvent(novoEvento);
+
+                // Chamar a função para remover a mensagem após 3 segundo
+                removerMsg();
+
+                // Fechar a janela modal
+                cadastrarModal.hide();
+            }
+
+            // Apresentar no botão o texto Cadastrar
+            btnCadEvento.value = "Cadastrar";
+
+        });
+    }
+
+    // Função para remover a mensagem após 3 segundo
+    function removerMsg() {
+        setTimeout(() => {
+            document.getElementById('msg').innerHTML = "";
+        }, 3000)
     }
 });
