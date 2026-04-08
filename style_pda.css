@@ -1,0 +1,77 @@
+/* Estilos para o carrossel */
+    .carousel {   position: relative; overflow: hidden; width: 100%; max-width: 800px; margin: 2rem auto;   }
+    .slides { display: flex; transition: transform 0.5s ease; }
+    .slides img { width: 100%; flex-shrink: 0; display: block; object-fit: cover; }
+    .prev, .next { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: #fff; border: none; padding: 0.5rem 0.7rem; cursor: pointer; font-size: 1.2rem; }
+    .prev { left: 10px; }
+    .next { right: 10px; }
+    .dots { text-align: center; padding: .5rem 0; }
+    .dots button { width: 10px; height: 10px; border-radius: 50%; border: none; margin: 0 4px; background: #ccc; padding: 0; cursor: pointer; }
+    .dots button.active { background: #333; }
+
+    /* css login/cadastro */
+        .card{border:1px solid #ddd;padding:1rem;border-radius:6px}
+        .tabs{display:flex;gap:8px;margin-bottom:1rem}
+        .tabs button{padding:.5rem 1rem;border:1px solid #ccc;background:#f7f7f7;cursor:pointer}
+        .tabs button.active{background:#eee;border-color:#999}
+        form{display:none}
+        form.active{display:block}
+        input{display:block;width:100%;padding:.5rem;margin:.5rem 0;border:1px solid #ccc;border-radius:4px}
+        .actions{display:flex;gap:.5rem;align-items:center}
+        .message{color:green}
+        .error{color:#b00}
+        a{color:#06c}
+
+
+
+#calendar {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* nav bar css*/
+ul{
+  list-style: none;
+  margin: 0;              /* REMOVE centralização */
+  padding: 0;
+  display: flex;          /* deixa horizontal */
+  justify-content: space-between; /* ocupa toda largura */
+  align-items: center;
+  width: 100%;            /* ocupa 100% da tela */
+  background-color: #5A3220;
+}
+
+ul li {
+  display: flex;
+  align-items: center;
+}
+
+ul li a {
+  display: block;
+  color: #FFB8CE;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+ul li a:hover {
+  background-color: #ffffff;
+}
+
+
+
+/* css botão login e cesta */
+.btn-primary {
+  background-color: #5A3220; /* marrom */
+  border-color: #8B4513;
+  color: #FFB8CE;
+}
+
+.btn-primary:hover {
+  background-color: #5A3220; /* tom mais claro no hover */
+  border-color: #A0522D;
+  color: white;
+}
+
+/* css nav bar pedacinho la no cmc */
+
+/* css imagem logo */
