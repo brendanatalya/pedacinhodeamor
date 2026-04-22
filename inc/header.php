@@ -48,9 +48,9 @@
         <!-- botoes-->
     <nav class="navbar navbar-expand-lg navbar-light bg-lightw-100" style="background-color: #5a3522;">
     
-        <div class="container-fluid justify-content-center">
+        <div class="container-fluid m-2">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+                <i class="fa-solid fa-bars"></i>
             </button>
             <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
                 <ul class="navbar-nav nav-underline container-fluid row justify-content-between">

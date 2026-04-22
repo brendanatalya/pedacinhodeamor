@@ -91,6 +91,18 @@ a {
 }
 
 
+/*botao de agrupamento*/
+
+.navbar-toggler {
+  color: #FFB8CE;
+  border-color: #ffb8cf00;
+}
+
+/*consertar a borda externa quando estiver em foco*/
+.navbar-toggler::-moz-focus-inner {
+  border: "2px solid #fff";
+}
+
 
 
 @media (max-width: 768px) {
