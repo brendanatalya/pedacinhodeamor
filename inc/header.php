@@ -10,9 +10,9 @@
     <link rel="stylesheet" href="css/style_pda.css">
 </head>
 <body>
-<header class="">
+<header class="fixed-top">
         <!-- faixa rosa-->
-    <div class="d-flex justify-content-between" style="background-color: #fbb6cc; width: 100%;">
+    <div class="d-flex justify-content-between headerfooter">
             <!-- logo-->
         <div class="d-flex justify-content-center align-items-center" style="background-color: #fbb6cc;">
             <a class="navbar-brand d-flex justify-content-center col-md-9" href="index.php">
