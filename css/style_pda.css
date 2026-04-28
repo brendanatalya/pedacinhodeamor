@@ -30,7 +30,6 @@ ul {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: #5A3220;
 }
 
 ul li {
@@ -39,31 +38,29 @@ ul li {
 
 ul li a {
   display: block;
-  color: #FFB8CE;
+  color: #5A3220;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
 }
 
-ul li a:hover {
-  background-color: #111111;
-}
 
 /* css geral para header e footer*/
 
 .headerfooter {
-  background-color: #ffb8cf;
+  background: radial-gradient(circle, 
+  #FFB8CE 90%,   /* rosa ocupa 70% do centro */
+  #f5c7d6 100%   /* marrom nas extremidades */
+);
   width: 100%;
 }
 
 /* css nav bar */
 .header nav.navbar {
-  color: #FFB8CE;
-  background-color: #FFB8CE;
+  background-color: #ffb8cf;
 }
 
 header nav.navbar .navbar-brand {
-  color: #FFB8CE;
   padding: 0%;
 }
 
@@ -72,22 +69,34 @@ a {
   color: inherit;
 }
 
-.navbar {
-  padding: 0%;
-  background-color: #5A3220;
-}
 
 .nav-item :hover{
-  background-color: #FFB8CE;
+  color: #5A3220;
 }
 
 .nav-link {
-  color: #FFB8CE;
+  color: #5A3220;
   font-weight: bold;
+  position: relative;
 }
 
 .nav-link :hover {
   color: #5A3220;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 3px;
+  background-color: #5A3220; 
+  transition: width 0.3s ease-in-out;
+}
+
+.nav-link:hover::after {
+  width: 100%;
 }
 
 /* tamanho dos icones */
@@ -115,4 +124,9 @@ a {
     font-size: 2em; 
   }
 }
-/* css imagem logo */
+/* footer */
+
+.redessociais {
+  border: #fff solid 1px;
+  border-radius: 50%;
+}

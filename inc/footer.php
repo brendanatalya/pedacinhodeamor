@@ -4,7 +4,8 @@
         <div class="row">
             <!--foto e cnpj-->
             <div>
-                <p>imagem</p>
+                <img src="imagens/logo.png" style="max-height: 100px; padding: 20px;" class="d-inline-block align-top img-fluid" alt="Logo">
+                <p>Levando um pouquinho de amor para cada momento</p>
                 <p>CNPJ: xxxxxxx</p>
             </div>
             
@@ -16,8 +17,8 @@
             <!--contato-->
             <div>
                 <p>REDES SOCIAIS</p>
-                <p><i class="fa-brands fa-instagram"></i></p>
-                <p><i class="fa-brands fa-facebook"></i></p>
+                <p class="redessociais"><i class="fa-brands fa-instagram"></i></p>
+                <p class="redessociais"><i class="fa-brands fa-facebook"></i></p>
             </div>
         </div>
     </div>
