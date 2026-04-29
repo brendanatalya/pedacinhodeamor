@@ -27,23 +27,19 @@
                     <i class="fa-solid fa-bars"></i>
                 </button>
                 <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
-                    <ul class="navbar-nav container-fluid row justify-content-between">
-                        <li class="nav-item col-2">
-                            <a class="nav-link" aria-current="page" href="index.php">Inicio</a>
-                        </li>
-                        <li class="nav-item col-2">
+                    <ul class="navbar-nav container-fluid row justify-content-between">                       
+                        <li class="nav-item col-3">
                             <a class="nav-link" href="sobrenos.php">Sobre nós</a>
                         </li>
                         <li class="nav-item col-2">
                             <a class="nav-link" href="doces.php">Doces</a>
                         </li>
-                        <li class="nav-item col-2">
+                        <li class="nav-item col-3">
                             <a class="nav-link" href="salgados.php">Salgados</a>
                         </li>
-                        <li class="nav-item col-3">
+                        <li class="nav-item col-4">
                             <a class="nav-link" href="personalizados.php">Personalizados</a>
-                        </li>
-                    
+                        </li>                    
                     </ul>
                 </div>
             </div>

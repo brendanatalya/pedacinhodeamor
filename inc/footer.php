@@ -17,7 +17,9 @@
             <!--contato-->
             <div>
                 <p>REDES SOCIAIS</p>
-                <p class="redessociais"><i class="fa-brands fa-instagram"></i></p>
+                <div class="redessociais">
+                    <p class=""><i class="fa-brands fa-instagram"></i></p>
+                </div>
                 <p class="redessociais"><i class="fa-brands fa-facebook"></i></p>
             </div>
         </div>
