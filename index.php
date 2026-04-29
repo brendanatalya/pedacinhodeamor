@@ -17,6 +17,30 @@
     <div class="dots"></div>
     </div>
 
+    <!-- parte onde tem os cards de produtos etc etc--> 
+     <div>
+        <div class="card">
+            Croissant 
+            <button class="btn btn-primary">Comprar</button>
+        </div>
+
+        <div class="card">
+            Cookies 
+            <button class="btn btn-primary">Comprar</button>
+        </div>
+
+        <div class="card">
+            Bolos 
+            <button class="btn btn-primary">Comprar</button>
+        </div>
+
+        <div class="card">
+            Brownies 
+            <button class="btn btn-primary">Comprar</button>
+        </div>
+    </div>
+    
+
 
 
     <script src="js/bootstrap/bootstrap.min.js"></script>
