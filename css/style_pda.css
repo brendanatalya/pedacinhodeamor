@@ -48,11 +48,21 @@ ul li a {
 /* css geral para header e footer*/
 
 .headerfooter {
-  background: radial-gradient(circle, 
-  #FFB8CE 90%,   /* rosa ocupa 70% do centro */
-  #f5c7d6 100%   /* marrom nas extremidades */
-);
-  width: 100%;
+  background: rgba(255, 184, 206, 0.85);
+  backdrop-filter: blur(8px); /* vidro */
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 2px solid #5A3220; 
+  transition: background 0.4s ease;
+}
+
+.logoheader {
+  max-height: 120px;
+  padding: 10px;
+  transition: transform 0.3s ease;
+}
+
+.logoheader:hover {
+  transform: scale(1.01);
 }
 
 /* css nav bar */
@@ -70,7 +80,7 @@ a {
 }
 
 
-.nav-item :hover{
+.nav-item:hover{
   color: #5A3220;
 }
 
@@ -78,16 +88,18 @@ a {
   color: #5A3220;
   font-weight: bold;
   position: relative;
+  transition: color 0.3s ease;
 }
 
 .nav-link :hover {
   color: #5A3220;
+  
 }
 
 .nav-link::after {
   content: "";
   position: absolute;
-  bottom: 0;
+  bottom: 0px;
   left: 0;
   width: 0%;
   height: 3px;
@@ -101,15 +113,21 @@ a {
 
 /* tamanho dos icones */
 .botaonavbar {
-  font-size: 3em;
+  font-size: 2.5em;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.botaonavbar:hover {
+  transform: scale(1.2) rotate(-3deg);
+  color: #6e243a;
 }
 
 
 /*botao de agrupamento*/
 
 .navbar-toggler {
-  color: #FFB8CE;
-  border-color: #ffb8cf00;
+  color: #5A3220;
+  border-color: #5A3220;
 }
 
 /*consertar a borda externa quando estiver em foco*/
