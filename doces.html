@@ -4,11 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pedacinho de Amor</title>
+
     <link rel="stylesheet" href="css_pda/style_pda.css">
     <link rel="stylesheet" href="css_pda/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="fontawesome/css/all.min.css">
 </head>
+
 <body>
+
 <header>
     <h1>Pedacinho de Amor</h1>
     <nav>
@@ -18,16 +21,115 @@
             <li><a href="doces.html">Doces</a></li>
             <li><a href="salgados.html">Salgados</a></li>
             <li><a href="personalizados.html">Personalizados</a></li>
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalLogin">
+<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalLogin">
                 Login
-            </button>      
-   
-            <button><li><a href="cesta.html">Cesta</a></li></button>
+            </button>    
 
-            
+            <button><li><a href="cesta.html">Cesta</a></li></button>
         </ul>
     </nav>
 </header>
-    
+
+<main>
+
+    <!-- HERO -->
+    <section class="doces-hero">
+        <div class="doces-hero__overlay"></div>
+        <div class="doces-hero__content">
+            <h1>DOCES</h1>
+            <p>deliciosamente feitos com carinho!</p>
+        </div>
+    </section>
+
+    <!-- LOJA -->
+    <section class="doces-shop">
+
+        <!-- CATEGORIAS -->
+        <div class="doces-shop__tabs">
+            <button class="active" data-filter="all">TODOS</button>
+            <button data-filter="bolos">BOLOS</button>
+            <button data-filter="brownie">BROWNIES E MINI VULCÕES</button>
+            <button data-filter="tortas">TORTAS</button>
+            <button data-filter="cones">CONES E TRUFAS</button>
+            <button data-filter="outros">OUTROS</button>
+        </div>
+
+        <!-- CARDS -->
+        <div class="doces-shop__cards">
+
+            <article class="doces-card" data-category="bolos">
+                <img src="imagens/doce1.webp">
+                <h3>mini vulcão de ninho com nutella</h3>
+                <span>R$30,00</span>
+            </article>
+
+            <article class="doces-card" data-category="brownie">
+                <img src="imagens/doce2.webp">
+                <h3>brownie de nutella</h3>
+                <span>R$15,00</span>
+            </article>
+
+            <article class="doces-card" data-category="outros">
+                <img src="imagens/doce1.webp">
+                <h3>cookie recheado de doce de leite</h3>
+                <span>R$12,00</span>
+            </article>
+
+            <article class="doces-card" data-category="cone">
+                <img src="imagens/doce3.webp">
+                <h3>camafeu</h3>
+                <span>R$10,00</span>
+            </article>
+
+            <article class="doces-card" data-category="tortas">
+                <img src="imagens/doce3.webp">
+                <h3>camafeu</h3>
+                <span>R$10,00</span>
+            </article>
+
+            <article class="doces-card" data-category="outros">
+                <img src="imagens/doce3.webp">
+                <h3>camafeu</h3>
+                <span>R$10,00</span>
+            </article>
+
+            <article class="doces-card" data-category="cones">
+                <img src="imagens/doce3.webp">
+                <h3>camafeu</h3>
+                <span>R$10,00</span>
+            </article>
+
+        </div>
+    </section>
+
+</main>
+
+<!-- JS FILTRO -->
+<script>
+const buttons = document.querySelectorAll('.doces-shop__tabs button');
+const cards = document.querySelectorAll('.doces-card');
+
+buttons.forEach(btn => {
+  btn.addEventListener('click', () => {
+
+    buttons.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    const filter = btn.getAttribute('data-filter');
+
+    cards.forEach(card => {
+      const category = card.getAttribute('data-category');
+
+      if (filter === 'all' || filter === category) {
+        card.style.display = 'flex';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+
+  });
+});
+</script>
+
 </body>
 </html>

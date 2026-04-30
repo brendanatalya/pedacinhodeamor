@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pedacinho de Amor</title>
     <link rel="stylesheet" href="css_pda/bootstrap/css/bootstrap.min.css">
-        <link rel="stylesheet" href="css_pda/style_pda.css">
+    <link rel="stylesheet" href="css_pda/style_pda.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <!--<link rel="stylesheet" href="css_pda/">-->
 </head>
@@ -29,6 +30,57 @@
         </ul>
     </nav>
 </header>
+
+
+<!-- MODAL -->
+<div class="modal fade" id="modalLogin" tabindex="-1">
+<div class="modal-dialog modal-dialog-centered">
+<div class="modal-content p-0 border-0">
+
+<div class="auth-card">
+
+<div class="auth-header">
+    <button type="button" class="btn-close-custom" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+    <h2 id="titulo">LOGIN</h2>
+</div>
+<div class="auth-body">
+    <form id="loginForm" action="login.php" method="POST">
+        <input type="email" name="email" placeholder="E-mail" required>
+        
+        <div class="input-group-auth">
+            <input type="password" name="password" id="passLogin" placeholder="Senha" required>
+            <i class="fas fa-eye toggle-password" onclick="togglePassword('passLogin', this)"></i>
+        </div>
+
+        <button type="submit" class="btn-enviar">ENTRAR</button>
+        <p class="login-link">Não tem conta? <span id="switchCadastro">Cadastrar</span></p>
+    </form>
+
+    <form id="cadastroForm" action="register.php" method="POST" style="display:none;">
+        <input type="text" name="name" placeholder="Nome completo" required>
+        <input type="email" name="email" placeholder="E-mail" required>
+        <input type="email" name="email_confirm" placeholder="Confirmar E-mail" required>
+        
+        <div class="input-group-auth">
+            <input type="password" name="password" id="passCad" placeholder="Senha" required>
+            <i class="fas fa-eye toggle-password" onclick="togglePassword('passCad', this)"></i>
+        </div>
+
+        <div class="input-group-auth">
+            <input type="password" name="password_confirm" id="passCadConfirm" placeholder="Confirmar senha" required>
+            <i class="fas fa-eye toggle-password" onclick="togglePassword('passCadConfirm', this)"></i>
+        </div>
+
+        <button type="submit" class="btn-enviar">CADASTRAR</button>
+        <p class="login-link">Já tem conta? <span id="switchLogin">Login</span></p>
+    </form>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
     <h1>Bem-vindo ao Pedacinho de Amor</h1>
     <p>Neste site voce vera inumeros doces e pratos de dar agua na boca, 
         com um tempero exclusivom no qual chamamos de amor.</p>
@@ -146,8 +198,8 @@
 
 
     <script src="js/bootstrap/bootstrap.min.js"></script>
-
-    <script>
+<script>
+    // --- CARROSSEL PRINCIPAL ---
     const carousel = document.getElementById('carousel');
     const slides = document.querySelector('.slides');
     const images = document.querySelectorAll('.slides img');
@@ -170,97 +222,70 @@
         updateDots();
     }
 
-    // Prev / Next
     prevBtn.addEventListener('click', () => showImage(index - 1));
     nextBtn.addEventListener('click', () => showImage(index + 1));
 
-    // Create dots
     for (let i = 0; i < total; i++) {
         const btn = document.createElement('button');
-        btn.setAttribute('aria-label', `Ir para slide ${i+1}`);
         btn.addEventListener('click', () => showImage(i));
         dotsContainer.appendChild(btn);
     }
 
-    // Autoplay with pause on hover
     function startAutoplay() { intervalId = setInterval(() => showImage(index + 1), 4000); }
-    function stopAutoplay() { if (intervalId) { clearInterval(intervalId); intervalId = null; } }
+    function stopAutoplay() { clearInterval(intervalId); }
 
     carousel.addEventListener('mouseenter', stopAutoplay);
     carousel.addEventListener('mouseleave', startAutoplay);
-
-    // Keyboard accessibility
-    carousel.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowLeft') showImage(index - 1);
-        if (e.key === 'ArrowRight') showImage(index + 1);
-    });
-
-    // Init
     showImage(0);
     startAutoplay();
 
-    // FEEDBACKS CAROUSEL
+    // --- FEEDBACKS ---
     const feedbacksCarousel = document.getElementById('feedbacksCarousel');
     const feedbackCards = document.querySelectorAll('#feedbacksCarousel .feedback-card');
     const prevFeedbackBtn = document.querySelector('.prev-feedback');
     const nextFeedbackBtn = document.querySelector('.next-feedback');
 
     let feedbackIndex = 0;
-    let feedbackIntervalId = null;
-
     function showFeedback(i) {
         feedbackIndex = (i + feedbackCards.length) % feedbackCards.length;
         feedbacksCarousel.style.transform = `translateX(${-feedbackIndex * 100}%)`;
     }
 
-    prevFeedbackBtn.addEventListener('click', () => {
-        clearInterval(feedbackIntervalId);
-        showFeedback(feedbackIndex - 1);
-        startFeedbackAutoplay();
-    });
-
-    nextFeedbackBtn.addEventListener('click', () => {
-        clearInterval(feedbackIntervalId);
-        showFeedback(feedbackIndex + 1);
-        startFeedbackAutoplay();
-    });
-
-    function startFeedbackAutoplay() {
-        feedbackIntervalId = setInterval(() => showFeedback(feedbackIndex + 1), 5000);
-    }
-
-    feedbacksCarousel.addEventListener('mouseenter', () => {
-        clearInterval(feedbackIntervalId);
-    });
-
-    feedbacksCarousel.addEventListener('mouseleave', () => {
-        startFeedbackAutoplay();
-    });
-
+    prevFeedbackBtn.addEventListener('click', () => showFeedback(feedbackIndex - 1));
+    nextFeedbackBtn.addEventListener('click', () => showFeedback(feedbackIndex + 1));
     showFeedback(0);
-    startFeedbackAutoplay();
-    </script>
-             
-<!-- MODAL -->
-<div class="modal fade" id="modalLogin" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
 
-      <div class="modal-header">
-        <h5 class="modal-title">Login</h5>
-        <button class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
+    // --- LÓGICA DO MODAL (LOGIN/CADASTRO) ---
+    const loginForm = document.getElementById('loginForm');
+    const cadastroForm = document.getElementById('cadastroForm');
+    const titulo = document.getElementById('titulo');
 
-      <div class="modal-body">
+    document.addEventListener('click', (e) => {
+        if (e.target.id === 'switchCadastro') {
+            loginForm.style.display = 'none';
+            cadastroForm.style.display = 'block';
+            titulo.textContent = 'CADASTRO';
+        }
+        if (e.target.id === 'switchLogin') {
+            loginForm.style.display = 'block';
+            cadastroForm.style.display = 'none';
+            titulo.textContent = 'LOGIN';
+        }
+    });
 
-        <!-- Aqui o login.html será carregado -->
-        <iframe src="login.html" width="100%" height="300" style="border:none;"></iframe>
-
-      </div>
-
-    </div>
-  </div>
-</div>   
-   
+    // FUNÇÃO DO OLHO (FORA DE TUDO PARA FUNCIONAR)
+    function togglePassword(inputId, icon) {
+        const input = document.getElementById(inputId);
+        if (input.type === "password") {
+            input.type = "text";
+            icon.classList.remove("fa-eye");
+            icon.classList.add("fa-eye-slash");
+        } else {
+            input.type = "password";
+            icon.classList.remove("fa-eye-slash");
+            icon.classList.add("fa-eye");
+        }
+    }
+</script>
 </body>
 </html>
