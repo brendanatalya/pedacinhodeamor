@@ -113,6 +113,161 @@
   transform: translateY(-1px);
 }
 
+/* FEEDBACKS SECTION */
+.feedbacks-section {
+  background-color: #f5f5f5;
+}
+
+.feedbacks-header {
+  background: #ffb3d9;
+  padding: 1.25rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.feedbacks-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.feedbacks-container {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.feedbacks-wrapper {
+  position: relative;
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.feedbacks-carousel {
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+  max-width: 700px;
+  transition: transform 0.5s ease;
+}
+
+.feedback-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  max-width: 500px;
+  min-width: 100%;
+  flex-shrink: 0;
+}
+
+.feedback-card-large {
+  max-width: 600px;
+  padding: 2.5rem;
+  min-width: 100%;
+}
+
+.feedback-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.feedback-user {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+.feedback-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.feedback-info h4 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.feedback-info p {
+  margin: 0.25rem 0 0 0;
+  font-size: 0.85rem;
+  color: #999;
+}
+
+.feedback-text {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #666;
+  text-align: justify;
+}
+
+.feedback-card-large .feedback-text {
+  font-size: 1.1rem;
+}
+
+.feedback-card-large .feedback-info h4 {
+  font-size: 1.15rem;
+}
+
+.feedback-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(81, 41, 10, 0.85);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 5;
+  transition: background 0.2s ease;
+}
+
+.feedback-arrow:hover {
+  background: rgba(81, 41, 10, 1);
+}
+
+.prev-feedback {
+  left: 0;
+}
+
+.next-feedback {
+  right: 0;
+}
+
+@media (max-width: 768px) {
+  .feedback-arrow {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .feedbacks-container {
+    grid-template-columns: 1fr;
+  }
+  .feedbacks-header h2 {
+    font-size: 1.25rem;
+  }
+}
+
 
   .product-slider {
     overflow-x: auto;

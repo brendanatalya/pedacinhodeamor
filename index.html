@@ -85,6 +85,65 @@
         </div>
     </section>
 
+    <!-- FEEDBACKS SECTION -->
+    <section class="feedbacks-section py-5">
+        <div class="container">
+            <div class="feedbacks-header">
+                <h2>Eles amam! Feedbacks que amamos!</h2>
+            </div>
+            <div class="feedbacks-wrapper">
+                <button class="feedback-arrow prev-feedback" type="button" aria-label="Feedback anterior">&#10094;</button>
+                <div class="feedbacks-carousel" id="feedbacksCarousel">
+                    <div class="feedback-card feedback-card-large">
+                        <div class="feedback-user">
+                            <img src="https://via.placeholder.com/50" alt="Avatar Gabriela Ruiz" class="feedback-avatar">
+                            <div class="feedback-info">
+                                <h4>Gabriela Ruiz</h4>
+                                <p>@gabrielaclientefiel</p>
+                            </div>
+                        </div>
+                        <p class="feedback-text">adoro a qualidade e rapidez de entrega. Pedi um bolo pro aniversario do meu filho, e chegou rapidinho, estava impecável, todo mundo amou!!</p>
+                    </div>
+
+                    <div class="feedback-card feedback-card-large">
+                        <div class="feedback-user">
+                            <img src="https://via.placeholder.com/50" alt="Avatar Gabriela Ruiz" class="feedback-avatar">
+                            <div class="feedback-info">
+                                <h4>Gabriela Ruiz</h4>
+                                <p>@gabrielaclientefiel</p>
+                            </div>
+                        </div>
+                        <p class="feedback-text">adoro a qualidade e rapidez de entrega. Pedi um bolo pro aniversario do meu filho, e chegou rapidinho, estava impecável, todo mundo amou!!</p>
+                    </div>
+
+                    <div class="feedback-card feedback-card-large">
+                        <div class="feedback-user">
+                            <img src="https://via.placeholder.com/50" alt="Avatar Gabriela Ruiz" class="feedback-avatar">
+                            <div class="feedback-info">
+                                <h4>Gabriela Ruiz</h4>
+                                <p>@gabrielaclientefiel</p>
+                            </div>
+                        </div>
+                        <p class="feedback-text">adoro a qualidade e rapidez de entrega. Pedi um bolo pro aniversario do meu filho, e chegou rapidinho, estava impecável, todo mundo amou!!</p>
+                    </div>
+
+                   <div class="feedback-card feedback-card-large">
+                        <div class="feedback-user">
+                            <img src="https://via.placeholder.com/50" alt="Avatar Gabriela Ruiz" class="feedback-avatar">
+                            <div class="feedback-info">
+                                <h4>Gabriela Ruiz</h4>
+                                <p>@gabrielaclientefiel</p>
+                            </div>
+                        </div>
+                        <p class="feedback-text">adoro a qualidade e rapidez de entrega. Pedi um bolo pro aniversario do meu filho, e chegou rapidinho, estava impecável, todo mundo amou!!</p>
+                    </div>
+                </div>
+                <button class="feedback-arrow next-feedback" type="button" aria-label="Próximo feedback">&#10095;</button>
+            </div>
+        </div>
+    </section>
+
+
 
     <script src="js/bootstrap/bootstrap.min.js"></script>
 
@@ -139,6 +198,47 @@
     // Init
     showImage(0);
     startAutoplay();
+
+    // FEEDBACKS CAROUSEL
+    const feedbacksCarousel = document.getElementById('feedbacksCarousel');
+    const feedbackCards = document.querySelectorAll('#feedbacksCarousel .feedback-card');
+    const prevFeedbackBtn = document.querySelector('.prev-feedback');
+    const nextFeedbackBtn = document.querySelector('.next-feedback');
+
+    let feedbackIndex = 0;
+    let feedbackIntervalId = null;
+
+    function showFeedback(i) {
+        feedbackIndex = (i + feedbackCards.length) % feedbackCards.length;
+        feedbacksCarousel.style.transform = `translateX(${-feedbackIndex * 100}%)`;
+    }
+
+    prevFeedbackBtn.addEventListener('click', () => {
+        clearInterval(feedbackIntervalId);
+        showFeedback(feedbackIndex - 1);
+        startFeedbackAutoplay();
+    });
+
+    nextFeedbackBtn.addEventListener('click', () => {
+        clearInterval(feedbackIntervalId);
+        showFeedback(feedbackIndex + 1);
+        startFeedbackAutoplay();
+    });
+
+    function startFeedbackAutoplay() {
+        feedbackIntervalId = setInterval(() => showFeedback(feedbackIndex + 1), 5000);
+    }
+
+    feedbacksCarousel.addEventListener('mouseenter', () => {
+        clearInterval(feedbackIntervalId);
+    });
+
+    feedbacksCarousel.addEventListener('mouseleave', () => {
+        startFeedbackAutoplay();
+    });
+
+    showFeedback(0);
+    startFeedbackAutoplay();
     </script>
              
 <!-- MODAL -->
