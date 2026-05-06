@@ -23,11 +23,116 @@
             </button>     
    
             <button><li><a href="cesta.html">Cesta</a></li></button>
-
-            
         </ul>
     </nav>
 </header>
+
+    <main>
+            <section class="work-section">
+                <div class="work-container">
+                    <div class="work-text">
+                        <h2>Como trabalhamos?</h2>
+                        <p>Cada doce, bolo e salgado é preparado de forma artesanal, com ingredientes selecionados e muito carinho.</p>
+                        <p>Nossos produtos buscam entregar qualidade e aconchego, cada detalhe importa em nossa produção: um recheio cremoso, a textura macia de nossas tortas e o cuidado na decoração de cada sobremesa.</p>
+                        <p>Produzimos em pequenas quantidades para garantir qualidade e sabor autêntico, mantendo sempre o nosso toque caseiro.</p>
+                    </div>
+                    <div class="work-image">
+                        <img src="imagens/doce3.webp" alt="Como trabalhamos Pedacinho de Amor">
+                    </div>
+                </div>
+            </section>
+    </main>
+
+    <section class="container my-5">
+    <h2 class="text-center mb-4">1. Escolha o Seu Produto</h2>
+
+    <h3 class="mb-3">Produtos Doces (Personalizáveis)</h3>
+    <div class="row mb-5">
+        <div class="col-md-4 mb-3">
+            <div class="card h-100 shadow-sm text-center">
+                <img src="imagens/bolo_personalizado.jpg" class="card-img-top" alt="Bolos Decorados">
+                <div class="card-body">
+                    <h5 class="card-title">Bolos Decorados</h5>
+                    <p class="card-text text-muted">A partir de R$ 150,00</p>
+                    <a href="#formulario-pedido" class="btn btn-outline-primary select-prod">Escolher este</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card h-100 shadow-sm text-center">
+                <img src="imagens/cupcake_personalizado.jpg" class="card-img-top" alt="Cupcakes">
+                <div class="card-body">
+                    <h5 class="card-title">Cupcakes Temáticos</h5>
+                    <p class="card-text text-muted">A partir de R$ 65,00/dz</p>
+                    <a href="#formulario-pedido" class="btn btn-outline-primary select-prod">Escolher este</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card h-100 shadow-sm text-center">
+                <img src="imagens/docinhos_personalizados.jpg" class="card-img-top" alt="Docinhos Finos">
+                <div class="card-body">
+                    <h5 class="card-title">Docinhos Finos</h5>
+                    <p class="card-text text-muted">A partir de R$ 120,00/cento</p>
+                    <a href="#formulario-pedido" class="btn btn-outline-primary select-prod">Escolher este</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h3 class="mb-3">Produtos Salgados (Personalizáveis)</h3>
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <div class="card h-100 shadow-sm text-center border-warning">
+                <img src="imagens/salgadinhos.jpg" class="card-img-top" alt="Salgadinhos">
+                <div class="card-body">
+                    <h5 class="card-title">Salgadinhos de Festa</h5>
+                    <p class="card-text text-muted">A partir de R$ 80,00/cento</p>
+                    <a href="#formulario-pedido" class="btn btn-outline-primary select-prod">Escolher este</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr class="my-5" id="formulario-pedido">
+
+    <div class="row justify-content-center">
+        <div class="col-md-8 bg-light p-4 rounded shadow">
+            <h2 class="text-center mb-4 text-primary">2. Personalize seu Pedido</h2>
+            <form>
+                <div class="mb-3">
+                    <label class="form-label font-weight-bold">Tamanho / Quantidade:</label>
+                    <select class="form-select">
+                        <option selected>Selecione...</option>
+                        <option>Pequeno (10 fatias / 25 unidades)</option>
+                        <option>Médio (20 fatias / 50 unidades)</option>
+                        <option>Grande (40 fatias / 100 unidades)</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label font-weight-bold">Sabor da Massa/Recheio:</label>
+                    <textarea class="form-control" rows="2" placeholder="Ex: Massa de baunilha com recheio de brigadeiro..."></textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label font-weight-bold">Tema e Cores da Decoração:</label>
+                    <textarea class="form-control" rows="3" placeholder="Descreva como você quer o visual do seu produto..."></textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Anexar imagem de referência:</label>
+                    <input class="form-control" type="file">
+                </div>
+                <button type="submit" class="btn btn-success w-100">Adicionar à Cesta</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+
+
+<!--DPS COLOCAR MAIS FOTODS-->
+
+
+
     <script src="js/bootstrap/bootstrap.min.js"></script>
 
 </body>
