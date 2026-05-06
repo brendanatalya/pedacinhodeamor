@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!---https://lamonte.com.br/-->
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
@@ -22,7 +23,7 @@
                 Login
             </button>     
    
-            <button><li><a href="cesta.html">Cesta</a></li></button>
+            <li><a href="cesta.html" class="btn btn-secondary">Cesta</a></li>        
         </ul>
     </nav>
 </header>
@@ -43,89 +44,57 @@
             </section>
     </main>
 
-    <section class="container my-5">
-    <h2 class="text-center mb-4">1. Escolha o Seu Produto</h2>
-
-    <h3 class="mb-3">Produtos Doces (Personalizáveis)</h3>
-    <div class="row mb-5">
-        <div class="col-md-4 mb-3">
-            <div class="card h-100 shadow-sm text-center">
-                <img src="imagens/bolo_personalizado.jpg" class="card-img-top" alt="Bolos Decorados">
-                <div class="card-body">
-                    <h5 class="card-title">Bolos Decorados</h5>
-                    <p class="card-text text-muted">A partir de R$ 150,00</p>
-                    <a href="#formulario-pedido" class="btn btn-outline-primary select-prod">Escolher este</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 mb-3">
-            <div class="card h-100 shadow-sm text-center">
-                <img src="imagens/cupcake_personalizado.jpg" class="card-img-top" alt="Cupcakes">
-                <div class="card-body">
-                    <h5 class="card-title">Cupcakes Temáticos</h5>
-                    <p class="card-text text-muted">A partir de R$ 65,00/dz</p>
-                    <a href="#formulario-pedido" class="btn btn-outline-primary select-prod">Escolher este</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 mb-3">
-            <div class="card h-100 shadow-sm text-center">
-                <img src="imagens/docinhos_personalizados.jpg" class="card-img-top" alt="Docinhos Finos">
-                <div class="card-body">
-                    <h5 class="card-title">Docinhos Finos</h5>
-                    <p class="card-text text-muted">A partir de R$ 120,00/cento</p>
-                    <a href="#formulario-pedido" class="btn btn-outline-primary select-prod">Escolher este</a>
-                </div>
-            </div>
-        </div>
+   
+<!-- CATEGORIAS -->
+<section class="categorias">
+  
+  <div class="categoria-card">
+    <img src="imagens/doce2.webp">
+    <div class="overlay">
+      <h3>Doces Personalizados</h3>
+      <button>Escolher</button>
     </div>
+  </div>
 
-    <h3 class="mb-3">Produtos Salgados (Personalizáveis)</h3>
-    <div class="row">
-        <div class="col-md-4 mb-3">
-            <div class="card h-100 shadow-sm text-center border-warning">
-                <img src="imagens/salgadinhos.jpg" class="card-img-top" alt="Salgadinhos">
-                <div class="card-body">
-                    <h5 class="card-title">Salgadinhos de Festa</h5>
-                    <p class="card-text text-muted">A partir de R$ 80,00/cento</p>
-                    <a href="#formulario-pedido" class="btn btn-outline-primary select-prod">Escolher este</a>
-                </div>
-            </div>
-        </div>
+  <div class="categoria-card">
+    <img src="imagens/doce1.webp">
+    <div class="overlay">
+      <h3>Salgados Personalizados</h3>
+      <button>Escolher</button>
     </div>
+  </div>
 
-    <hr class="my-5" id="formulario-pedido">
-
-    <div class="row justify-content-center">
-        <div class="col-md-8 bg-light p-4 rounded shadow">
-            <h2 class="text-center mb-4 text-primary">2. Personalize seu Pedido</h2>
-            <form>
-                <div class="mb-3">
-                    <label class="form-label font-weight-bold">Tamanho / Quantidade:</label>
-                    <select class="form-select">
-                        <option selected>Selecione...</option>
-                        <option>Pequeno (10 fatias / 25 unidades)</option>
-                        <option>Médio (20 fatias / 50 unidades)</option>
-                        <option>Grande (40 fatias / 100 unidades)</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label font-weight-bold">Sabor da Massa/Recheio:</label>
-                    <textarea class="form-control" rows="2" placeholder="Ex: Massa de baunilha com recheio de brigadeiro..."></textarea>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label font-weight-bold">Tema e Cores da Decoração:</label>
-                    <textarea class="form-control" rows="3" placeholder="Descreva como você quer o visual do seu produto..."></textarea>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Anexar imagem de referência:</label>
-                    <input class="form-control" type="file">
-                </div>
-                <button type="submit" class="btn btn-success w-100">Adicionar à Cesta</button>
-            </form>
-        </div>
-    </div>
 </section>
+
+<!-- CRIAR PEDIDO -->
+<section class="cta">
+  <h2>Crie a sua Obra-Prima</h2>
+
+  <div class="tabs">
+    <button class="active" data-filter="doces">Doces</button>
+    <button data-filter="salgados">Salgados</button>
+  </div>
+
+  <!-- FORM DOCES -->
+  <form class="form-pedido active" data-form="doces">
+    <input type="text" placeholder="Tipo de doce">
+    <input type="text" placeholder="Tema">
+    <input type="text" placeholder="Sabor">
+    <textarea placeholder="Detalhes"></textarea>
+    <button type="submit">Enviar</button>
+  </form>
+
+  <!-- FORM SALGADOS -->
+  <form class="form-pedido" data-form="salgados">
+    <input type="text" placeholder="Tipo de salgado">
+    <input type="number" placeholder="Quantidade">
+    <textarea placeholder="Detalhes"></textarea>
+    <button type="submit">Enviar</button>
+  </form>
+
+</section>
+
+  
 
 
 
@@ -133,7 +102,28 @@
 
 
 
-    <script src="js/bootstrap/bootstrap.min.js"></script>
+    
+<script>
+const buttons = document.querySelectorAll('.tabs button');
+const forms = document.querySelectorAll('.form-pedido');
+
+forms.forEach(form => form.classList.remove('active')); // garante tudo escondido
+
+buttons.forEach(btn => {
+  btn.addEventListener('click', () => {
+
+    buttons.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    const filter = btn.dataset.filter;
+
+    forms.forEach(form => {
+      form.classList.toggle('active', form.dataset.form === filter);
+    });
+
+  });
+});
+</script>
 
 </body>
 </html>
