@@ -1,3 +1,41 @@
+<script>
+
+const navToggle = document.querySelector(".nav-toggle");
+const linksContainer = document.querySelector(".links-container");
+const links = document.querySelector(".links");
+
+navToggle.addEventListener("click", function(){
+
+    const linksHeight = links.getBoundingClientRect().height;
+
+    const containerHeight = linksContainer.getBoundingClientRect().height;
+
+    if(containerHeight === 0){
+        linksContainer.style.height = `${linksHeight + 80}px`;
+    } else {
+        linksContainer.style.height = 0;
+    }
+
+});
+
+/* deixar a navbar fixa ao rolar a pagina */
+
+const navbar = document.getElementById("nav");
+
+window.addEventListener("scroll", function(){
+
+    const scrollHeight = window.pageYOffset;
+
+    if(scrollHeight > 80){
+        navbar.classList.add("fixed-nav");
+    } else {
+        navbar.classList.remove("fixed-nav");
+    }
+
+});
+
+</script>
+
 <footer class="">
     <div class="d-flex justify-content-between headerfooter">
         <!--faixa de contato e info-->

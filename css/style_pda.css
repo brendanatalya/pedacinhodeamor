@@ -1,3 +1,259 @@
+/* ========================================
+   RESET
+======================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    overflow-x:hidden;
+}
+
+/* ========================================
+   NAVBAR
+======================================== */
+
+nav{
+    position:fixed;
+    top:0;
+    left:0;
+
+    width:100%;
+
+    background: rgba(255, 184, 206, 0.35);
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    transition: all 0.4s ease;
+
+    z-index:999;
+}
+
+/* NAVBAR AO ROLAR */
+
+.fixed-nav{
+    background:#ffb8cf;
+
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+
+    border-bottom:2px solid #5A3220;
+}
+
+/* CONTAINER */
+
+.nav-center{
+    width:90vw;
+    max-width:1170px;
+
+    margin:0 auto;
+}
+
+/* TOPO */
+
+.nav-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:1rem 0;
+}
+
+/* LOGO */
+
+.logo{
+    height:90px;
+
+    transition:0.4s ease;
+}
+
+.fixed-nav .logo{
+    height:70px;
+}
+
+/* BOTÃO */
+
+.nav-toggle{
+    font-size:1.8rem;
+
+    color:#5A3220;
+
+    background:transparent;
+
+    border:none;
+
+    cursor:pointer;
+
+    transition:0.3s ease;
+}
+
+.nav-toggle:hover{
+    transform:rotate(90deg);
+}
+
+/* MENU ESCONDIDO MOBILE */
+
+.links-container{
+    height:0;
+
+    overflow:hidden;
+
+    transition:all 0.4s ease;
+}
+
+/* LINKS */
+
+.links a{
+    display:block;
+
+    padding:1rem 0;
+
+    color:#5A3220;
+
+    font-size:1.1rem;
+
+    font-weight:bold;
+
+    text-transform:capitalize;
+
+    letter-spacing:1px;
+
+    transition:0.3s ease;
+
+    position:relative;
+}
+
+.links a:hover{
+    color:#6e243a;
+
+    padding-left:10px;
+}
+
+/* LINHA ANIMADA */
+
+.links a::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:50%;
+    bottom:0px;
+
+    width:0%;
+
+    height:2px;
+
+    background:#5A3220;
+
+    transition:all 0.3s ease;
+
+    transform:translateX(-50%);
+}
+
+/* ANIMAÇÃO */
+
+.links a:hover::after{
+    width:100%;
+}
+
+/* ICONES */
+
+.nav-icons{
+    display:flex;
+
+    gap:25px;
+
+    padding:1rem 0;
+}
+
+.nav-icons a{
+    color:#5A3220;
+
+    font-size:1.7rem;
+
+    transition:0.3s ease;
+}
+
+.nav-icons a:hover{
+    transform:scale(1.2);
+
+    color:#6e243a;
+}
+
+/* DESKTOP */
+
+@media screen and (min-width: 800px){
+
+    nav{
+        padding:0.5rem 0;
+    }
+
+    .nav-center{
+        display:flex;
+
+        align-items:center;
+
+        justify-content:space-between;
+    }
+
+    .nav-header{
+        padding:0;
+    }
+
+    .nav-toggle{
+        display:none;
+    }
+
+    .links-container{
+        height:auto !important;
+
+        display:flex;
+
+        align-items:center;
+    }
+
+    .links{
+        display:flex;
+
+        align-items:center;
+    }
+
+    .links a{
+        margin:0 1rem;
+
+        padding:0;
+    }
+
+    .links a:hover{
+        padding-left:0;
+    }
+
+    .nav-icons{
+        padding:0;
+
+        margin-left:30px;
+    }
+
+}
+
+header{
+    height:120px;
+}
+
+
+
+
+
+
 /* Estilos para o carrossel */
     .carousel { position: relative; width: 100%; max-width:900px; margin: 1rem auto; overflow: hidden; }
     .slides { display: flex; transition: transform 0.5s ease; }
@@ -23,6 +279,16 @@
         .error{color:#b00}
         a{color:#06c}
 
+html {
+  scroll-behavior: smooth;
+}
+*,
+::after,
+::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 /* nav bar css*/
 ul {
@@ -46,10 +312,10 @@ ul li a {
 
 
 /* css geral para header e footer*/
-
+/*
 .headerfooter {
   background: rgba(255, 184, 206, 0.85);
-  backdrop-filter: blur(8px); /* vidro */
+  backdrop-filter: blur(8px); //vidro 
   -webkit-backdrop-filter: blur(8px);
   border-bottom: 2px solid #5A3220; 
   transition: background 0.4s ease;
@@ -65,7 +331,7 @@ ul li a {
   transform: scale(1.01);
 }
 
-/* css nav bar */
+/* css nav bar 
 .header nav.navbar {
   background-color: #ffb8cf;
 }
@@ -111,7 +377,7 @@ a {
   width: 100%;
 }
 
-/* tamanho dos icones */
+/* tamanho dos icones
 .botaonavbar {
   font-size: 2.5em;
   transition: transform 0.3s ease, color 0.3s ease;
@@ -123,14 +389,14 @@ a {
 }
 
 
-/*botao de agrupamento*/
+/*botao de agrupamento
 
 .navbar-toggler {
   color: #5A3220;
   border-color: #5A3220;
 }
 
-/*consertar a borda externa quando estiver em foco*/
+/*consertar a borda externa quando estiver em foco
 .navbar-toggler::-moz-focus-inner {
   border: "2px solid #fff";
 }
@@ -142,9 +408,11 @@ a {
     font-size: 2em; 
   }
 }
-/* footer */
+/* footer 
 
 .redessociais {
   border: #fff solid 1px;
   border-radius: 50%;
 }
+
+*/
