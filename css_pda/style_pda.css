@@ -614,6 +614,178 @@
   }
 }
 
+/* =========================
+   FILTROS
+========================= */
+
+.filter-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 40px 0;
+}
+
+.filter-btn {
+    border: none;
+    padding: 12px 22px;
+    border-radius: 30px;
+    background: #f7c7d8;
+    color: #5a2e1f;
+    font-weight: 700;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.filter-btn:hover {
+    background: #ff9ccf;
+    transform: translateY(-2px);
+}
+
+.filter-btn.active {
+    background: #7a2f2f;
+    color: white;
+}
+
+/* =========================
+   PRODUTOS
+========================= */
+
+#products-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 25px;
+    margin-bottom: 60px;
+}
+
+.product-card {
+    background: #f3e5df;
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+    transition: 0.3s;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+.product-card img {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+}
+
+/* =========================
+   INDISPONÍVEL
+========================= */
+
+.product-card.unavailable {
+    opacity: 0.6;
+    filter: grayscale(100%);
+}
+
+.unavailable-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #a00000;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: bold;
+}
+
+/* =========================
+   CONTEÚDO
+========================= */
+
+.product-info {
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.product-info h3 {
+    font-size: 1.2rem;
+    color: #4e2d1f;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.product-info p {
+    color: #6b4b3e;
+    font-size: 0.95rem;
+    margin-bottom: 15px;
+}
+
+/* =========================
+   PREÇO
+========================= */
+
+.product-price {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #8b0000;
+    margin-bottom: 20px;
+}
+
+/* =========================
+   BOTÃO CARRINHO
+========================= */
+
+.add-to-cart-btn {
+    margin-top: auto;
+    border: none;
+    background: #2d6a00;
+    color: white;
+    padding: 14px;
+    border-radius: 16px;
+    font-weight: bold;
+    transition: 0.3s;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.add-to-cart-btn:hover {
+    background: #3f8a00;
+    transform: scale(1.02);
+}
+
+.add-to-cart-btn:disabled {
+    background: #999;
+    cursor: not-allowed;
+}
+
+/* =========================
+   RESPONSIVO
+========================= */
+
+@media (max-width: 768px) {
+
+    #products-container {
+        grid-template-columns: 1fr;
+    }
+
+    .product-card img {
+        height: 220px;
+    }
+
+    .product-info {
+        padding: 18px;
+    }
+
+    .product-price {
+        font-size: 1.3rem;
+    }
+}
+
+
 
 /* PARTE DO CARRINHO */
 

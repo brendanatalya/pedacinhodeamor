@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrinho - Pedacinho de Amor</title>
+    <link rel="stylesheet" href="css_pda/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css_pda/style_pda.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <h1>Pedacinho de Amor</h1>
+        <nav>
+            <ul>
+                <li><a href="index.php">Home</a></li>
+                <li><a href="sobrenos.html">Sobre Nós</a></li>
+                <li><a href="doces.html">Doces</a></li>
+                <li><a href="salgados.html">Salgados</a></li>
+                <li><a href="personalizados.html">Personalizados</a></li>
+                <li><a href="carrinho.html" class="active"><i class="fas fa-shopping-cart"></i> Carrinho (<span id="cart-count">0</span>)</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2 class="my-4">Seu Carrinho</h2>
+
+        <div id="cart-content">
+            <!-- Conteúdo do carrinho será inserido aqui via JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        // Dados dos produtos - deve ser o mesmo que em doces.html
+        const products = [
+            {
+                id: 1,
+                nome: "Mini Vulcão de Ninho com Nutella",
+                descricao: "Delicioso mini vulcão recheado",
+                preco: 30.00,
+                imagem: "imagens/doce1.webp",
+                disponivel: true,
+                categoria: "brownie"
+            },
+            {
+                id: 2,
+                nome: "Brownie de Nutella",
+                descricao: "Brownie macio com cobertura de nutella",
+                preco: 15.00,
+                imagem: "imagens/doce2.webp",
+                disponivel: true,
+                categoria: "brownie"
+            },
+            {
+                id: 3,
+                nome: "Cookie Recheado de Doce de Leite",
+                descricao: "Cookie crocante por fora, cremoso por dentro",
+                preco: 12.00,
+                imagem: "imagens/doce1.webp",
+                disponivel: false,
+                categoria: "outros"
+            },
+            {
+                id: 4,
+                nome: "Camafeu",
+                descricao: "Doce tradicional brasileiro",
+                preco: 10.00,
+                imagem: "imagens/doce3.webp",
+                disponivel: true,
+                categoria: "cones"
+            },
+            {
+                id: 5,
+                nome: "Torta de Frango com Cream Cheese",
+                descricao: "Torta salgada leve e deliciosa",
+                preco: 13.00,
+                imagem: "imagens/doce3.webp",
+                disponivel: true,
+                categoria: "tortas"
+            }
+        ];
+
+        // Função para obter o carrinho do localStorage
+        function getCart() {
+            return JSON.parse(localStorage.getItem('cart')) || {};
+        }
+
+        // Função para salvar o carrinho no localStorage
+        function saveCart(cart) {
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            renderCart();
+        }
+
+        // Função para atualizar a contagem do carrinho no header
+        function updateCartCount() {
+            const cart = getCart();
+            const count = Object.values(cart).reduce((sum, qty) => sum + qty, 0);
+            document.getElementById('cart-count').textContent = count;
+        }
+
+        // Função para obter produto por ID
+        function getProductById(id) {
+            return products.find(p => p.id === parseInt(id));
+        }
+
+        // Função para atualizar quantidade de um item
+        function updateQuantity(productId, newQuantity) {
+            const cart = getCart();
+            if (newQuantity <= 0) {
+                delete cart[productId];
+            } else {
+                cart[productId] = newQuantity;
+            }
+            saveCart(cart);
+        }
+
+        // Função para remover item do carrinho
+        function removeItem(productId) {
+            const cart = getCart();
+            delete cart[productId];
+            saveCart(cart);
+        }
+
+        // Função para limpar itens indisponíveis
+        function clearUnavailableItems() {
+            const cart = getCart();
+            const newCart = {};
+            for (const [productId, qty] of Object.entries(cart)) {
+                const product = getProductById(productId);
+                if (product && product.disponivel) {
+                    newCart[productId] = qty;
+                }
+            }
+            saveCart(newCart);
+        }
+
+        // Função para renderizar o carrinho
+        function renderCart() {
+            const cart = getCart();
+            const container = document.getElementById('cart-content');
+
+            if (Object.keys(cart).length === 0) {
+                container.innerHTML = '<div class="alert alert-info">Seu carrinho está vazio. <a href="doces.html">Continuar comprando</a></div>';
+                return;
+            }
+
+            const availableItems = [];
+            const unavailableItems = [];
+            let totalItems = 0;
+            let totalPrice = 0;
+
+            for (const [productId, qty] of Object.entries(cart)) {
+                const product = getProductById(productId);
+                if (!product) continue;
+
+                const item = { ...product, quantity: qty, subtotal: product.preco * qty };
+
+                if (product.disponivel) {
+                    availableItems.push(item);
+                    totalItems += qty;
+                    totalPrice += item.subtotal;
+                } else {
+                    unavailableItems.push(item);
+                }
+            }
+
+            const frete = totalPrice > 0 ? 12.28 : 0;
+            const totalFinal = totalPrice + frete;
+
+            let html = '<div class="cart">';
+
+            // Itens disponíveis
+            html += '<div class="cart-items">';
+            html += '<h3>Itens Disponíveis</h3>';
+            if (availableItems.length === 0) {
+                html += '<p>Nenhum item disponível no carrinho.</p>';
+            } else {
+                availableItems.forEach(item => {
+                    html += `
+                        <div class="cart-item">
+                            <img src="${item.imagem}" alt="${item.nome}">
+                            <div class="cart-item-info">
+                                <h4>${item.nome}</h4>
+                                <p>${item.descricao}</p>
+                                <p>R$ ${item.preco.toFixed(2).replace('.', ',')}</p>
+                                <div class="quantity-controls">
+                                    <button class="quantity-btn" onclick="updateQuantity(${item.id}, ${item.quantity - 1})">-</button>
+                                    <input type="number" class="quantity-input" value="${item.quantity}" onchange="updateQuantity(${item.id}, parseInt(this.value))" min="1">
+                                    <button class="quantity-btn" onclick="updateQuantity(${item.id}, ${item.quantity + 1})">+</button>
+                                </div>
+                                <p>Subtotal: R$ ${item.subtotal.toFixed(2).replace('.', ',')}</p>
+                                <button class="remove-btn" onclick="removeItem(${item.id})">Remover</button>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+            html += '</div>';
+
+            // Resumo da compra
+            html += `
+                <div class="cart-summary">
+                    <h4>Resumo da Compra</h4>
+                    <div class="summary-row">
+                        <span>Total de itens</span>
+                        <span>${totalItems}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Subtotal</span>
+                        <span>R$ ${totalPrice.toFixed(2).replace('.', ',')}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Frete</span>
+                        <span>R$ ${frete.toFixed(2).replace('.', ',')}</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total</span>
+                        <span>R$ ${totalFinal.toFixed(2).replace('.', ',')}</span>
+                    </div>
+                    <button class="checkout-btn" onclick="checkout()" ${totalItems === 0 ? 'disabled' : ''}>Finalizar Compra</button>
+                </div>
+            `;
+
+            html += '</div>';
+
+            // Itens indisponíveis
+            if (unavailableItems.length > 0) {
+                html += '<div class="unavailable-section">';
+                html += '<h3>Itens Indisponíveis</h3>';
+                html += '<button class="clear-unavailable-btn" onclick="clearUnavailableItems()">Excluir todos os itens indisponíveis</button>';
+                unavailableItems.forEach(item => {
+                    html += `
+                        <div class="cart-item" style="opacity: 0.6;">
+                            <img src="${item.imagem}" alt="${item.nome}">
+                            <div class="cart-item-info">
+                                <h4>${item.nome}</h4>
+                                <p>${item.descricao}</p>
+                                <div class="unavailable-badge">Indisponível</div>
+                                <p>Quantidade reservada: ${item.quantity}</p>
+                                <button class="remove-btn" onclick="removeItem(${item.id})">Remover</button>
+                            </div>
+                        </div>
+                    `;
+                });
+                html += '</div>';
+            }
+
+            container.innerHTML = html;
+        }
+
+        // Função para finalizar compra
+        function checkout() {
+            alert('Compra finalizada! Em um sistema real, isso redirecionaria para o checkout.');
+            // Aqui poderia redirecionar para uma página de checkout ou processar o pedido
+        }
+
+        // Inicialização da página
+        document.addEventListener('DOMContentLoaded', () => {
+            updateCartCount();
+            renderCart();
+        });
+    </script>
+
+    <script src="js/bootstrap/bootstrap.bundle.min.js"></script>
+</body>
+</html>

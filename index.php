@@ -23,16 +23,16 @@ include 'inc/modal.php';
         <ul>
             <li><a href="index.php">Home</a></li>
             <li><a href="sobrenos.html">Sobre Nós</a></li>
-            <li><a href="doces.html">Doces</a></li>
-            <li><a href="salgados.html">Salgados</a></li>
-            <li><a href="personalizados.html">Personalizados</a></li>
+            <li><a href="doces.php">Doces</a></li>
+            <li><a href="salgados.php">Salgados</a></li>
+            <li><a href="personalizados.php">Personalizados</a></li>
             
             <?php if(!empty($_SESSION['logado']) && $_SESSION['logado'] === true): ?>
                 <li class="nav-item dropdown">
-                    <span class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         👤 Olá, <?php echo htmlspecialchars($_SESSION['nome']); ?>
-                    </span>
-                    <ul class="dropdown-menu">
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="userDropdown">
                         <li><a class="dropdown-item" href="inc/logout.php">Sair</a></li>
                     </ul>
                 </li>
@@ -42,73 +42,12 @@ include 'inc/modal.php';
                 </button>
             <?php endif; ?>
    
-            <button><li><a href="cesta.html">Cesta</a></li></button>
+                <li><a href="carrinho.php"><i class="fas fa-shopping-cart"></i> Carrinho (<?php echo array_sum($_SESSION['cart'] ?? []); ?>)</a></li>
 
             
         </ul>
     </nav>
 </header>
-
-
-<!-- MODAL -->
-<div class="modal fade" id="modalLogin" tabindex="-1">
-<div class="modal-dialog modal-dialog-centered">
-<div class="modal-content p-0 border-0">
-
-<div class="auth-card">
-
-<div class="auth-header">
-    <button type="button" class="btn-close-custom" data-bs-dismiss="modal" aria-label="Close">&times;</button>
-    <h2 id="titulo">LOGIN</h2>
-</div>
-<div class="auth-body">
-    <form id="loginForm" action="inc/valida.php" method="POST">
-        <input type="text" name="login" placeholder="Usuário" required>
-        
-        <div class="input-group-auth">
-            <input type="password" name="senha" id="passLogin" placeholder="Senha" required>
-            <i class="fas fa-eye toggle-password" onclick="togglePassword('passLogin', this)"></i>
-        </div>
-
-        <button type="submit" class="btn-enviar">ENTRAR</button>
-        <p class="login-link">Não tem conta? <span id="switchCadastro">Cadastrar</span></p>
-    </form>
-
-    <form id="cadastroForm" action="register.php" method="POST" style="display:none;">
-        <input type="text" name="name" placeholder="Nome completo" required>
-        <input type="email" name="email" placeholder="E-mail" required>
-        <input type="email" name="email_confirm" placeholder="Confirmar E-mail" required>
-        
-        <div class="input-group-auth">
-            <input type="password" name="password" id="passCad" placeholder="Senha" required>
-            <i class="fas fa-eye toggle-password" onclick="togglePassword('passCad', this)"></i>
-        </div>
-
-        <div class="input-group-auth">
-            <input type="password" name="password_confirm" id="passCadConfirm" placeholder="Confirmar senha" required>
-            <i class="fas fa-eye toggle-password" onclick="togglePassword('passCadConfirm', this)"></i>
-        </div>
-
-        <button type="submit" class="btn-enviar">CADASTRAR</button>
-        <p class="login-link">Já tem conta? <span id="switchLogin">Login</span></p>
-    </form>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-<!-- MENSAGENS DE SESSÃO -->
-<?php if(!empty($_SESSION['message'])): ?>
-    <div class="alert alert-<?php echo ($_SESSION['type'] === 'success') ? 'success' : 'danger'; ?> alert-dismissible fade show" role="alert" style="margin: 20px;">
-        <?php echo htmlspecialchars($_SESSION['message']); ?>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    <?php 
-        unset($_SESSION['message']);
-        unset($_SESSION['type']);
-    ?>
-<?php endif; ?>
 
     <h1>Bem-vindo ao Pedacinho de Amor</h1>
     <p>Neste site voce vera inumeros doces e pratos de dar agua na boca, 
@@ -226,7 +165,7 @@ include 'inc/modal.php';
 
 
 
-    <script src="js/bootstrap/bootstrap.min.js"></script>
+    <script src="js/bootstrap/bootstrap.bundle.min.js"></script>
 <script>
     // --- CARROSSEL PRINCIPAL ---
     const carousel = document.getElementById('carousel');
@@ -273,16 +212,42 @@ include 'inc/modal.php';
     const feedbackCards = document.querySelectorAll('#feedbacksCarousel .feedback-card');
     const prevFeedbackBtn = document.querySelector('.prev-feedback');
     const nextFeedbackBtn = document.querySelector('.next-feedback');
+    const feedbackWrapper = feedbacksCarousel.parentElement;
 
     let feedbackIndex = 0;
-    function showFeedback(i) {
-        feedbackIndex = (i + feedbackCards.length) % feedbackCards.length;
-        feedbacksCarousel.style.transform = `translateX(${-feedbackIndex * 100}%)`;
+    let feedbackInterval = null;
+
+    function updateFeedbackPosition() {
+        const wrapperWidth = feedbackWrapper.clientWidth;
+        feedbackCards.forEach(card => {
+            card.style.width = `${wrapperWidth}px`;
+        });
+        feedbacksCarousel.style.transform = `translateX(${-feedbackIndex * wrapperWidth}px)`;
     }
 
-    prevFeedbackBtn.addEventListener('click', () => showFeedback(feedbackIndex - 1));
-    nextFeedbackBtn.addEventListener('click', () => showFeedback(feedbackIndex + 1));
+    function showFeedback(i) {
+        feedbackIndex = (i + feedbackCards.length) % feedbackCards.length;
+        updateFeedbackPosition();
+    }
+
+    function resetFeedbackAutoplay() {
+        clearInterval(feedbackInterval);
+        feedbackInterval = setInterval(() => showFeedback(feedbackIndex + 1), 6000);
+    }
+
+    prevFeedbackBtn.addEventListener('click', () => {
+        showFeedback(feedbackIndex - 1);
+        resetFeedbackAutoplay();
+    });
+
+    nextFeedbackBtn.addEventListener('click', () => {
+        showFeedback(feedbackIndex + 1);
+        resetFeedbackAutoplay();
+    });
+
+    window.addEventListener('resize', updateFeedbackPosition);
     showFeedback(0);
+    resetFeedbackAutoplay();
 
     
 </script>

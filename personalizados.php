@@ -1,4 +1,11 @@
-﻿<!DOCTYPE html>
+<?php
+if (!isset($_SESSION)) session_start();
+require_once 'config.php';
+require_once ABSPATH . 'inc/database.php';
+
+$usuario_logado = !empty($_SESSION['logado']) && $_SESSION['logado'] === true;
+?>
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
@@ -15,10 +22,15 @@
             <ul>
                 <li><a href="index.php">Home</a></li>
                 <li><a href="sobrenos.html">Sobre Nós</a></li>
-                <li><a href="doces.html">Doces</a></li>
-                <li><a href="salgados.html">Salgados</a></li>
-                <li><a href="personalizados.html" class="active">Personalizados</a></li>
-                <li><a href="carrinho.html"><i class="fas fa-shopping-cart"></i> Carrinho (<span id="cart-count">0</span>)</a></li>
+                <li><a href="doces.php">Doces</a></li>
+                <li><a href="salgados.php">Salgados</a></li>
+                <li><a href="personalizados.php" class="active">Personalizados</a></li>
+                <li><a href="carrinho.php"><i class="fas fa-shopping-cart"></i> Carrinho (<?php echo array_sum($_SESSION['cart'] ?? []); ?>)</a></li>
+                <?php if ($usuario_logado): ?>
+                    <li><a href="inc/logout.php">Sair</a></li>
+                <?php else: ?>
+                    <li><a class="btn btn-primary text-white" href="index.php">Login</a></li>
+                <?php endif; ?>
             </ul>
         </nav>
     </header>
@@ -46,10 +58,10 @@
                 <div class="col-md-8">
                     <div class="card shadow">
                         <div class="card-body">
-                            <form id="personalizado-form">
+                            <form id="personalizado-form" action="processar_personalizado.php" method="POST">
                                 <div class="mb-3">
                                     <label for="tipo" class="form-label">Tipo de Produto</label>
-                                    <select class="form-select" id="tipo" required>
+                                    <select class="form-select" id="tipo" name="tipo" required>
                                         <option value="">Selecione...</option>
                                         <option value="doce">Doce</option>
                                         <option value="salgado">Salgado</option>
@@ -58,19 +70,19 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="tema" class="form-label">Tema</label>
-                                    <input type="text" class="form-control" id="tema" placeholder="Ex: Aniversário, Casamento, Tema infantil" required>
+                                    <input type="text" class="form-control" id="tema" name="tema" placeholder="Ex: Aniversário, Casamento, Tema infantil" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="sabor" class="form-label">Sabor Principal</label>
-                                    <input type="text" class="form-control" id="sabor" placeholder="Ex: Chocolate, Baunilha, Frutas vermelhas" required>
+                                    <input type="text" class="form-control" id="sabor" name="sabor" placeholder="Ex: Chocolate, Baunilha, Frutas vermelhas" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="quantidade" class="form-label">Quantidade</label>
-                                    <input type="number" class="form-control" id="quantidade" min="1" value="1" required>
+                                    <input type="number" class="form-control" id="quantidade" name="quantidade" min="1" value="1" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="detalhes" class="form-label">Detalhes Especiais</label>
-                                    <textarea class="form-control" id="detalhes" rows="4" placeholder="Descreva cores, decorações, restrições alimentares, etc."></textarea>
+                                    <textarea class="form-control" id="detalhes" name="detalhes" rows="4" placeholder="Descreva cores, decorações, restrições alimentares, etc."></textarea>
                                 </div>
                                 <button type="submit" class="btn btn-success w-100">Solicitar Orçamento</button>
                             </form>
@@ -80,32 +92,6 @@
             </div>
         </div>
     </main>
-
-    <script>
-        // Função para obter o carrinho do localStorage
-        function getCart() {
-            return JSON.parse(localStorage.getItem('cart')) || {};
-        }
-
-        // Função para atualizar a contagem do carrinho no header
-        function updateCartCount() {
-            const cart = getCart();
-            const count = Object.values(cart).reduce((sum, qty) => sum + qty, 0);
-            document.getElementById('cart-count').textContent = count;
-        }
-
-        // Função para enviar formulário de personalizado
-        document.getElementById('personalizado-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Obrigado! Entraremos em contato em breve com o orçamento para seu produto personalizado.');
-            this.reset();
-        });
-
-        // Inicialização da página
-        document.addEventListener('DOMContentLoaded', () => {
-            updateCartCount();
-        });
-    </script>
 
     <script src="js/bootstrap/bootstrap.bundle.min.js"></script>
 </body>

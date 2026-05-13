@@ -91,6 +91,49 @@
         return find($table);
     }
 
+    //parte para os produtos 
+    function find_products($type = null) {
+        $database = open_database();
+        $found = [];
+
+        try {
+            if ($type) {
+                $sql = $database->prepare("SELECT * FROM produtos WHERE tipo = ? AND disponivel = 1 ORDER BY nome ASC");
+                $sql->execute([$type]);
+            } else {
+                $sql = $database->prepare("SELECT * FROM produtos WHERE disponivel = 1 ORDER BY nome ASC");
+                $sql->execute();
+            }
+
+            while ($row = $sql->fetch(PDO::FETCH_ASSOC)) {
+                $found[] = $row;
+            }
+        } catch (Exception $e) {
+            $_SESSION['message'] = $e->getMessage();
+            $_SESSION['type'] = 'danger';
+        }
+
+        close_database($database);
+        return $found;
+    }
+
+    function find_product($id) {
+        $database = open_database();
+        $found = null;
+
+        try {
+            $sql = $database->prepare("SELECT * FROM produtos WHERE id = ? LIMIT 1");
+            $sql->execute([$id]);
+            $found = $sql->fetch(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            $_SESSION['message'] = $e->getMessage();
+            $_SESSION['type'] = 'danger';
+        }
+
+        close_database($database);
+        return $found;
+    }
+
     //Insere um registro no BD
 /*
    function save($table, $data) {
@@ -315,36 +358,46 @@
             if (!empty($usuario) AND !empty($senha)) {
                 
 
-                $sql = $database->prepare("SELECT id, nome, email, password FROM usuarios WHERE email = ? LIMIT 1");
+                $sql = $database->prepare("SELECT id, nome, email, senha FROM usuarios WHERE email = ? LIMIT 1");
                 $sql->execute([$usuario]);
 
                 $dados = $sql->fetch(PDO::FETCH_ASSOC);
                 
-                if ($dados && password_verify($senha, $dados['password'])) {
-   
-                  
+                if (!$dados) {
+                    throw new Exception("Usuário não cadastrado. Faça seu cadastro.");
+                }
+
+                if ($dados && password_verify($senha, $dados['senha'])) {
                     if(!isset($_SESSION)) session_start();
-                    $_SESSION['message'] = "Bem vindo " . $dados['nome'] . "!";
-                    $_SESSION['type'] = "success";
                     $_SESSION['id'] = $dados['id'];
                     $_SESSION['nome'] = $dados['nome'];
                     $_SESSION['email'] = $dados['email'];
                     $_SESSION['logado'] = true;
                     
-                    header("Location: ". BASEURL . "index.php");
-                    exit;
-                } else {
-                    throw new Exception("Email ou senha inválidos!");
+                    return true;
                 }
+
+                // Suporte a senhas legadas em texto puro: atualiza para hash automático
+                if ($dados && $dados['senha'] === $senha) {
+                    $novoHash = password_hash($senha, PASSWORD_DEFAULT);
+                    $update = $database->prepare("UPDATE usuarios SET senha = ? WHERE id = ?");
+                    $update->execute([$novoHash, $dados['id']]);
+
+                    if(!isset($_SESSION)) session_start();
+                    $_SESSION['id'] = $dados['id'];
+                    $_SESSION['nome'] = $dados['nome'];
+                    $_SESSION['email'] = $dados['email'];
+                    $_SESSION['logado'] = true;
+
+                    return true;
+                }
+
+                throw new Exception("Senha inválida!");
             } else {
                 throw new Exception("Preencha email e senha!");
             }
         } catch (Exception $e) {
-            if(!isset($_SESSION)) session_start();
-            $_SESSION['message'] = $e->getMessage();
-            $_SESSION['type'] = 'danger';
-            header("Location: ". BASEURL . "index.php");
-            exit;
+            throw $e;
         }
 
         close_database($database);
