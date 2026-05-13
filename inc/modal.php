@@ -10,11 +10,11 @@
     <h2 id="titulo">LOGIN</h2>
 </div>
 <div class="auth-body">
-    <form id="loginForm" action="login.php" method="POST">
+    <form id="loginForm" action="inc/valida.php" method="POST">
         <input type="email" name="email" placeholder="E-mail" required>
         
         <div class="input-group-auth">
-            <input type="password" name="password" id="passLogin" placeholder="Senha" required>
+            <input type="password" name="senha" id="passLogin" placeholder="Senha" required>
             <i class="fas fa-eye toggle-password" onclick="togglePassword('passLogin', this)"></i>
         </div>
 

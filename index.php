@@ -1,4 +1,7 @@
-<?php include 'inc/modal.php'; ?>
+<?php 
+if(!isset($_SESSION)) session_start();
+include 'inc/modal.php'; 
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -18,14 +21,26 @@
     <h1>Pedacinho de Amor</h1>
     <nav>
         <ul>
-            <li><a href="index.html">Home</a></li>
+            <li><a href="index.php">Home</a></li>
             <li><a href="sobrenos.html">Sobre Nós</a></li>
             <li><a href="doces.html">Doces</a></li>
             <li><a href="salgados.html">Salgados</a></li>
             <li><a href="personalizados.html">Personalizados</a></li>
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalLogin">
-                Login
-            </button>      
+            
+            <?php if(!empty($_SESSION['logado']) && $_SESSION['logado'] === true): ?>
+                <li class="nav-item dropdown">
+                    <span class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">
+                        👤 Olá, <?php echo htmlspecialchars($_SESSION['nome']); ?>
+                    </span>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="inc/logout.php">Sair</a></li>
+                    </ul>
+                </li>
+            <?php else: ?>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalLogin">
+                    Login
+                </button>
+            <?php endif; ?>
    
             <button><li><a href="cesta.html">Cesta</a></li></button>
 
@@ -47,11 +62,11 @@
     <h2 id="titulo">LOGIN</h2>
 </div>
 <div class="auth-body">
-    <form id="loginForm" action="login.php" method="POST">
-        <input type="email" name="email" placeholder="E-mail" required>
+    <form id="loginForm" action="inc/valida.php" method="POST">
+        <input type="text" name="login" placeholder="Usuário" required>
         
         <div class="input-group-auth">
-            <input type="password" name="password" id="passLogin" placeholder="Senha" required>
+            <input type="password" name="senha" id="passLogin" placeholder="Senha" required>
             <i class="fas fa-eye toggle-password" onclick="togglePassword('passLogin', this)"></i>
         </div>
 
@@ -83,6 +98,17 @@
 </div>
 </div>
 
+<!-- MENSAGENS DE SESSÃO -->
+<?php if(!empty($_SESSION['message'])): ?>
+    <div class="alert alert-<?php echo ($_SESSION['type'] === 'success') ? 'success' : 'danger'; ?> alert-dismissible fade show" role="alert" style="margin: 20px;">
+        <?php echo htmlspecialchars($_SESSION['message']); ?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <?php 
+        unset($_SESSION['message']);
+        unset($_SESSION['type']);
+    ?>
+<?php endif; ?>
 
     <h1>Bem-vindo ao Pedacinho de Amor</h1>
     <p>Neste site voce vera inumeros doces e pratos de dar agua na boca, 

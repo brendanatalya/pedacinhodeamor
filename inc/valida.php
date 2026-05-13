@@ -1,9 +1,11 @@
 <?php 
     include ("../config.php");
     require_once(DBAPI);
-    include (HEADER_TEMPLATE);
+    
     //verifica se houve post e se o usuario ou a senha sao vazios
     if(!empty($_POST) AND (empty($_POST['login']) OR empty($_POST['senha']))){
+        $_SESSION['message'] = "Preencha login e senha!";
+        $_SESSION['type'] = 'danger';
         header("Location: ". BASEURL . "index.php"); //redireciona o usuario para a pagina de login
         exit;
     }
@@ -71,18 +73,3 @@
         $_SESSION['type'] = 'danger';
     }
 ?>
-
-<?php if (!empty($_SESSION['message'])) : ?>
-    <div class="alert alert-<?php echo $_SESSION['type']; ?> alert-dismissible" role="alert" id="actions">
-        <?php echo $_SESSION['message']; ?>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>        
-    </div>
-    <?php 
-        clear_messages();
-    ?>
-<?php endif; ?>
-<header>
-    <a href="<?php echo BASEURL?>index.php" class="btn btn-dark"><i class="fa-solid fa-arrow-left"></i> Voltar</a>
-</header>
-
-<?php include (FOOTER_TEMPLATE); ?>

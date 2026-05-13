@@ -325,21 +325,26 @@
                   
                     if(!isset($_SESSION)) session_start();
                     $_SESSION['message'] = "Bem vindo " . $dados['nome'] . "!";
-                    $_SESSION['type'] = "info";
+                    $_SESSION['type'] = "success";
                     $_SESSION['id'] = $dados['id'];
                     $_SESSION['nome'] = $dados['nome'];
                     $_SESSION['email'] = $dados['email'];
+                    $_SESSION['logado'] = true;
                     
-                    header("Location: ". BASEURL . "index.php"); //redireciona o usuario para a pagina de login
+                    header("Location: ". BASEURL . "index.php");
+                    exit;
                 } else {
-                    throw new Exception("Não foi possivel se conectar!<br>Verifique seu usuario e senha!");
+                    throw new Exception("Email ou senha inválidos!");
                 }
             } else {
-                throw new Exception("Não foi possivel se conectar!<br>Verifique seu usuario e senha!");
+                throw new Exception("Preencha email e senha!");
             }
         } catch (Exception $e) {
-            $_SESSION['message'] = "Ocorreu um erro: " . $e->getMessage();
+            if(!isset($_SESSION)) session_start();
+            $_SESSION['message'] = $e->getMessage();
             $_SESSION['type'] = 'danger';
+            header("Location: ". BASEURL . "index.php");
+            exit;
         }
 
         close_database($database);
