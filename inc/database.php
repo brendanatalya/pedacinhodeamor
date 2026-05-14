@@ -358,7 +358,7 @@
             if (!empty($usuario) AND !empty($senha)) {
                 
 
-                $sql = $database->prepare("SELECT id, nome, email, senha FROM usuarios WHERE email = ? LIMIT 1");
+                $sql = $database->prepare("SELECT id, nome, email, senha, tipo FROM usuarios WHERE email = ? LIMIT 1");
                 $sql->execute([$usuario]);
 
                 $dados = $sql->fetch(PDO::FETCH_ASSOC);
@@ -373,6 +373,7 @@
                     $_SESSION['nome'] = $dados['nome'];
                     $_SESSION['email'] = $dados['email'];
                     $_SESSION['logado'] = true;
+                    $_SESSION['tipo'] = $dados['tipo'] ?? 'cliente';
                     
                     return true;
                 }
@@ -388,6 +389,7 @@
                     $_SESSION['nome'] = $dados['nome'];
                     $_SESSION['email'] = $dados['email'];
                     $_SESSION['logado'] = true;
+                    $_SESSION['tipo'] = $dados['tipo'] ?? 'cliente';
 
                     return true;
                 }

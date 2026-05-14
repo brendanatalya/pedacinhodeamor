@@ -43,6 +43,9 @@ unset($_SESSION['cart_message']);
             <li><a href="produtos.php?tipo=personalizado">Personalizados</a></li>
             <li><a href="cesta.php">Cesta</a></li>
             <?php if ($usuario_logado): ?>
+                <?php if (!empty($_SESSION['tipo']) && $_SESSION['tipo'] === 'admin'): ?>
+                    <li><a href="admin.php">Admin</a></li>
+                <?php endif; ?>
                 <li><a href="inc/logout.php">Sair</a></li>
             <?php else: ?>
                 <li><a class="btn btn-primary text-white" href="index.php">Login</a></li>

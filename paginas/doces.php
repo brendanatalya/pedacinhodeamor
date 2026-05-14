@@ -1,6 +1,6 @@
 <?php
 if (!isset($_SESSION)) session_start();
-require_once 'config.php';
+require_once '../config.php';
 require_once ABSPATH . 'inc/database.php';
 
 $usuario_logado = !empty($_SESSION['logado']) && $_SESSION['logado'] === true;
@@ -12,7 +12,7 @@ $tipos = [
     'personalizado' => 'Personalizados',
 ];
 
-$tipo = $_GET['tipo'] ?? 'salgado'; // Filtro padrão para salgados
+$tipo = $_GET['tipo'] ?? 'doce'; // Filtro padrão para doces
 $produtos = find_products($tipo === 'all' ? null : $tipo);
 $cartMessage = $_SESSION['cart_message'] ?? '';
 unset($_SESSION['cart_message']);
@@ -22,7 +22,7 @@ unset($_SESSION['cart_message']);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Salgados - Pedacinho de Amor</title>
+    <title>Doces - Pedacinho de Amor</title>
     <link rel="stylesheet" href="css_pda/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="css_pda/style_pda.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -34,8 +34,8 @@ unset($_SESSION['cart_message']);
             <ul>
                 <li><a href="index.php">Home</a></li>
                 <li><a href="sobrenos.html">Sobre Nós</a></li>
-                <li><a href="doces.php">Doces</a></li>
-                <li><a href="salgados.php" class="active">Salgados</a></li>
+                <li><a href="doces.php" class="active">Doces</a></li>
+                <li><a href="salgados.php">Salgados</a></li>
                 <li><a href="personalizados.php">Personalizados</a></li>
                 <li><a href="carrinho.php"><i class="fas fa-shopping-cart"></i> Carrinho (<?php echo array_sum($_SESSION['cart'] ?? []); ?>)</a></li>
                 <?php if ($usuario_logado): ?>
@@ -51,7 +51,7 @@ unset($_SESSION['cart_message']);
         <section class="doces-hero" style="background-image:url('imagens/doce3.webp');">
             <div class="doces-hero__overlay"></div>
             <div class="doces-hero__content">
-                <h1>SALGADOS</h1>
+                <h1>DOCES</h1>
                 <p>Deliciosamente feitos com carinho!</p>
             </div>
         </section>
@@ -67,7 +67,7 @@ unset($_SESSION['cart_message']);
 
             <div class="filter-buttons mb-4">
                 <?php foreach ($tipos as $key => $label): ?>
-                    <a href="salgados.php?tipo=<?php echo $key === 'all' ? '' : urlencode($key); ?>" class="filter-btn <?php echo ($tipo === $key || ($key === 'all' && $tipo === '')) ? 'active' : ''; ?>">
+                    <a href="doces.php?tipo=<?php echo $key === 'all' ? '' : urlencode($key); ?>" class="filter-btn <?php echo ($tipo === $key || ($key === 'all' && $tipo === '')) ? 'active' : ''; ?>">
                         <?php echo $label; ?>
                     </a>
                 <?php endforeach; ?>

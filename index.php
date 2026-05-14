@@ -9,7 +9,7 @@ include 'inc/modal.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pedacinho de Amor</title>
     <link rel="stylesheet" href="css_pda/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css_pda/style_pda.css">
+    <link rel="stylesheet" href="./css_pda/style_pda.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <!--<link rel="stylesheet" href="css_pda/">-->
@@ -22,25 +22,36 @@ include 'inc/modal.php';
     <nav>
         <ul>
             <li><a href="index.php">Home</a></li>
-            <li><a href="sobrenos.html">Sobre Nós</a></li>
-            <li><a href="doces.php">Doces</a></li>
-            <li><a href="salgados.php">Salgados</a></li>
-            <li><a href="personalizados.php">Personalizados</a></li>
+            <li><a href="paginas/sobrenos.html">Sobre Nós</a></li>
+            <li><a href="paginas/doces.php">Doces</a></li>
+            <li><a href="paginas/salgados.php">Salgados</a></li>
+            <li><a href="paginas/personalizados.php">Personalizados</a></li>
             
-            <?php if(!empty($_SESSION['logado']) && $_SESSION['logado'] === true): ?>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        👤 Olá, <?php echo htmlspecialchars($_SESSION['nome']); ?>
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="userDropdown">
-                        <li><a class="dropdown-item" href="inc/logout.php">Sair</a></li>
-                    </ul>
-                </li>
-            <?php else: ?>
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalLogin">
-                    Login
-                </button>
-            <?php endif; ?>
+          <?php if(!empty($_SESSION['logado']) && $_SESSION['logado'] === true): ?>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            👤 Olá, <?php echo htmlspecialchars($_SESSION['nome']); ?>
+        </a>
+
+        <ul class="dropdown-menu" aria-labelledby="userDropdown">
+            <li>
+                <a class="dropdown-item" href="minha_conta.php">
+                    Gerenciar Conta
+                </a>
+            </li>
+
+            <li>
+                <a class="dropdown-item" href="inc/logout.php">
+                    Sair
+                </a>
+            </li>
+        </ul>
+    </li>
+<?php else: ?>
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalLogin">
+        Login
+    </button>
+<?php endif; ?>
    
                 <li><a href="carrinho.php"><i class="fas fa-shopping-cart"></i> Carrinho (<?php echo array_sum($_SESSION['cart'] ?? []); ?>)</a></li>
 
@@ -76,7 +87,7 @@ include 'inc/modal.php';
                        
                         <div class="product-card-body">
                             <span>Croissants</span>
-                            <button class="btn btn-confira">Confira</button>
+                            <button class="btn btn-confira" src="doces.php">Confira</button>
                         </div>
                     </div>
                     

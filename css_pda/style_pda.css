@@ -15,8 +15,8 @@
         .tabs{display:flex;gap:8px;margin-bottom:1rem}
         .tabs button{padding:.5rem 1rem;border:1px solid #ccc;background:#f7f7f7;cursor:pointer}
         .tabs button.active{background:#eee;border-color:#999}
-        form{display:none}
-        form.active{display:block}
+        .auth-body form{display:none}
+        .auth-body form.active{display:block}
         input{display:block;width:100%;padding:.5rem;margin:.5rem 0;border:1px solid #ccc;border-radius:4px}
         .actions{display:flex;gap:.5rem;align-items:center}
         .message{color:green}
