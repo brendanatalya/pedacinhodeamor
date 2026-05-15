@@ -24,9 +24,16 @@
         validacao($usuario, $senha);
         
         // Se chegou aqui, login foi bem-sucedido
+        // Determinar URL de redirecionamento baseado no tipo de usuário
+        $redirect_url = 'index.php';
+        if (isset($_SESSION['tipo']) && $_SESSION['tipo'] === 'admin') {
+            $redirect_url = 'admin/';
+        }
+        
         echo json_encode([
             'success' => true,
-            'message' => 'Login realizado com sucesso!'
+            'message' => 'Login realizado com sucesso!',
+            'redirect_url' => $redirect_url
         ]);
     } catch (Exception $e) {
         echo json_encode([

@@ -168,10 +168,8 @@ unset($_SESSION['cart_message']);
 
     <script>
         function checkout() {
-            if (confirm('Deseja finalizar a compra?')) {
-                alert('Compra finalizada! Em um sistema real, isso processaria o pagamento.');
-                // Aqui poderia redirecionar para uma página de checkout ou processar o pedido
-            }
+            // Redirecionar para a página de checkout
+            window.location.href = 'checkout_form.php';
         }
     </script>
 

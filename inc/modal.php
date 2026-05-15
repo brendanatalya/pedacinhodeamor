@@ -104,8 +104,9 @@
             const data = await response.json();
 
             if (data.success) {
-                // Login bem-sucedido, redireciona
-                window.location.href = 'index.php';
+                // Login bem-sucedido, redireciona para URL apropriada
+                const redirectUrl = data.redirect_url || 'index.php';
+                window.location.href = redirectUrl;
             } else {
                 // Erro, exibe no modal
                 loginError.textContent = data.message;
