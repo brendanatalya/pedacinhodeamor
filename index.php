@@ -1,6 +1,5 @@
 <?php 
 if(!isset($_SESSION)) session_start();
-include 'inc/modal.php'; 
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -9,8 +8,8 @@ include 'inc/modal.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pedacinho de Amor</title>
     <link rel="stylesheet" href="css_pda/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./css_pda/style_pda.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css_pda/style_pda.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <!--<link rel="stylesheet" href="css_pda/">-->
 </head>
@@ -53,7 +52,7 @@ include 'inc/modal.php';
     </button>
 <?php endif; ?>
    
-                <li><a href="carrinho.php"><i class="fas fa-shopping-cart"></i> Carrinho (<?php echo array_sum($_SESSION['cart'] ?? []); ?>)</a></li>
+                <li><a href="paginas/carrinho.php"><i class="fas fa-shopping-cart"></i> Carrinho (<?php echo array_sum($_SESSION['cart'] ?? []); ?>)</a></li>
 
             
         </ul>
@@ -87,7 +86,7 @@ include 'inc/modal.php';
                        
                         <div class="product-card-body">
                             <span>Croissants</span>
-                            <button class="btn btn-confira" src="doces.php">Confira</button>
+                            <button class="btn btn-confira" src="./paginas/doces.php">Confira</button>
                         </div>
                     </div>
                     
@@ -105,7 +104,7 @@ include 'inc/modal.php';
                         </div>
                     </div>
                   
-                    <div class="product-card" style="background-image: url('imagens/doce4.webp');">
+                    <div class="product-card" style="background-image: url('imagens/doce3.webp');">
                         <div class="product-card-body">
                             <span>Brownies</span>
                             <button class="btn btn-confira">Confira</button>
@@ -124,49 +123,51 @@ include 'inc/modal.php';
             </div>
             <div class="feedbacks-wrapper">
                 <button class="feedback-arrow prev-feedback" type="button" aria-label="Feedback anterior">&#10094;</button>
-                <div class="feedbacks-carousel" id="feedbacksCarousel">
-                    <div class="feedback-card feedback-card-large">
-                        <div class="feedback-user">
-                            <img src="https://via.placeholder.com/50" alt="Avatar Gabriela Ruiz" class="feedback-avatar">
-                            <div class="feedback-info">
-                                <h4>Gabriela Ruiz</h4>
-                                <p>@gabrielaclientefiel</p>
+                <div class="feedbacks-carousel-track">
+                    <div class="feedbacks-carousel" id="feedbacksCarousel">
+                        <div class="feedback-card feedback-card-large">
+                            <div class="feedback-user">
+                                <svg class="feedback-avatar" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="23" cy="23" r="23" fill="#e8d5f0"/><circle cx="23" cy="18" r="8" fill="#a855f7"/><ellipse cx="23" cy="36" rx="13" ry="8" fill="#a855f7"/></svg>
+                                <div class="feedback-info">
+                                    <h4>Gabriela Ruiz</h4>
+                                    <p>@gabrielaclientefiel</p>
+                                </div>
                             </div>
+                            <p class="feedback-text">adoro a qualidade e rapidez de entrega. Pedi um bolo pro aniversario do meu filho, e chegou rapidinho, estava impecável, todo mundo amou!!</p>
                         </div>
-                        <p class="feedback-text">adoro a qualidade e rapidez de entrega. Pedi um bolo pro aniversario do meu filho, e chegou rapidinho, estava impecável, todo mundo amou!!</p>
-                    </div>
 
-                    <div class="feedback-card feedback-card-large">
-                        <div class="feedback-user">
-                            <img src="https://via.placeholder.com/50" alt="Avatar Gabriela Ruiz" class="feedback-avatar">
-                            <div class="feedback-info">
-                                <h4>Gabriela Ruiz</h4>
-                                <p>@gabrielaclientefiel</p>
+                        <div class="feedback-card feedback-card-large">
+                            <div class="feedback-user">
+                                <svg class="feedback-avatar" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="23" cy="23" r="23" fill="#e8d5f0"/><circle cx="23" cy="18" r="8" fill="#a855f7"/><ellipse cx="23" cy="36" rx="13" ry="8" fill="#a855f7"/></svg>
+                                <div class="feedback-info">
+                                    <h4>Gabriela Ruiz</h4>
+                                    <p>@gabrielaclientefiel</p>
+                                </div>
                             </div>
+                            <p class="feedback-text">adoro a qualidade e rapidez de entrega. Pedi um bolo pro aniversario do meu filho, e chegou rapidinho, estava impecável, todo mundo amou!!</p>
                         </div>
-                        <p class="feedback-text">adoro a qualidade e rapidez de entrega. Pedi um bolo pro aniversario do meu filho, e chegou rapidinho, estava impecável, todo mundo amou!!</p>
-                    </div>
 
-                    <div class="feedback-card feedback-card-large">
-                        <div class="feedback-user">
-                            <img src="https://via.placeholder.com/50" alt="Avatar Gabriela Ruiz" class="feedback-avatar">
-                            <div class="feedback-info">
-                                <h4>Gabriela Ruiz</h4>
-                                <p>@gabrielaclientefiel</p>
+                        <div class="feedback-card feedback-card-large">
+                            <div class="feedback-user">
+                                <svg class="feedback-avatar" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="23" cy="23" r="23" fill="#e8d5f0"/><circle cx="23" cy="18" r="8" fill="#a855f7"/><ellipse cx="23" cy="36" rx="13" ry="8" fill="#a855f7"/></svg>
+                                <div class="feedback-info">
+                                    <h4>Gabriela Ruiz</h4>
+                                    <p>@gabrielaclientefiel</p>
+                                </div>
                             </div>
+                            <p class="feedback-text">adoro a qualidade e rapidez de entrega. Pedi um bolo pro aniversario do meu filho, e chegou rapidinho, estava impecável, todo mundo amou!!</p>
                         </div>
-                        <p class="feedback-text">adoro a qualidade e rapidez de entrega. Pedi um bolo pro aniversario do meu filho, e chegou rapidinho, estava impecável, todo mundo amou!!</p>
-                    </div>
 
-                   <div class="feedback-card feedback-card-large">
-                        <div class="feedback-user">
-                            <img src="https://via.placeholder.com/50" alt="Avatar Gabriela Ruiz" class="feedback-avatar">
-                            <div class="feedback-info">
-                                <h4>Gabriela Ruiz</h4>
-                                <p>@gabrielaclientefiel</p>
+                       <div class="feedback-card feedback-card-large">
+                            <div class="feedback-user">
+                                <svg class="feedback-avatar" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="23" cy="23" r="23" fill="#e8d5f0"/><circle cx="23" cy="18" r="8" fill="#a855f7"/><ellipse cx="23" cy="36" rx="13" ry="8" fill="#a855f7"/></svg>
+                                <div class="feedback-info">
+                                    <h4>Gabriela Ruiz</h4>
+                                    <p>@gabrielaclientefiel</p>
+                                </div>
                             </div>
+                            <p class="feedback-text">adoro a qualidade e rapidez de entrega. Pedi um bolo pro aniversario do meu filho, e chegou rapidinho, estava impecável, todo mundo amou!!</p>
                         </div>
-                        <p class="feedback-text">adoro a qualidade e rapidez de entrega. Pedi um bolo pro aniversario do meu filho, e chegou rapidinho, estava impecável, todo mundo amou!!</p>
                     </div>
                 </div>
                 <button class="feedback-arrow next-feedback" type="button" aria-label="Próximo feedback">&#10095;</button>
@@ -177,6 +178,7 @@ include 'inc/modal.php';
 
 
     <script src="js/bootstrap/bootstrap.bundle.min.js"></script>
+<?php include 'inc/modal.php'; ?>
 <script>
     // --- CARROSSEL PRINCIPAL ---
     const carousel = document.getElementById('carousel');
@@ -218,45 +220,55 @@ include 'inc/modal.php';
     showImage(0);
     startAutoplay();
 
-    // --- FEEDBACKS ---
+    // --- FEEDBACKS (2 cards visíveis, avança 1 por vez) ---
     const feedbacksCarousel = document.getElementById('feedbacksCarousel');
-    const feedbackCards = document.querySelectorAll('#feedbacksCarousel .feedback-card');
-    const prevFeedbackBtn = document.querySelector('.prev-feedback');
-    const nextFeedbackBtn = document.querySelector('.next-feedback');
-    const feedbackWrapper = feedbacksCarousel.parentElement;
+    const feedbackCards     = feedbacksCarousel ? feedbacksCarousel.querySelectorAll('.feedback-card') : [];
+    const prevFeedbackBtn   = document.querySelector('.prev-feedback');
+    const nextFeedbackBtn   = document.querySelector('.next-feedback');
 
-    let feedbackIndex = 0;
+    let feedbackIndex    = 0;
     let feedbackInterval = null;
 
-    function updateFeedbackPosition() {
-        const wrapperWidth = feedbackWrapper.clientWidth;
-        feedbackCards.forEach(card => {
-            card.style.width = `${wrapperWidth}px`;
-        });
-        feedbacksCarousel.style.transform = `translateX(${-feedbackIndex * wrapperWidth}px)`;
+    // Quantos cards ficam visíveis de uma vez (muda no mobile via JS)
+    function visibleCount() {
+        return 1;
+    }
+
+    function maxIndex() {
+        return Math.max(0, feedbackCards.length - visibleCount());
     }
 
     function showFeedback(i) {
-        feedbackIndex = (i + feedbackCards.length) % feedbackCards.length;
-        updateFeedbackPosition();
+        feedbackIndex = Math.max(0, Math.min(i, maxIndex()));
+        const track = feedbacksCarousel.parentElement;
+        const trackWidth = track ? track.clientWidth : 0;
+        const offset = feedbackIndex * trackWidth;
+        feedbacksCarousel.style.transform = `translateX(-${offset}px)`;
     }
 
     function resetFeedbackAutoplay() {
         clearInterval(feedbackInterval);
-        feedbackInterval = setInterval(() => showFeedback(feedbackIndex + 1), 6000);
+        feedbackInterval = setInterval(() => {
+            const next = feedbackIndex >= maxIndex() ? 0 : feedbackIndex + 1;
+            showFeedback(next);
+        }, 6000);
     }
 
-    prevFeedbackBtn.addEventListener('click', () => {
-        showFeedback(feedbackIndex - 1);
-        resetFeedbackAutoplay();
-    });
+    if (prevFeedbackBtn) {
+        prevFeedbackBtn.addEventListener('click', () => {
+            showFeedback(feedbackIndex - 1);
+            resetFeedbackAutoplay();
+        });
+    }
 
-    nextFeedbackBtn.addEventListener('click', () => {
-        showFeedback(feedbackIndex + 1);
-        resetFeedbackAutoplay();
-    });
+    if (nextFeedbackBtn) {
+        nextFeedbackBtn.addEventListener('click', () => {
+            showFeedback(feedbackIndex + 1);
+            resetFeedbackAutoplay();
+        });
+    }
 
-    window.addEventListener('resize', updateFeedbackPosition);
+    window.addEventListener('resize', () => showFeedback(feedbackIndex));
     showFeedback(0);
     resetFeedbackAutoplay();
 

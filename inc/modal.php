@@ -51,11 +51,14 @@
 </div>
 
 <script>
+document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.getElementById('loginForm');
     const cadastroForm = document.getElementById('cadastroForm');
     const titulo = document.getElementById('titulo');
     const loginError = document.getElementById('loginError');
     const cadastroError = document.getElementById('cadastroError');
+
+    if (!loginForm || !cadastroForm) return;
 
     document.addEventListener('click', (e) => {
         if (e.target.id === 'switchCadastro') {
@@ -156,4 +159,5 @@
             cadastroError.style.display = 'block';
         }
     });
+}); // fim DOMContentLoaded
 </script>

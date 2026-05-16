@@ -21,9 +21,9 @@ $stmt = $conn->prepare("
         u.telefone,
         u.endereco,
         COUNT(p.id) as total_pedidos,
-        SUM(p.total) as total_gasto
+        SUM(p.valor_total) as total_gasto
     FROM usuarios u
-    LEFT JOIN pedidos p ON u.id = p.usuario_id
+    LEFT JOIN pedidos p ON u.id = p.id_cliente
     WHERE u.tipo = 'cliente'
     GROUP BY u.id
     ORDER BY u.id DESC
@@ -44,7 +44,7 @@ if (isset($_GET['ver'])) {
     if ($cliente_detalhes) {
         $stmt = $conn->prepare("
             SELECT * FROM pedidos 
-            WHERE usuario_id = ? 
+            WHERE id_cliente = ? 
             ORDER BY data_pedido DESC
         ");
         $stmt->execute([$id]);
@@ -61,14 +61,9 @@ close_database($conn);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciar Clientes - Admin</title>
     <link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        .card-cliente {
-            background: white;
-            border-left: 4px solid #8b6f47;
-            margin-bottom: 15px;
-        }
-    </style>
+    <link rel="stylesheet" href="<?php echo BASEURL; ?>../css_pda/style_pda.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
 </head>
 <body style="background-color: #f8f9fa;">
     <div class="container-fluid p-4">
@@ -109,7 +104,7 @@ close_database($conn);
                                 <div class="col-6">
                                     <div style="background: #f0f0f0; padding: 15px; border-radius: 4px; text-align: center;">
                                         <div style="font-size: 24px; font-weight: bold; color: #28a745;">
-                                            R$ <?php echo number_format($cliente_detalhes['pedidos'] ? array_sum(array_column($cliente_detalhes['pedidos'], 'total')) : 0, 2, ',', '.'); ?>
+                                            R$ <?php echo number_format($cliente_detalhes['pedidos'] ? array_sum(array_column($cliente_detalhes['pedidos'], 'valor_total')) : 0, 2, ',', '.'); ?>
                                         </div>
                                         <small>Total Gasto</small>
                                     </div>
@@ -139,7 +134,7 @@ close_database($conn);
                                         <tr>
                                             <td><strong>#<?php echo $pedido['id']; ?></strong></td>
                                             <td><?php echo date('d/m/Y H:i', strtotime($pedido['data_pedido'])); ?></td>
-                                            <td>R$ <?php echo number_format($pedido['total'], 2, ',', '.'); ?></td>
+                                            <td>R$ <?php echo number_format($pedido['valor_total'], 2, ',', '.'); ?></td>
                                             <td>
                                                 <span class="badge bg-info"><?php echo ucfirst($pedido['status']); ?></span>
                                             </td>

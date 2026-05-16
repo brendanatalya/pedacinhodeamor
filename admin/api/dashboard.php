@@ -1,79 +1,142 @@
-<?php 
-if (!isset($_SESSION)) session_start();
-
-// Verificar se usuário é admin
-if (empty($_SESSION['logado']) || $_SESSION['tipo'] !== 'admin') {
-    header('Content-Type: application/json');
-    echo json_encode(['error' => 'Acesso negado']);
-    exit;
+<?php
+if (!isset($_SESSION)) {
+    session_start();
 }
+
+header('Content-Type: application/json; charset=utf-8');
 
 include '../../config.php';
 require_once(DBAPI);
 
-header('Content-Type: application/json; charset=utf-8');
+// Verificar login admin
+if (
+    empty($_SESSION['logado']) ||
+    $_SESSION['tipo'] !== 'admin'
+) {
+
+    http_response_code(403);
+
+    echo json_encode([
+        'success' => false,
+        'message' => 'Acesso negado.'
+    ]);
+
+    exit;
+}
 
 try {
+
     $conn = open_database();
-    
-    // Pedidos de hoje
+
+    /*
+    | PEDIDOS DE HOJE
+    */
     $stmt = $conn->prepare("
-        SELECT COUNT(*) as total 
-        FROM pedidos 
+        SELECT COUNT(*) AS total
+        FROM itens_pedidos
         WHERE DATE(data_pedido) = CURDATE()
     ");
+
     $stmt->execute();
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    $pedidos_hoje = $result['total'];
-    
-    // Pedidos pendentes
+
+    $pedidos_hoje = $stmt->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
+
+    /*
+    | PEDIDOS PENDENTES
+    */
     $stmt = $conn->prepare("
-        SELECT COUNT(*) as total 
-        FROM pedidos 
+        SELECT COUNT(*) AS total
+        FROM pedidos
         WHERE status = 'pendente'
     ");
+
     $stmt->execute();
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    $pedidos_pendentes = $result['total'];
-    
-    // Total de produtos
-    $stmt = $conn->prepare("SELECT COUNT(*) as total FROM produtos");
-    $stmt->execute();
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    $total_produtos = $result['total'];
-    
-    // Total de clientes
-    $stmt = $conn->prepare("SELECT COUNT(*) as total FROM usuarios WHERE tipo = 'cliente'");
-    $stmt->execute();
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    $total_clientes = $result['total'];
-    
-    // Últimos pedidos
+
+    $pedidos_pendentes = $stmt->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
+
+    /*
+    | TOTAL PRODUTOS
+    */
     $stmt = $conn->prepare("
-        SELECT 
-            p.id, 
-            p.total, 
+        SELECT COUNT(*) AS total
+        FROM produtos
+    ");
+
+    $stmt->execute();
+
+    $total_produtos = $stmt->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
+
+    /*
+    | TOTAL CLIENTES
+    */
+    $stmt = $conn->prepare("
+        SELECT COUNT(*) AS total
+        FROM usuarios
+        WHERE tipo = 'cliente'
+    ");
+
+    $stmt->execute();
+
+    $total_clientes = $stmt->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
+
+    /*
+    | ÚLTIMOS PEDIDOS
+    */
+    $stmt = $conn->prepare("
+        SELECT
+            p.id,
+            p.total,
             p.status,
             p.data_pedido,
             u.nome
         FROM pedidos p
-        INNER JOIN usuarios u ON p.usuario_id = u.id
+        INNER JOIN usuarios u
+            ON p.usuario_id = u.id
         ORDER BY p.data_pedido DESC
         LIMIT 5
     ");
+
     $stmt->execute();
+
     $ultimos_pedidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
+
+    // Fechar conexão
     close_database($conn);
-    
+
+    /*
+    | RESPOSTA
+    */
     echo json_encode([
-        'pedidos_hoje' => $pedidos_hoje,
-        'pedidos_pendentes' => $pedidos_pendentes,
-        'total_produtos' => $total_produtos,
-        'total_clientes' => $total_clientes,
-        'ultimos_pedidos' => $ultimos_pedidos
-    ]);
+        'success' => true,
+
+        'dashboard' => [
+
+            'pedidos_hoje' => (int)$pedidos_hoje,
+
+            'pedidos_pendentes' => (int)$pedidos_pendentes,
+
+            'total_produtos' => (int)$total_produtos,
+
+            'total_clientes' => (int)$total_clientes,
+
+            'ultimos_pedidos' => $ultimos_pedidos
+        ]
+
+    ], JSON_UNESCAPED_UNICODE);
+
 } catch (Exception $e) {
-    echo json_encode(['error' => $e->getMessage()]);
+
+    http_response_code(500);
+
+    echo json_encode([
+
+        'success' => false,
+
+        'message' => 'Erro interno do servidor.',
+
+        // REMOVA EM PRODUÇÃO
+        'error' => $e->getMessage()
+
+    ], JSON_UNESCAPED_UNICODE);
 }
 ?>

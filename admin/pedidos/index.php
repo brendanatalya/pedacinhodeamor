@@ -39,14 +39,14 @@ $stmt = $conn->prepare("
         p.id,
         p.status,
         p.data_pedido,
-        p.data_entrega,
+        p.data_entrega, 
         p.tipo_entrega,
-        p.total,
+        p.valor_total,
         u.nome,
         u.email,
         u.telefone
     FROM pedidos p
-    INNER JOIN usuarios u ON p.usuario_id = u.id
+    INNER JOIN usuarios u ON p.id_cliente = u.id
     ORDER BY p.data_pedido DESC
 ");
 $stmt->execute();
@@ -64,7 +64,7 @@ if (isset($_GET['ver'])) {
             p.*,
             u.nome, u.email, u.telefone, u.endereco
         FROM pedidos p
-        INNER JOIN usuarios u ON p.usuario_id = u.id
+        INNER JOIN usuarios u ON p.id_cliente = u.id
         WHERE p.id = ?
     ");
     $stmt->execute([$id]);
@@ -77,8 +77,8 @@ if (isset($_GET['ver'])) {
                 pr.nome as produto_nome,
                 pr.tipo as produto_tipo
             FROM itens_pedido ip
-            INNER JOIN produtos pr ON ip.produto_id = pr.id
-            WHERE ip.pedido_id = ?
+            INNER JOIN produtos pr ON ip.id_produto = pr.id
+            WHERE ip.id_pedido = ?
         ");
         $stmt->execute([$id]);
         $itens = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -95,15 +95,9 @@ if (isset($_GET['ver'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciar Pedidos - Admin</title>
     <link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        .badge-pendente { background-color: #ffc107; }
-        .badge-confirmado { background-color: #17a2b8; }
-        .badge-preparacao { background-color: #fd7e14; }
-        .badge-pronto { background-color: #20c997; }
-        .badge-entregue { background-color: #28a745; }
-        .badge-cancelado { background-color: #dc3545; }
-    </style>
+    <link rel="stylesheet" href="<?php echo BASEURL; ?>../css_pda/style_pda.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
 </head>
 <body style="background-color: #f8f9fa;">
     <div class="container-fluid p-4">
@@ -138,7 +132,7 @@ if (isset($_GET['ver'])) {
                                 <strong>Data do Pedido:</strong> <?php echo date('d/m/Y H:i', strtotime($pedido_detalhes['data_pedido'])); ?><br>
                                 <strong>Data de Entrega:</strong> <?php echo date('d/m/Y', strtotime($pedido_detalhes['data_entrega'])); ?><br>
                                 <strong>Tipo:</strong> <span class="badge bg-info"><?php echo ucfirst($pedido_detalhes['tipo_entrega']); ?></span><br>
-                                <strong>Total:</strong> <span class="badge bg-success">R$ <?php echo number_format($pedido_detalhes['total'], 2, ',', '.'); ?></span>
+                                <strong>Total:</strong> <span class="badge bg-success">R$ <?php echo number_format($pedido_detalhes['valor_total'], 2, ',', '.'); ?></span>
                             </p>
                         </div>
                     </div>
@@ -162,24 +156,15 @@ if (isset($_GET['ver'])) {
                                     <tr>
                                         <td><?php echo htmlspecialchars($item['produto_nome']); ?></td>
                                         <td><span class="badge bg-secondary"><?php echo ucfirst($item['produto_tipo']); ?></span></td>
-                                        <td><?php echo $item['quantidade']; ?></td>
+                                        <td><?php echo $item['qtd']; ?></td>
                                         <td>R$ <?php echo number_format($item['preco_unitario'], 2, ',', '.'); ?></td>
                                         <td><strong>R$ <?php echo number_format($item['subtotal'], 2, ',', '.'); ?></strong></td>
                                         <td>
-                                            <small>
-                                                <?php if ($item['sabor_massa']): ?>
-                                                    <br><strong>Massa:</strong> <?php echo htmlspecialchars($item['sabor_massa']); ?>
-                                                <?php endif; ?>
-                                                <?php if ($item['sabor_recheio']): ?>
-                                                    <br><strong>Recheio:</strong> <?php echo htmlspecialchars($item['sabor_recheio']); ?>
-                                                <?php endif; ?>
-                                                <?php if ($item['topping']): ?>
-                                                    <br><strong>Topping:</strong> <?php echo htmlspecialchars($item['topping']); ?>
-                                                <?php endif; ?>
-                                                <?php if ($item['decoracao']): ?>
-                                                    <br><strong>Decoração:</strong> <?php echo htmlspecialchars($item['decoracao']); ?>
-                                                <?php endif; ?>
-                                            </small>
+                                            <?php if (!empty($item['observacao'])): ?>
+                                                <small class="text-muted">
+                                                    <?php echo htmlspecialchars($item['observacao']); ?>
+                                                </small>
+                                            <?php endif; ?>
                                         </td>
                                         <td>
                                             <span class="badge <?php echo $item['disponivel'] ? 'bg-success' : 'bg-danger'; ?>">
@@ -217,11 +202,7 @@ if (isset($_GET['ver'])) {
                         </div>
                     </form>
 
-                    <?php if ($pedido_detalhes['observacoes']): ?>
-                        <div class="mt-3 alert alert-info">
-                            <strong>Observações:</strong> <?php echo htmlspecialchars($pedido_detalhes['observacoes']); ?>
-                        </div>
-                    <?php endif; ?>
+                   
                 </div>
             </div>
 
@@ -259,7 +240,7 @@ if (isset($_GET['ver'])) {
                                         </span>
                                     </td>
                                     <td>
-                                        <strong>R$ <?php echo number_format($pedido['total'], 2, ',', '.'); ?></strong>
+                                        <strong>R$ <?php echo number_format($pedido['valor_total'], 2, ',', '.'); ?></strong>
                                     </td>
                                     <td>
                                         <span class="badge badge-<?php echo strtolower(str_replace('_', '-', $pedido['status'])); ?>">

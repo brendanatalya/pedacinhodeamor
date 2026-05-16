@@ -51,37 +51,9 @@ if (empty($cart_items)) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Finalizar Compra - Pedacinho de Amor</title>
     <link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/style_pda.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        .checkout-section {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .section-title {
-            border-bottom: 2px solid #8b6f47;
-            padding-bottom: 10px;
-            margin-bottom: 15px;
-        }
-        .form-section {
-            margin-bottom: 30px;
-        }
-        .resumo-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid #eee;
-        }
-        .resumo-item.total {
-            border-bottom: 2px solid #8b6f47;
-            font-weight: bold;
-            font-size: 18px;
-            color: #8b6f47;
-        }
-    </style>
+    <link rel="stylesheet" href="<?php echo BASEURL; ?>/css_pda/style_pda.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
 </head>
 <body>
     <?php include '../inc/header.php'; ?>
@@ -286,38 +258,114 @@ if (empty($cart_items)) {
             });
         });
 
-        // Envio do formulário
-        document.getElementById('checkoutForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
+document.getElementById('checkoutForm').addEventListener('submit', async (e) => {
 
-            const submitBtn = document.getElementById('submitBtn');
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processando...';
+    e.preventDefault();
 
-            const formData = new FormData(document.getElementById('checkoutForm'));
+    const form = document.getElementById('checkoutForm');
+    const formData = new FormData(form);
 
-            try {
-                const response = await fetch('checkout.php', {
-                    method: 'POST',
-                    body: formData
-                });
+    try {
 
-                const data = await response.json();
-
-                if (data.success) {
-                    // Redireciona para a agenda do cliente
-                    window.location.href = data.redirect_url;
-                } else {
-                    alert('Erro: ' + data.message);
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = '<i class="fas fa-check-circle"></i> Confirmar Pedido';
-                }
-            } catch (error) {
-                alert('Erro ao processar pedido: ' + error);
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = '<i class="fas fa-check-circle"></i> Confirmar Pedido';
-            }
+        // SALVA O PEDIDO NO BANCO
+        const response = await fetch('checkout.php', {
+            method: 'POST',
+            body: formData
         });
+
+        const data = await response.json();
+
+        if (!data.success) {
+            alert(data.message);
+            return;
+        }
+
+        // =========================
+        // DADOS DO CLIENTE
+        // =========================
+
+        const nomeCliente = `<?php echo htmlspecialchars($usuario['nome']); ?>`;
+        const telefone = `<?php echo htmlspecialchars($usuario['telefone']); ?>`;
+        const endereco = `<?php echo htmlspecialchars($usuario['endereco']); ?>`;
+
+        const tipoEntrega =
+            document.querySelector('input[name="tipo_entrega"]:checked').value;
+
+        const dataEntrega =
+            document.querySelector('input[name="data_entrega"]').value;
+
+        const horaEntrega =
+            document.querySelector('input[name="hora_entrega"]').value;
+
+        const observacoes =
+            document.querySelector('textarea[name="observacoes"]').value;
+
+        // =========================
+        // MONTA MENSAGEM
+        // =========================
+
+        let mensagem = `🎂 *NOVO PEDIDO - PEDACINHO DE AMOR* \n\n`;
+
+        mensagem += `📌 *Pedido:* #${data.pedido_id}\n\n`;
+
+        mensagem += `👤 *Cliente:* ${nomeCliente}\n`;
+        mensagem += `📞 *Telefone:* ${telefone}\n`;
+
+        if (tipoEntrega === 'entrega') {
+            mensagem += `🚚 *Entrega:* ${endereco}\n`;
+        } else {
+            mensagem += `🏪 *Retirada na loja*\n`;
+        }
+
+        mensagem += `📅 *Data:* ${dataEntrega}\n`;
+        mensagem += `⏰ *Horário:* ${horaEntrega}\n\n`;
+
+        mensagem += `🧁 *ITENS DO PEDIDO*\n\n`;
+
+        <?php foreach ($cart_items as $item): ?>
+
+            mensagem += `• <?php echo addslashes($item['nome']); ?> `;
+            mensagem += `x<?php echo $item['quantity']; ?> `;
+            mensagem += `- R$ <?php echo number_format($item['subtotal'], 2, ',', '.'); ?>\n`;
+
+        <?php endforeach; ?>
+
+        mensagem += `\n💰 *TOTAL:* R$ <?php echo number_format($total_com_frete, 2, ',', '.'); ?>\n\n`;
+
+        if (observacoes) {
+            mensagem += `📝 *Observações:* ${observacoes}\n\n`;
+        }
+
+        mensagem += `✅ Pedido registrado no sistema!`;
+
+        // =========================
+        // WHATSAPP
+        // =========================
+
+        const numeroWhatsapp = '5515988329726';
+
+        const link =
+            `https://wa.me/${numeroWhatsapp}?text=${encodeURIComponent(mensagem)}`;
+
+        // abre whatsapp
+        window.open(link, '_blank');
+
+        // redireciona cliente
+        setTimeout(() => {
+
+           window.location.href = '/pedacinhodeamor/paginas/minha_conta.php?sucesso=1';
+
+        }, 1500);
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert('Erro ao finalizar pedido.');
+
+    }
+
+});
 
         // Validar datas mínimas
         const dataInput = document.querySelector('input[name="data_entrega"]');

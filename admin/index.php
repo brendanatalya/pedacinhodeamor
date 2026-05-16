@@ -17,138 +17,69 @@ require_once(DBAPI);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel Admin - Pedacinho de Amor</title>
     <link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/style_pda.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        .sidebar {
-            background-color: #8b6f47;
-            min-height: 100vh;
-            padding: 20px 0;
-        }
-        .sidebar a {
-            color: white;
-            text-decoration: none;
-            padding: 15px 20px;
-            display: block;
-            border-left: 4px solid transparent;
-            transition: all 0.3s;
-        }
-        .sidebar a:hover,
-        .sidebar a.active {
-            background-color: rgba(0, 0, 0, 0.1);
-            border-left-color: #f5c2d6;
-            color: #f5c2d6;
-        }
-        .main-content {
-            padding: 30px;
-            background-color: #f8f9fa;
-            min-height: 100vh;
-        }
-        .header-admin {
-            background-color: #f5c2d6;
-            padding: 20px;
-            margin-bottom: 30px;
-            border-radius: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .header-admin h1 {
-            margin: 0;
-            color: #8b6f47;
-            font-size: 28px;
-        }
-        .card-stat {
-            background: white;
-            border-radius: 8px;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-        }
-        .card-stat .number {
-            font-size: 32px;
-            font-weight: bold;
-            color: #8b6f47;
-        }
-        .card-stat .label {
-            color: #666;
-            margin-top: 10px;
-        }
-        .section {
-            display: none;
-        }
-        .section.active {
-            display: block;
-        }
-    </style>
+    <link rel="stylesheet" href="<?php echo BASEURL; ?>/css_pda/style_pda.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    
 </head>
 <body>
     <div class="container-fluid">
         <div class="row">
-            <!-- SIDEBAR -->
             <div class="col-md-2 sidebar">
-                <div class="text-white p-3" style="border-bottom: 2px solid rgba(255,255,255,0.2); margin-bottom: 20px;">
-                    <h5 style="margin: 0;"><i class="fas fa-user-circle"></i> Admin</h5>
-                    <small><?php echo htmlspecialchars($_SESSION['nome']); ?></small>
+                <div class="text-white p-3 mb-4" style="border-bottom: 1px dashed rgba(255,255,255,0.2);">
+                    <h5 class="d-flex align-items-center gap-2" style="margin: 0; font-weight: 700;"><i class="fas fa-user-circle"></i> Admin</h5>
+                    <small style="color: #E2D9D7;"><?php echo htmlspecialchars($_SESSION['nome']); ?></small>
                 </div>
                 
-                <a href="#dashboard" onclick="showSection('dashboard')" class="menu-link active">
+                <a href="#dashboard" onclick="showSection('dashboard', event)" class="menu-link active">
                     <i class="fas fa-chart-line"></i> Dashboard
                 </a>
-                <a href="#produtos" onclick="showSection('produtos')" class="menu-link">
+                <a href="#produtos" onclick="showSection('produtos', event)" class="menu-link">
                     <i class="fas fa-box"></i> Produtos
                 </a>
-                <a href="#pedidos" onclick="showSection('pedidos')" class="menu-link">
+                <a href="#pedidos" onclick="showSection('pedidos', event)" class="menu-link">
                     <i class="fas fa-shopping-bag"></i> Pedidos
                 </a>
-                <a href="#agenda" onclick="showSection('agenda')" class="menu-link">
+                <a href="#agenda" onclick="showSection('agenda', event)" class="menu-link">
                     <i class="fas fa-calendar"></i> Agenda
                 </a>
-                <a href="#clientes" onclick="showSection('clientes')" class="menu-link">
+                <a href="#clientes" onclick="showSection('clientes', event)" class="menu-link">
                     <i class="fas fa-users"></i> Clientes
                 </a>
                 
-                <hr style="border-color: rgba(255,255,255,0.2);">
+                <hr style="border-color: rgba(255,255,255,0.2); margin: 20px 0;">
                 
-                <a href="<?php echo BASEURL; ?>inc/logout.php" style="color: #ff6b6b;">
+                <a href="<?php echo BASEURL; ?>inc/logout.php" style="color: #FBB6CE;">
                     <i class="fas fa-sign-out-alt"></i> Sair
                 </a>
             </div>
 
-            <!-- MAIN CONTENT -->
             <div class="col-md-10 main-content">
                 
-                <?php
-                date_default_timezone_set('America/Sao_Paulo');
-                ?>
+                <?php date_default_timezone_set('America/Sao_Paulo'); ?>
 
-                <!-- HEADER -->
                 <div class="header-admin">
                     <div>
                         <h1>
                             <i class="fas fa-crown"></i>
                             Painel de Administração
                         </h1>
-
                         <small>
-                            Bem-vindo de volta,
-                            <?php echo htmlspecialchars($_SESSION['nome']); ?>!
+                            Bem-vindo de volta, <?php echo htmlspecialchars($_SESSION['nome']); ?>!
                         </small>
                     </div>
                     
-                    <div style="color: #8b6f47; text-align:right;">
-                        <small>
+                    <div style="color: #61463B; text-align:right; font-size: 14px;">
+                        <small style="font-weight: 600; color: #8A736E;">
                             <?php echo date('d/m/Y'); ?>
                         </small>
                         <br>
-                        <strong>
+                        <strong style="font-size: 18px; font-weight: 800; color: #8C475E;">
                             <?php echo date('H:i'); ?>
                         </strong>
                     </div>
                 </div>
 
-                <!-- DASHBOARD -->
                 <div id="dashboard" class="section active">
                     <div class="row">
                         <div class="col-md-3">
@@ -178,10 +109,10 @@ require_once(DBAPI);
                     </div>
                     <div class="row mt-4">
                         <div class="col-md-12">
-                            <div style="background: white; padding: 20px; border-radius: 8px;">
-                                <h5>Últimos Pedidos</h5>
-                                <table class="table table-sm">
-                                    <thead>
+                            <div class="card-table-box">
+                                <h5><i class="fas fa-history text-muted me-2"></i> Últimos Pedidos</h5>
+                                <table class="table table-hover align-middle">
+                                    <thead class="table-light">
                                         <tr>
                                             <th>ID</th>
                                             <th>Cliente</th>
@@ -192,36 +123,37 @@ require_once(DBAPI);
                                         </tr>
                                     </thead>
                                     <tbody id="ultimosPedidos">
-                                        <!-- Preenchido via JavaScript -->
-                                    </tbody>
+                                        </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- PRODUTOS -->
                 <div id="produtos" class="section">
                     <iframe src="<?php echo BASEURL; ?>admin/produtos/index.php" 
-                            style="width: 100%; height: 800px; border: none;"></iframe>
+                            style="width: 100%; height: 85vh; border: none; border-radius: 16px;"></iframe>
                 </div>
 
-                <!-- PEDIDOS -->
-                <div id="pedidos" class="section">
-                    <iframe src="<?php echo BASEURL; ?>admin/pedidos/index.php" 
-                            style="width: 100%; height: 800px; border: none;"></iframe>
+               <div id="pedidos" class="section">
+                    <iframe 
+                        id="iframePedidos"
+                        src="<?php echo BASEURL; ?>admin/pedidos/index.php"
+                        style="width: 100%; height: 85vh; border: none; border-radius: 16px;">
+                    </iframe>
                 </div>
 
-                <!-- AGENDA -->
                 <div id="agenda" class="section">
-                    <iframe src="<?php echo BASEURL; ?>admin/agenda/index.php" 
-                            style="width: 100%; height: 800px; border: none;"></iframe>
+                    <iframe 
+                        id="iframeAgenda"
+                        src="<?php echo BASEURL; ?>admin/agenda/index.php"
+                        style="width: 100%; height: 85vh; border: none; border-radius: 16px;">
+                    </iframe>
                 </div>
 
-                <!-- CLIENTES -->
                 <div id="clientes" class="section">
                     <iframe src="<?php echo BASEURL; ?>admin/clientes/index.php" 
-                            style="width: 100%; height: 800px; border: none;"></iframe>
+                            style="width: 100%; height: 85vh; border: none; border-radius: 16px;"></iframe>
                 </div>
 
             </div>
@@ -230,7 +162,11 @@ require_once(DBAPI);
 
     <script src="<?php echo BASEURL; ?>js/bootstrap/bootstrap.bundle.min.js"></script>
     <script>
-        function showSection(sectionId) {
+        let currentActiveSection = 'dashboard';
+
+        function showSection(sectionId, event) {
+            currentActiveSection = sectionId;
+
             // Esconder todas as seções
             document.querySelectorAll('.section').forEach(el => {
                 el.classList.remove('active');
@@ -244,12 +180,17 @@ require_once(DBAPI);
             // Mostrar seção selecionada
             document.getElementById(sectionId).classList.add('active');
             
-            // Adicionar classe active ao link clicado
-            event.target.closest('.menu-link').classList.add('active');
+            // Adicionar classe active ao link clicado de forma segura
+            if(event) {
+                event.currentTarget.classList.add('active');
+            }
         }
 
         // Carregar dados do dashboard
         function loadDashboardData() {
+            // Só executa o fetch se a aba do painel principal (dashboard) estiver visível
+            if (currentActiveSection !== 'dashboard') return;
+
             fetch('<?php echo BASEURL; ?>admin/api/dashboard.php')
                 .then(response => response.json())
                 .then(data => {
@@ -265,13 +206,13 @@ require_once(DBAPI);
                         data.ultimos_pedidos.forEach(pedido => {
                             const row = `
                                 <tr>
-                                    <td>#${pedido.id}</td>
+                                    <td class="fw-bold">#${pedido.id}</td>
                                     <td>${pedido.nome}</td>
                                     <td>${pedido.data_pedido}</td>
-                                    <td><span class="badge bg-info">${pedido.status}</span></td>
-                                    <td>R$ ${parseFloat(pedido.total).toFixed(2)}</td>
+                                    <td><span class="badge bg-info text-dark rounded-pill" style="background-color: #FFEAF1 !important; color: #D53F8C !important;">${pedido.status}</span></td>
+                                    <td class="fw-bold text-secondary">R$ ${parseFloat(pedido.total).toFixed(2).replace('.', ',')}</td>
                                     <td>
-                                        <a href="javascript:void(0)" class="btn btn-sm btn-primary" onclick="viewPedido(${pedido.id})">
+                                        <a href="javascript:void(0)" class="btn btn-sm text-white" style="background-color: #61463B" onclick="viewPedido(${pedido.id})">
                                             <i class="fas fa-eye"></i>
                                         </a>
                                     </td>
@@ -286,19 +227,25 @@ require_once(DBAPI);
 
         // Carregar dados ao abrir a página
         document.addEventListener('DOMContentLoaded', loadDashboardData);
+        
+        // Polling inteligente de 5 segundos
         setInterval(() => {
 
-            if(document.visibilityState === 'visible') {
+    if(document.visibilityState !== 'visible') return;
 
-                loadDashboardData();
+    // Dashboard principal
+    loadDashboardData();
 
-            }
+    // Atualiza iframe ativo
+    if (currentActiveSection === 'pedidos') {
+        refreshIframe('iframePedidos');
+    }
 
-        }, 5000);
+    if (currentActiveSection === 'agenda') {
+        refreshIframe('iframeAgenda');
+    }
 
-
-
-
+}, 5000);
     </script>
 </body>
 </html>

@@ -36,8 +36,8 @@ unset($_SESSION['cart_message']);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carrinho - Pedacinho de Amor</title>
-    <link rel="stylesheet" href="css_pda/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css_pda/style_pda.css">
+    <link rel="stylesheet" href="../css_pda/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css_pda/style_pda.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
@@ -45,7 +45,7 @@ unset($_SESSION['cart_message']);
         <h1>Pedacinho de Amor</h1>
         <nav>
             <ul>
-                <li><a href="index.php">Home</a></li>
+                <li><a href="../index.php">Home</a></li>
                 <li><a href="sobrenos.html">Sobre Nós</a></li>
                 <li><a href="doces.php">Doces</a></li>
                 <li><a href="salgados.php">Salgados</a></li>
@@ -83,7 +83,7 @@ unset($_SESSION['cart_message']);
                         <?php foreach ($availableItems as $produto): ?>
                             <div class="cart-item">
                                 <?php if (!empty($produto['imagem_referencia'])): ?>
-                                    <img src="<?php echo htmlspecialchars($produto['imagem_referencia']); ?>" alt="<?php echo htmlspecialchars($produto['nome']); ?>">
+                                    <img src="<?php echo '../' . htmlspecialchars($produto['imagem_referencia']); ?>" alt="<?php echo htmlspecialchars($produto['nome']); ?>">
                                 <?php endif; ?>
                                 <div class="cart-item-info">
                                     <h4><?php echo htmlspecialchars($produto['nome']); ?></h4>
@@ -121,7 +121,7 @@ unset($_SESSION['cart_message']);
                             <?php foreach ($unavailableItems as $produto): ?>
                                 <div class="cart-item" style="opacity: 0.6;">
                                     <?php if (!empty($produto['imagem_referencia'])): ?>
-                                        <img src="<?php echo htmlspecialchars($produto['imagem_referencia']); ?>" alt="<?php echo htmlspecialchars($produto['nome']); ?>">
+                                        <img src="<?php echo '../' . htmlspecialchars($produto['imagem_referencia']); ?>" alt="<?php echo htmlspecialchars($produto['nome']); ?>">
                                     <?php endif; ?>
                                     <div class="cart-item-info">
                                         <h4><?php echo htmlspecialchars($produto['nome']); ?></h4>
@@ -173,6 +173,6 @@ unset($_SESSION['cart_message']);
         }
     </script>
 
-    <script src="js/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="../js/bootstrap/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -114,8 +114,10 @@
 }
 
 /* PARTE DOS FEEDBACKS ----  ARRUMAR ESSAS BOSTA DE BOTAO PRA NAO FICAR EM CIMA DO TEXTO ESSAS BOSTA */
+/* ── FEEDBACKS ─────────────────────────────────────────────── */
 .feedbacks-section {
   background-color: #f5f5f5;
+  padding: 3rem 0;
 }
 
 .feedbacks-header {
@@ -136,152 +138,131 @@
   letter-spacing: 0.08em;
 }
 
-.feedbacks-container {
-  display: flex;
-  justify-content: auto;
-  gap: 1.5rem;
-  flex-wrap: nowrap;
-  overflow-x: auto;}
-
+/* Wrapper: setas ficam nas laterais, trilho no meio */
 .feedbacks-wrapper {
   position: relative;
-  margin: 2rem auto 0;
+  margin: 0 auto;
+  max-width: 960px;
+  width: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  max-width: 760px;
-  width: 100%;
-  padding: 0;
+  gap: 0;
   box-sizing: border-box;
+  padding: 0 1rem;
 }
 
+/* Trilho com overflow hidden */
+.feedbacks-carousel-track {
+  overflow: hidden;
+  flex: 1;
+  min-width: 0; /* evita overflow no flex */
+}
+
+/* Faixa interna — gap entre cards */
 .feedbacks-carousel {
   display: flex;
   flex-wrap: nowrap;
-  overflow: hidden;
-  width: 100%;
+  gap: 0;
   transition: transform 0.5s ease;
+  will-change: transform;
 }
 
+/* Cada card: 50% menos metade do gap → 2 visíveis sem corte */
 .feedback-card {
   background: white;
-  padding: 2rem;
-  border-radius: 24px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 1.75rem;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  border-left: 4px solid #a855f7;
   flex: 0 0 100%;
   min-width: 100%;
   max-width: 100%;
-  width: 100%;
   box-sizing: border-box;
 }
 
 .feedback-card-large {
-  min-width: 100%;
-  max-width: 100%;
-  padding: 2.5rem;
-  flex: 0 0 100%;
+  padding: 1.75rem;
 }
 
 .feedback-user {
   display: flex;
   align-items: center;
-  gap: 0.875rem;
-  margin-bottom: 1rem;
+  gap: 0.75rem;
+  margin-bottom: 0.875rem;
 }
 
 .feedback-avatar {
-  width: 50px;
-  height: 50px;
+  width: 46px;
+  height: 46px;
   border-radius: 50%;
   object-fit: cover;
+  flex-shrink: 0;
+  background: #e8d5f0;
 }
 
 .feedback-info h4 {
   margin: 0;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 700;
   color: #333;
 }
 
 .feedback-info p {
-  margin: 0.25rem 0 0 0;
-  font-size: 0.85rem;
+  margin: 0.2rem 0 0;
+  font-size: 0.8rem;
   color: #999;
 }
 
 .feedback-text {
   margin: 0;
-  font-size: 1rem;
-  line-height: 1.8;
+  font-size: 0.97rem;
+  line-height: 1.7;
   color: #4d4039;
   text-align: left;
 }
 
-.feedback-card-large .feedback-text {
-  font-size: 1.15rem;
-}
-
-.feedback-card-large .feedback-info h4 {
-  font-size: 1.15rem;
-}
-
+/* Setas */
 .feedback-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 56px;
-  height: 56px;
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
   border: none;
   border-radius: 50%;
   background: #5c3b28;
   color: #fff;
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
   z-index: 5;
-  transition: background 0.2s ease, transform 0.2s ease;
 }
 
 .feedback-arrow:hover {
   background: #432917;
-  transform: translateY(-50%) scale(1.05);
+  transform: scale(1.07);
 }
 
-.prev-feedback {
-  left: 12px;
-}
-
-.next-feedback {
-  right: 12px;
-}
-
+/* Mobile: 1 card por vez */
 @media (max-width: 768px) {
+  .feedback-card {
+    flex: 0 0 100%;
+    min-width: 100%;
+    max-width: 100%;
+  }
+
   .feedback-arrow {
-    display: none;
+    width: 36px;
+    height: 36px;
+    font-size: 0.9rem;
   }
-}
 
-@media (max-width: 768px) {
-  .feedbacks-container {
-    grid-template-columns: 1fr;
-  }
   .feedbacks-header h2 {
     font-size: 1.25rem;
   }
 }
-
-
-  .product-slider {
-    overflow-x: auto;
-    padding: 0 0.5rem;
-  }
-  .product-card {
-    min-width: 260px;
-  }
+  
 
 /* COMO TRABALHAMOS */
 .work-section {
@@ -1245,145 +1226,414 @@
 
 
 /*TESTE PERSONALIZADO*/
+/* ==========================================================================
+   FOLHA DE ESTILO - PERSONALIZADOS (FINAL OTIMIZADO)
+   ========================================================================== */
+
+:root {
+  --primary-color: #d65a7d;       /* Rosa Confeitaria Premium */
+  --primary-hover: #b83f60;
+  --secondary-color: #4a3e3d;     /* Marrom Café */
+  --bg-light: #fff9f9;
+  --text-dark: #2d2525;
+  --text-muted: #756a6a;
+}
+
 body {
-  margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: 'Montserrat', sans-serif;
+  color: var(--text-dark);
+  background-color: var(--bg-light);
 }
 
-/* HERO */
-.hero {
-  height: 90vh;
-  background: url('imagens/bolo-bg.jpg') center/cover no-repeat;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* Ajustes de Títulos */
+h2, .section-title {
+  font-family: 'Playfair Display', serif;
+  color: var(--secondary-color);
+  font-weight: 600;
 }
 
-.hero-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.5);
+/* ==========================================================================
+   RESET E ALINHAMENTO DO FORMULÁRIO PERSONALIZADO
+   ========================================================================== */
+
+/* Garante que o container do Bootstrap funcione sem interferências */
+.container.my-5 {
+    display: block !important;
+    width: 100% !important;
+    max-width: 1320px !important;
+    margin-right: auto !important;
+    margin-left: auto !important;
+    float: none !important;
 }
 
-.hero-content {
-  position: relative;
-  color: white;
-  text-align: center;
+/* Força a linha do Bootstrap a se comportar como flex centralizado */
+.row.justify-content-center {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    float: none !important;
+    width: 100% !important;
+    margin: 0 auto !important;
 }
 
-.hero h1 {
-  font-size: 3rem;
+/* Corrige a coluna para não flutuar para a direita */
+.col-md-8 {
+    float: none !important;
+    margin: 0 auto !important;
 }
 
-.hero button {
-  margin-top: 1rem;
-  padding: 12px 25px;
-  background: red;
-  color: white;
-  border: none;
-  cursor: pointer;
+/* Estilização do Card Centralizado */
+.card-custom {
+    background-color: #ffffff !important;
+    border-radius: 16px !important;
+    border: none !important;
+    box-shadow: 0 10px 30px rgba(74, 62, 61, 0.08) !important;
+    padding: 2.5rem !important;
+    width: 100% !important;
+    max-width: 800px !important; 
+    margin: 0 auto !important;
+    box-sizing: border-box !important;
 }
 
-/* SOBRE */
-.about {
-  padding: 4rem;
-  background: #eee;
+/* Alinhamento dos Labels */
+.custom-label {
+    display: block !important;
+    font-weight: 600 !important;
+    color: #4a3e3d !important;
+    font-size: 0.9rem !important;
+    margin-bottom: 0.5rem !important;
+    text-align: left !important; 
 }
 
-.about-container {
-  display: flex;
-  gap: 2rem;
-  align-items: center;
+/* Inputs Ocupando toda a largura do Card */
+.custom-input {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    border: 2px solid #f0e9e9 !important;
+    border-radius: 8px !important;
+    padding: 0.75rem 1rem !important;
+    font-family: 'Montserrat', sans-serif !important;
+    color: #2d2525 !important;
+    background-color: #ffffff !important;
+    box-sizing: border-box !important;
 }
 
-.about-text {
-  flex: 1;
+.custom-input:focus {
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 0 0 4px rgba(214, 90, 125, 0.15) !important;
+    outline: none !important;
 }
 
-.about-image img {
-  width: 400px;
-  border-radius: 20px;
+/* Botão de Envio Centralizado/Largo */
+.btn-custom-submit {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    background-color: #28a745 !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 1rem !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.2) !important;
 }
 
-/* CATEGORIAS */
-.categorias {
-  display: flex;
-  gap: 2rem;
-  justify-content: center;
-  padding: 3rem;
+.btn-custom-submit:hover:not(:disabled) {
+    background-color: #218838 !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 6px 15px rgba(40, 167, 69, 0.3) !important;
 }
 
-.categoria-card {
-  position: relative;
-  width: 300px;
-  overflow: hidden;
-  border-radius: 20px;
+/* Alertas Corrigidos */
+.alert-custom-warning {
+    background-color: #fff3cd !important;
+    border: 1px solid #ffeeba !important;
+    color: #856404 !important;
+    border-radius: 8px !important;
+    padding: 1rem !important;
 }
+/*parte do INDEX.PHP - ADMIN*/
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
-.categoria-card img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-}
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body{ 
+            background: #fdf9f9;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: #5A433D !important;
+        }
+        
+        /* SIDEBAR COMBINANDO COM A AGENDA */
+        .sidebar  {
+            background-color: #61463B !important  ;
+            min-height: 100vh;
+            padding: 25px 0;
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 100;
+        }
+        .sidebar a {
+            color: #E2D9D7;
+            text-decoration: none;
+            padding: 14px 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 15px;
+            font-weight: 500;
+            border-left: 4px solid transparent;
+            transition: all 0.2s;
+        }
+        .sidebar a:hover,
+        .sidebar a.active {
+            background-color: #503930;
+            border-left-color: #FBB6CE;
+            color: #FFF;
+        }
+        
+        /* CONTEÚDO PRINCIPAL AJUSTADO POR CAUSA DA SIDEBAR FIXA */
+        .main-content {
+            margin-left: 16.666667%; /* Alinha com o col-md-2 da sidebar */
+            padding: 40px;
+            background-color: #FDF9F9;
+            min-height: 100vh;
+        }
+        
+        /* HEADER COMBINANDO */
+        .header-admin {
+            background-color: #FFFFFF;
+            padding: 22px;
+            margin-bottom: 30px;
+            border-radius: 24px;
+            border: 1px solid #FAF2F2;
+            box-shadow: 0 10px 30px rgba(97, 70, 59, 0.04);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header-admin h1 {
+            margin: 0;
+            color: #4A332D;
+            font-size: 24px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .header-admin h1 i {
+            color: #FBB6CE;
+        }
+        .header-admin small {
+            color: #8A736E;
+            font-weight: 500;
+        }
+        
+        /* CARDS DE ESTATÍSTICA */
+        .card-stat {
+            background: #FFFFFF;
+            border-radius: 24px;
+            border: 1px solid #FAF2F2;
+            padding: 22px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(97, 70, 59, 0.04);
+            margin-bottom: 20px;
+        }
+        .card-stat .number {
+            font-size: 32px;
+            font-weight: 800;
+            color: #8C475E;
+        }
+        .card-stat .label {
+            color: #705853;
+            font-weight: 600;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        
+        /* IFRAMES DASHBOARD */
+        .section {
+            display: none;
+        }
+        .section.active {
+            display: block;
+        }
+        .card-table-box {
+            background: #FFFFFF;
+            padding: 25px;
+            border-radius: 24px;
+            border: 1px solid #FAF2F2;
+            box-shadow: 0 10px 30px rgba(97, 70, 59, 0.04);
+        }
+        .card-table-box h5 {
+            font-weight: 700;
+            color: #4A332D;
+            margin-bottom: 20px;
+        }
+        
+        /* Ajustes de responsividade para esconder sidebar fixa se necessário */
+        @media (max-width: 768px) {
+            .sidebar { position: relative; min-height: auto; }
+            .main-content { margin-left: 0; padding: 20px; }
+        }
 
-.overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.5);
-  color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
+        /* INDEX.PHP - PRODUTOS */
+    .badge-disponivel { background-color: #28a745; }
+    .badge-indisponivel { background-color: #dc3545; }
 
-/* CTA */
-.cta {
-  text-align: center;
-  padding: 3rem;
-  background: #f5f5f5;
-}
+    .bg-pink{
+        background-color:#ff69b4;
+        color:white;
+    }
 
-.tabs {
-  margin: 2rem 0;
-}
+    .table-produtos { font-size: 14px; }
 
-.tabs button {
-  padding: 10px 20px;
-  border: none;
-  background: #ddd;
-  cursor: pointer;
-}
+    .form-section {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
 
-.tabs button.active {
-  background: red;
-  color: white;
-}
+    /*CHECKOUT_FORM.PHP*/
+        .checkout-section {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .section-title {
+            border-bottom: 2px solid #8b6f47;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        .form-section {
+            margin-bottom: 30px;
+        }
+        .resumo-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .resumo-item.total {
+            border-bottom: 2px solid #8b6f47;
+            font-weight: bold;
+            font-size: 18px;
+            color: #8b6f47;
+        }
 
-/* FORM */
-.form-pedido {
-  display: none;
-  max-width: 400px;
-  margin: auto;
-  flex-direction: column;
-  gap: 10px;
-}
+        /*INDEX.PHP - PEDIDOS*/
+        .badge-pendente { background-color: #ffc107; }
+        .badge-confirmado { background-color: #17a2b8; }
+        .badge-preparacao { background-color: #fd7e14; }
+        .badge-pronto { background-color: #20c997; }
+        .badge-entregue { background-color: #28a745; }
+        .badge-cancelado { background-color: #dc3545; }
 
-.form-pedido.active {
-  display: flex;
-}
+        /*INDEX.PHP - CLIENTES*/
+        .card-cliente {
+            background: white;
+            border-left: 4px solid #8b6f47;
+            margin-bottom: 15px;
+        }
 
-.form-pedido input,
-.form-pedido textarea {
-  padding: 10px;
-  border: 1px solid #ccc;
-}
-
-.form-pedido button {
-  background: red;
-  color: white;
-  padding: 10px;
-  border: none;
-  cursor: pointer;
-}
+        /*AGENDA_CLIENTE.PHP*/
+        .calendar-container {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .calendar-nav {
+            display: flex;
+            gap: 10px;
+        }
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .calendar-cell {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 10px;
+            min-height: 100px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .calendar-cell:hover {
+            background: #e9ecef;
+        }
+        .calendar-cell.other-month {
+            opacity: 0.5;
+        }
+        .calendar-cell.today {
+            background: #d4f1d4;
+            border-color: #28a745;
+        }
+        .calendar-cell-header {
+            font-weight: bold;
+            text-align: center;
+            background: #8b6f47;
+            color: white;
+            border: none !important;
+            padding: 8px;
+            margin-bottom: 5px;
+        }
+        .calendar-cell-date {
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 5px;
+            padding: 5px 0;
+        }
+        .agendamento-item {
+            background: #f5c2d6;
+            border-left: 3px solid #8b6f47;
+            padding: 5px;
+            margin: 2px 0;
+            font-size: 11px;
+            border-radius: 2px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .agendamento-item:hover {
+            background: #f0a0c0;
+            text-decoration: none;
+        }
+        .agendamento-retirada {
+            border-left-color: #28a745;
+            background: #d4edda;
+        }
+        .agendamento-entrega {
+            border-left-color: #007bff;
+            background: #cfe2ff;
+        }
+        .sidebar {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .sidebar h6 {
+            border-bottom: 2px solid #8b6f47;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        .badge-retirada { background-color: #28a745; }
+        .badge-entrega { background-color: #007bff; }

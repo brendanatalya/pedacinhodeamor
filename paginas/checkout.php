@@ -63,17 +63,17 @@ try {
         $preco_unitario = floatval($produto['preco']);
         $subtotal = $quantidade * $preco_unitario;
         
-        $itens_pedido[] = [
-            'produto_id' => $product_id,
-            'quantidade' => $quantidade,
-            'preco_unitario' => $preco_unitario,
-            'subtotal' => $subtotal,
-            'sabor_massa' => $_POST['sabor_massa'][$product_id] ?? null,
-            'sabor_recheio' => $_POST['sabor_recheio'][$product_id] ?? null,
-            'topping' => $_POST['topping'][$product_id] ?? null,
-            'decoracao' => $_POST['decoracao'][$product_id] ?? null,
-            'observacoes' => $_POST['observacoes_item'][$product_id] ?? null
-        ];
+       $itens_pedido[] = [
+    'id_produto' => $product_id,
+    'quantidade' => $quantidade,
+    'preco_unitario' => $preco_unitario,
+    'subtotal' => $subtotal,
+    'observacoes' => $_POST['observacoes_item'][$product_id] ?? null,
+    'sabor_massa' => $_POST['sabor_massa'][$product_id] ?? null,
+    'sabor_recheio' => $_POST['sabor_recheio'][$product_id] ?? null,
+    'topping' => $_POST['topping'][$product_id] ?? null,
+    'decoracao' => $_POST['decoracao'][$product_id] ?? null,
+];
         
         $total += $subtotal;
     }
@@ -82,52 +82,82 @@ try {
     $frete = isset($_POST['frete']) ? floatval($_POST['frete']) : 0;
     $total += $frete;
     
-    // Criar pedido
-    $stmt = $conn->prepare("
-        INSERT INTO pedidos (usuario_id, status, data_entrega, tipo_entrega, observacoes, total)
-        VALUES (?, ?, ?, ?, ?, ?)
-    ");
-    $stmt->execute([$usuario_id, 'pendente', $data_entrega, $tipo_entrega, $observacoes, $total]);
-    $pedido_id = $conn->lastInsertId();
+   $stmt = $conn->prepare("
+    INSERT INTO pedidos (
+        id_cliente,
+        valor_total,
+        status,
+        observacao,
+        tipo,
+        qtd_itens,
+        data_pedido,
+        data_entrega,
+        forma_pagamento,
+        tipo_entrega,
+        hora_entrega
+    )
+    VALUES (?, ?, ?, ?, ?, ?, NOW(), ?, ?, ?, ?)
+");
+$stmt->execute([
+    $usuario_id,
+    $total,
+    'pendente',
+    $observacoes,
+    $tipo_entrega == 'retirada' ? 'personalizado' : 'normal',
+    count($cart),
+    $data_entrega,
+    'WhatsApp',
+    $tipo_entrega,
+    $hora_entrega
+]);
+    $id_pedido = $conn->lastInsertId();
     
-    // Criar itens do pedido
-    foreach ($itens_pedido as $item) {
-        $stmt = $conn->prepare("
-            INSERT INTO itens_pedido 
-            (pedido_id, produto_id, quantidade, preco_unitario, subtotal, sabor_massa, sabor_recheio, topping, decoracao, observacoes, disponivel)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ");
-        $stmt->execute([
-            $pedido_id,
-            $item['produto_id'],
-            $item['quantidade'],
-            $item['preco_unitario'],
-            $item['subtotal'],
-            $item['sabor_massa'],
-            $item['sabor_recheio'],
-            $item['topping'],
-            $item['decoracao'],
-            $item['observacoes'],
-            1
-        ]);
+   foreach ($itens_pedido as $item) {
+
+    $observacao_item = '';
+
+    if (!empty($item['sabor_massa'])) {
+        $observacao_item .= "Massa: {$item['sabor_massa']} | ";
     }
-    
-    // Criar agendamento
+
+    if (!empty($item['sabor_recheio'])) {
+        $observacao_item .= "Recheio: {$item['sabor_recheio']} | ";
+    }
+
+    if (!empty($item['topping'])) {
+        $observacao_item .= "Topping: {$item['topping']} | ";
+    }
+
+    if (!empty($item['decoracao'])) {
+        $observacao_item .= "Decoração: {$item['decoracao']} | ";
+    }
+
+    if (!empty($item['observacoes'])) {
+        $observacao_item .= "Obs: {$item['observacoes']}";
+    }
+
     $stmt = $conn->prepare("
-        INSERT INTO agendamentos (pedido_id, usuario_id, data_agendada, tipo, status, observacoes)
+        INSERT INTO itens_pedido (
+            id_pedido,
+            id_produto,
+            qtd,
+            preco_unitario,
+            subtotal,
+            observacao
+        )
         VALUES (?, ?, ?, ?, ?, ?)
     ");
-    
-    $localizacao = $tipo_entrega === 'entrega' ? 'A definir' : 'Loja';
+
     $stmt->execute([
-        $pedido_id,
-        $usuario_id,
-        $data_entrega,
-        $tipo_entrega,
-        'agendado',
-        "Horário: $hora_entrega"
+        $id_pedido,
+        $item['id_produto'],
+        $item['quantidade'],
+        $item['preco_unitario'],
+        $item['subtotal'],
+        $observacao_item
     ]);
-    $agendamento_id = $conn->lastInsertId();
+}
+
     
     // Limpar carrinho da sessão
     unset($_SESSION['cart']);
@@ -138,9 +168,8 @@ try {
     echo json_encode([
         'success' => true,
         'message' => 'Pedido criado com sucesso!',
-        'pedido_id' => $pedido_id,
-        'agendamento_id' => $agendamento_id,
-        'redirect_url' => BASEURL . 'agenda_cliente.php?ver=' . $agendamento_id
+        'id_pedido' => $id_pedido,
+        'redirect_url' => BASEURL . 'minha_conta.php'
     ]);
     
 } catch (Exception $e) {

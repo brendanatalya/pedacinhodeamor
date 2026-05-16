@@ -31,23 +31,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $disponivel = isset($_POST['disponivel']) ? 1 : 0;
            $imagem = null;
 
-if (!empty($_FILES['imagem']['name'])) {
+            if (!empty($_FILES['imagem']['name'])) {
 
-    $pasta = '../../uploads/produtos/';
+            $pasta = '../../imagens/uploads/produtos/';
 
-    if (!file_exists($pasta)) {
-        mkdir($pasta, 0777, true);
-    }
+                if (!file_exists($pasta)) {
+                    mkdir($pasta, 0777, true);
+                }
 
-    $nomeImagem = time() . '_' . $_FILES['imagem']['name'];
+                $nomeImagem = time() . '_' . $_FILES['imagem']['name'];
 
-    $caminhoImagem = $pasta . $nomeImagem;
+                $caminhoImagem = $pasta . $nomeImagem;
 
-    move_uploaded_file($_FILES['imagem']['tmp_name'], $caminhoImagem);
+                move_uploaded_file($_FILES['imagem']['tmp_name'], $caminhoImagem);
 
-    $imagem = 'uploads/produtos/' . $nomeImagem;
-}
-            
+                $imagem = 'imagens/uploads/produtos/' . $nomeImagem;
+            }
+
             $stmt = $conn->prepare("
                 INSERT INTO produtos (nome, descricao, preco, tipo, disponivel, imagem_referencia)
                 VALUES (?, ?, ?, ?, ?, ?)
@@ -81,24 +81,39 @@ if (!empty($_FILES['imagem']['name'])) {
     $produtoAtual = $stmt->fetch(PDO::FETCH_ASSOC);
 
     $imagem = $produtoAtual['imagem_referencia'];
-
-    // Nova imagem
+            
     if (!empty($_FILES['imagem']['name'])) {
 
-        $pasta = '../../uploads/produtos/';
+    $pasta = $_SERVER['DOCUMENT_ROOT'] . '/pedacinhodeamor/imagens/uploads/produtos/';
 
-        if (!file_exists($pasta)) {
-            mkdir($pasta, 0777, true);
-        }
-
-        $nomeImagem = time() . '_' . $_FILES['imagem']['name'];
-
-        $caminhoImagem = $pasta . $nomeImagem;
-
-        move_uploaded_file($_FILES['imagem']['tmp_name'], $caminhoImagem);
-
-        $imagem = 'uploads/produtos/' . $nomeImagem;
+    // cria pasta se não existir
+    if (!file_exists($pasta)) {
+        mkdir($pasta, 0777, true);
     }
+
+    // remove imagem antiga
+    if (!empty($produtoAtual['imagem_referencia'])) {
+
+        $imagemAntiga = $_SERVER['DOCUMENT_ROOT'] . '/pedacinhodeamor/' . $produtoAtual['imagem_referencia'];
+
+        if (file_exists($imagemAntiga)) {
+            unlink($imagemAntiga);
+        }
+    }
+
+    // gera nome único
+    $nomeImagem = uniqid() . '_' . basename($_FILES['imagem']['name']);
+
+    // caminho completo
+    $caminhoImagem = $pasta . $nomeImagem;
+
+    // move upload
+    if (move_uploaded_file($_FILES['imagem']['tmp_name'], $caminhoImagem)) {
+
+        // salva no banco
+        $imagem = 'imagens/uploads/produtos/' . $nomeImagem;
+    }
+}
 
     $stmt = $conn->prepare("
         UPDATE produtos 
@@ -170,25 +185,9 @@ if (isset($_GET['editar'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciar Produtos - Admin</title>
     <link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <style>
-    .badge-disponivel { background-color: #28a745; }
-    .badge-indisponivel { background-color: #dc3545; }
-
-    .bg-pink{
-        background-color:#ff69b4;
-        color:white;
-    }
-
-    .table-produtos { font-size: 14px; }
-
-    .form-section {
-        background: white;
-        padding: 20px;
-        border-radius: 8px;
-        margin-bottom: 20px;
-    }
-</style>
+    <link rel="stylesheet" href="<?php echo BASEURL; ?>/css_pda/style_pda.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
 </head>
 <body style="background-color: #f8f9fa;">
     <div class="container-fluid p-4">
