@@ -36,30 +36,32 @@ window.addEventListener("scroll", function(){
 
 </script>
 
-<footer class="">
-    <div class="d-flex justify-content-between headerfooter">
-        <!--faixa de contato e info-->
-        <div class="row">
-            <!--foto e cnpj-->
-            <div>
-                <img src="imagens/logo.png" style="max-height: 100px; padding: 20px;" class="d-inline-block align-top img-fluid" alt="Logo">
-                <p>Levando um pouquinho de amor para cada momento</p>
-                <p>CNPJ: xxxxxxx</p>
-            </div>
-            
-            <!--contato-->
-            <div>
-                <p>CONTATO</p>
-                <p><i class="fa-brands fa-whatsapp"></i> (15) 12345-5678</p>
-            </div>
-            <!--contato-->
-            <div>
-                <p>REDES SOCIAIS</p>
-                <div class="redessociais">
-                    <p class=""><i class="fa-brands fa-instagram"></i></p>
-                </div>
-                <p class="redessociais"><i class="fa-brands fa-facebook"></i></p>
-            </div>
-        </div>
+<footer>
+  <div class="footer-container">
+
+    <div class="footer-logo">
+      <img src="imagens/logo.png" alt="Logo Pedacinho de Amor" style="max-width: 300px;">
+      <p>Confeitaria artesanal, produtos feitos com o carinho de quem ama o que faz.</p>
+      <p>CNPJ: 12.345.678/0001-90</p>
+
+      <div class="footer-icones">
+        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+      </div>
     </div>
+
+    <div class="footer-contato">
+      <h3>Contato</h3>
+      <p><i class="fa-solid fa-location-dot"></i> Rua das Flores, 123<br>Centro · São Paulo</p>
+      <p><i class="fa-solid fa-phone"></i> (11) 9 8765-4321</p>
+      <p><i class="fa-regular fa-envelope"></i> ola@pedacinhodeamor.com.br</p>
+    </div>
+
+  </div>
+
+  <div class="footer-copyright">
+    <p>© 2026 Pedacinho de Amor. Todos os direitos reservados.</p>
+    <p>Feito com <i class="fa-solid fa-heart" style="color: #8f1a5a;"></i> para adoçar seus momentos.</p>
+  </div>
 </footer>
+

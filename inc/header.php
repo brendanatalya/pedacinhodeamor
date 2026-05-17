@@ -56,7 +56,7 @@
                 <ul class="links">
 
                     <li>
-                        <a href="index.php">Inicio</a>
+                        <a href="index.php">Início</a>
                     </li>
 
                     <li>
