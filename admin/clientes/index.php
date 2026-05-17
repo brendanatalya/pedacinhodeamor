@@ -6,7 +6,7 @@ if (empty($_SESSION['logado']) || $_SESSION['tipo'] !== 'admin') {
     exit;
 }
 
-include '../../config.php';
+include dirname(__DIR__, 2) . '/config.php';
 require_once(DBAPI);
 
 $conn = open_database();

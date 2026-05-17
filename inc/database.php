@@ -11,30 +11,19 @@
     */
 
     function open_database() {
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $dbname = "pedacinhodeamor";
-        $charset = 'utf8';
-
-        // DSN (Data Source Name)
-        $dsn = "mysql:host=$servername;dbname=$dbname;charset=$charset";
-
-        // Opções de configuração do PDO
-        $options = [
-            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION, 
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,       // Retorna resultados como array associativo
-            PDO::ATTR_EMULATE_PREPARES   => false,                  // Usa prepared statements nativos
-        ];
-
-        try {
-            $conn = new PDO($dsn, $username, $password, $options);
-            return $conn;
-        } catch (PDOException $e) {
-            echo $e->getMessage();
-            return null;
-        }
+    $options = [
+        PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        PDO::ATTR_EMULATE_PREPARES   => false,
+    ];
+    try {
+        return new PDO(DB_DSN, DB_USER, DB_PASSWORD, $options);
+    } catch (PDOException $e) {
+        // nunca exponha a mensagem real em produção
+        error_log($e->getMessage());
+        die('Erro de conexão com o banco.');
     }
+}
 
     function close_database($conn) {
         try {

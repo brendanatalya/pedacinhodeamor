@@ -5,7 +5,7 @@ if (!isset($_SESSION)) {
 
 header('Content-Type: application/json; charset=utf-8');
 
-include '../../config.php';
+include dirname(__DIR__, 2) . '/config.php';
 require_once(DBAPI);
 
 // Verificar login admin
@@ -32,52 +32,54 @@ try {
     | PEDIDOS DE HOJE
     */
     $stmt = $conn->prepare("
-        SELECT COUNT(*) AS total
-        FROM itens_pedidos
-        WHERE DATE(data_pedido) = CURDATE()
+    SELECT COUNT(*) AS valor_total
+    FROM pedidos
+    WHERE data_pedido >= CURDATE()
+      AND data_pedido < CURDATE() + INTERVAL 1 DAY
     ");
+
 
     $stmt->execute();
 
-    $pedidos_hoje = $stmt->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
+    $pedidos_hoje = $stmt->fetch(PDO::FETCH_ASSOC)['valor_total'] ?? 0;
 
     /*
     | PEDIDOS PENDENTES
     */
     $stmt = $conn->prepare("
-        SELECT COUNT(*) AS total
+        SELECT COUNT(*) AS valor_total
         FROM pedidos
         WHERE status = 'pendente'
     ");
 
     $stmt->execute();
 
-    $pedidos_pendentes = $stmt->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
+    $pedidos_pendentes = $stmt->fetch(PDO::FETCH_ASSOC)['valor_total'] ?? 0;
 
     /*
     | TOTAL PRODUTOS
     */
     $stmt = $conn->prepare("
-        SELECT COUNT(*) AS total
+        SELECT COUNT(*) AS valor_total
         FROM produtos
     ");
 
     $stmt->execute();
 
-    $total_produtos = $stmt->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
+    $total_produtos = $stmt->fetch(PDO::FETCH_ASSOC)['valor_total'] ?? 0;
 
     /*
     | TOTAL CLIENTES
     */
     $stmt = $conn->prepare("
-        SELECT COUNT(*) AS total
+        SELECT COUNT(*) AS valor_total
         FROM usuarios
         WHERE tipo = 'cliente'
     ");
 
     $stmt->execute();
 
-    $total_clientes = $stmt->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
+    $total_clientes = $stmt->fetch(PDO::FETCH_ASSOC)['valor_total'] ?? 0;
 
     /*
     | ÚLTIMOS PEDIDOS
@@ -85,20 +87,28 @@ try {
     $stmt = $conn->prepare("
         SELECT
             p.id,
-            p.total,
+            p.valor_total,
             p.status,
             p.data_pedido,
             u.nome
         FROM pedidos p
         INNER JOIN usuarios u
-            ON p.usuario_id = u.id
+            ON p.id_cliente = u.id
         ORDER BY p.data_pedido DESC
         LIMIT 5
     ");
 
     $stmt->execute();
 
-    $ultimos_pedidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $ultimos_pedidos = array_map(function ($p) {
+        return [
+            'id'          => (int)$p['id'],
+            'total'       => number_format((float)$p['valor_total'], 2, '.', ''),
+            'status'      => $p['status'],
+            'data_pedido' => $p['data_pedido'],
+            'nome'        => $p['nome'],
+        ];
+    }, $stmt->fetchAll(PDO::FETCH_ASSOC));
 
     // Fechar conexão
     close_database($conn);
@@ -139,4 +149,6 @@ try {
 
     ], JSON_UNESCAPED_UNICODE);
 }
+
+
 ?>

@@ -55,9 +55,12 @@ try {
         $stmt->execute([$product_id]);
         $produto = $stmt->fetch(PDO::FETCH_ASSOC);
         
-        if (!$produto || !$produto['disponivel']) {
-            throw new Exception("O produto '{$produto['nome']}' não está mais disponível");
+        if (!$produto) {
+            throw new Exception("Produto #$product_id não encontrado.");
         }
+        if (!$produto['disponivel']) {
+            throw new Exception("O produto '{$produto['nome']}' não está disponível.");
+}
         
         $quantidade = max(1, intval($qty));
         $preco_unitario = floatval($produto['preco']);

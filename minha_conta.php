@@ -14,6 +14,7 @@ if (empty($_SESSION['logado'])) {
 $userId = intval($_SESSION['id'] ?? 0);
 $user = find('usuarios', $userId);
 
+
 if (!$user) {
     header('Location: index.php');
     exit;
@@ -26,6 +27,8 @@ $message = $_SESSION['message'] ?? '';
 $type = $_SESSION['type'] ?? '';
 
 unset($_SESSION['message'], $_SESSION['type']);
+
+
 ?>
 
 <!DOCTYPE html>

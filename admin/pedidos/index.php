@@ -6,7 +6,7 @@ if (empty($_SESSION['logado']) || $_SESSION['tipo'] !== 'admin') {
     exit;
 }
 
-include '../../config.php';
+include dirname(__DIR__, 2) . '/config.php';
 require_once(DBAPI);
 
 $mensagem = '';
@@ -95,7 +95,7 @@ if (isset($_GET['ver'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciar Pedidos - Admin</title>
     <link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="<?php echo BASEURL; ?>../css_pda/style_pda.css">
+    <link rel="stylesheet" href="<?php echo BASEURL; ?>../css_pda/style_pda.css">  
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
 </head>
