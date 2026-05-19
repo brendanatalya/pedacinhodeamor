@@ -1,8 +1,16 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+
+<meta charset="utf-8">
+
+
+	
+	<link rel="icon" type="image/x-icon" href="imagens/logo.ico">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Brenda e Iris">
     <title>Pedacinho de Amor</title>
 
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
@@ -10,69 +18,90 @@
     <link rel="stylesheet" href="css/style_pda.css">
 </head>
 <body>
-<header class="">
-        <!-- faixa rosa-->
-    <div class="d-flex justify-content-between" style="background-color: #fbb6cc; width: 100%;">
-            <!-- logo-->
-        <div class="d-flex justify-content-center align-items-center" style="background-color: #fbb6cc;">
-            <a class="navbar-brand d-flex justify-content-center col-md-9" href="index.php">
-                <img src="imagens/logo.png" style="max-height: 150px; padding: 20px;" class="d-inline-block align-top img-fluid" alt="">
-            </a>
-        </div>
-        <!-- botoes login e cesta-->
-        <div class=" d-flex justify-content-end" style="color: #5a3522;">
-            <!-- login-->
-            <div class="me-3 d-flex align-items-center text-center">
-                <a href="#">
-                    <div>
-                        <i class="fa-regular fa-circle-user botaonavbar"></i>
-                    </div>
-                    <div>
-                        <p>Login</p>
-                    </div>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedacinho de Amor</title>
+
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
+
+    <!-- font awesome -->
+    <link rel="stylesheet" href="css/awesome/all.min.css">
+
+    <!-- css -->
+    <link rel="stylesheet" href="css/style_pda.css">
+</head>
+
+<body>
+
+<header id="home">
+
+    <!-- NAVBAR -->
+    <nav id="nav">
+
+        <div class="nav-center">
+
+            <!-- LOGO -->
+            <div class="nav-header">
+
+                <a href="index.php">
+                    <img src="imagens/logo.png" class="logo" alt="">
                 </a>
+
+                <!-- BOTÃO MOBILE -->
+                <button class="nav-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+
             </div>
-            <!-- cesta-->
-            <div class="me-3 d-flex align-items-center text-center">
-                <a href="#">
-                    <div>
-                        <i class="fa-solid fa-basket-shopping botaonavbar"></i>
-                    </div>
-                    <div>
-                        <p>Cesta</p>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </div>
-        <!-- botoes-->
-    <nav class="navbar navbar-expand-lg navbar-light bg-lightw-100" style="background-color: #5a3522;">
-    
-        <div class="container-fluid justify-content-center">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
-                <ul class="navbar-nav nav-underline container-fluid row justify-content-between">
-                    <li class="nav-item col-2">
-                        <a class="nav-link" aria-current="page" href="index.php">Inicio</a>
+
+            <!-- LINKS -->
+            <div class="links-container">
+
+                <ul class="links">
+
+                    <li>
+                        <a href="index.php">Início</a>
                     </li>
-                    <li class="nav-item col-2">
-                        <a class="nav-link" href="sobrenos.php">Sobre nós</a>
+
+                    <li>
+                        <a href="sobrenos.php">Sobre nós</a>
                     </li>
-                    <li class="nav-item col-2">
-                        <a class="nav-link" href="doces.php">Doces</a>
+
+                    <li>
+                        <a href="doces.php">Doces</a>
                     </li>
-                    <li class="nav-item col-2">
-                        <a class="nav-link" href="salgados.php">Salgados</a>
+
+                    <li>
+                        <a href="salgados.php">Salgados</a>
                     </li>
-                    <li class="nav-item col-2">
-                        <a class="nav-link" href="personalizados.php">Personalizados</a>
+
+                    <li>
+                        <a href="personalizados.php">Personalizados</a>
                     </li>
-                
+
                 </ul>
+
+                <!-- ICONES -->
+                <div class="nav-icons">
+
+                    <a href="#">
+                        <i class="fa-regular fa-circle-user"></i>
+                    </a>
+
+                    <a href="#">
+                        <i class="fa-solid fa-basket-shopping"></i>
+                    </a>
+
+                </div>
+
             </div>
+
         </div>
 
     </nav>
+
 </header>
