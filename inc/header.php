@@ -1,8 +1,16 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+
+<meta charset="utf-8">
+
+
+	
+	<link rel="icon" type="image/x-icon" href="imagens/logo.ico">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Brenda e Iris">
     <title>Pedacinho de Amor</title>
 
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">

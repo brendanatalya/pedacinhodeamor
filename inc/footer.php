@@ -45,8 +45,8 @@ window.addEventListener("scroll", function(){
       <p>CNPJ: 12.345.678/0001-90</p>
 
       <div class="footer-icones">
-        <a href="#"><i class="fa-brands fa-instagram"></i></a>
-        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="https://www.instagram.com/_pedacinhodeamor_o?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+        <!-- <a href="#"><i class="fa-brands fa-facebook-f"></i></a> -->
       </div>
     </div>
 
