@@ -131,6 +131,7 @@ CREATE TABLE `usuarios` (
   `cpf` char(11) NOT NULL,
   `telefone` varchar(20) DEFAULT NULL,
   `endereco` varchar(255) DEFAULT NULL,
+  `foto` varchar(255) DEFAULT NULL,
   `senha` varchar(255) NOT NULL,
   `tipo` enum('admin','cliente') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -144,6 +145,14 @@ INSERT INTO `usuarios` (`id`, `nome`, `email`, `cpf`, `telefone`, `endereco`, `s
 (3, 'Íris Pires Do Nascimento', 'irispirees@gmail.com', '', NULL, '', '$2y$10$UfG2oscilVRXmCKie0ECwepLcsJnlni/IAABaurPozRlA6vdQ/H8y', 'cliente'),
 (7, 'Administrador', 'adminpda@gmail.com', '123123123', '1212222222', 'sao bento', '$2y$10$8JS374iUX6sfM/RWKasDR.XWg5WyGqA32tN96DVAjWu2SOPZvmtN6', 'admin');
 
+CREATE TABLE `estoque_ingredientes` (
+    'id'            INT            NOT NULL AUTO_INCREMENT,
+    'nome'          VARCHAR(100)   NOT NULL,
+    'unidade'       VARCHAR(20)    NOT NULL,
+    'qtd_estoque'   DECIMAL(10,3)  NOT NULL DEFAULT 0.000,
+    'qtd_minima'    DECIMAL(10,3)  NOT NULL DEFAULT 0.000,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 --
 -- Índices para tabelas despejadas
 --

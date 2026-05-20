@@ -27,7 +27,9 @@ if (!$user) {
 
 $name = trim($_POST['nome'] ?? '');
 $email = strtolower(trim($_POST['email'] ?? ''));
-$password = $_POST['senha'] ?? '';
+$senhaAtual = $_POST['senha_atual'] ?? '';
+$novaSenha = $_POST['nova_senha'] ?? '';
+$confirmarSenha = $_POST['confirmar_senha'] ?? '';
 $address = trim($_POST['endereco'] ?? '');
 
 if (!$name || !$email) {
@@ -111,6 +113,14 @@ try {
     if (!empty($updateData['foto'])) {
         $_SESSION['foto'] = $updateData['foto'];
     }
+    if ($_FILES['foto']['size'] > 5 * 1024 * 1024) {
+    throw new Exception('A imagem deve ter no máximo 5MB.');
+}
+$checkImage = getimagesize($_FILES['foto']['tmp_name']);
+
+if ($checkImage === false) {
+    throw new Exception('Arquivo inválido.');
+}
 
     $_SESSION['message'] = 'Dados da conta atualizados com sucesso.';
     $_SESSION['type'] = 'success';
@@ -118,6 +128,25 @@ try {
     $_SESSION['message'] = $e->getMessage();
     $_SESSION['type'] = 'danger';
 }
+if (!empty($novaSenha)) {
 
+    if (empty($senhaAtual)) {
+        throw new Exception('Digite sua senha atual.');
+    }
+
+    if (!password_verify($senhaAtual, $user['senha'])) {
+        throw new Exception('Senha atual incorreta.');
+    }
+
+    if ($novaSenha !== $confirmarSenha) {
+        throw new Exception('As novas senhas não coincidem.');
+    }
+
+    if (strlen($novaSenha) < 6) {
+        throw new Exception('A nova senha deve ter no mínimo 6 caracteres.');
+    }
+
+    $updateData['senha'] = password_hash($novaSenha, PASSWORD_DEFAULT);
+}
 header('Location: minha_conta.php');
 exit;
