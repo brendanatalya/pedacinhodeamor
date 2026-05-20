@@ -1,5 +1,8 @@
 <?php
-if (!isset($_SESSION)) session_start();
+if (!isset($_SESSION)) {
+    session_start();
+}
+
 require_once 'config.php';
 require_once ABSPATH . 'inc/database.php';
 
@@ -25,6 +28,7 @@ if (!$user) {
     exit;
 }
 
+// Recebe e limpa as entradas textuais
 $name = trim($_POST['nome'] ?? '');
 $email = strtolower(trim($_POST['email'] ?? ''));
 $senhaAtual = $_POST['senha_atual'] ?? '';
@@ -33,7 +37,7 @@ $confirmarSenha = $_POST['confirmar_senha'] ?? '';
 $address = trim($_POST['endereco'] ?? '');
 
 if (!$name || !$email) {
-    $_SESSION['message'] = 'Nome e email são obrigatórios.';
+    $_SESSION['message'] = 'Nome e e-mail são obrigatórios.';
     $_SESSION['type'] = 'danger';
     header('Location: minha_conta.php');
     exit;
@@ -45,52 +49,90 @@ try {
         throw new Exception('Não foi possível conectar ao banco de dados.');
     }
 
+    // Verifica se o e-mail modificado já pertence a outro usuário
     $check = $database->prepare('SELECT id FROM usuarios WHERE email = ? AND id <> ? LIMIT 1');
     $check->execute([$email, $userId]);
     if ($check->fetch()) {
-        throw new Exception('Este email já está em uso por outro usuário.');
+        throw new Exception('Este e-mail já está em uso por outro usuário.');
     }
 
+    // Mapeia colunas existentes na tabela
     $columns = [];
     $columnResult = $database->query('SHOW COLUMNS FROM usuarios');
     if ($columnResult) {
         $columns = $columnResult->fetchAll(PDO::FETCH_COLUMN);
     }
 
+    // Inicializa a array de dados básicos para atualização
     $updateData = [
-        'nome' => $name,
+        'nome'  => $name,
         'email' => $email,
     ];
 
-    if (!empty($password)) {
-        $updateData['senha'] = password_hash($password, PASSWORD_DEFAULT);
+    // Validação de alteração de Senha (movida para o local correto)
+    if (!empty($novaSenha)) {
+        if (empty($senhaAtual)) {
+            throw new Exception('Para cadastrar uma nova senha, você precisa digitar a Senha Atual.');
+        }
+
+        if (!password_verify($senhaAtual, $user['senha'])) {
+            throw new Exception('Senha atual incorreta.');
+        }
+
+        if ($novaSenha !== $confirmarSenha) {
+            throw new Exception('A nova senha e a confirmação não coincidem.');
+        }
+
+        if (strlen($novaSenha) < 6) {
+            throw new Exception('A nova senha deve ter no mínimo 6 caracteres.');
+        }
+
+        $updateData['senha'] = password_hash($novaSenha, PASSWORD_DEFAULT);
     }
 
+    // Se houver coluna de endereço, inclui na atualização
     if (in_array('endereco', $columns)) {
         $updateData['endereco'] = $address;
     }
 
-    if (in_array('foto', $columns) && !empty($_FILES['foto']['name']) && $_FILES['foto']['error'] === UPLOAD_ERR_OK) {
+    // VALIDAÇÃO E UPLOAD DA FOTO (Segura contra erros de path vazio)
+    if (in_array('foto', $columns) && isset($_FILES['foto']) && $_FILES['foto']['error'] === UPLOAD_ERR_OK) {
+        
+        // 1. Valida tamanho da imagem (Máximo 5MB)
+        if ($_FILES['foto']['size'] > 5 * 1024 * 1024) {
+            throw new Exception('A imagem deve ter no máximo 5MB.');
+        }
+
+        // 2. Valida se o arquivo é genuinamente uma imagem através da leitura de bytes
+        $checkImage = getimagesize($_FILES['foto']['tmp_name']);
+        if ($checkImage === false) {
+            throw new Exception('O arquivo enviado não é uma imagem válida.');
+        }
+
+        // 3. Valida extensões permitidas
         $allowed = ['jpg', 'jpeg', 'png', 'gif'];
         $fileName = $_FILES['foto']['name'];
         $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
 
         if (!in_array($fileExt, $allowed)) {
-            throw new Exception('Formato de imagem inválido. Use jpg, png ou gif.');
+            throw new Exception('Formato de imagem inválido. Use apenas JPG, JPEG, PNG ou GIF.');
         }
 
+        // 4. Cria diretório caso ele não exista
         $uploadDir = 'imagens/usuarios';
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0755, true);
         }
 
+        // 5. Define nome único e move o arquivo
         $newFileName = 'perfil_' . $userId . '_' . time() . '.' . $fileExt;
         $destination = $uploadDir . '/' . $newFileName;
 
         if (!move_uploaded_file($_FILES['foto']['tmp_name'], $destination)) {
-            throw new Exception('Falha ao enviar a foto de perfil.');
+            throw new Exception('Falha ao salvar a foto de perfil no servidor.');
         }
 
+        // 6. Apaga a foto antiga se ela existir para não acumular lixo no servidor
         if (!empty($user['foto'])) {
             $oldPath = $user['foto'];
             if (!file_exists($oldPath)) {
@@ -101,52 +143,25 @@ try {
             }
         }
 
+        // Adiciona a nova foto para ser salva no banco
         $updateData['foto'] = $destination;
+        $_SESSION['foto'] = $destination;
     }
 
+    // Executa a query de atualização utilizando a função global do seu projeto
     update('usuarios', $userId, $updateData);
+    
+    // Atualiza os dados essenciais na sessão corrente
     $_SESSION['nome'] = $name;
     $_SESSION['email'] = $email;
-    if (!empty($password)) {
-        // Mantém o login atual, não força logout
-    }
-    if (!empty($updateData['foto'])) {
-        $_SESSION['foto'] = $updateData['foto'];
-    }
-    if ($_FILES['foto']['size'] > 5 * 1024 * 1024) {
-    throw new Exception('A imagem deve ter no máximo 5MB.');
-}
-$checkImage = getimagesize($_FILES['foto']['tmp_name']);
-
-if ($checkImage === false) {
-    throw new Exception('Arquivo inválido.');
-}
 
     $_SESSION['message'] = 'Dados da conta atualizados com sucesso.';
     $_SESSION['type'] = 'success';
+
 } catch (Exception $e) {
     $_SESSION['message'] = $e->getMessage();
     $_SESSION['type'] = 'danger';
 }
-if (!empty($novaSenha)) {
 
-    if (empty($senhaAtual)) {
-        throw new Exception('Digite sua senha atual.');
-    }
-
-    if (!password_verify($senhaAtual, $user['senha'])) {
-        throw new Exception('Senha atual incorreta.');
-    }
-
-    if ($novaSenha !== $confirmarSenha) {
-        throw new Exception('As novas senhas não coincidem.');
-    }
-
-    if (strlen($novaSenha) < 6) {
-        throw new Exception('A nova senha deve ter no mínimo 6 caracteres.');
-    }
-
-    $updateData['senha'] = password_hash($novaSenha, PASSWORD_DEFAULT);
-}
 header('Location: minha_conta.php');
 exit;

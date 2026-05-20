@@ -77,7 +77,7 @@ $redirect_uri = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL);
 
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card card-custom">
+            <div class="">
                 <form action="add_carrinho.php" method="POST">
                     <input type="hidden" name="product_id" value="personalizado">
                     <input type="hidden" name="redirect" value="<?php echo htmlspecialchars($redirect_uri, ENT_QUOTES, 'UTF-8'); ?>">
@@ -114,7 +114,8 @@ $redirect_uri = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL);
                         <textarea class="form-control custom-input" id="detalhes" name="detalhes" rows="4" placeholder="Descreva cores, decorações, restrições alimentares, etc."></textarea>
                     </div>
 
-                    <button type="submit" class="btn btn-custom-submit" <?php echo !$usuario_logado ? 'disabled' : ''; ?>>
+                    <button type="submit" class="btn btn-custom-submit" <?php echo !$usuario_logado ? 'disabled' : ''; ?>
+                        <?php echo html_entity_decode('Adicionar ao Carrinho'); ?>>
                         <i class="fas fa-shopping-cart me-2"></i>
                         Adicionar ao Carrinho
                     </button>

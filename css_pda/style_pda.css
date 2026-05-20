@@ -1641,87 +1641,195 @@ h2, .section-title {
 
 
 
-        /*PARTE DO MINHA CONTA*/
-        .conta-card{
-    background:#fff;
-    border-radius:25px;
-    overflow:hidden;
-    box-shadow:0 10px 35px rgba(0,0,0,.08);
+        /* --- PARTE DO MINHA CONTA --- */
+
+body.bg-confeitaria {
+    background-color: #fcf8f5; /* Creme bem suave */
+    background-image: radial-gradient(#f3e1ec 1.5px, transparent 1.5px), radial-gradient(#f3e1ec 1.5px, #fcf8f5 1.5px);
+    background-size: 40px 40px;
+    background-position: 0 0, 20px 20px;
+    font-family: 'Poppins', sans-serif;
+    color: #4a3b32; /* Marrom escuro suave em vez de preto puro */
 }
 
-.conta-header{
-    background:linear-gradient(135deg,#ff4d6d,#ff758f);
-    color:#fff;
-    padding:40px;
-    text-align:center;
+.title-confeitaria {
+    font-family: 'Comfortaa', cursive;
+    color: #d65a8a; /* Rosa Confeitaria */
+    font-weight: 700;
 }
 
-.avatar,
-.avatar-img{
-    width:120px;
-    height:120px;
-    border-radius:50%;
-    object-fit:cover;
-    border:4px solid #fff;
-    margin:auto;
+.conta-card {
+    background: #ffffff;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid #f0e2eb;
 }
 
-.avatar{
-    background:rgba(255,255,255,.2);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:40px;
+.conta-header {
+    background: linear-gradient(135deg, #fbebf3 0%, #fae3d9 100%);
+    padding: 40px 20px;
+    border-bottom: 3px dashed #ffffff;
 }
 
-.conta-body{
-    background:#fff;
+/* --- DESIGN DO AVATAR / PREVIEW DA FOTO --- */
+.avatar-container {
+    display: flex;
+    justify-content: center;
 }
 
-.info-box{
-    background:#f8f9fa;
-    padding:15px;
-    border-radius:12px;
-    font-size:15px;
+.avatar-wrapper {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+    border: 4px solid #ffffff;
+    box-shadow: 0 4px 10px rgba(214, 90, 138, 0.15);
+    transition: transform 0.2s ease;
 }
 
-.form-control{
-    border-radius:12px;
-    padding:12px;
+.avatar-wrapper:hover {
+    transform: scale(1.03);
 }
 
-.btn-salvar{
-    background:#ff4d6d;
-    color:#fff;
-    border:none;
-    border-radius:12px;
-    padding:12px 20px;
+.avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
-.btn-salvar:hover{
-    background:#e63b5d;
-    color:#fff;
-}
-/*AINDA DENTRO DO MINHA CONTA TA A PARTE DOS PEDIDOS*/
-.pedidos-box{
-    background:#fff;
-    padding:25px;
-    border-radius:20px;
-    box-shadow:0 5px 20px rgba(0,0,0,.06);
+.bg-cream { background-color: #fff5f8; }
+.text-pink { color: #d65a8a; }
+
+.avatar-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.2s ease;
 }
 
-.pedido-item{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:15px;
-    border-radius:15px;
-    background:#fafafa;
-    margin-bottom:12px;
-    transition:.2s;
+.avatar-wrapper:hover class="avatar-overlay" {
+    opacity: 1;
 }
 
-.pedido-item:hover{
-    transform:translateY(-2px);
-    background:#fff0f3;
+/* --- ELEMENTOS DE FORMULÁRIO --- */
+.section-title {
+    font-family: 'Comfortaa', cursive;
+    color: #845c47;
+    font-weight: 700;
+}
+
+.form-label-custom {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #6e5546;
+    margin-bottom: 6px;
+}
+
+.form-control-custom {
+    border: 2px solid #eee5ec;
+    border-radius: 10px;
+    padding: 10px 15px;
+    color: #4a3b32;
+    transition: all 0.2s ease;
+}
+
+.form-control-custom:focus {
+    border-color: #d65a8a;
+    box-shadow: 0 0 0 0.25rem rgba(214, 90, 138, 0.15);
+    background-color: #fffbfe;
+}
+
+.custom-hr {
+    border-top: 2px dotted #e6d5e1;
+    opacity: 1;
+}
+
+/* --- BOTÕES PERSONALIZADOS --- */
+.btn-custom-primary {
+    background-color: #d65a8a;
+    border: none;
+    color: white;
+    padding: 10px 24px;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+.btn-custom-primary:hover {
+    background-color: #bf4977;
+    color: white;
+    box-shadow: 0 4px 12px rgba(214, 90, 138, 0.3);
+}
+
+.btn-custom-secondary {
+    background-color: #f5f0f3;
+    color: #6e5546;
+    border: 1px solid #e1d5de;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-weight: 600;
+}
+.btn-custom-secondary:hover {
+    background-color: #ebe2e9;
+    color: #4a3b32;
+}
+
+.btn-custom-danger {
+    background-color: #fae3d9;
+    color: #c94a4a;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-weight: 600;
+}
+.btn-custom-danger:hover {
+    background-color: #f7cebe;
+    color: #a83232;
+}
+
+/* --- HISTÓRICO DE PEDIDOS --- */
+.table-custom {
+    border-collapse: separate;
+    border-spacing: 0 8px;
+}
+.table-custom thead th {
+    border-bottom: none;
+    color: #845c47;
+    font-weight: 600;
+    padding: 12px;
+}
+.table-custom tbody tr {
+    background-color: #fdfbfd;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+    transition: transform 0.15s ease;
+}
+.table-custom tbody tr:hover {
+    transform: translateY(-2px);
+    background-color: #ffffff;
+}
+.table-custom tbody td {
+    padding: 14px 12px;
+    border-top: 1px solid #f3edf2;
+    border-bottom: 1px solid #f3edf2;
+}
+.table-custom tbody td:first-child {
+    border-left: 1px solid #f3edf2;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+.table-custom tbody td:last-child {
+    border-right: 1px solid #f3edf2;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.bg-light-pink {
+    background-color: #fff5f8;
+    border: 1px dashed #f2d4e0;
 }
