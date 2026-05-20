@@ -21,7 +21,7 @@ $product_id = $_POST['product_id'] ?? null;
 $quantity   = max(1, intval($_POST['quantity'] ?? 1));
 $redirect   = $_POST['redirect'] ?? BASEURL . 'paginas/doces.php';
 
-// ─── PRODUTO PERSONALIZADO ───────────────────────────────────────────────────
+// PRODUTO PERSONALIZADO
 if ($product_id === 'personalizado') {
     $tipo     = trim($_POST['tipo']     ?? '');
     $tema     = trim($_POST['tema']     ?? '');
@@ -50,12 +50,12 @@ if ($product_id === 'personalizado') {
         'added_at'  => date('Y-m-d H:i:s'),
     ];
 
-    $_SESSION['cart_message'] = 'Produto personalizado adicionado ao carrinho!';
+    $_SESSION['cart_message'] = 'Produto personalizado adicionado ao    !';
     header('Location: ' . $redirect);
     exit;
 }
 
-// ─── PRODUTO NORMAL (ID numérico) ────────────────────────────────────────────
+//PRODUTO NORMAL (ID numérico)
 $product_id = intval($product_id);
 
 if ($product_id <= 0) {

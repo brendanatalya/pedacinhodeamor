@@ -172,6 +172,8 @@ ALTER TABLE `pedidos`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_cliente` (`id_cliente`);
 
+ALTER TABLE pedidos MODIFY COLUMN data_entrega DATETIME NOT NULL;
+
 --
 -- Índices de tabela `produtos`
 --
