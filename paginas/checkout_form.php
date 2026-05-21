@@ -20,9 +20,16 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 close_database($conn);
 
 // Buscar produtos do carrinho
+$tipo_entrega = $_POST['tipo_entrega'] ?? 'retirada';
 $cart_items = [];
 $total = 0;
-$frete = 12.28;
+$frete = 0;
+
+
+if ($tipo_entrega === 'entrega') {
+    $frete = 12.28;
+}
+   $total_com_frete = $total + $frete;
 
 foreach ($cart as $product_id => $qty) {
     $produto = find_product(intval($product_id));
@@ -37,9 +44,11 @@ foreach ($cart as $product_id => $qty) {
     $total += $produto['subtotal'];
 }
 
-$total_com_frete = $total + $frete;
 
-if (empty($cart_items)) {
+ 
+    
+
+else if(empty($cart_items)) {
     header('Location: ' . BASEURL . 'paginas/carrinho.php');
     exit;
 }

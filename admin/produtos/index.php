@@ -88,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         elseif ($acao === 'vincular_ingrediente') {
             $stmt = $conn->prepare("
-                INSERT INTO produto_ingrediente (id_produto, id_ingrediente, qtd_necessaria)
+                INSERT INTO estoque_ingrediente (id, nome,unidade, qtd_estoque, qtd_minima)
                 VALUES (?, ?, ?)
                 ON DUPLICATE KEY UPDATE qtd_necessaria = VALUES(qtd_necessaria)
             ");
@@ -98,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         elseif ($acao === 'remover_ingrediente') {
-            $stmt = $conn->prepare("DELETE FROM produto_ingrediente WHERE id_produto = ? AND id_ingrediente = ?");
+            $stmt = $conn->prepare("DELETE FROM estoque_ingrediente WHERE id_produto = ? AND id_ingrediente = ?");
             $stmt->execute([$_POST['id_produto'], $_POST['id_ingrediente']]);
             $mensagem = 'Ingrediente removido!';
             $tipo_mensagem = 'success';
@@ -137,7 +137,7 @@ if (isset($_GET['editar'])) {
 
         $stmt = $conn->prepare("
             SELECT pi.*, ei.nome, ei.unidade
-            FROM produto_ingrediente pi
+            FROM estoque_ingrediente
             INNER JOIN estoque_ingredientes ei ON pi.id_ingrediente = ei.id
             WHERE pi.id_produto = ?
         ");

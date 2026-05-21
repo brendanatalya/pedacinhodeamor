@@ -145,7 +145,7 @@ INSERT INTO `usuarios` (`id`, `nome`, `email`, `cpf`, `telefone`, `endereco`, `s
 (3, 'Íris Pires Do Nascimento', 'irispirees@gmail.com', '', NULL, '', '$2y$10$UfG2oscilVRXmCKie0ECwepLcsJnlni/IAABaurPozRlA6vdQ/H8y', 'cliente'),
 (7, 'Administrador', 'adminpda@gmail.com', '123123123', '1212222222', 'sao bento', '$2y$10$8JS374iUX6sfM/RWKasDR.XWg5WyGqA32tN96DVAjWu2SOPZvmtN6', 'admin');
 
-CREATE TABLE `estoque_ingredientes` (
+CREATE TABLE 'estoque_ingredientes' (
     'id'            INT            NOT NULL AUTO_INCREMENT,
     'nome'          VARCHAR(100)   NOT NULL,
     'unidade'       VARCHAR(20)    NOT NULL,
