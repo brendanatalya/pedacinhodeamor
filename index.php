@@ -58,6 +58,36 @@ if(!isset($_SESSION)) session_start();
         </ul>
     </nav>
 </header>
+<main>
+    <section class="index-bemvindo">
+        <!-- primeira foto do site -->
+        <div class="bemvindo-fundo"></div>
+
+
+        <div class="conteudobemvindo">
+            <p class="subtitulo">Confeitaria artesanal</p>
+            <h1 class="bemvindo-titulo">
+                Feito com<br>
+                <em>amor e cuidado</em>
+            </h1>
+            <p class="bemvindo-subttitulo">
+                Cada doce é um pedaço de aconchego<br>
+                e carinho que buscamos levar até você.
+            </p>
+            <div class="bemvindo-botoes">
+                <a href="doces.php" class="botaoclaro">Encomendar</a>
+                <a href="sobrenos.html" class="botaoescuro">Sobre nós</a>
+            </div>
+        </div>
+
+        <!-- linha bonitinha -->
+        <div class="detalhe">
+            <span></span>
+        </div>
+    </section>
+
+
+</main>
 
     <h1>Bem-vindo ao Pedacinho de Amor</h1>
     <p>Neste site voce vera inumeros doces e pratos de dar agua na boca, 
