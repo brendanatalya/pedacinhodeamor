@@ -1878,6 +1878,11 @@ body.bg-confeitaria {
     margin-bottom: 24px;
 }
 
+.bemvindo-titulo em {
+    font-style: italic;
+    color: #f4c0d1;
+}
+
 .bemvindo-subtitulo {
     font-family: Arial, Helvetica, sans-serif; /*mudar*/
     font-size: clamp(14px, 2vw, 17px);

@@ -70,7 +70,7 @@ if(!isset($_SESSION)) session_start();
                 Feito com<br>
                 <em>amor e cuidado</em>
             </h1>
-            <p class="bemvindo-subttitulo">
+            <p class="bemvindo-subtitulo">
                 Cada doce é um pedaço de aconchego<br>
                 e carinho que buscamos levar até você.
             </p>
