@@ -63,12 +63,12 @@
 
 
                 <div class="conteudobemvindo">
-                    <p class="subtitulo">Confeitaria artesanal</p>
+                    <p class="bemvindo-subtitulo">Confeitaria artesanal</p>
                     <h1 class="bemvindo-titulo">
                         Feito com<br>
                         <em>amor e cuidado</em>
                     </h1>
-                    <p class="bemvindo-subtitulo">
+                    <p class="bemvindo-subtitulo2">
                         Cada doce é um pedaço de aconchego<br>
                         e carinho que buscamos levar até você.
                     </p>
@@ -84,26 +84,39 @@
                 </div>
             </section>
 
-            <section>
+            <section class="carrossel">
                 <!--carrossel-->
-
-                <div class="carousel" id="carousel" tabindex="0">
-                    <div class="slides">
-                        <img src="imagens/doce1.webp" alt="Imagem 1">
-                        <img src="imagens/doce2.webp" alt="Imagem 2">
-                        <img src="imagens/doce3.webp" alt="Imagem 3">
+                <div class="container-xxl">
+                    <div style="margin-bottom: 40px;">
+                        <p class="carrossel-subtitulo">Ficou com curiosidade?</p>
+                        <h2 class="carrossel-titulo">Tenha um <em>gostinho</em> do que temos</h2>
                     </div>
-                    <button class="prev">&#10094;</button>
-                    <button class="next">&#10095;</button>
-                    <div class="dots"></div>
+                    <div class="carrosselofc" id="carrossel" tabindex="0">
+                        <div class="slides">
+                            <img src="imagens/doce1.webp" alt="Imagem 1">
+                            <img src="imagens/doce2.webp" alt="Imagem 2">
+                            <img src="imagens/doce3.webp" alt="Imagem 3">
+                        </div>
+                        <button class="prev carrossel-btnprev">
+                            <i class="fa-solid fa-angle-left"></i>
+                        </button>
+                        <button class="next carrossel-btnnext">
+                            <i class="fa-solid fa-angle-right"></i>
+                        </button>
+                        <div class="dots"></div>
+                    </div>
                 </div>
             </section>
 
-            <section class="popular-products py-5">
+            <section class="cards py-5">
                 <!-- PArte dos carss fofinhos rs -->
-                <div class="container position-relative">
-                    <h2 class="text-center mb-4">Esses fazem sucesso por aqui!</h2>
-                    <div class="product-slider-wrapper">
+                <div class="container-xxl">
+                    <div style="margin-bottom: 40px;">
+                        <p class="carrossel-subtitulo">algo</p>
+                        <h2 class="carrossel-titulo">Esses fazem <em>sucesso</em> por aqui!</h2>
+                    </div>
+                    
+                    <div class="cardsprodutos">
                         <div class="product-slider">
                             
                             <div class="product-card" style="background-image: url('imagens/doce1.webp');">
@@ -147,8 +160,8 @@
                     </div>
                     <div class="feedbacks-wrapper">
                         <button class="feedback-arrow prev-feedback" type="button" aria-label="Feedback anterior">&#10094;</button>
-                        <div class="feedbacks-carousel-track">
-                            <div class="feedbacks-carousel" id="feedbacksCarousel">
+                        <div class="feedbacks-carrossel-track">
+                            <div class="feedbacks-carrossel" id="feedbackscarrossel">
                                 <div class="feedback-card feedback-card-large">
                                     <div class="feedback-user">
                                         <svg class="feedback-avatar" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="23" cy="23" r="23" fill="#e8d5f0"/><circle cx="23" cy="18" r="8" fill="#a855f7"/><ellipse cx="23" cy="36" rx="13" ry="8" fill="#a855f7"/></svg>
@@ -208,7 +221,7 @@
         
         <script>
             // --- CARROSSEL PRINCIPAL ---
-            const carousel = document.getElementById('carousel');
+            const carrossel = document.getElementById('carrossel');
             const slides = document.querySelector('.slides');
             const images = document.querySelectorAll('.slides img');
             const prevBtn = document.querySelector('.prev');
@@ -242,14 +255,14 @@
             function startAutoplay() { intervalId = setInterval(() => showImage(index + 1), 4000); }
             function stopAutoplay() { clearInterval(intervalId); }
 
-            carousel.addEventListener('mouseenter', stopAutoplay);
-            carousel.addEventListener('mouseleave', startAutoplay);
+            carrossel.addEventListener('mouseenter', stopAutoplay);
+            carrossel.addEventListener('mouseleave', startAutoplay);
             showImage(0);
             startAutoplay();
 
             // --- FEEDBACKS (2 cards visíveis, avança 1 por vez) ---
-            const feedbacksCarousel = document.getElementById('feedbacksCarousel');
-            const feedbackCards     = feedbacksCarousel ? feedbacksCarousel.querySelectorAll('.feedback-card') : [];
+            const feedbackscarrossel = document.getElementById('feedbackscarrossel');
+            const feedbackCards     = feedbackscarrossel ? feedbackscarrossel.querySelectorAll('.feedback-card') : [];
             const prevFeedbackBtn   = document.querySelector('.prev-feedback');
             const nextFeedbackBtn   = document.querySelector('.next-feedback');
 
@@ -267,10 +280,10 @@
 
             function showFeedback(i) {
                 feedbackIndex = Math.max(0, Math.min(i, maxIndex()));
-                const track = feedbacksCarousel.parentElement;
+                const track = feedbackscarrossel.parentElement;
                 const trackWidth = track ? track.clientWidth : 0;
                 const offset = feedbackIndex * trackWidth;
-                feedbacksCarousel.style.transform = `translateX(-${offset}px)`;
+                feedbackscarrossel.style.transform = `translateX(-${offset}px)`;
             }
 
             function resetFeedbackAutoplay() {
