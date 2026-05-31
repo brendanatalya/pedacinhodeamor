@@ -108,46 +108,107 @@
                 </div>
             </section>
 
+            <div style="height: 100px; background: linear-gradient(to bottom, #fdf2f4, #fde0e5);">
+            </div>
+
             <section class="cards py-5">
                 <!-- PArte dos carss fofinhos rs -->
-                <div class="container-xxl">
-                    <div style="margin-bottom: 40px;">
-                        <p class="carrossel-subtitulo">algo</p>
+                <div class="container-xxl" style="overflow: visible;">
+                    <div>
+                        <p class="carrossel-subtitulo">Campeões de Vendas</p>
                         <h2 class="carrossel-titulo">Esses fazem <em>sucesso</em> por aqui!</h2>
                     </div>
                     
-                    <div class="cardsprodutos">
-                        <div class="product-slider">
-                            
-                            <div class="product-card" style="background-image: url('imagens/doce1.webp');">
-                            
-                                <div class="product-card-body">
-                                    <span>Croissants</span>
-                                    <button class="btn btn-confira" src="./paginas/doces.php">Confira</button>
-                                </div>
-                            </div>
-                            
-                            <div class="product-card" style="background-image: url('imagens/doce2.webp');">
-                                <div class="product-card-body">
-                                    <span>Cookies</span>
-                                    <button class="btn btn-confira">Confira</button>
-                                </div>
-                            </div>
+
+                    <div class="product-slider">
                         
-                            <div class="product-card" style="background-image: url('imagens/doce2.webp');">
-                                <div class="product-card-body">
-                                    <span>Bolos &nbsp;</span>
-                                    <button class="btn btn-confira">Confira</button>
+                        <div class="product-card" style="background-image: url('imagens/doce1.webp');">
+                            <div class="product-card-body">
+                                <span>Croissants</span>
+                                <button class="btn-confira" src="./paginas/doces.php">Confira</button>
+                            </div>
+                        </div>
+                        
+                        <div class="product-card" style="background-image: url('imagens/doce2.webp');">
+                            <div class="product-card-body">
+                                <span>Cookies</span>
+                                <button class="btn-confira">Confira</button>
+                            </div>
+                        </div>
+                    
+                        <div class="product-card" style="background-image: url('imagens/doce2.webp');">
+                            <div class="product-card-body">
+                                <span>Bolos</span>
+                                <button class="btn-confira">Confira</button>
+                            </div>
+                        </div>
+                    
+                        <div class="product-card" style="background-image: url('imagens/doce3.webp');">
+                            <div class="product-card-body">
+                                <span>Brownies</span>
+                                <button class="btn-confira">Confira</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </section>
+
+
+            <section class="cards py-5">
+                <!-- PArte dos carss fofinhos rs -->
+                
+                <div class="container-xxl" style="overflow: visible;">
+                    <div>
+                        <p class="carrossel-subtitulo">Campeões de Vendas</p>
+                        <h2 class="carrossel-titulo">Esses fazem <em>sucesso</em> por aqui!</h2>
+                    </div>
+                    
+
+                    <div id="cards" class="carousel slide product-slider">
+                        
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div class="product-card" style="background-image: url('imagens/doce1.webp');">
+                                    <div class="product-card-body">
+                                        <span>Croissants</span>
+                                        <button class="btn-confira" src="./paginas/doces.php">Confira</button>
+                                    </div>
                                 </div>
                             </div>
-                        
-                            <div class="product-card" style="background-image: url('imagens/doce3.webp');">
-                                <div class="product-card-body">
-                                    <span>Brownies</span>
-                                    <button class="btn btn-confira">Confira</button>
+                            
+                            <div class="carousel-item">
+                                <div class="product-card" style="background-image: url('imagens/doce2.webp');">
+                                    <div class="product-card-body">
+                                        <span>Cookies</span>
+                                        <button class="btn-confira">Confira</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="product-card" style="background-image: url('imagens/doce2.webp');">
+                                    <div class="product-card-body">
+                                        <span>Bolos</span>
+                                        <button class="btn-confira">Confira</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="product-card" style="background-image: url('imagens/doce3.webp');">
+                                    <div class="product-card-body">
+                                        <span>Brownies</span>
+                                        <button class="btn-confira">Confira</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+
+                        <button class="prev carrossel-btnprev carousel-control-prev" type="button" data-bs-target="#cards" data-bs-slide="prev">
+                            <i class="fa-solid fa-angle-left"></i>
+                        </button>
+                        <button class="next carrossel-btnnext carousel-control-next" type="button" data-bs-target="#cards" data-bs-slide="next">
+                            <i class="fa-solid fa-angle-right"></i>
+                        </button>
                     </div>
                 </div>
             </section>
