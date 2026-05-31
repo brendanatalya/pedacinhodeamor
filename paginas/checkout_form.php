@@ -43,12 +43,8 @@ foreach ($cart as $product_id => $qty) {
     $cart_items[] = $produto;
     $total += $produto['subtotal'];
 }
-
-
  
-    
-
-else if(empty($cart_items)) {
+if(empty($cart_items)) {
     header('Location: ' . BASEURL . 'paginas/carrinho.php');
     exit;
 }
@@ -86,15 +82,8 @@ else if(empty($cart_items)) {
                         <div class="form-group mb-3">
                             <label class="form-label">Tipo de Entrega *</label>
                             <div class="btn-group w-100" role="group">
-                                <input type="radio" class="btn-check" name="tipo_entrega" id="retirada" value="retirada" checked>
-                                <label class="btn btn-outline-primary" for="retirada">
-                                    <i class="fas fa-shopping-bag"></i> Retirada na Loja
-                                </label>
-
-                                <input type="radio" class="btn-check" name="tipo_entrega" id="entrega" value="entrega">
-                                <label class="btn btn-outline-primary" for="entrega">
-                                    <i class="fas fa-truck"></i> Entrega
-                                </label>
+                                <<input type="hidden" name="tipo_entrega" value="retirada">
+                                <p class="text-muted"><i class="fas fa-shopping-bag"></i> Retirada na loja</p>
                             </div>
                         </div>
 

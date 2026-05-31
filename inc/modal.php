@@ -1,4 +1,102 @@
-<!-- MODAL -->
+<!-- MODAL AVALIAÇÃO -->
+<?php if (!empty($_SESSION['pedido_avaliar_id'])): ?>
+<div class="modal fade" id="modalAvaliacao" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+<div class="modal-dialog modal-dialog-centered">
+<div class="modal-content p-0 border-0">
+<div class="auth-card">
+    <div class="auth-header">
+        <h2>⭐ AVALIAR PEDIDO</h2>
+    </div>
+    <div class="auth-body">
+        <p class="text-center text-muted mb-4">
+            Seu pedido <strong>#<?php echo $_SESSION['pedido_avaliar_id']; ?></strong> foi entregue!<br>
+            Conta pra gente como foi?
+        </p>
+        <form id="formAvaliacao" method="POST" action="paginas/avaliar.php?pedido=<?php echo $_SESSION['pedido_avaliar_id']; ?>">
+
+            <p style="font-weight:600; margin-bottom:4px;">🎂 Qualidade do Produto</p>
+            <div class="star-group" id="grupo-produto" style="display:flex;flex-direction:row-reverse;justify-content:center;gap:6px;margin-bottom:16px;">
+                <?php for ($i = 5; $i >= 1; $i--): ?>
+                    <input type="radio" name="nota_produto" id="mprod<?php echo $i; ?>" value="<?php echo $i; ?>" style="display:none;">
+                    <label for="mprod<?php echo $i; ?>" style="font-size:2rem;color:#ddd;cursor:pointer;" onmouseover="hoverStars('grupo-produto',<?php echo $i; ?>)" onmouseout="resetStars('grupo-produto')" onclick="selectStars('grupo-produto',<?php echo $i; ?>)">★</label>
+                <?php endfor; ?>
+            </div>
+
+            <p style="font-weight:600; margin-bottom:4px;">💝 Atendimento</p>
+            <div class="star-group" id="grupo-atend" style="display:flex;flex-direction:row-reverse;justify-content:center;gap:6px;margin-bottom:16px;">
+                <?php for ($i = 5; $i >= 1; $i--): ?>
+                    <input type="radio" name="nota_atend" id="matend<?php echo $i; ?>" value="<?php echo $i; ?>" style="display:none;">
+                    <label for="matend<?php echo $i; ?>" style="font-size:2rem;color:#ddd;cursor:pointer;" onmouseover="hoverStars('grupo-atend',<?php echo $i; ?>)" onmouseout="resetStars('grupo-atend')" onclick="selectStars('grupo-atend',<?php echo $i; ?>)">★</label>
+                <?php endfor; ?>
+            </div>
+
+            <textarea name="comentario" class="form-control mb-3" rows="2" placeholder="Comentário (opcional)..."></textarea>
+
+            <div id="erroAvaliacao" style="color:#ff4d4d;font-size:0.9rem;text-align:center;display:none;margin-bottom:10px;"></div>
+
+            <div style="display:flex;gap:8px;">
+                <button type="button" class="btn-enviar" style="background:#aaa;flex:1;" onclick="fecharModalAvaliacao()">Agora não</button>
+                <button type="submit" class="btn-enviar" style="flex:2;">Enviar ⭐</button>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+// Abre o modal automaticamente ao carregar a página
+document.addEventListener('DOMContentLoaded', function() {
+    var modal = new bootstrap.Modal(document.getElementById('modalAvaliacao'));
+    modal.show();
+});
+
+function hoverStars(grupoId, nota) {
+    const labels = document.getElementById(grupoId).querySelectorAll('label');
+    labels.forEach((label, i) => {
+        // labels estão em ordem reversa (5,4,3,2,1), index 0 = estrela 5
+        label.style.color = (5 - i) <= nota ? '#f5a623' : '#ddd';
+    });
+}
+
+function resetStars(grupoId) {
+    const grupo = document.getElementById(grupoId);
+    const checked = grupo.querySelector('input:checked');
+    const labels = grupo.querySelectorAll('label');
+    const notaSelecionada = checked ? parseInt(checked.value) : 0;
+    labels.forEach((label, i) => {
+        label.style.color = (5 - i) <= notaSelecionada ? '#f5a623' : '#ddd';
+    });
+}
+
+function selectStars(grupoId, nota) {
+    const grupo = document.getElementById(grupoId);
+    const prefix = grupoId === 'grupo-produto' ? 'mprod' : 'matend';
+    document.getElementById(prefix + nota).checked = true;
+    resetStars(grupoId);
+}
+
+function fecharModalAvaliacao() {
+    // Fecha o modal e marca sessão para não abrir de novo nessa visita
+    fetch('paginas/avaliar_dispensar.php?pedido=<?php echo $_SESSION['pedido_avaliar_id']; ?>');
+    bootstrap.Modal.getInstance(document.getElementById('modalAvaliacao')).hide();
+}
+
+document.getElementById('formAvaliacao').addEventListener('submit', function(e) {
+    const prod = document.querySelector('input[name="nota_produto"]:checked');
+    const atend = document.querySelector('input[name="nota_atend"]:checked');
+    const erro = document.getElementById('erroAvaliacao');
+    if (!prod || !atend) {
+        e.preventDefault();
+        erro.textContent = 'Por favor, selecione uma nota em cada item.';
+        erro.style.display = 'block';
+    }
+});
+</script>
+<?php endif; ?>
+
+<!-- MODAL LOGIN -->
 <div class="modal fade" id="modalLogin" tabindex="-1">
 <div class="modal-dialog modal-dialog-centered">
 <div class="modal-content p-0 border-0">

@@ -1,4 +1,29 @@
-<?php if(!isset($_SESSION)) session_start(); ?>
+<?php 
+if(!isset($_SESSION)) session_start();
+
+// Verificar se cliente tem pedido entregue sem avaliação
+if (!empty($_SESSION['logado']) && $_SESSION['tipo'] === 'cliente') {
+    require_once 'config.php';
+    require_once ABSPATH . 'inc/database.php';
+
+    $conn = open_database();
+    $stmt = $conn->prepare("
+        SELECT p.id 
+        FROM pedidos p
+        LEFT JOIN avaliacoes a ON a.id_pedido = p.id
+        WHERE p.id_cliente = ? 
+          AND p.status = 'entregue'
+          AND a.id IS NULL
+        ORDER BY p.data_pedido DESC
+        LIMIT 1
+    ");
+    $stmt->execute([$_SESSION['id']]);
+    $pendente = $stmt->fetch();
+    close_database($conn);
+
+    $_SESSION['pedido_avaliar_id'] = $pendente ? $pendente['id'] : null;
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
@@ -107,10 +132,9 @@
                         <div class="product-slider">
                             
                             <div class="product-card" style="background-image: url('imagens/doce1.webp');">
-                            
                                 <div class="product-card-body">
                                     <span>Croissants</span>
-                                    <button class="btn btn-confira" src="./paginas/doces.php">Confira</button>
+                                    <button class="btn btn-confira" src="paginas/doces.php">Confira</button>
                                 </div>
                             </div>
                             

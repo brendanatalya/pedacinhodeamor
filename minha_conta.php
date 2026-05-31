@@ -163,6 +163,7 @@ unset($_SESSION['message'], $_SESSION['type']);
                                             <th>Data</th>
                                             <th>Status</th>
                                             <th class="text-end">Total</th>
+                                            <th>Ação</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -181,6 +182,21 @@ unset($_SESSION['message'], $_SESSION['type']);
                                                     </span>
                                                 </td>
                                                 <td class="text-end fw-bold text-dark">R$ <?php echo number_format($pedido['valor_total'], 2, ',', '.'); ?></td>
+                                                <td>
+                                                    <?php
+                                                        $stmtAval = $database->prepare("SELECT id FROM avaliacoes WHERE id_pedido = ?");
+                                                        $stmtAval->execute([$pedido['id']]);
+                                                        $ja_avaliou = $stmtAval->fetch();
+
+                                                        if ($pedido['status'] === 'entregue' && !$ja_avaliou): ?>
+                                                            <a href="paginas/avaliar.php?pedido=<?= $pedido['id'] ?>
+                                                            " class="btn btn-sm btn-warning">
+                                                                ⭐ Avaliar
+                                                            </a>
+                                                        <?php elseif ($pedido['status'] === 'entregue' && $ja_avaliou): ?>
+                                                            <span class="text-success small">✔ Avaliado</span>
+                                                        <?php endif; ?>
+                                                </td>
                                             </tr>
                                         <?php endforeach; ?>
                                     </tbody>

@@ -1974,3 +1974,19 @@ body.bg-confeitaria {
     background: rgba(255,255,255,0.15);
     border-color: #fff;
 }
+
+
+
+/* Modal de Avaliação */
+#modalAvaliacao .auth-card {
+    overflow: visible;
+}
+
+#modalAvaliacao .auth-body {
+    overflow-y: auto;
+    max-height: 70vh;
+}
+
+#modalAvaliacao #formAvaliacao {
+    display: block !important;
+}

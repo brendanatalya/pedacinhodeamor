@@ -81,26 +81,6 @@ try {
         $total += $subtotal;
     }
     
-    // Adicionar frete (opcional)
-    $frete = isset($_POST['frete']) ? floatval($_POST['frete']) : 0;
-    $total += $frete;
-    
-   $stmt = $conn->prepare("
-    INSERT INTO pedidos (
-        id_cliente,
-        valor_total,
-        status,
-        observacao,
-        tipo,
-        qtd_itens,
-        data_pedido,
-        data_entrega,
-        forma_pagamento,
-        tipo_entrega,
-        hora_entrega
-    )
-    VALUES (?, ?, ?, ?, ?, ?, NOW(), ?, ?, ?, ?)
-");
 $stmt->execute([
     $usuario_id,
     $total,
@@ -161,7 +141,31 @@ $stmt->execute([
     ]);
 }
 
-    
+    // Para cada item do pedido, descontar do estoque
+foreach ($itens_pedido as $item) {
+    $stmt = $conn->prepare("
+        SELECT pi.id_ingrediente, pi.qtd_necessaria
+        FROM produto_ingrediente pi
+        WHERE pi.id_produto = ?
+    ");
+    $stmt->execute([$item['id_produto']]);
+    $ingredientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach ($ingredientes as $ing) {
+        $qtd_total = $ing['qtd_necessaria'] * $item['quantidade'];
+
+        $stmt2 = $conn->prepare("
+            UPDATE estoque_ingredientes
+            SET qtd_estoque = qtd_estoque - ?
+            WHERE id = ? AND qtd_estoque >= ?
+        ");
+        $stmt2->execute([$qtd_total, $ing['id_ingrediente'], $qtd_total]);
+
+        if ($stmt2->rowCount() === 0) {
+            throw new Exception("Estoque insuficiente para um dos ingredientes.");
+        }
+    }
+}
     // Limpar carrinho da sessão
     unset($_SESSION['cart']);
     

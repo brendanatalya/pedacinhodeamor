@@ -8,7 +8,6 @@ $cart = $_SESSION['cart'] ?? [];
 $availableItems = [];
 $unavailableItems = [];
 $total = 0;
-$frete = 12.28;
 
 foreach ($cart as $product_id => $qty) {
     $produto = find_product(intval($product_id));
@@ -149,13 +148,9 @@ unset($_SESSION['cart_message']);
                         <span>Subtotal</span>
                         <span>R$ <?php echo number_format($total, 2, ',', '.'); ?></span>
                     </div>
-                    <div class="summary-row">
-                        <span>Frete</span>
-                        <span>R$ <?php echo $total > 0 ? number_format($frete, 2, ',', '.') : '0,00'; ?></span>
-                    </div>
                     <div class="summary-row total">
                         <span>Total</span>
-                        <span>R$ <?php echo number_format($total > 0 ? $total + $frete : 0, 2, ',', '.'); ?></span>
+                        <span>R$ <?php echo number_format($total > 0 ? $total : 0, 2, ',', '.'); ?></span>
                     </div>
                     <button class="checkout-btn" onclick="checkout()" <?php echo (!$usuario_logado || $total <= 0) ? 'disabled' : ''; ?>>Finalizar Compra</button>
                     <?php if (!$usuario_logado): ?>
