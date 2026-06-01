@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 17/05/2026 às 00:56
+-- Tempo de geração: 01/06/2026 às 14:36
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -20,6 +20,45 @@ SET time_zone = "+00:00";
 --
 -- Banco de dados: `pedacinhodeamor`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `avaliacoes`
+--
+
+CREATE TABLE `avaliacoes` (
+  `id` int(11) NOT NULL,
+  `id_pedido` int(11) NOT NULL,
+  `id_cliente` int(11) NOT NULL,
+  `nota_produto` tinyint(1) NOT NULL,
+  `nota_atend` tinyint(1) NOT NULL,
+  `comentario` text DEFAULT NULL,
+  `criado_em` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `estoque_ingredientes`
+--
+
+CREATE TABLE `estoque_ingredientes` (
+  `id` int(11) NOT NULL,
+  `nome` varchar(100) NOT NULL,
+  `unidade` varchar(20) NOT NULL,
+  `qtd_estoque` decimal(10,3) NOT NULL DEFAULT 0.000,
+  `qtd_minima` decimal(10,3) NOT NULL DEFAULT 0.000
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `estoque_ingredientes`
+--
+
+INSERT INTO `estoque_ingredientes` (`id`, `nome`, `unidade`, `qtd_estoque`, `qtd_minima`) VALUES
+(1, 'Farinha de Trigo', 'kg', 10.000, 4.000),
+(2, 'Açúcar', 'kg', 12.000, 3.000),
+(3, 'Leite em Pó', 'kg', 4.000, 2.000);
 
 -- --------------------------------------------------------
 
@@ -77,21 +116,7 @@ CREATE TABLE `pedidos` (
 --
 
 INSERT INTO `pedidos` (`id`, `id_cliente`, `valor_total`, `status`, `observacao`, `tipo`, `imagem_referencia`, `qtd_itens`, `data_pedido`, `data_entrega`, `forma_pagamento`, `tipo_entrega`, `hora_entrega`) VALUES
-(1, 1, 24.28, 'pendente', '', '', NULL, 0, '2026-05-16 19:10:51', '2026-05-27 00:00:00', NULL, 'retirada', '12:12:00'),
-(2, 1, 24.28, 'pendente', '', '', NULL, 0, '2026-05-16 19:11:39', '2026-05-28 00:00:00', NULL, 'retirada', '11:11:00'),
-(3, 1, 24.28, 'pendente', '', '', NULL, 0, '2026-05-16 19:12:14', '2026-05-29 00:00:00', NULL, 'retirada', '11:01:00'),
-(4, 1, 24.28, 'pendente', '', '', NULL, 0, '2026-05-16 19:12:57', '2026-05-28 00:00:00', NULL, 'retirada', '11:01:00'),
-(5, 1, 24.28, 'pendente', '', '', NULL, 0, '2026-05-16 19:15:50', '2026-05-29 00:00:00', NULL, 'retirada', '11:01:00'),
-(6, 1, 24.28, 'pendente', '', '', NULL, 0, '2026-05-16 19:15:55', '2026-05-29 00:00:00', NULL, 'retirada', '11:01:00'),
-(7, 1, 24.28, 'pendente', '', '', NULL, 0, '2026-05-16 19:17:14', '2026-05-22 00:00:00', NULL, 'retirada', '11:01:00'),
-(8, 1, 24.28, 'pendente', '', '', NULL, 0, '2026-05-16 19:18:24', '2026-05-29 00:00:00', NULL, 'retirada', '11:01:00'),
-(9, 1, 24.28, 'pendente', '', 'personalizado', NULL, 1, '2026-05-16 19:22:27', '2026-05-29 00:00:00', 'WhatsApp', 'retirada', '11:01:00'),
-(10, 1, 24.28, 'pendente', '', 'personalizado', NULL, 1, '2026-05-16 19:24:18', '2026-05-22 00:00:00', 'WhatsApp', 'retirada', '11:01:00'),
-(11, 1, 24.28, 'pendente', '', 'personalizado', NULL, 1, '2026-05-16 19:25:33', '2026-05-28 00:00:00', 'WhatsApp', 'retirada', '11:01:00'),
-(12, 1, 24.50, 'pendente', '', 'normal', NULL, 1, '2026-05-16 19:28:53', '2026-05-29 00:00:00', 'WhatsApp', 'entrega', '13:43:00'),
-(13, 1, 24.28, 'pendente', '', 'normal', NULL, 1, '2026-05-16 19:30:13', '2026-05-28 00:00:00', 'WhatsApp', 'entrega', '19:32:00'),
-(14, 1, 24.50, 'em_preparacao', '', 'normal', NULL, 1, '2026-05-16 19:33:29', '2026-06-06 00:00:00', 'WhatsApp', 'entrega', '14:04:00'),
-(15, 1, 36.28, 'entregue', '', 'normal', NULL, 1, '2026-05-16 19:34:28', '2026-05-22 00:00:00', 'WhatsApp', 'entrega', '21:34:00');
+(1, 1, 24.00, 'pendente', NULL, 'normal', NULL, 2, '2026-06-01 08:56:54', '2026-06-01 13:56:30', NULL, 'retirada', '00:00:00');
 
 -- --------------------------------------------------------
 
@@ -108,15 +133,6 @@ CREATE TABLE `produtos` (
   `tipo` enum('salgado','doce','bolo','personalizado') NOT NULL,
   `imagem_referencia` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Despejando dados para a tabela `produtos`
---
-
-INSERT INTO `produtos` (`id`, `nome`, `descricao`, `preco`, `disponivel`, `tipo`, `imagem_referencia`) VALUES
-(1, 'camafeu', 'bla bla', 12.00, 1, 'doce', 'imagens/uploads/produtos/6a08d5e796714_23.jpg'),
-(4, 'dasd', 'sda', 12.22, 1, 'bolo', 'imagens/uploads/produtos/6a08d5e0869f5_25.jpg'),
-(7, 'das', 'sda', 232.31, 1, 'bolo', 'imagens/uploads/produtos/1778963920_22.jpg');
 
 -- --------------------------------------------------------
 
@@ -140,75 +156,56 @@ CREATE TABLE `usuarios` (
 -- Despejando dados para a tabela `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `nome`, `email`, `cpf`, `telefone`, `endereco`, `senha`, `tipo`) VALUES
-(1, 'joao', 'joao@gmail.com', '12312312312', '1212222222', 'rua x, bairro y]', '$2y$10$o5hpmtInSFO6jwhz1WaVDevx4UOr.bFJac21xSZ9cXcLZDjWyUcWu', 'cliente'),
-(3, 'Íris Pires Do Nascimento', 'irispirees@gmail.com', '', NULL, '', '$2y$10$UfG2oscilVRXmCKie0ECwepLcsJnlni/IAABaurPozRlA6vdQ/H8y', 'cliente'),
-(7, 'Administrador', 'adminpda@gmail.com', '123123123', '1212222222', 'sao bento', '$2y$10$8JS374iUX6sfM/RWKasDR.XWg5WyGqA32tN96DVAjWu2SOPZvmtN6', 'admin');
+INSERT INTO `usuarios` (`id`, `nome`, `email`, `cpf`, `telefone`, `endereco`, `foto`, `senha`, `tipo`) VALUES
+(1, 'joao', 'joao@gmail.com', '12312312312', '1212222222', 'rua x, bairro y]', NULL, '$2y$10$o5hpmtInSFO6jwhz1WaVDevx4UOr.bFJac21xSZ9cXcLZDjWyUcWu', 'cliente'),
+(3, 'Íris Pires Do Nascimento', 'irispirees@gmail.com', '', NULL, '', NULL, '$2y$10$UfG2oscilVRXmCKie0ECwepLcsJnlni/IAABaurPozRlA6vdQ/H8y', 'cliente'),
+(7, 'Administrador', 'adminpda@gmail.com', '123123123', '1212222222', 'sao bento', NULL, '$2y$10$8JS374iUX6sfM/RWKasDR.XWg5WyGqA32tN96DVAjWu2SOPZvmtN6', 'admin');
 
-CREATE TABLE 'estoque_ingredientes' (
-    'id'            INT            NOT NULL AUTO_INCREMENT,
-    'nome'          VARCHAR(100)   NOT NULL,
-    'unidade'       VARCHAR(20)    NOT NULL,
-    'qtd_estoque'   DECIMAL(10,3)  NOT NULL DEFAULT 0.000,
-    'qtd_minima'    DECIMAL(10,3)  NOT NULL DEFAULT 0.000,
-    PRIMARY KEY (id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 --
 -- Índices para tabelas despejadas
 --
 
 --
--- Índices de tabela `itens_pedido`
+-- Índices de tabela `avaliacoes`
 --
-ALTER TABLE `itens_pedido`
+ALTER TABLE `avaliacoes`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `id_pedido` (`id_pedido`),
-  ADD KEY `id_produto` (`id_produto`);
+  ADD UNIQUE KEY `uq_avaliacao_pedido` (`id_pedido`),
+  ADD KEY `fk_aval_cliente` (`id_cliente`);
+
+--
+-- Índices de tabela `estoque_ingredientes`
+--
+ALTER TABLE `estoque_ingredientes`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Índices de tabela `pedidos`
 --
 ALTER TABLE `pedidos`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_cliente` (`id_cliente`);
-
-ALTER TABLE pedidos MODIFY COLUMN data_entrega DATETIME NOT NULL;
-
---
--- Índices de tabela `produtos`
---
-ALTER TABLE `produtos`
   ADD PRIMARY KEY (`id`);
 
 --
 -- Índices de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `email` (`email`),
-  ADD UNIQUE KEY `cpf` (`cpf`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT para tabelas despejadas
 --
 
 --
--- AUTO_INCREMENT de tabela `itens_pedido`
+-- AUTO_INCREMENT de tabela `avaliacoes`
 --
-ALTER TABLE `itens_pedido`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+ALTER TABLE `avaliacoes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de tabela `pedidos`
+-- AUTO_INCREMENT de tabela `estoque_ingredientes`
 --
-ALTER TABLE `pedidos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
-
---
--- AUTO_INCREMENT de tabela `produtos`
---
-ALTER TABLE `produtos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+ALTER TABLE `estoque_ingredientes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios`
@@ -221,17 +218,11 @@ ALTER TABLE `usuarios`
 --
 
 --
--- Restrições para tabelas `itens_pedido`
+-- Restrições para tabelas `avaliacoes`
 --
-ALTER TABLE `itens_pedido`
-  ADD CONSTRAINT `itens_pedido_ibfk_1` FOREIGN KEY (`id_pedido`) REFERENCES `pedidos` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `itens_pedido_ibfk_2` FOREIGN KEY (`id_produto`) REFERENCES `produtos` (`id`);
-
---
--- Restrições para tabelas `pedidos`
---
-ALTER TABLE `pedidos`
-  ADD CONSTRAINT `pedidos_ibfk_1` FOREIGN KEY (`id_cliente`) REFERENCES `usuarios` (`id`);
+ALTER TABLE `avaliacoes`
+  ADD CONSTRAINT `fk_aval_cliente` FOREIGN KEY (`id_cliente`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_aval_pedido` FOREIGN KEY (`id_pedido`) REFERENCES `pedidos` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
