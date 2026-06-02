@@ -2061,7 +2061,6 @@ body.bg-confeitaria {
   display: flex;
   justify-content: center;
   gap: 1.5rem;
-  overflow-x: auto;
   overflow-y: visible;
   scroll-behavior: smooth;
   padding: 40px 40px 90px;
@@ -2164,32 +2163,59 @@ body.bg-confeitaria {
     transform: translateY(-1px);
 }
 
-/*arrumando o bootstrap*/
+/*arrumando o bootstrap do carrossel*/
 
-.carousel-inner {
-  width: auto;
+#cards {
+    padding: 20px 0 40px;
 }
 
-.carousel-item {
-  width: auto;
+#cards .carousel-inner {
+    height: 420px;
+    overflow: visible;
 }
 
-@media (max-width: 768px) {
+#cards .carousel-item {
+  height: 420px;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.4s ease !important;
+}
+
+#cards .carousel-item.active {
+    opacity: 1;
+}
+
+#cards .product-card {
+    width: 75vw;
+    max-width: 300px;
+    height: 380px;
+    min-width: unset;
+}
+
+
+@media (max-width: 1100px) {
     .cards {
         padding: 40px 0;
     }
 
-    .product-slider {
-        overflow-x: auto;
-        scroll-snap-type: x mandatory; /* ← efeito de "encaixe" suave */
-        -webkit-overflow-scrolling: touch;
-        gap: 1rem;
-        justify-content: flex-start; /* ← alinha da esquerda */
-        cursor: grab;
+    /* faz o carousel respeitar a altura do card */
+    #cardsCarousel .carousel-inner {
+        height: 380px;
     }
 
-    .product-card {
-        
+    #cardsCarousel .carousel-item {
+        height: 380px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #cardsCarousel .product-card {
+        width: 80vw;
+        height: 360px;
+        min-width: unset;
     }
 
     .btn-confira {

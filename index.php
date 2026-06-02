@@ -112,7 +112,7 @@
             </div>
 
             <section class="cards py-5">
-                <!-- PArte dos carss fofinhos rs -->
+                <!-- PArte dos carss fofinhos rs para desktop aff -->
                 <div class="container-xxl" style="overflow: visible;">
                     <div>
                         <p class="carrossel-subtitulo">Campeões de Vendas</p>
@@ -120,7 +120,7 @@
                     </div>
                     
 
-                    <div class="product-slider">
+                    <div class="product-slider d-none d-lg-flex">
                         
                         <div class="product-card" style="background-image: url('imagens/doce1.webp');">
                             <div class="product-card-body">
@@ -150,22 +150,9 @@
                             </div>
                         </div>
                     </div>
-                    
-                </div>
-            </section>
 
-
-            <section class="cards py-5">
-                <!-- PArte dos carss fofinhos rs -->
-                
-                <div class="container-xxl" style="overflow: visible;">
-                    <div>
-                        <p class="carrossel-subtitulo">Campeões de Vendas</p>
-                        <h2 class="carrossel-titulo">Esses fazem <em>sucesso</em> por aqui!</h2>
-                    </div>
-                    
-
-                    <div id="cards" class="carousel slide product-slider">
+                    <!-- carrossel aparece em tela pequena -->
+                    <div id="cards" class="carousel slide product-slider d-lg-none">
                         
                         <div class="carousel-inner">
                             <div class="carousel-item active">
@@ -210,6 +197,22 @@
                             <i class="fa-solid fa-angle-right"></i>
                         </button>
                     </div>
+                    
+                </div>
+            </section>
+
+
+            <section class="cards py-5">
+                <!-- PArte dos carss fofinhos rs -->
+                
+                <div class="container-xxl" style="overflow: visible;">
+                    <div>
+                        <p class="carrossel-subtitulo">Campeões de Vendas</p>
+                        <h2 class="carrossel-titulo">Esses fazem <em>sucesso</em> por aqui!</h2>
+                    </div>
+                    
+
+                    
                 </div>
             </section>
             
