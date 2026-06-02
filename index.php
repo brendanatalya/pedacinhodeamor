@@ -108,8 +108,8 @@
                 </div>
             </section>
 
-            <div style="height: 100px; background: linear-gradient(to bottom, #fdf2f4, #fde0e5);">
-            </div>
+            <!-- transição de cor-->
+            <div style="height: 100px; background: linear-gradient(to bottom, #fdf2f4, #fde0e5);"></div>
 
             <section class="cards py-5">
                 <!-- PArte dos carss fofinhos rs para desktop aff -->
@@ -152,7 +152,7 @@
                     </div>
 
                     <!-- carrossel aparece em tela pequena -->
-                    <div id="cards" class="carousel slide product-slider d-lg-none">
+                    <div id="cards" class="carousel slide product-slider d-lg-none" data-bs-ride="false">
                         
                         <div class="carousel-inner">
                             <div class="carousel-item active">
@@ -190,10 +190,10 @@
                             </div>
                         </div>
 
-                        <button class="prev carrossel-btnprev carousel-control-prev" type="button" data-bs-target="#cards" data-bs-slide="prev">
+                        <button class="carrossel-btnprev carousel-control-prev" type="button" data-bs-target="#cards" data-bs-slide="prev">
                             <i class="fa-solid fa-angle-left"></i>
                         </button>
-                        <button class="next carrossel-btnnext carousel-control-next" type="button" data-bs-target="#cards" data-bs-slide="next">
+                        <button class="carrossel-btnnext carousel-control-next" type="button" data-bs-target="#cards" data-bs-slide="next">
                             <i class="fa-solid fa-angle-right"></i>
                         </button>
                     </div>
@@ -201,27 +201,17 @@
                 </div>
             </section>
 
+            <!-- transição de cor-->
+            <div style="height: 100px; background: linear-gradient(to top, #fdf2f4, #fde0e5);"></div>
 
-            <section class="cards py-5">
-                <!-- PArte dos carss fofinhos rs -->
-                
-                <div class="container-xxl" style="overflow: visible;">
-                    <div>
-                        <p class="carrossel-subtitulo">Campeões de Vendas</p>
-                        <h2 class="carrossel-titulo">Esses fazem <em>sucesso</em> por aqui!</h2>
-                    </div>
-                    
-
-                    
-                </div>
-            </section>
-            
-            <section class="feedbacks-section py-5">
+            <section class="feedbacks py-5">
                 <!-- feedbacks que so da b.o-->
-                <div class="container">
-                    <div class="feedbacks-header">
-                        <h2>Eles amam! Feedbacks que amamos!</h2>
+                <div class="container-xxl">
+                    <div style="margin-bottom: 40px;">
+                        <p class="carrossel-subtitulo">Depoimentos</p>
+                        <h2 class="carrossel-titulo">O que nossos <em>clientes</em> dizem sobre nós?</h2>
                     </div>
+
                     <div class="feedbacks-wrapper">
                         <button class="feedback-arrow prev-feedback" type="button" aria-label="Feedback anterior">&#10094;</button>
                         <div class="feedbacks-carrossel-track">

@@ -26,28 +26,7 @@
 
 /* PARTE DOS FEEDBACKS ----  ARRUMAR ESSAS BOSTA DE BOTAO PRA NAO FICAR EM CIMA DO TEXTO ESSAS BOSTA */
 /* ── FEEDBACKS ─────────────────────────────────────────────── */
-.feedbacks-section {
-  background-color: #f5f5f5;
-  padding: 3rem 0;
-}
 
-.feedbacks-header {
-  background: #ffb3d9;
-  padding: 1.5rem 2rem;
-  border-radius: 22px;
-  margin: 0 auto 2rem;
-  max-width: 700px;
-  text-align: center;
-}
-
-.feedbacks-header h2 {
-  margin: 0;
-  font-size: 1.6rem;
-  font-weight: 900;
-  color: #4b2f25;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
 
 /* Wrapper: setas ficam nas laterais, trilho no meio */
 .feedbacks-wrapper {
@@ -57,20 +36,20 @@
   width: 100%;
   display: flex;
   align-items: center;
-  gap: 0;
+  gap: 12;
   box-sizing: border-box;
   padding: 0 1rem;
 }
 
 /* Trilho com overflow hidden */
-.feedbacks-carousel-track {
+.feedbacks-carrossel-track {
   overflow: hidden;
   flex: 1;
   min-width: 0; /* evita overflow no flex */
 }
 
 /* Faixa interna — gap entre cards */
-.feedbacks-carousel {
+.feedbacks-carrossel {
   display: flex;
   flex-wrap: nowrap;
   gap: 0;
@@ -80,15 +59,28 @@
 
 /* Cada card: 50% menos metade do gap → 2 visíveis sem corte */
 .feedback-card {
-  background: white;
-  padding: 1.75rem;
-  border-radius: 20px;
   box-shadow: 0 8px 24px rgba(0,0,0,0.08);
   border-left: 4px solid #a855f7;
-  flex: 0 0 100%;
   min-width: 100%;
   max-width: 100%;
   box-sizing: border-box;
+   
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: #fff;
+    border-radius: 20px;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    z-index: 5;
+    font-weight: 500;
+    font-size: 11px;
+    padding: 1.75rem;
+    letter-spacing: 2px;
+    transition: opacity 0.3s ease, transform 0.3s ease, background 0.3s ease;
+    background: #c0395b0a;
+    border-color: #813044;
+    flex: 0 0 100%
 }
 
 .feedback-card-large {
@@ -2166,25 +2158,22 @@ body.bg-confeitaria {
 /*arrumando o bootstrap do carrossel*/
 
 #cards {
-    padding: 20px 0 40px;
+    padding: 20px 0 60px;
+    overflow: hidden;
 }
 
 #cards .carousel-inner {
     height: 420px;
-    overflow: visible;
+    overflow: hidden;
 }
 
 #cards .carousel-item {
-  height: 420px;
+    height: 420px;
     display: flex !important;
     align-items: center;
     justify-content: center;
-    opacity: 0;
-    transition: opacity 0.4s ease !important;
-}
-
-#cards .carousel-item.active {
-    opacity: 1;
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+    /*esse cubic-bezier é oque da aquele movimento bonito*/
 }
 
 #cards .product-card {
@@ -2223,4 +2212,10 @@ body.bg-confeitaria {
     }
 }
 
+/*feedbacks*/
+
+.feedbacks {
+    padding: 80px;
+    background-color: #fdf2f4;
+}
 
