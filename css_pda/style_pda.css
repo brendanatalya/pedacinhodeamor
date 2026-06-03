@@ -36,9 +36,9 @@
   width: 100%;
   display: flex;
   align-items: center;
-  gap: 12;
   box-sizing: border-box;
   padding: 0 1rem;
+  height: auto;
 }
 
 /* Trilho com overflow hidden */
@@ -46,6 +46,8 @@
   overflow: hidden;
   flex: 1;
   min-width: 0; /* evita overflow no flex */
+  padding-bottom: 2rem; /* espaço para as setas */
+  margin: 0 1rem; /* compensa o padding do wrapper */
 }
 
 /* Faixa interna — gap entre cards */
@@ -59,7 +61,6 @@
 
 /* Cada card: 50% menos metade do gap → 2 visíveis sem corte */
 .feedback-card {
-  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
   border-left: 4px solid #a855f7;
   min-width: 100%;
   max-width: 100%;
@@ -71,13 +72,11 @@
     border-radius: 20px;
     align-items: center;
     justify-content: center;
-    font-size: 14px;
     z-index: 5;
     font-weight: 500;
     font-size: 11px;
     padding: 1.75rem;
     letter-spacing: 2px;
-    transition: opacity 0.3s ease, transform 0.3s ease, background 0.3s ease;
     background: #c0395b0a;
     border-color: #813044;
     flex: 0 0 100%
