@@ -23,13 +23,6 @@ close_database($conn);
 $tipo_entrega = $_POST['tipo_entrega'] ?? 'retirada';
 $cart_items = [];
 $total = 0;
-$frete = 0;
-
-
-if ($tipo_entrega === 'entrega') {
-    $frete = 12.28;
-}
-   $total_com_frete = $total + $frete;
 
 foreach ($cart as $product_id => $qty) {
     $produto = find_product(intval($product_id));
@@ -202,15 +195,11 @@ if(empty($cart_items)) {
                                 <span>R$ <?php echo number_format($total, 2, ',', '.'); ?></span>
                             </div>
 
-                            <div class="resumo-item" id="frete-item">
-                                <span>Frete/Taxa:</span>
-                                <span id="frete-value">R$ <?php echo number_format($frete, 2, ',', '.'); ?></span>
-                                <input type="hidden" name="frete" value="<?php echo $frete; ?>">
-                            </div>
+            
 
                             <div class="resumo-item total">
                                 <span>Total:</span>
-                                <span>R$ <?php echo number_format($total_com_frete, 2, ',', '.'); ?></span>
+                                <span>R$ <?php echo number_format($total, 2, ',', '.'); ?></span>
                             </div>
                         </div>
 
@@ -286,8 +275,8 @@ document.getElementById('checkoutForm').addEventListener('submit', async (e) => 
         const telefone = `<?php echo htmlspecialchars($usuario['telefone']); ?>`;
         const endereco = `<?php echo htmlspecialchars($usuario['endereco']); ?>`;
 
-        const tipoEntrega =
-            document.querySelector('input[name="tipo_entrega"]:checked').value;
+        const tipoEntregaInput = document.querySelector('input[name="tipo_entrega"]');
+        const tipoEntrega = tipoEntregaInput ? tipoEntregaInput.value : 'retirada';
 
         const dataEntrega =
             document.querySelector('input[name="data_entrega"]').value;
@@ -328,7 +317,6 @@ document.getElementById('checkoutForm').addEventListener('submit', async (e) => 
 
         <?php endforeach; ?>
 
-        mensagem += `\n💰 *TOTAL:* R$ <?php echo number_format($total_com_frete, 2, ',', '.'); ?>\n\n`;
 
         if (observacoes) {
             mensagem += `📝 *Observações:* ${observacoes}\n\n`;
