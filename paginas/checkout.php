@@ -1,4 +1,4 @@
-<?php 
+<?php
 if (!isset($_SESSION)) session_start();
 include '../config.php';
 require_once ABSPATH . 'inc/database.php';
@@ -16,8 +16,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 header('Content-Type: application/json; charset=utf-8');
 
-$usuario_id  = $_SESSION['id'];
-$cart        = $_SESSION['cart'] ?? [];
+$usuario_id     = $_SESSION['id'];
+$cart           = $_SESSION['cart'] ?? [];
 $personalizados = $_SESSION['cart_personalizado'] ?? [];
 
 if (empty($cart) && empty($personalizados)) {
@@ -34,7 +34,7 @@ try {
     $observacoes  = $_POST['observacoes'] ?? '';
 
     if (!$data_entrega) {
-        throw new Exception('Data de entrega é obrigatória');
+        throw new Exception('Data de retirada é obrigatória');
     }
 
     // Converter data BR para SQL (caso venha DD/MM/YYYY)
@@ -59,9 +59,9 @@ try {
             throw new Exception("O produto '{$produto['nome']}' não está disponível.");
         }
 
-        $quantidade      = max(1, intval($qty));
-        $preco_unitario  = floatval($produto['preco']);
-        $subtotal        = $quantidade * $preco_unitario;
+        $quantidade     = max(1, intval($qty));
+        $preco_unitario = floatval($produto['preco']);
+        $subtotal       = $quantidade * $preco_unitario;
 
         $itens_pedido[] = [
             'id_produto'     => $product_id,
@@ -123,8 +123,8 @@ try {
     }
 
     // ─── 4) Descontar estoque de ingredientes ─────────────────────────────────
-    // Se o produto não tiver ingredientes vinculados, simplesmente ignora (sem erro).
-    // Se tiver ingredientes mas o estoque estiver baixo, avisa o admin mas NÃO cancela o pedido.
+    // Se o produto não tiver ingredientes vinculados, ignora sem erro.
+    // Se estoque estiver baixo, avisa o admin mas NÃO cancela o pedido.
     $avisos_estoque = [];
 
     foreach ($itens_pedido as $item) {
@@ -149,7 +149,7 @@ try {
                 ");
                 $stmt2->execute([$qtd_necessaria, $ing['id_ingrediente']]);
             } else {
-                // Estoque insuficiente → desconta o que tiver (vai a zero) e registra aviso
+                // Estoque insuficiente → zera e registra aviso
                 $conn->prepare("
                     UPDATE estoque_ingredientes SET qtd_estoque = 0 WHERE id = ?
                 ")->execute([$ing['id_ingrediente']]);
@@ -178,17 +178,17 @@ try {
         foreach ($personalizados as $idx => $p) {
             $msg_wpp .= "  " . ($idx + 1) . ") " . ucfirst($p['tipo']) . " — " . $p['tema'] . "\n";
             $msg_wpp .= "     Sabor: " . $p['sabor'] . "\n";
-            if (!empty($p['tamanho']))    $msg_wpp .= "     Tamanho: {$p['tamanho']}\n";
-            if (!empty($p['cor']))        $msg_wpp .= "     Cor: {$p['cor']}\n";
-            if (!empty($p['restricoes'])) $msg_wpp .= "     Restrições: " . implode(', ', $p['restricoes']) . "\n";
+            if (!empty($p['tamanho']))       $msg_wpp .= "     Tamanho: {$p['tamanho']}\n";
+            if (!empty($p['cor']))           $msg_wpp .= "     Cor: {$p['cor']}\n";
+            if (!empty($p['restricoes']))    $msg_wpp .= "     Restrições: " . implode(', ', $p['restricoes']) . "\n";
             if (!empty($p['data_desejada'])) $msg_wpp .= "     Data: " . date('d/m/Y', strtotime($p['data_desejada'])) . "\n";
-            if (!empty($p['detalhes']))   $msg_wpp .= "     Detalhes: {$p['detalhes']}\n";
-            if (!empty($p['imagem_path'])) $msg_wpp .= "     📎 Imagem enviada separadamente\n";
+            if (!empty($p['detalhes']))      $msg_wpp .= "     Detalhes: {$p['detalhes']}\n";
+            if (!empty($p['imagem_path']))   $msg_wpp .= "     📎 Imagem enviada separadamente\n";
             $msg_wpp .= "     Qtd: {$p['quantity']}\n\n";
         }
     }
 
-    if ($observacoes)           $msg_wpp .= "📝 Obs: $observacoes\n";
+    if ($observacoes)            $msg_wpp .= "📝 Obs: $observacoes\n";
     if (!empty($avisos_estoque)) $msg_wpp .= "\n🔴 *Atenção estoque:*\n" . implode("\n", $avisos_estoque) . "\n";
 
     $msg_wpp .= "\n💰 *Total: R$ " . number_format($total, 2, ',', '.') . "*";
@@ -203,14 +203,15 @@ try {
     $link_wpp   = 'https://wa.me/' . $numero_wpp . '?text=' . rawurlencode($msg_wpp);
 
     echo json_encode([
-        'success'         => true,
-        'message'         => 'Pedido criado com sucesso!',
-        'pedido_id'       => $id_pedido,
-        'whatsapp'        => $link_wpp,
-        'avisos_estoque'  => $avisos_estoque,
+        'success'        => true,
+        'message'        => 'Pedido criado com sucesso!',
+        'pedido_id'      => $id_pedido,
+        'whatsapp'       => $link_wpp,
+        'avisos_estoque' => $avisos_estoque,
     ]);
 
 } catch (Exception $e) {
+    if (isset($conn)) $conn->rollBack();
     echo json_encode([
         'success' => false,
         'message' => 'Erro ao criar pedido: ' . $e->getMessage()

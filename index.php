@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php 
 if(!isset($_SESSION)) session_start();
 
@@ -72,52 +73,14 @@ close_database($conn);
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     </head>
+=======
+<?php if(!isset($_SESSION)) session_start(); 
+    require_once "config.php"; 
+    require_once DBAPI; 
+    include(HEADER_TEMPLATE); ?>
+>>>>>>> 939b4d7346d2a5b8fa9354a84e91ae190cad2f15
 
     <body>
-        <header>
-            
-            <h1>Pedacinho de Amor</h1>
-            <nav>
-                <ul>
-                    <li><a href="index.php">Home</a></li>
-                    <li><a href="paginas/sobrenos.html">Sobre Nós</a></li>
-                    <li><a href="paginas/doces.php">Doces</a></li>
-                    <li><a href="paginas/salgados.php">Salgados</a></li>
-                    <li><a href="paginas/personalizados.php">Personalizados</a></li>
-                    
-                <?php if(!empty($_SESSION['logado']) && $_SESSION['logado'] === true): ?>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    👤 Olá, <?php echo htmlspecialchars($_SESSION['nome']); ?>
-                </a>
-
-                <ul class="dropdown-menu" aria-labelledby="userDropdown">
-                    <li>
-                        <a class="dropdown-item" href="minha_conta.php">
-                            Gerenciar Conta
-                        </a>
-                    </li>
-
-                    <li>
-                        <a class="dropdown-item" href="inc/logout.php">
-                            Sair
-                        </a>
-                    </li>
-                </ul>
-            </li>
-        <?php else: ?>
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalLogin">
-                Login
-            </button>
-        <?php endif; ?>
-        
-                        <li><a href="paginas/carrinho.php"><i class="fas fa-shopping-cart"></i> Carrinho (<?php echo array_sum($_SESSION['cart'] ?? []); ?>)</a></li>
-
-                    
-                </ul>
-            </nav>
-        </header>
-
         <main>
             <section class="index-bemvindo">
                 <!-- bloco de bem vindo do site -->
@@ -135,8 +98,8 @@ close_database($conn);
                         e carinho que buscamos levar até você.
                     </p>
                     <div class="bemvindo-botoes">
-                        <a href="doces.php" class="botaoclaro">Encomendar</a>
-                        <a href="sobrenos.html" class="botaoescuro">Sobre nós</a>
+                        <a href="paginas/personalizados.php" class="botaoclaro">Encomendar</a>
+                        <a href="paginas/sobrenos.php" class="botaoescuro">Sobre nós</a>
                     </div>
                 </div>
 
@@ -170,10 +133,11 @@ close_database($conn);
                 </div>
             </section>
 
-            <div style="height: 100px; background: linear-gradient(to bottom, #fdf2f4, #fde0e5);">
-            </div>
+            <!-- transição de cor-->
+            <div style="height: 100px; background: linear-gradient(to bottom, #fdf2f4, #fde0e5);"></div>
 
             <section class="cards py-5">
+<<<<<<< HEAD
                 <!-- PArte dos carss fofinhos rs -->
 <<<<<<< HEAD
                 <div class="container position-relative">
@@ -195,6 +159,9 @@ close_database($conn);
                                 </div>
                             </div>
 =======
+=======
+                <!-- PArte dos carss fofinhos rs para desktop aff -->
+>>>>>>> 939b4d7346d2a5b8fa9354a84e91ae190cad2f15
                 <div class="container-xxl" style="overflow: visible;">
                     <div>
                         <p class="carrossel-subtitulo">Campeões de Vendas</p>
@@ -202,19 +169,23 @@ close_database($conn);
                     </div>
                     
 
+<<<<<<< HEAD
                     <div class="product-slider">
 >>>>>>> 58ab223e473b7eee82f24c6075429e9912de9cdd
+=======
+                    <div class="product-slider d-none d-lg-flex">
+>>>>>>> 939b4d7346d2a5b8fa9354a84e91ae190cad2f15
                         
                         <div class="product-card" style="background-image: url('imagens/doce1.webp');">
                             <div class="product-card-body">
-                                <span>Croissants</span>
+                                <span>Tortas</span>
                                 <button class="btn-confira" src="./paginas/doces.php">Confira</button>
                             </div>
                         </div>
                         
                         <div class="product-card" style="background-image: url('imagens/doce2.webp');">
                             <div class="product-card-body">
-                                <span>Cookies</span>
+                                <span>Salgados</span>
                                 <button class="btn-confira">Confira</button>
                             </div>
                         </div>
@@ -228,33 +199,20 @@ close_database($conn);
                     
                         <div class="product-card" style="background-image: url('imagens/doce3.webp');">
                             <div class="product-card-body">
-                                <span>Brownies</span>
+                                <span>Cones</span>
                                 <button class="btn-confira">Confira</button>
                             </div>
                         </div>
                     </div>
-                    
-                </div>
-            </section>
 
-
-            <section class="cards py-5">
-                <!-- PArte dos carss fofinhos rs -->
-                
-                <div class="container-xxl" style="overflow: visible;">
-                    <div>
-                        <p class="carrossel-subtitulo">Campeões de Vendas</p>
-                        <h2 class="carrossel-titulo">Esses fazem <em>sucesso</em> por aqui!</h2>
-                    </div>
-                    
-
-                    <div id="cards" class="carousel slide product-slider">
+                    <!-- carrossel aparece em tela pequena -->
+                    <div id="cards" class="carousel slide product-slider d-lg-none" data-bs-ride="false">
                         
                         <div class="carousel-inner">
                             <div class="carousel-item active">
                                 <div class="product-card" style="background-image: url('imagens/doce1.webp');">
                                     <div class="product-card-body">
-                                        <span>Croissants</span>
+                                        <span>Tortas</span>
                                         <button class="btn-confira" src="./paginas/doces.php">Confira</button>
                                     </div>
                                 </div>
@@ -263,7 +221,7 @@ close_database($conn);
                             <div class="carousel-item">
                                 <div class="product-card" style="background-image: url('imagens/doce2.webp');">
                                     <div class="product-card-body">
-                                        <span>Cookies</span>
+                                        <span>Salgados</span>
                                         <button class="btn-confira">Confira</button>
                                     </div>
                                 </div>
@@ -279,22 +237,24 @@ close_database($conn);
                             <div class="carousel-item">
                                 <div class="product-card" style="background-image: url('imagens/doce3.webp');">
                                     <div class="product-card-body">
-                                        <span>Brownies</span>
+                                        <span>Cones</span>
                                         <button class="btn-confira">Confira</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <button class="prev carrossel-btnprev carousel-control-prev" type="button" data-bs-target="#cards" data-bs-slide="prev">
+                        <button class="carrossel-btnprev carousel-control-prev" type="button" data-bs-target="#cards" data-bs-slide="prev">
                             <i class="fa-solid fa-angle-left"></i>
                         </button>
-                        <button class="next carrossel-btnnext carousel-control-next" type="button" data-bs-target="#cards" data-bs-slide="next">
+                        <button class="carrossel-btnnext carousel-control-next" type="button" data-bs-target="#cards" data-bs-slide="next">
                             <i class="fa-solid fa-angle-right"></i>
                         </button>
                     </div>
+                    
                 </div>
             </section>
+<<<<<<< HEAD
             
             <section class="feedbacks-section py-5">
                 <div class="container">
@@ -303,6 +263,20 @@ close_database($conn);
                     </div>
 
                     <?php if (!empty($avaliacoes_home)): ?>
+=======
+
+            <!-- transição de cor-->
+            <div style="height: 100px; background: linear-gradient(to top, #fdf2f4, #fde0e5);"></div>
+
+            <section class="feedbacks py-5">
+                <!-- feedbacks que so da b.o-->
+                <div class="container-xxl">
+                    <div style="margin-bottom: 40px;">
+                        <p class="carrossel-subtitulo">Depoimentos</p>
+                        <h2 class="carrossel-titulo">O que nossos <em>clientes</em> dizem sobre nós?</h2>
+                    </div>
+
+>>>>>>> 939b4d7346d2a5b8fa9354a84e91ae190cad2f15
                     <div class="feedbacks-wrapper">
                         <button class="feedback-arrow prev-feedback" type="button" aria-label="Feedback anterior">&#10094;</button>
                         <div class="feedbacks-carrossel-track">
@@ -344,100 +318,9 @@ close_database($conn);
 
         <script src="js/bootstrap/bootstrap.bundle.min.js"></script>
 
-        <?php include 'inc/modal.php'; ?>
+        <?php include 'inc/modal.php'; 
+        include_once __DIR__ .'/inc/footer.php';?>
         
-        <script>
-            // --- CARROSSEL PRINCIPAL ---
-            const carrossel = document.getElementById('carrossel');
-            const slides = document.querySelector('.slides');
-            const images = document.querySelectorAll('.slides img');
-            const prevBtn = document.querySelector('.prev');
-            const nextBtn = document.querySelector('.next');
-            const dotsContainer = document.querySelector('.dots');
-
-            let index = 0;
-            const total = images.length;
-            let intervalId = null;
-
-            function updateDots() {
-                const dots = dotsContainer.querySelectorAll('button');
-                dots.forEach((d, i) => d.classList.toggle('active', i === index));
-            }
-
-            function showImage(i) {
-                index = (i + total) % total;
-                slides.style.transform = `translateX(${-index * 100}%)`;
-                updateDots();
-            }
-
-            prevBtn.addEventListener('click', () => showImage(index - 1));
-            nextBtn.addEventListener('click', () => showImage(index + 1));
-
-            for (let i = 0; i < total; i++) {
-                const btn = document.createElement('button');
-                btn.addEventListener('click', () => showImage(i));
-                dotsContainer.appendChild(btn);
-            }
-
-            function startAutoplay() { intervalId = setInterval(() => showImage(index + 1), 4000); }
-            function stopAutoplay() { clearInterval(intervalId); }
-
-            carrossel.addEventListener('mouseenter', stopAutoplay);
-            carrossel.addEventListener('mouseleave', startAutoplay);
-            showImage(0);
-            startAutoplay();
-
-            // --- FEEDBACKS (2 cards visíveis, avança 1 por vez) ---
-            const feedbackscarrossel = document.getElementById('feedbackscarrossel');
-            const feedbackCards     = feedbackscarrossel ? feedbackscarrossel.querySelectorAll('.feedback-card') : [];
-            const prevFeedbackBtn   = document.querySelector('.prev-feedback');
-            const nextFeedbackBtn   = document.querySelector('.next-feedback');
-
-            let feedbackIndex    = 0;
-            let feedbackInterval = null;
-
-            // Quantos cards ficam visíveis de uma vez (muda no mobile via JS)
-            function visibleCount() {
-                return 1;
-            }
-
-            function maxIndex() {
-                return Math.max(0, feedbackCards.length - visibleCount());
-            }
-
-            function showFeedback(i) {
-                feedbackIndex = Math.max(0, Math.min(i, maxIndex()));
-                const track = feedbackscarrossel.parentElement;
-                const trackWidth = track ? track.clientWidth : 0;
-                const offset = feedbackIndex * trackWidth;
-                feedbackscarrossel.style.transform = `translateX(-${offset}px)`;
-            }
-
-            function resetFeedbackAutoplay() {
-                clearInterval(feedbackInterval);
-                feedbackInterval = setInterval(() => {
-                    const next = feedbackIndex >= maxIndex() ? 0 : feedbackIndex + 1;
-                    showFeedback(next);
-                }, 6000);
-            }
-
-            if (prevFeedbackBtn) {
-                prevFeedbackBtn.addEventListener('click', () => {
-                    showFeedback(feedbackIndex - 1);
-                    resetFeedbackAutoplay();
-                });
-            }
-
-            if (nextFeedbackBtn) {
-                nextFeedbackBtn.addEventListener('click', () => {
-                    showFeedback(feedbackIndex + 1);
-                    resetFeedbackAutoplay();
-                });
-            }
-
-            window.addEventListener('resize', () => showFeedback(feedbackIndex));
-            showFeedback(0);
-            resetFeedbackAutoplay(); 
-        </script>
+        
     </body>
 </html>

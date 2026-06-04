@@ -14,9 +14,7 @@ $total = 0;
 // Processa os produtos normais
 foreach ($cart as $product_id => $qty) {
     $produto = find_product(intval($product_id));
-    if (!$produto) {
-        continue;
-    }
+    if (!$produto) continue;
 
     $produto['quantity'] = max(1, intval($qty));
     $produto['subtotal'] = $produto['quantity'] * floatval($produto['preco']);
@@ -89,7 +87,7 @@ unset($_SESSION['cart_message']);
         <?php else: ?>
             <div class="cart">
                 <div class="cart-items">
-                    
+
                     <?php if (!empty($availableItems)): ?>
                         <h3>Itens Disponíveis</h3>
                         <?php foreach ($availableItems as $produto): ?>
@@ -206,9 +204,12 @@ unset($_SESSION['cart_message']);
                         <span>Total Atual</span>
                         <span>R$ <?php echo number_format($total, 2, ',', '.'); ?></span>
                     </div>
-                    
+                    <div class="summary-row">
+                        <small class="text-muted"><i class="fas fa-shopping-bag me-1"></i>Somente retirada na loja</small>
+                    </div>
+
                     <button class="checkout-btn" onclick="checkout()" <?php echo (!$usuario_logado || $total_itens_carrinho <= 0) ? 'disabled' : ''; ?>>Finalizar Compra</button>
-                    
+
                     <?php if (!$usuario_logado): ?>
                         <p class="text-muted small mt-2">Faça login para poder finalizar o pedido.</p>
                     <?php endif; ?>
