@@ -5,10 +5,13 @@ require_once ABSPATH . 'inc/database.php';
 
 $usuario_logado = !empty($_SESSION['logado']) && $_SESSION['logado'] === true;
 $cart = $_SESSION['cart'] ?? [];
+$cart_personalizado = $_SESSION['cart_personalizado'] ?? [];
+
 $availableItems = [];
 $unavailableItems = [];
 $total = 0;
 
+// Processa os produtos normais
 foreach ($cart as $product_id => $qty) {
     $produto = find_product(intval($product_id));
     if (!$produto) {
@@ -25,6 +28,17 @@ foreach ($cart as $product_id => $qty) {
         $unavailableItems[] = $produto;
     }
 }
+
+// Cálculo exato de quantidades para os contadores
+$qtd_normais = array_sum($cart);
+$qtd_personalizados = 0;
+foreach ($cart_personalizado as $item) {
+    $qtd_personalizados += intval($item['quantity'] ?? 1);
+}
+$total_itens_carrinho = $qtd_normais + $qtd_personalizados;
+
+// Verifica se o carrinho inteiro está totalmente vazio (Normais + Personalizados)
+$carrinho_vazio = empty($availableItems) && empty($unavailableItems) && empty($cart_personalizado);
 
 $cartMessage = $_SESSION['cart_message'] ?? '';
 unset($_SESSION['cart_message']);
@@ -49,7 +63,7 @@ unset($_SESSION['cart_message']);
                 <li><a href="doces.php">Doces</a></li>
                 <li><a href="salgados.php">Salgados</a></li>
                 <li><a href="personalizados.php">Personalizados</a></li>
-                <li><a href="carrinho.php" class="active"><i class="fas fa-shopping-cart"></i> Carrinho (<?php echo array_sum($cart); ?>)</a></li>
+                <li><a href="carrinho.php" class="active"><i class="fas fa-shopping-cart"></i> Carrinho (<?php echo $total_itens_carrinho; ?>)</a></li>
                 <?php if ($usuario_logado): ?>
                     <li><a href="inc/logout.php">Sair</a></li>
                 <?php else: ?>
@@ -70,15 +84,14 @@ unset($_SESSION['cart_message']);
             <div class="alert alert-warning">Faça login para finalizar seu pedido.</div>
         <?php endif; ?>
 
-        <?php if (empty($availableItems) && empty($unavailableItems)): ?>
+        <?php if ($carrinho_vazio): ?>
             <div class="alert alert-secondary">Seu carrinho está vazio. <a href="doces.php">Continuar comprando</a></div>
         <?php else: ?>
             <div class="cart">
                 <div class="cart-items">
-                    <h3>Itens Disponíveis</h3>
-                    <?php if (empty($availableItems)): ?>
-                        <p>Nenhum item disponível no carrinho.</p>
-                    <?php else: ?>
+                    
+                    <?php if (!empty($availableItems)): ?>
+                        <h3>Itens Disponíveis</h3>
                         <?php foreach ($availableItems as $produto): ?>
                             <div class="cart-item">
                                 <?php if (!empty($produto['imagem_referencia'])): ?>
@@ -111,8 +124,48 @@ unset($_SESSION['cart_message']);
                         <?php endforeach; ?>
                     <?php endif; ?>
 
+                    <?php if (!empty($cart_personalizado)): ?>
+                        <div class="personalizados-section mt-4">
+                            <h3>Produtos Personalizados (Sob Encomenda)</h3>
+                            <?php foreach ($cart_personalizado as $i => $item): ?>
+                                <div class="cart-item">
+                                    <?php if (!empty($item['imagem_path'])): ?>
+                                        <img src="<?php echo '../' . htmlspecialchars($item['imagem_path']); ?>"
+                                             alt="Referência" style="width:80px;height:80px;object-fit:cover;border-radius:8px;">
+                                    <?php endif; ?>
+                                    <div class="cart-item-info">
+                                        <h4><?php echo ucfirst($item['tipo']); ?> — <?php echo $item['tema']; ?></h4>
+                                        <p><strong>Sabor:</strong> <?php echo $item['sabor']; ?></p>
+                                        <?php if (!empty($item['tamanho'])): ?>
+                                            <p><strong>Tamanho:</strong> <?php echo $item['tamanho']; ?></p>
+                                        <?php endif; ?>
+                                        <?php if (!empty($item['cor'])): ?>
+                                            <p><strong>Cor:</strong> <?php echo $item['cor']; ?></p>
+                                        <?php endif; ?>
+                                        <?php if (!empty($item['restricoes'])): ?>
+                                            <p><strong>Restrições:</strong> <?php echo implode(', ', $item['restricoes']); ?></p>
+                                        <?php endif; ?>
+                                        <?php if (!empty($item['data_desejada'])): ?>
+                                            <p><strong>Data desejada:</strong> <?php echo date('d/m/Y', strtotime($item['data_desejada'])); ?></p>
+                                        <?php endif; ?>
+                                        <?php if (!empty($item['detalhes'])): ?>
+                                            <p><strong>Detalhes:</strong> <?php echo $item['detalhes']; ?></p>
+                                        <?php endif; ?>
+                                        <p><strong>Quantidade:</strong> <?php echo $item['quantity']; ?></p>
+                                        <p class="text-success"><em>Preço sob orçamento</em></p>
+                                        <form action="update_carrinho.php" method="POST" class="d-inline">
+                                            <input type="hidden" name="action" value="remove_personalizado">
+                                            <input type="hidden" name="index" value="<?php echo $i; ?>">
+                                            <button type="submit" class="remove-btn">Remover</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
+
                     <?php if (!empty($unavailableItems)): ?>
-                        <div class="unavailable-section">
+                        <div class="unavailable-section mt-4">
                             <h3>Itens Indisponíveis</h3>
                             <form action="update_carrinho.php" method="POST">
                                 <button type="submit" name="action" value="remove_unavailable" class="clear-unavailable-btn">Excluir todos os itens indisponíveis</button>
@@ -136,23 +189,26 @@ unset($_SESSION['cart_message']);
                             <?php endforeach; ?>
                         </div>
                     <?php endif; ?>
+
                 </div>
 
                 <div class="cart-summary">
                     <h4>Resumo da Compra</h4>
                     <div class="summary-row">
                         <span>Total de itens</span>
-                        <span><?php echo array_sum($cart); ?></span>
+                        <span><?php echo $total_itens_carrinho; ?></span>
                     </div>
                     <div class="summary-row">
-                        <span>Subtotal</span>
+                        <span>Subtotal itens padrão</span>
                         <span>R$ <?php echo number_format($total, 2, ',', '.'); ?></span>
                     </div>
                     <div class="summary-row total">
-                        <span>Total</span>
-                        <span>R$ <?php echo number_format($total > 0 ? $total : 0, 2, ',', '.'); ?></span>
+                        <span>Total Atual</span>
+                        <span>R$ <?php echo number_format($total, 2, ',', '.'); ?></span>
                     </div>
-                    <button class="checkout-btn" onclick="checkout()" <?php echo (!$usuario_logado || $total <= 0) ? 'disabled' : ''; ?>>Finalizar Compra</button>
+                    
+                    <button class="checkout-btn" onclick="checkout()" <?php echo (!$usuario_logado || $total_itens_carrinho <= 0) ? 'disabled' : ''; ?>>Finalizar Compra</button>
+                    
                     <?php if (!$usuario_logado): ?>
                         <p class="text-muted small mt-2">Faça login para poder finalizar o pedido.</p>
                     <?php endif; ?>
@@ -163,11 +219,9 @@ unset($_SESSION['cart_message']);
 
     <script>
         function checkout() {
-            // Redirecionar para a página de checkout
             window.location.href = 'checkout_form.php';
         }
     </script>
-
     <script src="../js/bootstrap/bootstrap.bundle.min.js"></script>
 </body>
 </html>

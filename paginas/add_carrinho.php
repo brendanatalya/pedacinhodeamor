@@ -20,37 +20,96 @@ if (empty($_SESSION['logado']) || $_SESSION['logado'] !== true) {
 $product_id = $_POST['product_id'] ?? null;
 $quantity   = max(1, intval($_POST['quantity'] ?? 1));
 $redirect   = $_POST['redirect'] ?? BASEURL . 'paginas/doces.php';
-
 // PRODUTO PERSONALIZADO
 if ($product_id === 'personalizado') {
-    $tipo     = trim($_POST['tipo']     ?? '');
-    $tema     = trim($_POST['tema']     ?? '');
-    $sabor    = trim($_POST['sabor']    ?? '');
-    $detalhes = trim($_POST['detalhes'] ?? '');
+    $tipo          = trim($_POST['tipo']          ?? '');
+    $tema          = trim($_POST['tema']          ?? '');
+    $sabor         = trim($_POST['sabor']         ?? '');
+    $detalhes      = trim($_POST['detalhes']      ?? '');
+    $tamanho       = trim($_POST['tamanho']       ?? '');
+    $cor           = trim($_POST['cor']           ?? '');
+    $data_desejada = trim($_POST['data_desejada'] ?? '');
+    $restricoes    = $_POST['restricoes'] ?? [];
 
-    // Validação básica
-    if (empty($tipo) || empty($tema) || empty($sabor)) {
-        $_SESSION['cart_message'] = 'Preencha todos os campos obrigatórios do produto personalizado.';
+    // Validação específica por tipo (tema não é obrigatório para doce)
+    if ($tipo === 'doce') {
+        if (empty($sabor)) {
+            $_SESSION['cart_message'] = 'Por favor, informe o sabor do doce.';
+            header('Location: ' . $redirect);
+            exit;
+        }
+    } elseif ($tipo === 'salgado') {
+        // No formulário de salgado, 'sabor' = tipo de salgado e 'tema' = recheio
+        if (empty($sabor) || empty($tema)) {
+            $_SESSION['cart_message'] = 'Por favor, selecione o tipo de salgado e o recheio.';
+            header('Location: ' . $redirect);
+            exit;
+        }
+    } elseif ($tipo === 'bolo') {
+        if (empty($tema) || empty($sabor)) {
+            $_SESSION['cart_message'] = 'Por favor, preencha o tema/ocasião e o sabor da massa do bolo.';
+            header('Location: ' . $redirect);
+            exit;
+        }
+    } else {
+        $_SESSION['cart_message'] = 'Tipo de produto personalizado inválido.';
         header('Location: ' . $redirect);
         exit;
     }
 
-    // Personalizados ficam em $_SESSION['cart_personalizado'] como lista
-    // pois cada um pode ter configurações diferentes
+    // Upload de imagem
+    $imagem_path = null;
+    if (!empty($_FILES['imagem_referencia']['tmp_name'])) {
+        $file      = $_FILES['imagem_referencia'];
+        $allowed   = ['image/jpeg', 'image/png', 'image/webp'];
+        $finfo     = finfo_open(FILEINFO_MIME_TYPE);
+        $mime      = finfo_file($finfo, $file['tmp_name']);
+        finfo_close($finfo);
+
+        if (!in_array($mime, $allowed)) {
+            $_SESSION['cart_message'] = 'Formato de imagem inválido. Use JPG, PNG ou WEBP.';
+            header('Location: ' . $redirect);
+            exit;
+        }
+        if ($file['size'] > 5 * 1024 * 1024) {
+            $_SESSION['cart_message'] = 'Imagem muito grande. Máximo 5MB.';
+            header('Location: ' . $redirect);
+            exit;
+        }
+
+        $ext         = pathinfo($file['name'], PATHINFO_EXTENSION);
+        $nome_arquivo = 'pers_' . uniqid() . '.' . $ext;
+        $destino      = ABSPATH . 'uploads/personalizados/' . $nome_arquivo;
+
+        // Cria a pasta se não existir
+        if (!is_dir(ABSPATH . 'uploads/personalizados/')) {
+            mkdir(ABSPATH . 'uploads/personalizados/', 0755, true);
+        }
+
+        if (move_uploaded_file($file['tmp_name'], $destino)) {
+            $imagem_path = 'uploads/personalizados/' . $nome_arquivo;
+        }
+    }
+
     if (!isset($_SESSION['cart_personalizado'])) {
         $_SESSION['cart_personalizado'] = [];
     }
 
     $_SESSION['cart_personalizado'][] = [
-        'tipo'      => htmlspecialchars($tipo),
-        'tema'      => htmlspecialchars($tema),
-        'sabor'     => htmlspecialchars($sabor),
-        'detalhes'  => htmlspecialchars($detalhes),
-        'quantity'  => $quantity,
-        'added_at'  => date('Y-m-d H:i:s'),
+        'tipo'          => htmlspecialchars($tipo),
+        'tema'          => htmlspecialchars($tema),
+        'sabor'         => htmlspecialchars($sabor),
+        'detalhes'      => htmlspecialchars($detalhes),
+        'tamanho'       => htmlspecialchars($tamanho),
+        'cor'           => htmlspecialchars($cor),
+        'data_desejada' => htmlspecialchars($data_desejada),
+        'restricoes'    => array_map('htmlspecialchars', $restricoes),
+        'imagem_path'   => $imagem_path,
+        'quantity'      => $quantity,
+        'added_at'      => date('Y-m-d H:i:s'),
     ];
 
-    $_SESSION['cart_message'] = 'Produto personalizado adicionado ao    !';
+    $_SESSION['cart_message'] = 'Produto personalizado adicionado ao carrinho!';
     header('Location: ' . $redirect);
     exit;
 }

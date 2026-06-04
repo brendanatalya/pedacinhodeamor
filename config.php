@@ -31,4 +31,7 @@ if (!defined('DBAPI'))
 /** caminhos dos templates de header e footer **/
 define('HEADER_TEMPLATE', ABSPATH . 'inc/header.php');
 define('FOOTER_TEMPLATE', ABSPATH . 'inc/footer.php');
+
+/** número WhatsApp da confeitaria (só números, com DDI) **/
+define('WHATSAPP_NUMBER', '5515988329726');
 ?>

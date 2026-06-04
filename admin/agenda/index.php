@@ -49,12 +49,8 @@ foreach ($pedidosDoMes as $p) {
         ];
     }
 
-    $tipo = $p['tipo'] ?? 'normal';
-
-    // evita erro caso venha vazio ou inválido
-    if (!in_array($tipo, ['normal', 'personalizado'])) {
-        $tipo = 'normal';
-    }
+    // usa tipo_entrega ('entrega' = normal, 'retirada' = personalizado) para as bolinhas
+    $tipo = ($p['tipo_entrega'] ?? 'retirada') === 'entrega' ? 'normal' : 'personalizado';
 
     $eventosPorDia[$d][$tipo]++;
 }
@@ -368,10 +364,10 @@ $meses = [
                 <?php foreach ($pedidosDoDia as $pedido): ?>
                     <div class="bloco-pedido-entrega">
                         <div class="hora-header">
-                            <span class="txt-hora"><?php echo date('H:i', strtotime($pedido['data_entrega'])); ?></span>
-                            <span class="badge-tipo <?php echo $pedido['tipo']; ?>">
-                                <i class="fas <?php echo $pedido['tipo'] == 'personalizado' ? 'fa-store' : 'fa-truck'; ?>"></i> 
-                                <?php echo $pedido['tipo'] == 'personalizado' ? 'Retirada' : 'Entrega'; ?>
+                            <span class="txt-hora"><?php echo date('H:i', strtotime($pedido['hora_entrega'])); ?></span>
+                            <span class="badge-tipo <?php echo $pedido['tipo_entrega'] === 'retirada' ? 'personalizado' : 'normal'; ?>">
+                                <i class="fas <?php echo $pedido['tipo_entrega'] === 'retirada' ? 'fa-store' : 'fa-truck'; ?>"></i>
+                                <?php echo $pedido['tipo_entrega'] === 'retirada' ? 'Retirada' : 'Entrega'; ?>
                             </span>
                         </div>
 
@@ -470,11 +466,11 @@ $meses = [
                     </div>
                     <div class="box-info-qtd">
                         <h5><span class="dot" style="background:#D53F8C; width:6px; height:6px; display:inline-block; border-radius:50%; margin-right:4px;"></span> Entregas</h5>
-                        <div class="num"><?php echo count(array_filter($pedidosDoMes, function($p){ return $p['tipo'] == 'normal'; })); ?></div>
+                        <div class="num"><?php echo count(array_filter($pedidosDoMes, function($p){ return $p['tipo_entrega'] === 'entrega'; })); ?></div>
                     </div>
                     <div class="box-info-qtd">
                         <h5><span class="dot" style="background:#DD6B20; width:6px; height:6px; display:inline-block; border-radius:50%; margin-right:4px;"></span> Retiradas</h5>
-                        <div class="num"><?php echo count(array_filter($pedidosDoMes, function($p){ return $p['tipo'] == 'personalizado'; })); ?></div>
+                        <div class="num"><?php echo count(array_filter($pedidosDoMes, function($p){ return $p['tipo_entrega'] === 'retirada'; })); ?></div>
                     </div>
                 </div>
 
@@ -488,9 +484,9 @@ $meses = [
                             ?>
                                 <div class="card-proximo-mini">
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <span class="data-hora"><?php echo date('d/m - H:i', strtotime($prox['data_entrega'])); ?></span>
-                                        <span class="badge-tipo <?php echo $prox['tipo']; ?>" style="font-size:9px; padding:1px 6px;">
-                                            <?php echo $prox['tipo'] == 'personalizado' ? 'Ret' : 'Ent'; ?>
+                                        <span class="data-hora"><?php echo date('d/m', strtotime($prox['data_entrega'])) . ' - ' . date('H:i', strtotime($prox['hora_entrega'])); ?></span>
+                                        <span class="badge-tipo <?php echo $prox['tipo_entrega'] === 'retirada' ? 'personalizado' : 'normal'; ?>" style="font-size:9px; padding:1px 6px;">
+                                            <?php echo $prox['tipo_entrega'] === 'retirada' ? 'Ret' : 'Ent'; ?>
                                         </span>
                                     </div>
                                     <div class="nome-cli" title="<?php echo htmlspecialchars($prox['cliente_nome']); ?>">
