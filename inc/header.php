@@ -86,12 +86,19 @@
                 <!-- ICONES -->
                 <div class="nav-icons">
 
-                    <a href="#">
-                        <i class="fa-regular fa-circle-user"></i>
-                    </a>
+                    <?php //if(!empty($_SESSION['logado']) && $_SESSION['logado'] === true): ?>
+
+                    <?php //else: ?>
+                        <a href="#">
+                            <i class="fa-regular fa-circle-user"></i>
+                            <p>Olá, <?php //echo htmlspecialchars($_SESSION['nome']); ?></p>
+                        </a>
+                    <?php //endif; ?>
+                    
 
                     <a href="#">
                         <i class="fa-solid fa-basket-shopping"></i>
+                        <p>Carrinho (<?php echo array_sum($_SESSION['cart'] ?? []); ?>)</p>
                     </a>
 
                 </div>
