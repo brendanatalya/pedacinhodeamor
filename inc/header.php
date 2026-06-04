@@ -4,7 +4,7 @@
 
 <meta charset="utf-8">
 
-	<link rel="icon" type="image/x-icon" href="../imagens/icon.png">
+	<link rel="icon" type="image/x-icon" href="imagens/icon.png">
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,8 +31,8 @@
             <!-- LOGO -->
             <div class="nav-header">
 
-                <a href="../index.php">
-                    <img src="../imagens/logo.png" class="logo" alt="">
+                <a href="index.php">
+                    <img src="imagens/logo.png" class="logo" alt="">
                 </a>
 
                 <!-- BOTÃO MOBILE -->

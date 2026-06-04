@@ -22,6 +22,67 @@
         .message{color:green}
         .error{color:#b00}
         a{color:#06c}
+
+/*fontes*/
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('../fontes/poppins/Poppins-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('../fontes/poppins/Poppins-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('../fontes/poppins/Poppins-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('../fontes/poppins/Poppins-MediumItalic.ttf') format('truetype');
+  font-weight: 500;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('../fontes/poppins/Poppins-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('../fontes/poppins/Poppins-SemiBoldItalic.ttf') format('truetype');
+  font-weight: 600;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  src: url('../fontes/cormorant-garamond/CormorantGaramond-VariableFont_wght.ttf') format('truetype');
+  font-weight: 300 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  src: url('../fontes/cormorant-garamond/CormorantGaramond-Italic-VariableFont_wght.ttf') format('truetype');
+  font-weight: 300 700;
+  font-style: italic;
+}
+
+
+
  
 
 /* PARTE DOS FEEDBACKS ----  ARRUMAR ESSAS BOSTA DE BOTAO PRA NAO FICAR EM CIMA DO TEXTO ESSAS BOSTA */
@@ -2216,5 +2277,499 @@ body.bg-confeitaria {
 .feedbacks {
     padding: 80px;
     background-color: #fdf2f4;
+}
+
+
+/*fontes*/
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('../fontes/poppins/Poppins-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('../fontes/poppins/Poppins-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('../fontes/poppins/Poppins-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('../fontes/poppins/Poppins-MediumItalic.ttf') format('truetype');
+  font-weight: 500;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('../fontes/poppins/Poppins-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('../fontes/poppins/Poppins-SemiBoldItalic.ttf') format('truetype');
+  font-weight: 600;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  src: url('../fontes/cormorant-garamond/CormorantGaramond-VariableFont_wght.ttf') format('truetype');
+  font-weight: 300 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  src: url('../fontes/cormorant-garamond/CormorantGaramond-Italic-VariableFont_wght.ttf') format('truetype');
+  font-weight: 300 700;
+  font-style: italic;
+}
+
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family: 'Poppins', Arial, sans-serif;
+    overflow-x:hidden;
+}
+
+header{
+    height:120px;
+}
+
+/*NAVBAR*/
+
+nav{
+    position:fixed;
+    top:0;
+    left:0;
+    font-family: 'Poppins', Arial, sans-serif;
+    width:100%;
+
+    background: #ffb8ce59;
+    /*vidro*/
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    transition: all 0.4s ease;
+
+    z-index:999;
+}
+
+/* efeito do vinicius */
+
+.fixed-nav{
+    background: linear-gradient(to right, #fadae4 0%, #fbf5f9 50%, #fadae4 100%);
+
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+.nav-center{
+    width:90vw;
+    max-width:1170px;
+
+    margin:0 auto;
+}
+
+.nav-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:1rem 0;
+}
+
+/* logo */
+
+.logo{
+    width: 300px;
+    transition:0.4s ease;
+}
+
+.logo:hover{
+    transform:scale(1.05);
+}
+
+.fixed-nav .logo{
+    height:70px;
+}
+
+.nav-toggle{
+    font-size:1.8rem;
+
+    color:#5A3220;
+
+    background:transparent;
+
+    border:none;
+
+    cursor:pointer;
+
+    transition:0.3s ease;
+}
+
+.nav-toggle:hover{
+    transform:rotate(90deg);
+}
+
+/* menu do mobile */
+
+.links-container{
+    height:0;
+
+    overflow:hidden;
+
+    transition:all 0.4s ease;
+}
+
+/* botoes de navegação */
+
+.links a{
+    display:block;
+
+    padding:1rem 0;
+
+    color:#5A3220;
+
+    font-size:1.1rem;
+
+    font-weight:bold;
+
+    text-transform:capitalize;
+
+    letter-spacing:1px;
+
+    transition:0.3s ease;
+
+    position:relative;
+}
+
+.links a:hover{
+    color:#8f1a5a;
+
+    padding-left:10px;
+}
+
+/* linha ao passar por cima dos itens do nav */
+
+.links a::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:50%;
+    bottom:0px;
+
+    width:0%;
+
+    height:2px;
+
+    background:#8f1a5a;
+
+    transition:all 0.3s ease;
+
+    transform:translateX(-50%);
+}
+
+.links a:hover::after{
+    width:100%;
+}
+
+/* icones de login e cesta */
+
+.nav-icons{
+    display:flex;
+
+    gap:25px;
+
+    padding:1rem 0;
+}
+
+.nav-icons a{
+    color:#5A3220;
+
+    font-size:1.7rem;
+
+    transition:0.5s ease;
+}
+
+.nav-icons a:hover{
+    transform:scale(1.2);
+
+    color:#8f1a5a;
+}
+
+/*FOOTER*/
+
+footer {
+  background-color: #fcedf5;
+  color: #333;
+  font-family: 'Poppins';
+  padding: 3rem 0 0 0;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  max-width: 1170px;
+  margin: 0 auto;
+  padding: 0 2rem 3rem 2rem;
+}
+
+/* logo */
+.footer-logo {
+  max-width: 380px;
+}
+
+.footer-logo h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.footer-logo h2 span {
+  color: #8f1a5a;
+}
+
+.footer-logo p {
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 1.2rem;
+}
+
+/* redes sociais */
+.footer-icones {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.footer-icones a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid #aaa;
+  color: #333;
+  font-size: 0.95rem;
+  transition: 0.3s ease;
+  text-decoration: none;
+}
+
+.footer-icones a:hover {
+  border-color: #8f1a5a;
+  color: #8f1a5a;
+}
+
+/* contato */
+.footer-contato h3 {
+  font-size: 1rem;
+  margin-bottom: 1.2rem;
+  color: #333;
+}
+
+.footer-contato p {
+  color: #555;
+  margin-bottom: 0.8rem;
+  line-height: 1.5;
+}
+
+.footer-contato i {
+  color: #8f1a5a;
+  margin-right: 0.4rem;
+}
+
+/* parte de copyright e recado */
+.footer-copyright {
+  border-top: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 2rem;
+  max-width: 100%;
+  color: #888;
+  font-size: 0.85rem;
+}
+
+.footer-copyright span {
+  color: #8f1a5a;
+}
+
+@media screen and (max-width: 768px) {
+  /*footer*/
+  .footer-container {
+    flex-direction: column;
+  }
+
+  .footer-copyright {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+}
+
+@media screen and (min-width: 1100px){
+    /*navbar*/
+    nav{
+      padding:0.5rem 0;
+    }
+
+    .nav-center{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+
+    .nav-header{
+        padding:0;
+    }
+
+    .nav-toggle{
+        display:none;
+    }
+
+    .links-container{
+        height:auto !important;
+
+        display:flex;
+
+        align-items:center;
+    }
+
+    .links{
+        display:flex;
+
+        align-items:center;
+    }
+
+    .links a{
+        margin:0 1rem;
+
+        padding:0;
+    }
+
+    .links a:hover{
+        padding-left:0;
+    }
+
+    .nav-icons{
+        padding:0;
+
+        margin-left:30px;
+    }
+
+}
+
+
+html {
+  scroll-behavior: smooth;
+}
+*,
+::after,
+::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* nav bar css*/
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+
+ul li a {
+  display: block;
+  color: #5A3220;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+
+/* css geral para header e footer*/
+/*
+.headerfooter {
+  background: rgba(255, 184, 206, 0.85);
+  backdrop-filter: blur(8px); //vidro 
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 2px solid #5A3220; 
+  transition: background 0.4s ease;
+}
+/* css card*/
+.card {
+  box-sizing: border-box;
+  width: 190px;
+  height: 254px;
+  background: rgba(217, 217, 217, 0.58);
+  border: 1px solid white;
+  box-shadow: 12px 17px 51px rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(6px);
+  border-radius: 17px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.5s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  font-weight: bolder;
+  color: black;
+  margin: 0.75rem;
+}
+
+.card:hover {
+  border: 1px solid black;
+  transform: scale(1.05);
+}
+
+.card:active {
+  transform: scale(0.95) rotateZ(1.7deg);
+}
+.btn-primary {
+  background-color: #FFB8CE;
+  border-color: #FFB8CE;
+  color: #5A3220;
+  font-weight: bold;
+  width: 100%;
+  margin: 0.5rem 0;
+
+  
+}
+
+.logoheader {
+  max-height: 120px;
+  padding: 10px;
+  transition: transform 0.3s ease;
+}
+
+.logoheader:hover {
+  transform: scale(1.01);
 }
 
