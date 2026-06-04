@@ -4,60 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pedacinho de Amor</title>
-   <link rel="stylesheet" href="../css_pda/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css_pda/style_pda.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css_pda/style_pda.css">
+    <link rel="stylesheet" href="css_pda/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="fontawesome/css/all.min.css">
 </head>
 <body>
 <header>
     <h1>Pedacinho de Amor</h1>
     <nav>
         <ul>
-            <li><a href="../index.php">Home</a></li>
+            <li><a href="index.html">Home</a></li>
             <li><a href="sobrenos.html">Sobre Nós</a></li>
-            <li><a href="doces.php">Doces</a></li>
-            <li><a href="salgados.php">Salgados</a></li>
-            <li><a href="personalizados.php">Personalizados</a></li>
-            <a class="btn btn-primary text-white" href="../index.php" style="text-decoration:none;">
+            <li><a href="doces.html">Doces</a></li>
+            <li><a href="salgados.html">Salgados</a></li>
+            <li><a href="personalizados.html">Personalizados</a></li>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalLogin">
                 Login
-            </a>
+            </button>      
    
-            <button><li><a href="cesta.php">Cesta</a></li></button>
+            <button><li><a href="cesta.html">Cesta</a></li></button>
         </ul>
     </nav>
 </header>
 
     <main>
-        <section class="about-section">
-            <div class="about-container">
-                <div class="about-image">
-                    <img src="imagens/doce1.webp" alt="Equipe Pedacinho de Amor">
-                </div>
-                <div class="about-text">
-                    <h2>Quem somos nós?</h2>
-                    <p>A Pedacinho de Amor iniciou com a ideia de entregar o verdadeiro sabor caseiro, aquele que lembra a cozinha da família e o aconchego do lar.</p>
-                    <p>Cada receita foi feita com carinho e dedicação, sempre buscando transformar momentos simples em experiências únicas e acolhedoras.</p>
-                    <p>Estamos aqui para encantar seu paladar com doces e salgados preparados com amor, qualidade e aquele toque especial que só quem faz com coração sabe oferecer.</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="work-section">
-            <div class="work-container">
-                <div class="work-text">
-                    <h2>Como trabalhamos?</h2>
-                    <p>Cada doce, bolo e salgado é preparado de forma artesanal, com ingredientes selecionados e muito carinho.</p>
-                    <p>Nossos produtos buscam entregar qualidade e aconchego, cada detalhe importa em nossa produção: um recheio cremoso, a textura macia de nossas tortas e o cuidado na decoração de cada sobremesa.</p>
-                    <p>Produzimos em pequenas quantidades para garantir qualidade e sabor autêntico, mantendo sempre o nosso toque caseiro.</p>
-                </div>
-                <div class="work-image">
-                    <img src="imagens/doce3.webp" alt="Como trabalhamos Pedacinho de Amor">
-                </div>
-            </div>
-        </section>
+        <h2>Sobre Nós</h2>
+        <p>Bem-vindo à nossa história! Somos uma empresa dedicada a criar doces deliciosos com muito amor e cuidado. Nossa missão é trazer alegria e doçura para suas vidas através de produtos artesanais de qualidade.</p>
     </main>
 
-    <script src="js/bootstrap/bootstrap.min.js"></script>
+        <script src="js/bootstrap/bootstrap.min.js"></script>
 
 </body>
 </html>

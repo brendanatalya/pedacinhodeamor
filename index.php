@@ -1,370 +1,126 @@
-<?php if(!isset($_SESSION)) session_start(); ?>
-<!DOCTYPE html>
-<html lang="pt-br">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Pedacinho de Amor</title>
-        <link rel="stylesheet" href="css_pda/bootstrap/css/bootstrap.min.css">
-        <link rel="stylesheet" href="css_pda/style_pda.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<?php
+    include_once __DIR__ . '/inc/header.php';
+?>
+    <h1>Bem-vindo ao Pedacinho de Amor</h1>
+    <p>Neste site voce vera inumeros doces e pratos de dar agua na boca, 
+        com um tempero exclusivom no qual chamamos de amor.</p>
 
-    </head>
+    <h2>Carrossel</h2>
+    <div class="carousel" id="carousel" tabindex="0">
+    <div class="slides">
+        <img src="imagens/doce1.webp" alt="Imagem 1">
+        <img src="imagens/doce2.webp" alt="Imagem 2">
+        <img src="imagens/doce3.webp" alt="Imagem 3">
+    </div>
+    <button class="prev">&#10094;</button>
+    <button class="next">&#10095;</button>
+    <div class="dots"></div>
+    </div>
 
-    <body>
-        <header>
-            
-            <h1>Pedacinho de Amor</h1>
-            <nav>
-                <ul>
-                    <li><a href="index.php">Home</a></li>
-                    <li><a href="paginas/sobrenos.html">Sobre Nós</a></li>
-                    <li><a href="paginas/doces.php">Doces</a></li>
-                    <li><a href="paginas/salgados.php">Salgados</a></li>
-                    <li><a href="paginas/personalizados.php">Personalizados</a></li>
-                    
-                <?php if(!empty($_SESSION['logado']) && $_SESSION['logado'] === true): ?>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    👤 Olá, <?php echo htmlspecialchars($_SESSION['nome']); ?>
-                </a>
+    <!-- parte onde tem os cards de produtos etc etc--> 
+     <div>
+        <div class="card">
+            Croissant 
+            <button class="btn btn-primary">Comprar</button>
+        </div>
 
-                <ul class="dropdown-menu" aria-labelledby="userDropdown">
-                    <li>
-                        <a class="dropdown-item" href="minha_conta.php">
-                            Gerenciar Conta
-                        </a>
-                    </li>
+        <div class="card">
+            Cookies 
+            <button class="btn btn-primary">Comprar</button>
+        </div>
 
-                    <li>
-                        <a class="dropdown-item" href="inc/logout.php">
-                            Sair
-                        </a>
-                    </li>
-                </ul>
-            </li>
-        <?php else: ?>
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalLogin">
-                Login
-            </button>
-        <?php endif; ?>
-        
-                        <li><a href="paginas/carrinho.php"><i class="fas fa-shopping-cart"></i> Carrinho (<?php echo array_sum($_SESSION['cart'] ?? []); ?>)</a></li>
+        <div class="card">
+            Bolos 
+            <button class="btn btn-primary">Comprar</button>
+        </div>
 
-                    
-                </ul>
-            </nav>
-        </header>
-
-        <main>
-            <section class="index-bemvindo">
-                <!-- bloco de bem vindo do site -->
-                <div class="bemvindo-fundo"></div>
+        <div class="card">
+            Brownies 
+            <button class="btn btn-primary">Comprar</button>
+        </div>
+    </div>
+    
 
 
-                <div class="conteudobemvindo">
-                    <p class="bemvindo-subtitulo">Confeitaria artesanal</p>
-                    <h1 class="bemvindo-titulo">
-                        Feito com<br>
-                        <em>amor e cuidado</em>
-                    </h1>
-                    <p class="bemvindo-subtitulo2">
-                        Cada doce é um pedaço de aconchego<br>
-                        e carinho que buscamos levar até você.
-                    </p>
-                    <div class="bemvindo-botoes">
-                        <a href="paginas/personalizados.php" class="botaoclaro">Encomendar</a>
-                        <a href="paginas/sobrenos.php" class="botaoescuro">Sobre nós</a>
-                    </div>
-                </div>
 
-                <!-- linha bonitinha -->
-                <div class="detalhe">
-                    <span></span>
-                </div>
-            </section>
+    <script src="js/bootstrap/bootstrap.min.js"></script>
 
-            <section class="carrossel">
-                <!--carrossel-->
-                <div class="container-xxl">
-                    <div style="margin-bottom: 40px;">
-                        <p class="carrossel-subtitulo">Ficou com curiosidade?</p>
-                        <h2 class="carrossel-titulo">Tenha um <em>gostinho</em> do que temos</h2>
-                    </div>
-                    <div class="carrosselofc" id="carrossel" tabindex="0">
-                        <div class="slides">
-                            <img src="imagens/doce1.webp" alt="Imagem 1">
-                            <img src="imagens/doce2.webp" alt="Imagem 2">
-                            <img src="imagens/doce3.webp" alt="Imagem 3">
-                        </div>
-                        <button class="prev carrossel-btnprev">
-                            <i class="fa-solid fa-angle-left"></i>
-                        </button>
-                        <button class="next carrossel-btnnext">
-                            <i class="fa-solid fa-angle-right"></i>
-                        </button>
-                        <div class="dots"></div>
-                    </div>
-                </div>
-            </section>
+    <script>
+    const carousel = document.getElementById('carousel');
+    const slides = document.querySelector('.slides');
+    const images = document.querySelectorAll('.slides img');
+    const prevBtn = document.querySelector('.prev');
+    const nextBtn = document.querySelector('.next');
+    const dotsContainer = document.querySelector('.dots');
 
-            <!-- transição de cor-->
-            <div style="height: 100px; background: linear-gradient(to bottom, #fdf2f4, #fde0e5);"></div>
+    let index = 0;
+    const total = images.length;
+    let intervalId = null;
 
-            <section class="cards py-5">
-                <!-- PArte dos carss fofinhos rs para desktop aff -->
-                <div class="container-xxl" style="overflow: visible;">
-                    <div>
-                        <p class="carrossel-subtitulo">Campeões de Vendas</p>
-                        <h2 class="carrossel-titulo">Esses fazem <em>sucesso</em> por aqui!</h2>
-                    </div>
-                    
+    function updateDots() {
+        const dots = dotsContainer.querySelectorAll('button');
+        dots.forEach((d, i) => d.classList.toggle('active', i === index));
+    }
 
-                    <div class="product-slider d-none d-lg-flex">
-                        
-                        <div class="product-card" style="background-image: url('imagens/doce1.webp');">
-                            <div class="product-card-body">
-                                <span>Tortas</span>
-                                <button class="btn-confira" src="./paginas/doces.php">Confira</button>
-                            </div>
-                        </div>
-                        
-                        <div class="product-card" style="background-image: url('imagens/doce2.webp');">
-                            <div class="product-card-body">
-                                <span>Salgados</span>
-                                <button class="btn-confira">Confira</button>
-                            </div>
-                        </div>
-                    
-                        <div class="product-card" style="background-image: url('imagens/doce2.webp');">
-                            <div class="product-card-body">
-                                <span>Bolos</span>
-                                <button class="btn-confira">Confira</button>
-                            </div>
-                        </div>
-                    
-                        <div class="product-card" style="background-image: url('imagens/doce3.webp');">
-                            <div class="product-card-body">
-                                <span>Cones</span>
-                                <button class="btn-confira">Confira</button>
-                            </div>
-                        </div>
-                    </div>
+    function showImage(i) {
+        index = (i + total) % total;
+        slides.style.transform = `translateX(${-index * 100}%)`;
+        updateDots();
+    }
 
-                    <!-- carrossel aparece em tela pequena -->
-                    <div id="cards" class="carousel slide product-slider d-lg-none" data-bs-ride="false">
-                        
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <div class="product-card" style="background-image: url('imagens/doce1.webp');">
-                                    <div class="product-card-body">
-                                        <span>Tortas</span>
-                                        <button class="btn-confira" src="./paginas/doces.php">Confira</button>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="carousel-item">
-                                <div class="product-card" style="background-image: url('imagens/doce2.webp');">
-                                    <div class="product-card-body">
-                                        <span>Salgados</span>
-                                        <button class="btn-confira">Confira</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <div class="product-card" style="background-image: url('imagens/doce2.webp');">
-                                    <div class="product-card-body">
-                                        <span>Bolos</span>
-                                        <button class="btn-confira">Confira</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <div class="product-card" style="background-image: url('imagens/doce3.webp');">
-                                    <div class="product-card-body">
-                                        <span>Cones</span>
-                                        <button class="btn-confira">Confira</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+    // Prev / Next
+    prevBtn.addEventListener('click', () => showImage(index - 1));
+    nextBtn.addEventListener('click', () => showImage(index + 1));
 
-                        <button class="carrossel-btnprev carousel-control-prev" type="button" data-bs-target="#cards" data-bs-slide="prev">
-                            <i class="fa-solid fa-angle-left"></i>
-                        </button>
-                        <button class="carrossel-btnnext carousel-control-next" type="button" data-bs-target="#cards" data-bs-slide="next">
-                            <i class="fa-solid fa-angle-right"></i>
-                        </button>
-                    </div>
-                    
-                </div>
-            </section>
+    // Create dots
+    for (let i = 0; i < total; i++) {
+        const btn = document.createElement('button');
+        btn.setAttribute('aria-label', `Ir para slide ${i+1}`);
+        btn.addEventListener('click', () => showImage(i));
+        dotsContainer.appendChild(btn);
+    }
 
-            <!-- transição de cor-->
-            <div style="height: 100px; background: linear-gradient(to top, #fdf2f4, #fde0e5);"></div>
+    // Autoplay with pause on hover
+    function startAutoplay() { intervalId = setInterval(() => showImage(index + 1), 4000); }
+    function stopAutoplay() { if (intervalId) { clearInterval(intervalId); intervalId = null; } }
 
-            <section class="feedbacks py-5">
-                <!-- feedbacks que so da b.o-->
-                <div class="container-xxl">
-                    <div style="margin-bottom: 40px;">
-                        <p class="carrossel-subtitulo">Depoimentos</p>
-                        <h2 class="carrossel-titulo">O que nossos <em>clientes</em> dizem sobre nós?</h2>
-                    </div>
+    carousel.addEventListener('mouseenter', stopAutoplay);
+    carousel.addEventListener('mouseleave', startAutoplay);
 
-                    <div class="feedbacks-wrapper">
-                        <button class="feedback-arrow prev-feedback" type="button" aria-label="Feedback anterior">&#10094;</button>
-                        <div class="feedbacks-carrossel-track">
-                            <div class="feedbacks-carrossel" id="feedbackscarrossel">
-                                <div class="feedback-card feedback-card-large">
-                                    <div class="feedback-user">
-                                        <svg class="feedback-avatar" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="23" cy="23" r="23" fill="#e8d5f0"/><circle cx="23" cy="18" r="8" fill="#a855f7"/><ellipse cx="23" cy="36" rx="13" ry="8" fill="#a855f7"/></svg>
-                                        <div class="feedback-info">
-                                            <h4>Gabriela Ruiz</h4>
-                                            <p>@gabrielaclientefiel</p>
-                                        </div>
-                                    </div>
-                                    <p class="feedback-text">adoro a qualidade e rapidez de entrega. Pedi um bolo pro aniversario do meu filho, e chegou rapidinho, estava impecável, todo mundo amou!!</p>
-                                </div>
+    // Keyboard accessibility
+    carousel.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') showImage(index - 1);
+        if (e.key === 'ArrowRight') showImage(index + 1);
+    });
 
-                                <div class="feedback-card feedback-card-large">
-                                    <div class="feedback-user">
-                                        <svg class="feedback-avatar" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="23" cy="23" r="23" fill="#e8d5f0"/><circle cx="23" cy="18" r="8" fill="#a855f7"/><ellipse cx="23" cy="36" rx="13" ry="8" fill="#a855f7"/></svg>
-                                        <div class="feedback-info">
-                                            <h4>Gabriela Ruiz</h4>
-                                            <p>@gabrielaclientefiel</p>
-                                        </div>
-                                    </div>
-                                    <p class="feedback-text">adoro a qualidade e rapidez de entrega. Pedi um bolo pro aniversario do meu filho, e chegou rapidinho, estava impecável, todo mundo amou!!</p>
-                                </div>
+    // Init
+    showImage(0);
+    startAutoplay();
+    </script>
+             
+<!-- MODAL -->
+<div class="modal fade" id="modalLogin" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
 
-                                <div class="feedback-card feedback-card-large">
-                                    <div class="feedback-user">
-                                        <svg class="feedback-avatar" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="23" cy="23" r="23" fill="#e8d5f0"/><circle cx="23" cy="18" r="8" fill="#a855f7"/><ellipse cx="23" cy="36" rx="13" ry="8" fill="#a855f7"/></svg>
-                                        <div class="feedback-info">
-                                            <h4>Gabriela Ruiz</h4>
-                                            <p>@gabrielaclientefiel</p>
-                                        </div>
-                                    </div>
-                                    <p class="feedback-text">adoro a qualidade e rapidez de entrega. Pedi um bolo pro aniversario do meu filho, e chegou rapidinho, estava impecável, todo mundo amou!!</p>
-                                </div>
+      <div class="modal-header">
+        <h5 class="modal-title">Login</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
 
-                            <div class="feedback-card feedback-card-large">
-                                    <div class="feedback-user">
-                                        <svg class="feedback-avatar" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="23" cy="23" r="23" fill="#e8d5f0"/><circle cx="23" cy="18" r="8" fill="#a855f7"/><ellipse cx="23" cy="36" rx="13" ry="8" fill="#a855f7"/></svg>
-                                        <div class="feedback-info">
-                                            <h4>Gabriela Ruiz</h4>
-                                            <p>@gabrielaclientefiel</p>
-                                        </div>
-                                    </div>
-                                    <p class="feedback-text">adoro a qualidade e rapidez de entrega. Pedi um bolo pro aniversario do meu filho, e chegou rapidinho, estava impecável, todo mundo amou!!</p>
-                                </div>
-                            </div>
-                        </div>
-                        <button class="feedback-arrow next-feedback" type="button" aria-label="Próximo feedback">&#10095;</button>
-                    </div>
-                </div>
-            </section>
+      <div class="modal-body">
 
-        </main>
+        <!-- Aqui o login.html será carregado -->
+        <iframe src="login.html" width="100%" height="300" style="border:none;"></iframe>
 
+      </div>
 
-        <script src="js/bootstrap/bootstrap.bundle.min.js"></script>
-
-        <?php include 'inc/modal.php'; ?>
-        
-        <script>
-            // --- CARROSSEL PRINCIPAL ---
-            const carrossel = document.getElementById('carrossel');
-            const slides = document.querySelector('.slides');
-            const images = document.querySelectorAll('.slides img');
-            const prevBtn = document.querySelector('.prev');
-            const nextBtn = document.querySelector('.next');
-            const dotsContainer = document.querySelector('.dots');
-
-            let index = 0;
-            const total = images.length;
-            let intervalId = null;
-
-            function updateDots() {
-                const dots = dotsContainer.querySelectorAll('button');
-                dots.forEach((d, i) => d.classList.toggle('active', i === index));
-            }
-
-            function showImage(i) {
-                index = (i + total) % total;
-                slides.style.transform = `translateX(${-index * 100}%)`;
-                updateDots();
-            }
-
-            prevBtn.addEventListener('click', () => showImage(index - 1));
-            nextBtn.addEventListener('click', () => showImage(index + 1));
-
-            for (let i = 0; i < total; i++) {
-                const btn = document.createElement('button');
-                btn.addEventListener('click', () => showImage(i));
-                dotsContainer.appendChild(btn);
-            }
-
-            function startAutoplay() { intervalId = setInterval(() => showImage(index + 1), 4000); }
-            function stopAutoplay() { clearInterval(intervalId); }
-
-            carrossel.addEventListener('mouseenter', stopAutoplay);
-            carrossel.addEventListener('mouseleave', startAutoplay);
-            showImage(0);
-            startAutoplay();
-
-            // --- FEEDBACKS (2 cards visíveis, avança 1 por vez) ---
-            const feedbackscarrossel = document.getElementById('feedbackscarrossel');
-            const feedbackCards     = feedbackscarrossel ? feedbackscarrossel.querySelectorAll('.feedback-card') : [];
-            const prevFeedbackBtn   = document.querySelector('.prev-feedback');
-            const nextFeedbackBtn   = document.querySelector('.next-feedback');
-
-            let feedbackIndex    = 0;
-            let feedbackInterval = null;
-
-            // Quantos cards ficam visíveis de uma vez (muda no mobile via JS)
-            function visibleCount() {
-                return 1;
-            }
-
-            function maxIndex() {
-                return Math.max(0, feedbackCards.length - visibleCount());
-            }
-
-            function showFeedback(i) {
-                feedbackIndex = Math.max(0, Math.min(i, maxIndex()));
-                const track = feedbackscarrossel.parentElement;
-                const trackWidth = track ? track.clientWidth : 0;
-                const offset = feedbackIndex * trackWidth;
-                feedbackscarrossel.style.transform = `translateX(-${offset}px)`;
-            }
-
-            function resetFeedbackAutoplay() {
-                clearInterval(feedbackInterval);
-                feedbackInterval = setInterval(() => {
-                    const next = feedbackIndex >= maxIndex() ? 0 : feedbackIndex + 1;
-                    showFeedback(next);
-                }, 6000);
-            }
-
-            if (prevFeedbackBtn) {
-                prevFeedbackBtn.addEventListener('click', () => {
-                    showFeedback(feedbackIndex - 1);
-                    resetFeedbackAutoplay();
-                });
-            }
-
-            if (nextFeedbackBtn) {
-                nextFeedbackBtn.addEventListener('click', () => {
-                    showFeedback(feedbackIndex + 1);
-                    resetFeedbackAutoplay();
-                });
-            }
-
-            window.addEventListener('resize', () => showFeedback(feedbackIndex));
-            showFeedback(0);
-            resetFeedbackAutoplay(); 
-        </script>
-    </body>
+    </div>
+  </div>
+</div> 
+<?php
+    include_once __DIR__ .'/inc/footer.php';
+?>
+   
+</body>
 </html>
