@@ -73,8 +73,8 @@
                         e carinho que buscamos levar até você.
                     </p>
                     <div class="bemvindo-botoes">
-                        <a href="doces.php" class="botaoclaro">Encomendar</a>
-                        <a href="sobrenos.html" class="botaoescuro">Sobre nós</a>
+                        <a href="paginas/personalizados.php" class="botaoclaro">Encomendar</a>
+                        <a href="paginas/sobrenos.php" class="botaoescuro">Sobre nós</a>
                     </div>
                 </div>
 
@@ -124,14 +124,14 @@
                         
                         <div class="product-card" style="background-image: url('imagens/doce1.webp');">
                             <div class="product-card-body">
-                                <span>Croissants</span>
+                                <span>Tortas</span>
                                 <button class="btn-confira" src="./paginas/doces.php">Confira</button>
                             </div>
                         </div>
                         
                         <div class="product-card" style="background-image: url('imagens/doce2.webp');">
                             <div class="product-card-body">
-                                <span>Cookies</span>
+                                <span>Salgados</span>
                                 <button class="btn-confira">Confira</button>
                             </div>
                         </div>
@@ -145,7 +145,7 @@
                     
                         <div class="product-card" style="background-image: url('imagens/doce3.webp');">
                             <div class="product-card-body">
-                                <span>Brownies</span>
+                                <span>Cones</span>
                                 <button class="btn-confira">Confira</button>
                             </div>
                         </div>
@@ -158,7 +158,7 @@
                             <div class="carousel-item active">
                                 <div class="product-card" style="background-image: url('imagens/doce1.webp');">
                                     <div class="product-card-body">
-                                        <span>Croissants</span>
+                                        <span>Tortas</span>
                                         <button class="btn-confira" src="./paginas/doces.php">Confira</button>
                                     </div>
                                 </div>
@@ -167,7 +167,7 @@
                             <div class="carousel-item">
                                 <div class="product-card" style="background-image: url('imagens/doce2.webp');">
                                     <div class="product-card-body">
-                                        <span>Cookies</span>
+                                        <span>Salgados</span>
                                         <button class="btn-confira">Confira</button>
                                     </div>
                                 </div>
@@ -183,7 +183,7 @@
                             <div class="carousel-item">
                                 <div class="product-card" style="background-image: url('imagens/doce3.webp');">
                                     <div class="product-card-body">
-                                        <span>Brownies</span>
+                                        <span>Cones</span>
                                         <button class="btn-confira">Confira</button>
                                     </div>
                                 </div>
