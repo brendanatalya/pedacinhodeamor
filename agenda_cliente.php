@@ -1,9 +1,8 @@
 <?php 
 if (!isset($_SESSION)) session_start();
 
-// Verificar se usuário está logado como cliente
 if (empty($_SESSION['logado']) || $_SESSION['tipo'] !== 'cliente') {
-    header('Location: ' . dirname(__DIR__) . '/index.php');
+    header('Location: index.php');
     exit;
 }
 
@@ -13,317 +12,248 @@ require_once(DBAPI);
 $usuario_id = $_SESSION['id'];
 $conn = open_database();
 
-// Buscar mes/ano para exibição
-$mes = isset($_GET['mes']) ? (int)$_GET['mes'] : date('m');
-$ano = isset($_GET['ano']) ? (int)$_GET['ano'] : date('Y');
+$mes = isset($_GET['mes']) ? (int)$_GET['mes'] : (int)date('m');
+$ano = isset($_GET['ano']) ? (int)$_GET['ano'] : (int)date('Y');
+if ($mes < 1 || $mes > 12) $mes = (int)date('m');
+if ($ano < 2020 || $ano > 2035) $ano = (int)date('Y');
 
-// Validar mes e ano
-if ($mes < 1 || $mes > 12) $mes = date('m');
-if ($ano < 2020 || $ano > 2030) $ano = date('Y');
+$mesFormatado = str_pad($mes, 2, '0', STR_PAD_LEFT);
+$data_inicio  = "$ano-$mesFormatado-01";
+$data_fim     = date('Y-m-t', strtotime($data_inicio));
 
-// Buscar agendamentos do cliente do mês
-$data_inicio = "$ano-$mes-01";
-$data_fim = date('Y-m-t', strtotime($data_inicio));
-
+// Buscar pedidos do cliente no mês pela data de ENTREGA
 $stmt = $conn->prepare("
-    SELECT 
-        a.*,
-        p.id as pedido_id,
-        p.total
-    FROM agendamentos a
-    INNER JOIN pedidos p ON a.pedido_id = p.id
-    WHERE a.usuario_id = ? AND a.data_agendada BETWEEN ? AND ?
-    ORDER BY a.data_agendada ASC
+    SELECT id, status, tipo, tipo_entrega, valor_total,
+           data_entrega, hora_entrega, observacao
+    FROM pedidos
+    WHERE id_cliente = ?
+      AND DATE(data_entrega) BETWEEN ? AND ?
+    ORDER BY data_entrega ASC
 ");
 $stmt->execute([$usuario_id, $data_inicio, $data_fim]);
-$agendamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$pedidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Agrupar agendamentos por data
-$agendamentos_por_data = [];
-foreach ($agendamentos as $agendamento) {
-    $data = $agendamento['data_agendada'];
-    if (!isset($agendamentos_por_data[$data])) {
-        $agendamentos_por_data[$data] = [];
-    }
-    $agendamentos_por_data[$data][] = $agendamento;
+// Agrupar por data para o calendário
+$pedidos_por_data = [];
+foreach ($pedidos as $p) {
+    $data = date('Y-m-d', strtotime($p['data_entrega']));
+    $pedidos_por_data[$data][] = $p;
 }
 
-// Buscar detalhes do agendamento se solicitado
-$agendamento_detalhes = null;
+// Detalhes de um pedido específico
+$pedido_detalhes = null;
 if (isset($_GET['ver'])) {
-    $agend_id = $_GET['ver'];
+    $id = (int)$_GET['ver'];
     $stmt = $conn->prepare("
-        SELECT 
-            a.*,
-            p.id as pedido_id,
-            p.total,
-            p.observacoes
-        FROM agendamentos a
-        INNER JOIN pedidos p ON a.pedido_id = p.id
-        WHERE a.id = ? AND a.usuario_id = ?
+        SELECT p.*, u.nome, u.telefone, u.endereco
+        FROM pedidos p
+        INNER JOIN usuarios u ON p.id_cliente = u.id
+        WHERE p.id = ? AND p.id_cliente = ?
     ");
-    $stmt->execute([$agend_id, $usuario_id]);
-    $agendamento_detalhes = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-    if ($agendamento_detalhes) {
+    $stmt->execute([$id, $usuario_id]);
+    $pedido_detalhes = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($pedido_detalhes) {
         $stmt = $conn->prepare("
-            SELECT * FROM itens_pedido 
-            WHERE pedido_id = ?
+            SELECT ip.qtd, ip.observacao, pr.nome AS produto_nome
+            FROM itens_pedido ip
+            INNER JOIN produtos pr ON ip.id_produto = pr.id
+            WHERE ip.id_pedido = ?
         ");
-        $stmt->execute([$agendamento_detalhes['pedido_id']]);
-        $agendamento_detalhes['itens'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $stmt->execute([$id]);
+        $pedido_detalhes['itens'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
 
 close_database($conn);
+
+$meses_nomes = [
+    1=>'Janeiro',2=>'Fevereiro',3=>'Março',4=>'Abril',5=>'Maio',6=>'Junho',
+    7=>'Julho',8=>'Agosto',9=>'Setembro',10=>'Outubro',11=>'Novembro',12=>'Dezembro'
+];
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minha Agenda - Pedacinho de Amor</title>
+    <title>Meus Pedidos - Pedacinho de Amor</title>
     <link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/style_pda.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .cal-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 4px; }
+        .cal-header { background: #FBB6CE; border-radius: 10px; text-align: center;
+                      font-weight: 700; font-size: 13px; padding: 8px 0; color: #4A332D; }
+        .cal-cell { min-height: 60px; border-radius: 8px; border: 1px solid #f0e9e9;
+                    padding: 4px 6px; font-size: 13px; }
+        .cal-cell.hoje { border: 2px solid #FBB6CE; }
+        .cal-cell.outro-mes { background: #fafafa; }
+        .cal-num { font-weight: 600; color: #61463B; }
+        .cal-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%;
+                   margin: 1px; }
+        .dot-retirada { background: #DD6B20; }
+        .dot-entrega  { background: #D53F8C; }
+        .badge-status-pendente    { background:#FFF4E6; color:#DD6B20; }
+        .badge-status-confirmado  { background:#EAF3DE; color:#3B6D11; }
+        .badge-status-em_preparacao { background:#E6F1FB; color:#185FA5; }
+        .badge-status-pronto      { background:#d1fae5; color:#065f46; }
+        .badge-status-entregue    { background:#EAF3DE; color:#3B6D11; }
+        .badge-status-cancelado   { background:#FCEBEB; color:#A32D2D; }
+    </style>
 </head>
 <body>
     <?php include 'inc/header.php'; ?>
 
     <div class="container mt-5 mb-5">
-        
-        <h2 class="mb-4">
-            <i class="fas fa-calendar"></i> Minha Agenda de Entregas/Retiradas
-        </h2>
+        <h2 class="mb-4"><i class="fas fa-calendar-alt me-2" style="color:#FBB6CE"></i> Meus Agendamentos</h2>
 
-        <?php if ($agendamento_detalhes): ?>
-            <!-- DETALHES DO AGENDAMENTO -->
-            <div class="card mb-4">
-                <div class="card-header" style="background-color: #f5c2d6;">
-                    <h5 class="mb-0">Detalhes do Agendamento</h5>
+        <?php if ($pedido_detalhes): ?>
+
+            <!-- DETALHES DO PEDIDO -->
+            <div class="card shadow-sm mb-4" style="border-radius:16px; border:none;">
+                <div class="card-header" style="background:#FBB6CE; border-radius:16px 16px 0 0;">
+                    <h5 class="mb-0" style="color:#4A332D;">Pedido #<?php echo $pedido_detalhes['id']; ?></h5>
                 </div>
                 <div class="card-body">
-                    <div class="row">
+                    <div class="row mb-3">
                         <div class="col-md-6">
-                            <h6>Informações do Agendamento</h6>
-                            <p>
-                                <strong>Data Agendada:</strong> <?php echo date('d/m/Y', strtotime($agendamento_detalhes['data_agendada'])); ?><br>
-                                <strong>Tipo:</strong> 
-                                <span class="badge <?php echo $agendamento_detalhes['tipo'] === 'entrega' ? 'badge-entrega' : 'badge-retirada'; ?>">
-                                    <?php echo ucfirst($agendamento_detalhes['tipo']); ?>
-                                </span><br>
-                                <strong>Status:</strong> 
-                                <span class="badge bg-info"><?php echo ucfirst($agendamento_detalhes['status']); ?></span><br>
-                                
-                                <?php if ($agendamento_detalhes['tipo'] === 'retirada'): ?>
-                                    <strong>Hora da Retirada:</strong> 
-                                    <?php echo $agendamento_detalhes['hora_retirada'] ? date('H:i', strtotime($agendamento_detalhes['hora_retirada'])) : 'A confirmar'; ?><br>
-                                <?php else: ?>
-                                    <strong>Hora da Entrega:</strong> 
-                                    <?php echo $agendamento_detalhes['hora_entrega'] ? date('H:i', strtotime($agendamento_detalhes['hora_entrega'])) : 'A confirmar'; ?><br>
-                                    <strong>Local:</strong> 
-                                    <?php echo htmlspecialchars($agendamento_detalhes['localizacao'] ?? 'Seu endereço cadastrado'); ?><br>
-                                <?php endif; ?>
+                            <p class="mb-1"><strong>Data de entrega/retirada:</strong><br>
+                                <?php echo date('d/m/Y', strtotime($pedido_detalhes['data_entrega'])); ?>
+                                às <?php echo date('H:i', strtotime($pedido_detalhes['hora_entrega'])); ?>
                             </p>
+                            <p class="mb-1"><strong>Tipo:</strong>
+                                <?php echo ucfirst($pedido_detalhes['tipo_entrega']); ?>
+                            </p>
+                            <?php if ($pedido_detalhes['tipo_entrega'] === 'entrega'): ?>
+                                <p class="mb-1"><strong>Endereço:</strong> <?php echo htmlspecialchars($pedido_detalhes['endereco']); ?></p>
+                            <?php endif; ?>
                         </div>
                         <div class="col-md-6">
-                            <h6>Informações do Pedido</h6>
-                            <p>
-                                <strong>ID do Pedido:</strong> #<?php echo $agendamento_detalhes['pedido_id']; ?><br>
-                                <strong>Total:</strong> <span class="badge bg-success">R$ <?php echo number_format($agendamento_detalhes['total'], 2, ',', '.'); ?></span>
+                            <p class="mb-1"><strong>Status:</strong>
+                                <span class="badge badge-status-<?php echo $pedido_detalhes['status']; ?>" style="padding:4px 10px; border-radius:8px; font-size:13px;">
+                                    <?php echo ucfirst(str_replace('_',' ',$pedido_detalhes['status'])); ?>
+                                </span>
                             </p>
+                            <p class="mb-1"><strong>Total:</strong> R$ <?php echo number_format($pedido_detalhes['valor_total'],2,',','.'); ?></p>
+                            <?php if (!empty($pedido_detalhes['observacao'])): ?>
+                                <p class="mb-1"><strong>Obs:</strong> <?php echo htmlspecialchars($pedido_detalhes['observacao']); ?></p>
+                            <?php endif; ?>
                         </div>
                     </div>
 
-                    <hr>
-
-                    <h6>Itens do Pedido</h6>
-                    <div class="table-responsive">
-                        <table class="table table-sm table-bordered">
-                            <thead class="table-light">
-                                <tr>
-                                    <th>Produto</th>
-                                    <th>Qtd</th>
-                                    <th>Detalhes</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($agendamento_detalhes['itens'] as $item): ?>
-                                    <tr>
-                                        <td><?php echo htmlspecialchars($item['produto_id']); ?></td>
-                                        <td><?php echo $item['quantidade']; ?></td>
-                                        <td>
-                                            <small>
-                                                <?php if ($item['sabor_massa']): ?>
-                                                    <br><strong>Massa:</strong> <?php echo htmlspecialchars($item['sabor_massa']); ?>
-                                                <?php endif; ?>
-                                                <?php if ($item['sabor_recheio']): ?>
-                                                    <br><strong>Recheio:</strong> <?php echo htmlspecialchars($item['sabor_recheio']); ?>
-                                                <?php endif; ?>
-                                                <?php if ($item['topping']): ?>
-                                                    <br><strong>Topping:</strong> <?php echo htmlspecialchars($item['topping']); ?>
-                                                <?php endif; ?>
-                                            </small>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <?php if ($agendamento_detalhes['observacoes']): ?>
-                        <div class="alert alert-info">
-                            <strong>Observações:</strong> <?php echo htmlspecialchars($agendamento_detalhes['observacoes']); ?>
-                        </div>
+                    <?php if (!empty($pedido_detalhes['itens'])): ?>
+                        <h6 class="mt-3">Itens</h6>
+                        <ul class="list-group list-group-flush">
+                            <?php foreach ($pedido_detalhes['itens'] as $item): ?>
+                                <li class="list-group-item px-0">
+                                    <strong><?php echo $item['qtd']; ?>x <?php echo htmlspecialchars($item['produto_nome']); ?></strong>
+                                    <?php if (!empty($item['observacao'])): ?>
+                                        <br><small class="text-muted"><?php echo htmlspecialchars($item['observacao']); ?></small>
+                                    <?php endif; ?>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
                     <?php endif; ?>
 
-                    <a href="<?php echo BASEURL; ?>agenda_cliente.php" class="btn btn-secondary">
+                    <a href="agenda_cliente.php?mes=<?php echo $mes; ?>&ano=<?php echo $ano; ?>" class="btn btn-secondary mt-3">
                         <i class="fas fa-arrow-left"></i> Voltar
                     </a>
                 </div>
             </div>
 
         <?php else: ?>
+
             <!-- CALENDÁRIO -->
             <div class="row">
-                <div class="col-md-9">
-                    <div class="calendar-container">
-                        <div class="calendar-header">
-                            <div>
-                                <h5><?php echo strftime('%B de %Y', strtotime("$ano-$mes-01")); ?></h5>
-                            </div>
-                            <div class="calendar-nav">
-                                <a href="?mes=<?php echo $mes == 1 ? 12 : $mes - 1; ?>&ano=<?php echo $mes == 1 ? $ano - 1 : $ano; ?>" class="btn btn-sm btn-secondary">
-                                    <i class="fas fa-chevron-left"></i> Anterior
-                                </a>
-                                <a href="?mes=<?php echo date('m'); ?>&ano=<?php echo date('Y'); ?>" class="btn btn-sm btn-outline-secondary">
-                                    Hoje
-                                </a>
-                                <a href="?mes=<?php echo $mes == 12 ? 1 : $mes + 1; ?>&ano=<?php echo $mes == 12 ? $ano + 1 : $ano; ?>" class="btn btn-sm btn-secondary">
-                                    Próximo <i class="fas fa-chevron-right"></i>
-                                </a>
-                            </div>
+                <div class="col-md-8">
+                    <div class="card shadow-sm p-4 mb-4" style="border-radius:16px; border:none;">
+                        <!-- Navegação -->
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <a href="?mes=<?php echo $mes==1?12:$mes-1; ?>&ano=<?php echo $mes==1?$ano-1:$ano; ?>" class="btn btn-outline-secondary btn-sm">
+                                <i class="fas fa-chevron-left"></i>
+                            </a>
+                            <strong><?php echo $meses_nomes[$mes].' de '.$ano; ?></strong>
+                            <a href="?mes=<?php echo $mes==12?1:$mes+1; ?>&ano=<?php echo $mes==12?$ano+1:$ano; ?>" class="btn btn-outline-secondary btn-sm">
+                                <i class="fas fa-chevron-right"></i>
+                            </a>
                         </div>
 
-                        <div class="calendar-grid">
-                            <!-- Cabeçalho dos dias da semana -->
-                            <?php 
-                            $dias_semana = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
-                            foreach ($dias_semana as $dia): 
-                            ?>
-                                <div class="calendar-cell calendar-cell-header"><?php echo substr($dia, 0, 3); ?></div>
+                        <!-- Cabeçalho dias -->
+                        <div class="cal-grid mb-2">
+                            <?php foreach (['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'] as $d): ?>
+                                <div class="cal-header"><?php echo $d; ?></div>
                             <?php endforeach; ?>
+                        </div>
 
-                            <!-- Dias do mês -->
+                        <!-- Dias do mês -->
+                        <div class="cal-grid">
                             <?php
-                            $primeiro_dia = strtotime("$ano-$mes-01");
-                            $ultimo_dia = strtotime(date('Y-m-t', $primeiro_dia));
-                            $dia_semana_inicio = date('w', $primeiro_dia);
-                            $num_dias = date('d', $ultimo_dia);
+                            $primeiroDia   = strtotime("$ano-$mesFormatado-01");
+                            $inicioSemana  = (int)date('w', $primeiroDia);
+                            $totalDias     = (int)date('t', $primeiroDia);
+                            $hoje          = date('Y-m-d');
 
-                            // Preencher dias do mês anterior
-                            for ($i = 0; $i < $dia_semana_inicio; $i++) {
-                                echo '<div class="calendar-cell other-month"></div>';
-                            }
+                            for ($i = 0; $i < $inicioSemana; $i++) echo '<div class="cal-cell outro-mes"></div>';
 
-                            // Preencher dias do mês
-                            for ($dia = 1; $dia <= $num_dias; $dia++) {
-                                $data_atual = "$ano-$mes-" . str_pad($dia, 2, '0', STR_PAD_LEFT);
-                                $class = date('Y-m-d') === $data_atual ? 'today' : '';
-                                echo '<div class="calendar-cell ' . $class . '">';
-                                echo '<div class="calendar-cell-date">' . $dia . '</div>';
-                                
-                                // Mostrar agendamentos do dia
-                                if (isset($agendamentos_por_data[$data_atual])) {
-                                    foreach ($agendamentos_por_data[$data_atual] as $agend) {
-                                        $classe_agend = $agend['tipo'] === 'entrega' ? 'agendamento-entrega' : '';
-                                        echo '<a href="?ver=' . $agend['id'] . '" class="agendamento-item ' . $classe_agend . '" style="text-decoration: none; color: inherit;">';
-                                        echo '<i class="fas fa-' . ($agend['tipo'] === 'entrega' ? 'truck' : 'shopping-bag') . '"></i> ';
-                                        echo ucfirst($agend['tipo']);
-                                        echo '</a>';
-                                    }
-                                }
-                                echo '</div>';
-                            }
-
-                            // Preencher dias do próximo mês
-                            $dias_restantes = (7 - (($dia_semana_inicio + $num_dias) % 7)) % 7;
-                            for ($i = 0; $i < $dias_restantes; $i++) {
-                                echo '<div class="calendar-cell other-month"></div>';
-                            }
+                            for ($dia = 1; $dia <= $totalDias; $dia++):
+                                $dataLoop = "$ano-$mesFormatado-" . str_pad($dia,2,'0',STR_PAD_LEFT);
+                                $eHoje = $dataLoop === $hoje ? 'hoje' : '';
                             ?>
+                                <div class="cal-cell <?php echo $eHoje; ?>">
+                                    <div class="cal-num"><?php echo $dia; ?></div>
+                                    <?php if (!empty($pedidos_por_data[$dataLoop])): ?>
+                                        <?php foreach ($pedidos_por_data[$dataLoop] as $p): ?>
+                                            <a href="?ver=<?php echo $p['id']; ?>&mes=<?php echo $mes; ?>&ano=<?php echo $ano; ?>" style="text-decoration:none;">
+                                                <span class="cal-dot <?php echo $p['tipo_entrega']==='entrega' ? 'dot-entrega' : 'dot-retirada'; ?>"
+                                                      title="Pedido #<?php echo $p['id']; ?> — <?php echo ucfirst($p['tipo_entrega']); ?>"></span>
+                                            </a>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                </div>
+                            <?php endfor; ?>
+                        </div>
+
+                        <!-- Legenda -->
+                        <div class="d-flex gap-3 mt-3" style="font-size:12px; color:#8A736E;">
+                            <span><span class="cal-dot dot-entrega"></span> Entrega</span>
+                            <span><span class="cal-dot dot-retirada"></span> Retirada</span>
                         </div>
                     </div>
                 </div>
 
                 <!-- SIDEBAR -->
-                <div class="col-md-3">
-                    <div class="sidebar">
-                        <h6><i class="fas fa-info-circle"></i> Resumo</h6>
-                        
-                        <div class="mb-3">
-                            <p>
-                                <strong>Total de Agendamentos:</strong><br>
-                                <?php echo count($agendamentos); ?>
-                            </p>
-                        </div>
+                <div class="col-md-4">
+                    <div class="card shadow-sm p-3" style="border-radius:16px; border:none;">
+                        <h6 class="mb-3"><i class="fas fa-list me-1" style="color:#FBB6CE"></i> Pedidos do mês</h6>
 
-                        <h6 class="mt-4"><i class="fas fa-tasks"></i> Por Tipo</h6>
-                        <p>
-                            <span class="badge badge-retirada">
-                                Retiradas: <?php echo count(array_filter($agendamentos, function($a) { return $a['tipo'] === 'retirada'; })); ?>
-                            </span>
-                        </p>
-                        <p>
-                            <span class="badge badge-entrega">
-                                Entregas: <?php echo count(array_filter($agendamentos, function($a) { return $a['tipo'] === 'entrega'; })); ?>
-                            </span>
-                        </p>
-
-                        <h6 class="mt-4"><i class="fas fa-clock"></i> Próximos Agendamentos</h6>
-                        <div style="max-height: 300px; overflow-y: auto;">
-                            <?php 
-                            $agendamentos_proximos = array_slice($agendamentos, 0, 5);
-                            if ($agendamentos_proximos):
-                                foreach ($agendamentos_proximos as $agend): 
-                            ?>
-                                <a href="?ver=<?php echo $agend['id']; ?>" style="text-decoration: none; color: inherit;">
-                                    <div style="background: #f8f9fa; padding: 10px; border-radius: 4px; margin-bottom: 8px;">
-                                        <small>
-                                            <strong><?php echo ucfirst($agend['tipo']); ?></strong><br>
-                                            <i class="fas fa-calendar"></i> <?php echo date('d/m/Y', strtotime($agend['data_agendada'])); ?><br>
-                                            <i class="fas fa-clock"></i> 
-                                            <?php 
-                                            if ($agend['tipo'] === 'entrega') {
-                                                echo $agend['hora_entrega'] ? date('H:i', strtotime($agend['hora_entrega'])) : 'Sem horário';
-                                            } else {
-                                                echo $agend['hora_retirada'] ? date('H:i', strtotime($agend['hora_retirada'])) : 'Sem horário';
-                                            }
-                                            ?>
-                                            <br>
-                                            <span class="badge <?php echo $agend['tipo'] === 'entrega' ? 'badge-entrega' : 'badge-retirada'; ?>">
-                                                <?php echo ucfirst($agend['status']); ?>
+                        <?php if (!empty($pedidos)): ?>
+                            <?php foreach ($pedidos as $p): ?>
+                                <a href="?ver=<?php echo $p['id']; ?>&mes=<?php echo $mes; ?>&ano=<?php echo $ano; ?>" style="text-decoration:none; color:inherit;">
+                                    <div class="mb-2 p-2" style="border-radius:10px; border:1px solid #f0e9e9;">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <strong style="font-size:13px;">Pedido #<?php echo $p['id']; ?></strong>
+                                            <span class="badge badge-status-<?php echo $p['status']; ?>" style="padding:3px 8px; border-radius:6px; font-size:11px;">
+                                                <?php echo ucfirst(str_replace('_',' ',$p['status'])); ?>
                                             </span>
-                                        </small>
+                                        </div>
+                                        <div style="font-size:12px; color:#8A736E; margin-top:2px;">
+                                            <i class="fas fa-calendar-day"></i>
+                                            <?php echo date('d/m', strtotime($p['data_entrega'])); ?>
+                                            às <?php echo date('H:i', strtotime($p['hora_entrega'])); ?>
+                                            · <?php echo ucfirst($p['tipo_entrega']); ?>
+                                        </div>
                                     </div>
                                 </a>
-                            <?php 
-                                endforeach;
-                            else:
-                            ?>
-                                <div class="alert alert-info" style="font-size: 12px;">
-                                    Você ainda não tem agendamentos.
-                                </div>
-                            <?php 
-                            endif;
-                            ?>
-                        </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <p class="text-muted small text-center py-3">Nenhum pedido neste mês.</p>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
-        <?php endif; ?>
 
+        <?php endif; ?>
     </div>
 
     <?php include 'inc/footer.php'; ?>

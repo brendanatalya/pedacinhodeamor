@@ -36,8 +36,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $stmt = $conn->prepare("INSERT INTO produtos (nome, descricao, preco, tipo, disponivel, imagem_referencia) VALUES (?, ?, ?, ?, ?, ?)");
             $stmt->execute([$nome, $descricao, $preco, $tipo, $disponivel, $imagem]);
-            $mensagem = 'Produto adicionado com sucesso!';
-            $tipo_mensagem = 'success';
+            $novoId = $conn->lastInsertId();
+            close_database($conn);
+            header('Location: ?editar=' . $novoId . '&novo=1');
+            exit;
         }
         
         elseif ($acao === 'editar') {
@@ -88,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         elseif ($acao === 'vincular_ingrediente') {
             $stmt = $conn->prepare("
-                INSERT INTO estoque_ingrediente (id, nome,unidade, qtd_estoque, qtd_minima)
+                INSERT INTO produto_ingrediente (id_produto, id_ingrediente, qtd_necessaria)
                 VALUES (?, ?, ?)
                 ON DUPLICATE KEY UPDATE qtd_necessaria = VALUES(qtd_necessaria)
             ");
@@ -98,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         elseif ($acao === 'remover_ingrediente') {
-            $stmt = $conn->prepare("DELETE FROM estoque_ingrediente WHERE id_produto = ? AND id_ingrediente = ?");
+            $stmt = $conn->prepare("DELETE FROM produto_ingrediente WHERE id_produto = ? AND id_ingrediente = ?");
             $stmt->execute([$_POST['id_produto'], $_POST['id_ingrediente']]);
             $mensagem = 'Ingrediente removido!';
             $tipo_mensagem = 'success';
@@ -137,7 +139,7 @@ if (isset($_GET['editar'])) {
 
         $stmt = $conn->prepare("
             SELECT pi.*, ei.nome, ei.unidade
-            FROM estoque_ingrediente
+            FROM produto_ingrediente pi
             INNER JOIN estoque_ingredientes ei ON pi.id_ingrediente = ei.id
             WHERE pi.id_produto = ?
         ");
@@ -165,6 +167,30 @@ if (isset($_GET['editar'])) {
         <div class="alert alert-<?php echo $tipo_mensagem; ?> alert-dismissible fade show" role="alert">
             <?php echo htmlspecialchars($mensagem); ?>
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    <?php endif; ?>
+
+    <?php if (isset($_GET['novo']) && $produto_edicao): ?>
+        <div class="alert alert-success border-0 shadow-sm d-flex align-items-center gap-3 mb-3" style="border-left: 5px solid #198754 !important; border-radius: 12px;">
+            <div style="font-size: 2rem; line-height:1;">🎉</div>
+            <div>
+                <strong>Produto "<?php echo htmlspecialchars($produto_edicao['nome']); ?>" criado com sucesso!</strong><br>
+                <span class="text-muted small">Agora vincule os ingredientes que ele consome para o desconto automático do estoque funcionar.</span>
+            </div>
+        </div>
+        <!-- Passos visuais -->
+        <div class="d-flex align-items-center gap-2 mb-4">
+            <div class="d-flex align-items-center gap-2 px-3 py-2 rounded-pill" style="background:#d1e7dd; font-size:.85rem;">
+                <i class="fas fa-check-circle text-success"></i> <strong>1. Produto criado</strong>
+            </div>
+            <div style="flex:1; height:2px; background:#dee2e6;"></div>
+            <div class="d-flex align-items-center gap-2 px-3 py-2 rounded-pill" style="background:#fff3cd; font-size:.85rem;">
+                <i class="fas fa-mortar-pestle text-warning"></i> <strong>2. Vincular ingredientes</strong> ← você está aqui
+            </div>
+            <div style="flex:1; height:2px; background:#dee2e6;"></div>
+            <div class="d-flex align-items-center gap-2 px-3 py-2 rounded-pill" style="background:#f8f9fa; font-size:.85rem; color:#aaa;">
+                <i class="fas fa-check"></i> 3. Pronto para vender
+            </div>
         </div>
     <?php endif; ?>
 
@@ -231,17 +257,32 @@ if (isset($_GET['editar'])) {
                     </button>
                     
                     <?php if ($produto_edicao): ?>
-                        <a href="<?php echo BASEURL; ?>admin/produtos/" class="btn btn-secondary w-100">
-                            <i class="fas fa-times"></i> Cancelar
-                        </a>
+                        <?php if (isset($_GET['novo'])): ?>
+                            <a href="<?php echo BASEURL; ?>admin/produtos/" class="btn btn-success w-100 mt-1">
+                                <i class="fas fa-check"></i> Concluir e voltar à lista
+                            </a>
+                        <?php else: ?>
+                            <a href="<?php echo BASEURL; ?>admin/produtos/" class="btn btn-secondary w-100">
+                                <i class="fas fa-times"></i> Cancelar
+                            </a>
+                        <?php endif; ?>
                     <?php endif; ?>
                 </form>
             </div>
 
             <!-- SEÇÃO DE INGREDIENTES (só no modo editar) -->
             <?php if ($produto_edicao): ?>
-            <div class="form-section mt-3">
-                <h6><i class="fas fa-mortar-pestle me-2"></i> Ingredientes do Produto</h6>
+            <div class="form-section mt-3 <?php echo isset($_GET['novo']) ? 'border border-warning border-2' : ''; ?>" 
+                 style="<?php echo isset($_GET['novo']) ? 'box-shadow: 0 0 0 3px #fff3cd;' : ''; ?>">
+                <h6 class="d-flex align-items-center gap-2">
+                    <i class="fas fa-mortar-pestle <?php echo isset($_GET['novo']) ? 'text-warning' : ''; ?>"></i>
+                    Ingredientes da Receita
+                    <?php if (isset($_GET['novo'])): ?>
+                        <span class="badge bg-warning text-dark ms-1" style="font-size:.7rem;">Configure agora</span>
+                    <?php else: ?>
+                        <span class="badge bg-secondary ms-1" style="font-size:.7rem;"><?php echo count($ingredientes_vinculados); ?> vinculado(s)</span>
+                    <?php endif; ?> 
+                </h6>
 
                 <?php if (!empty($ingredientes_vinculados)): ?>
                     <table class="table table-sm align-middle mb-3">

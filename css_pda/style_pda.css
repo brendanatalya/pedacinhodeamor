@@ -1887,7 +1887,25 @@ body.bg-confeitaria {
 }
 
 
+
 /*carrosselllllllll*/
+
+
+/* Modal de Avaliação */
+#modalAvaliacao .auth-card {
+    overflow: visible;
+}
+
+#modalAvaliacao .auth-body {
+    overflow-y: auto;
+    max-height: 70vh;
+}
+
+#modalAvaliacao #formAvaliacao {
+    display: block !important;
+}
+
+/*CARROSSELLLLLLLLL*/
 
 .carrossel {
   padding: 80px;
@@ -2617,7 +2635,7 @@ ul li a {
   border-bottom: 2px solid #5a3220; 
   transition: background 0.4s ease;
 }
-/* css card*/
+ css card*/
 .card {
   box-sizing: border-box;
   width: 190px;
@@ -2682,3 +2700,4 @@ ul li a {
     text-align: center;
     background: linear-gradient(135deg, #9D7E6F 0%, #5F4A47 40%, #3D2C2A 75%, #1B0F0F 100%);
 }
+

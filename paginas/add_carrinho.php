@@ -24,7 +24,14 @@ $redirect   = $_POST['redirect'] ?? BASEURL . 'paginas/doces.php';
 // ─── PRODUTO PERSONALIZADO ────────────────────────────────────────────────────
 if ($product_id === 'personalizado') {
 
-    $tipo = trim($_POST['tipo'] ?? '');
+    $tipo          = trim($_POST['tipo']          ?? '');
+    $tema          = trim($_POST['tema']          ?? '');
+    $sabor         = trim($_POST['sabor']         ?? '');
+    $detalhes      = trim($_POST['detalhes']      ?? '');
+    $tamanho       = trim($_POST['tamanho']       ?? '');
+    $cor           = trim($_POST['cor']           ?? '');
+    $data_desejada = trim($_POST['data_desejada'] ?? '');
+    $restricoes    = $_POST['restricoes'] ?? [];
 
     if (empty($tipo)) {
         $_SESSION['cart_message'] = 'Selecione o tipo de produto personalizado.';
@@ -32,86 +39,82 @@ if ($product_id === 'personalizado') {
         exit;
     }
 
-    // Helper: sanitiza um campo de texto simples
-    $s = fn(string $key): string => htmlspecialchars(trim($_POST[$key] ?? ''), ENT_QUOTES, 'UTF-8');
-
-    // Helper: sanitiza um array de checkboxes/tags (enviados como name="campo[]")
-    $arr = function (string $key): array {
-        $raw = $_POST[$key] ?? [];
-        if (!is_array($raw)) return [];
-        return array_map(
-            fn($v) => htmlspecialchars(trim($v), ENT_QUOTES, 'UTF-8'),
-            array_filter($raw, fn($v) => $v !== '')
-        );
-    };
-
-    // Monta o item de acordo com o tipo escolhido
-    $item = [
-        'tipo'     => htmlspecialchars($tipo, ENT_QUOTES, 'UTF-8'),
-        'quantity' => $quantity,
-        'added_at' => date('Y-m-d H:i:s'),
-    ];
-
-    switch ($tipo) {
-
-        case 'bolo':
-            $item['tamanho']    = $s('tamanho');       // "20 fatias" etc.
-            $item['massa']      = $s('massa');
-            $item['recheio']    = $arr('recheio');      // pode ter mais de um
-            $item['cobertura']  = $s('cobertura');
-            $item['tema']       = $s('tema');
-            $item['texto_bolo'] = $s('texto_bolo');
-            $item['restricoes'] = $arr('restricoes');
-            $item['obs']        = $s('obs');
-
-            if (empty($item['tamanho']) || empty($item['massa']) || empty($item['cobertura'])) {
-                $_SESSION['cart_message'] = 'Preencha tamanho, massa e cobertura do bolo.';
-                header('Location: ' . $redirect);
-                exit;
-            }
-            break;
-
-        case 'doce':
-            $item['tipo_doce']  = $s('tipo_doce');
-            $item['sabor']      = $arr('sabor');
-            $item['embalagem']  = $s('embalagem');
-            $item['ocasiao']    = $s('ocasiao');
-            $item['obs']        = $s('obs');
-
-            if (empty($item['tipo_doce'])) {
-                $_SESSION['cart_message'] = 'Selecione o tipo de doce.';
-                header('Location: ' . $redirect);
-                exit;
-            }
-            break;
-
-        case 'salgado':
-            $item['tipo_salgado'] = $s('tipo_salgado');
-            $item['preparo']      = $s('preparo');
-            $item['recheio']      = $arr('recheio');
-            $item['data_evento']  = $s('data_evento');
-            $item['obs']          = $s('obs');
-
-            if (empty($item['tipo_salgado'])) {
-                $_SESSION['cart_message'] = 'Selecione o tipo de salgado.';
-                header('Location: ' . $redirect);
-                exit;
-            }
-            break;
-
-        default:
-            $_SESSION['cart_message'] = 'Tipo de produto inválido.';
+    // Validação específica por tipo
+    if ($tipo === 'doce') {
+        if (empty($sabor)) {
+            $_SESSION['cart_message'] = 'Por favor, informe o sabor do doce.';
             header('Location: ' . $redirect);
             exit;
+        }
+    } elseif ($tipo === 'salgado') {
+        if (empty($sabor) || empty($tema)) {
+            $_SESSION['cart_message'] = 'Por favor, selecione o tipo de salgado e o recheio.';
+            header('Location: ' . $redirect);
+            exit;
+        }
+    } elseif ($tipo === 'bolo') {
+        if (empty($tema) || empty($sabor)) {
+            $_SESSION['cart_message'] = 'Por favor, preencha o tema/ocasião e o sabor da massa do bolo.';
+            header('Location: ' . $redirect);
+            exit;
+        }
+    } else {
+        $_SESSION['cart_message'] = 'Tipo de produto personalizado inválido.';
+        header('Location: ' . $redirect);
+        exit;
     }
 
-    // Personalizados ficam em $_SESSION['cart_personalizado'] (lista separada
-    // pois cada item tem configuração própria e não tem ID numérico de produto)
+    // Upload de imagem de referência
+    $imagem_path = null;
+    if (!empty($_FILES['imagem_referencia']['tmp_name'])) {
+        $file    = $_FILES['imagem_referencia'];
+        $allowed = ['image/jpeg', 'image/png', 'image/webp'];
+        $finfo   = finfo_open(FILEINFO_MIME_TYPE);
+        $mime    = finfo_file($finfo, $file['tmp_name']);
+        finfo_close($finfo);
+
+        if (!in_array($mime, $allowed)) {
+            $_SESSION['cart_message'] = 'Formato de imagem inválido. Use JPG, PNG ou WEBP.';
+            header('Location: ' . $redirect);
+            exit;
+        }
+        if ($file['size'] > 5 * 1024 * 1024) {
+            $_SESSION['cart_message'] = 'Imagem muito grande. Máximo 5MB.';
+            header('Location: ' . $redirect);
+            exit;
+        }
+
+        $ext          = pathinfo($file['name'], PATHINFO_EXTENSION);
+        $nome_arquivo = 'pers_' . uniqid() . '.' . $ext;
+        $destino      = ABSPATH . 'uploads/personalizados/' . $nome_arquivo;
+
+        if (!is_dir(ABSPATH . 'uploads/personalizados/')) {
+            mkdir(ABSPATH . 'uploads/personalizados/', 0755, true);
+        }
+
+        if (move_uploaded_file($file['tmp_name'], $destino)) {
+            $imagem_path = 'uploads/personalizados/' . $nome_arquivo;
+        }
+    }
+
     if (!isset($_SESSION['cart_personalizado'])) {
         $_SESSION['cart_personalizado'] = [];
     }
 
-    $_SESSION['cart_personalizado'][] = $item;
+    $_SESSION['cart_personalizado'][] = [
+        'tipo'          => htmlspecialchars($tipo,          ENT_QUOTES, 'UTF-8'),
+        'tema'          => htmlspecialchars($tema,          ENT_QUOTES, 'UTF-8'),
+        'sabor'         => htmlspecialchars($sabor,         ENT_QUOTES, 'UTF-8'),
+        'detalhes'      => htmlspecialchars($detalhes,      ENT_QUOTES, 'UTF-8'),
+        'tamanho'       => htmlspecialchars($tamanho,       ENT_QUOTES, 'UTF-8'),
+        'cor'           => htmlspecialchars($cor,           ENT_QUOTES, 'UTF-8'),
+        'data_desejada' => htmlspecialchars($data_desejada, ENT_QUOTES, 'UTF-8'),
+        'restricoes'    => array_map(fn($r) => htmlspecialchars($r, ENT_QUOTES, 'UTF-8'), $restricoes),
+        'imagem_path'   => $imagem_path,
+        'quantity'      => $quantity,
+        'added_at'      => date('Y-m-d H:i:s'),
+    ];
+
     $_SESSION['cart_message'] = 'Produto personalizado adicionado ao carrinho!';
     header('Location: ' . $redirect);
     exit;
@@ -150,4 +153,3 @@ $_SESSION['cart'][$product_id] = $current + $quantity;
 $_SESSION['cart_message'] = '"' . htmlspecialchars($produto['nome'], ENT_QUOTES, 'UTF-8') . '" adicionado ao carrinho!';
 header('Location: ' . $redirect);
 exit;
-?>
