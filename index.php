@@ -68,23 +68,6 @@ $stmt->execute();
 $avaliacoes_home = $stmt->fetchAll(PDO::FETCH_ASSOC);
 close_database($conn);
 ?>
-<!DOCTYPE html>
-<html lang="pt-br">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Pedacinho de Amor</title>
-        <link rel="stylesheet" href="css_pda/bootstrap/css/bootstrap.min.css">
-        <link rel="stylesheet" href="css_pda/style_pda.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
-    </head>
-
-<?php if(!isset($_SESSION)) session_start(); 
-    require_once "config.php"; 
-    require_once DBAPI; 
-    include(HEADER_TEMPLATE); ?>
-
 
     <body>
         <main>
@@ -143,27 +126,6 @@ close_database($conn);
             <div style="height: 100px; background: linear-gradient(to bottom, #fdf2f4, #fde0e5);"></div>
 
             <section class="cards py-5">
-
-                <!-- PArte dos carss fofinhos rs -->
-
-                <div class="container position-relative">
-                    <h2 class="text-center mb-4">Esses fazem sucesso por aqui!</h2>
-                    <div class="product-slider-wrapper">
-                        <div class="product-slider">
-                            
-                            <div class="product-card" style="background-image: url('imagens/doce1.webp');">
-                                <div class="product-card-body">
-                                    <span>Croissants</span>
-                                    <button class="btn btn-confira" src="paginas/doces.php">Confira</button>
-                                </div>
-                            </div>
-                            
-                            <div class="product-card" style="background-image: url('imagens/doce2.webp');">
-                                <div class="product-card-body">
-                                    <span>Cookies</span>
-                                    <button class="btn btn-confira">Confira</button>
-                                </div>
-                            </div>
 
                 <!-- PArte dos carss fofinhos rs para desktop aff -->
 
@@ -258,16 +220,6 @@ close_database($conn);
                 </div>
             </section>
 
-            
-            <section class="feedbacks-section py-5">
-                <div class="container">
-                    <div class="feedbacks-header">
-                        <h2>Eles amam! Feedbacks que amamos!</h2>
-                    </div>
-
-                    <?php if (!empty($avaliacoes_home)): ?>
-
-
             <!-- transição de cor-->
             <div style="height: 100px; background: linear-gradient(to top, #fdf2f4, #fde0e5);"></div>
 
@@ -278,7 +230,8 @@ close_database($conn);
                         <p class="carrossel-subtitulo">Depoimentos</p>
                         <h2 class="carrossel-titulo">O que nossos <em>clientes</em> dizem sobre nós?</h2>
                     </div>
-
+                    
+                    <?php if (!empty($avaliacoes_home)): ?>
 
                     <div class="feedbacks-wrapper">
                         <button class="feedback-arrow prev-feedback" type="button" aria-label="Feedback anterior">&#10094;</button>
@@ -311,7 +264,7 @@ close_database($conn);
                         <button class="feedback-arrow next-feedback" type="button" aria-label="Próximo feedback">&#10095;</button>
                     </div>
                     <?php else: ?>
-                    <p class="text-center text-muted py-4">Ainda não há avaliações — seja o primeiro! 🎂</p>
+                        <p class="text-center text-muted py-4">Ainda não há avaliações — seja o primeiro! 🎂</p>
                     <?php endif; ?>
                 </div>
             </section>
