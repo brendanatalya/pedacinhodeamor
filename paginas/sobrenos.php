@@ -1,37 +1,40 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pedacinho de Amor</title>
-   <link rel="stylesheet" href="../css_pda/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css_pda/style_pda.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-</head>
+<?php  
+    require_once "../config.php"; 
+    require_once DBAPI; 
+    include(HEADER_TEMPLATE);
+?>
 <body>
-<header>
-    <h1>Pedacinho de Amor</h1>
-    <nav>
-        <ul>
-            <li><a href="../index.php">Home</a></li>
-            <li><a href="sobrenos.html">Sobre Nós</a></li>
-            <li><a href="doces.php">Doces</a></li>
-            <li><a href="salgados.php">Salgados</a></li>
-            <li><a href="personalizados.php">Personalizados</a></li>
-            <a class="btn btn-primary text-white" href="../index.php" style="text-decoration:none;">
-                Login
-            </a>
-   
-            <button><li><a href="cesta.php">Cesta</a></li></button>
-        </ul>
-    </nav>
-</header>
-
     <main>
+        <section class="sobre-intro">
+                <!-- bloco de bem vindo do site -->
+                <div class="bemvindo-fundo"></div>
+
+
+                <div class="conteudobemvindo">
+                    <p class="bemvindo-subtitulo">Confeitaria artesanal</p>
+                    <h1 class="bemvindo-titulo">
+                        Feito com<br>
+                        <em>amor e cuidado</em>
+                    </h1>
+                    <p class="bemvindo-subtitulo2">
+                        Cada doce é um pedaço de aconchego<br>
+                        e carinho que buscamos levar até você.
+                    </p>
+                    <div class="bemvindo-botoes">
+                        <a href="<?php echo BASEURL; ?>paginas/personalizados.php" class="botaoclaro">Encomendar</a>
+                        <a href="<?php echo BASEURL; ?>paginas/sobrenos.php" class="botaoescuro">Sobre nós</a>
+                    </div>
+                </div>
+
+                <!-- linha bonitinha -->
+                <div class="detalhe">
+                    <span></span>
+                </div>
+            </section>
         <section class="about-section">
             <div class="about-container">
                 <div class="about-image">
-                    <img src="imagens/doce1.webp" alt="Equipe Pedacinho de Amor">
+                    <img src="<?php echo BASEURL; ?>imagens/doce1.webp" alt="Equipe Pedacinho de Amor">
                 </div>
                 <div class="about-text">
                     <h2>Quem somos nós?</h2>
@@ -57,7 +60,7 @@
         </section>
     </main>
 
-    <script src="js/bootstrap/bootstrap.min.js"></script>
+    <?php include(FOOTER_TEMPLATE);?>
 
 </body>
 </html>

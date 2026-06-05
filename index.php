@@ -1,7 +1,8 @@
-<?php if(!isset($_SESSION)) session_start(); 
+<?php  
     require_once "config.php"; 
     require_once DBAPI; 
-    include(HEADER_TEMPLATE); ?>
+    include(HEADER_TEMPLATE);
+?>
 
     <body>
         <main>
@@ -21,8 +22,8 @@
                         e carinho que buscamos levar até você.
                     </p>
                     <div class="bemvindo-botoes">
-                        <a href="paginas/personalizados.php" class="botaoclaro">Encomendar</a>
-                        <a href="paginas/sobrenos.php" class="botaoescuro">Sobre nós</a>
+                        <a href="<?php echo BASEURL; ?>paginas/personalizados.php" class="botaoclaro">Encomendar</a>
+                        <a href="<?php echo BASEURL; ?>paginas/sobrenos.php" class="botaoescuro">Sobre nós</a>
                     </div>
                 </div>
 
@@ -41,9 +42,9 @@
                     </div>
                     <div class="carrosselofc" id="carrossel" tabindex="0">
                         <div class="slides">
-                            <img src="imagens/doce1.webp" alt="Imagem 1">
-                            <img src="imagens/doce2.webp" alt="Imagem 2">
-                            <img src="imagens/doce3.webp" alt="Imagem 3">
+                            <img src="<?php echo BASEURL; ?>imagens/doce1.webp" alt="Imagem 1">
+                            <img src="<?php echo BASEURL; ?>imagens/doce2.webp" alt="Imagem 2">
+                            <img src="<?php echo BASEURL; ?>imagens/doce3.webp" alt="Imagem 3">
                         </div>
                         <button class="prev carrossel-btnprev">
                             <i class="fa-solid fa-angle-left"></i>
@@ -70,36 +71,36 @@
 
                     <div class="product-slider d-none d-lg-flex">
                         
-                        <div class="product-card" style="background-image: url('imagens/doce1.webp');">
+                        <div class="product-card" style="background-image: url('<?php echo BASEURL; ?>imagens/doce1.webp');">
                             <div class="product-card-body">
                                 <span>Tortas</span>
-                                <button class="btn-confira" src="./paginas/doces.php">Confira</button>
+                                <button class="btn-confira" src="<?php echo BASEURL; ?>paginas/doces.php">Confira</button>
                             </div>
                         </div>
                         
-                        <div class="product-card" style="background-image: url('imagens/doce2.webp');">
+                        <div class="product-card" style="background-image: url('<?php echo BASEURL; ?>imagens/doce2.webp');">
                             <div class="product-card-body">
                                 <span>Salgados</span>
-                                <button class="btn-confira">Confira</button>
+                                <button class="btn-confira" src="<?php echo BASEURL; ?>paginas/salgados.php">Confira</button>
                             </div>
                         </div>
                     
-                        <div class="product-card" style="background-image: url('imagens/doce2.webp');">
+                        <div class="product-card" style="background-image: url('<?php echo BASEURL; ?>imagens/doce2.webp');">
                             <div class="product-card-body">
                                 <span>Bolos</span>
-                                <button class="btn-confira">Confira</button>
+                                <button class="btn-confira" src="<?php echo BASEURL; ?>paginas/doces.php">Confira</button>
                             </div>
                         </div>
                     
-                        <div class="product-card" style="background-image: url('imagens/doce3.webp');">
+                        <div class="product-card" style="background-image: url('<?php echo BASEURL; ?>imagens/doce3.webp');">
                             <div class="product-card-body">
                                 <span>Cones</span>
-                                <button class="btn-confira">Confira</button>
+                                <button class="btn-confira" src="<?php echo BASEURL; ?>paginas/personalizados.php">Confira</button>
                             </div>
                         </div>
                     </div>
 
-                    <!-- carrossel aparece em tela pequena -->
+                    <!-- carrossel aparece em tela pequena
                     <div id="cards" class="carousel slide product-slider d-lg-none" data-bs-ride="false">
                         
                         <div class="carousel-inner">
@@ -145,6 +146,7 @@
                             <i class="fa-solid fa-angle-right"></i>
                         </button>
                     </div>
+                     -->
                     
                 </div>
             </section>
@@ -216,12 +218,8 @@
 
         </main>
 
-
-        <script src="js/bootstrap/bootstrap.bundle.min.js"></script>
-
         <?php include 'inc/modal.php'; 
-        include_once __DIR__ .'/inc/footer.php';?>
-        
+        include(FOOTER_TEMPLATE);?>
         
     </body>
 </html>

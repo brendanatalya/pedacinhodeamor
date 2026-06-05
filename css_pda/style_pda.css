@@ -1,28 +1,3 @@
-/* Estilos para o carrossel */
-    .carousel { position: relative; width: 100%; max-width:900px; margin: 1rem auto; overflow: hidden; }
-    .slides { display: flex; transition: transform 0.5s ease; }
-    .slides img { width: 100%; flex-shrink: 0; display: block; object-fit: cover; }
-    .prev, .next { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: #fff; border: none; padding: 0.5rem 0.7rem; cursor: pointer; font-size: 1.2rem; }
-    .prev { left: 10px; }
-    .next { right: 10px; }
-    .dots { text-align: center; padding: .5rem 0; }
-    .dots button { width: 10px; height: 10px; border-radius: 50%; border: none; margin: 0 4px; background: #ccc; padding: 0; cursor: pointer; }
-    .dots button.active { background: #333; }
-
-    /* css login/cadastro */
-      body{font-family:Arial,Helvetica,sans-serif;}
-        .card{border:1px solid #ddd;padding:1rem;border-radius:6px}
-        .tabs{display:flex;gap:8px;margin-bottom:1rem}
-        .tabs button{padding:.5rem 1rem;border:1px solid #ccc;background:#f7f7f7;cursor:pointer}
-        .tabs button.active{background:#eee;border-color:#999}
-        .auth-body form{display:none}
-        .auth-body form.active{display:block}
-        input{display:block;width:100%;padding:.5rem;margin:.5rem 0;border:1px solid #ccc;border-radius:4px}
-        .actions{display:flex;gap:.5rem;align-items:center}
-        .message{color:green}
-        .error{color:#b00}
-        a{color:#06c}
-
 /*fontes*/
 
 @font-face {
@@ -82,14 +57,25 @@
 }
 
 
+body {
+  font-family: 'Poppins', Arial, sans-serif;
+}
+  .card{border:1px solid #ddd;padding:1rem;border-radius:6px}
+  .tabs{display:flex;gap:8px;margin-bottom:1rem}
+  .tabs button{padding:.5rem 1rem;border:1px solid #ccc;background:#f7f7f7;cursor:pointer}
+  .tabs button.active{background:#eee;border-color:#999}
+  .auth-body form{display:none}  
+  
+  .actions{display:flex;gap:.5rem;align-items:center}
+  .message{color:green}
+  .error{color:#b00}
 
- 
 
-/* PARTE DOS FEEDBACKS ----  ARRUMAR ESSAS BOSTA DE BOTAO PRA NAO FICAR EM CIMA DO TEXTO ESSAS BOSTA */
-/* ── FEEDBACKS ─────────────────────────────────────────────── */
+/* parte dos feedbacks ----  arrumar essas bosta de botao pra nao ficar em cima do texto essas bosta */
+/* ── feedbacks ─────────────────────────────────────────────── */
 
 
-/* Wrapper: setas ficam nas laterais, trilho no meio */
+/* wrapper: setas ficam nas laterais, trilho no meio */
 .feedbacks-wrapper {
   position: relative;
   margin: 0 auto;
@@ -102,7 +88,7 @@
   height: auto;
 }
 
-/* Trilho com overflow hidden */
+/* trilho com overflow hidden */
 .feedbacks-carrossel-track {
   overflow: hidden;
   flex: 1;
@@ -111,7 +97,7 @@
   margin: 0 1rem; /* compensa o padding do wrapper */
 }
 
-/* Faixa interna — gap entre cards */
+/* faixa interna — gap entre cards */
 .feedbacks-carrossel {
   display: flex;
   flex-wrap: nowrap;
@@ -120,7 +106,7 @@
   will-change: transform;
 }
 
-/* Cada card: 50% menos metade do gap → 2 visíveis sem corte */
+/* cada card: 50% menos metade do gap → 2 visíveis sem corte */
 .feedback-card {
   border-left: 4px solid #a855f7;
   min-width: 100%;
@@ -184,7 +170,7 @@
   text-align: left;
 }
 
-/* Setas */
+/* setas */
 .feedback-arrow {
   flex-shrink: 0;
   width: 48px;
@@ -207,7 +193,7 @@
   transform: scale(1.07);
 }
 
-/* Mobile: 1 card por vez */
+/* mobile: 1 card por vez */
 @media (max-width: 768px) {
   .feedback-card {
     flex: 0 0 100%;
@@ -227,7 +213,7 @@
 }
   
 
-/* COMO TRABALHAMOS */
+/* como trabalhamos */
 .work-section {
   padding: 4rem 1rem 5rem;
   background: #d8d6d1;
@@ -319,14 +305,14 @@
   }
 }
 
-/* PARTE DO SOBRE NOS */
+/* parte do sobre nos */
 .about-section {
   padding: 4rem 1rem 5rem;
   background: #d8d6d1;
 }
 
 
-/* PARTE DOS DOCES ---- DEPOIS MUDAR A FONTE Q NAO TEM E TIRAR O URL DA FOTO(? talvez nao precise mas vai que o lf ne) */
+/* parte dos doces ---- depois mudar a fonte q nao tem e tirar o url da foto(? talvez nao precise mas vai que o lf ne) */
 .doces-hero {
   position: relative;
   min-height: 420px;
@@ -455,7 +441,7 @@
   color: #4e2d1f;
   text-transform: 'Glacial Indifference';
 }
-/* PREÇO */
+/* preço */
 .doces-card span {
   background: #f1c3cf;
   padding: 0.6rem;
@@ -559,7 +545,7 @@
 }
 
 /* =========================
-   FILTROS
+   filtros
 ========================= */
 
 .filter-buttons {
@@ -592,7 +578,7 @@
 }
 
 /* =========================
-   PRODUTOS
+   produtos
 ========================= */
 
 #products-container {
@@ -624,7 +610,7 @@
 }
 
 /* =========================
-   INDISPONÍVEL
+   indisponível
 ========================= */
 
 .product-card.unavailable {
@@ -645,7 +631,7 @@
 }
 
 /* =========================
-   CONTEÚDO
+   conteúdo
 ========================= */
 
 .product-info {
@@ -669,7 +655,7 @@
 }
 
 /* =========================
-   PREÇO
+   preço
 ========================= */
 
 .product-price {
@@ -680,7 +666,7 @@
 }
 
 /* =========================
-   BOTÃO CARRINHO
+   botão carrinho
 ========================= */
 
 .add-to-cart-btn {
@@ -707,7 +693,7 @@
 }
 
 /* =========================
-   RESPONSIVO
+   responsivo
 ========================= */
 
 @media (max-width: 768px) {
@@ -731,9 +717,9 @@
 
 
 
-/* PARTE DO CARRINHO */
+/* parte do carrinho */
 
-/* HEADER */
+/* header */
 .top-bar {
   display: flex;
   width: 100%;
@@ -755,7 +741,7 @@
   text-align: center;
 }
 
-/* LAYOUT */
+/* layout */
 .container {
   display: flex;
   gap: 2rem;
@@ -763,7 +749,7 @@
   flex-wrap: wrap; /* responsivo */
 }
 
-/* LISTA */
+/* lista */
 .cart {
   flex: 2;
   min-width: 300px;
@@ -778,7 +764,7 @@
     gap: 1.5rem;
     box-shadow: 0 4px 15px rgba(0,0,0,0.05);
     position: relative;
-    width: 100%; /* Garante que ocupe a largura total */
+    width: 100%; /* garante que ocupe a largura total */
 }
 
 .cart-item:hover {
@@ -792,7 +778,7 @@
   object-fit: cover;
 }
 
-/* Força a info a ocupar o meio */
+/* força a info a ocupar o meio */
 .item-info {
     flex: 1; 
     display: flex;
@@ -815,14 +801,14 @@
   font-size: 1rem;
 }
 
-/* CHECKBOX */
+/* checkbox */
 .item-check {
   width: 18px;
   height: 18px;
   cursor: pointer;
 }
 
-/* RESUMO */
+/* resumo */
 .summary {
   flex: 1;
   min-width: 260px;
@@ -854,35 +840,19 @@
 
 /*parte do indisponivel*/
 
-/* HEADER */
+/* header */
 .top-bar {
   display: flex;
 }
 
-.top-bar div {
-  flex: 1;
-  padding: 1rem;
-  font-weight: bold;
-  color: white;
-}
-
-.top-left {
-  background: #9c7b66;
-}
-
-.top-right {
-  background: #8b0000;
-  text-align: center;
-}
-
-/* LAYOUT */
+/* layout */
 .container {
   display: flex;
   gap: 2rem;
   padding: 2rem;
 }
 
-/* LISTA */
+/* lista */
 .cart {
   flex: 2;
 }
@@ -897,25 +867,12 @@
   gap: 1rem;
 }
 
-.cart-item img {
-  width: 90px;
-  height: 90px;
-  border-radius: 12px;
-  object-fit: cover;
-}
-
 .item-info {
   flex: 1;
 }
 
 .item-info h4 {
   margin: 0;
-}
-
-.item-info p {
-  margin: 2px 0;
-  font-size: 0.9rem;
-  color: #555;
 }
 
 .price {
@@ -928,20 +885,13 @@
   height: 18px;
 }
 
-/* RESUMO */
+/* resumo */
 .summary {
   flex: 1;
   background: #fff;
   padding: 1.5rem;
   border-radius: 20px;
   height: fit-content;
-}
-
-.summary img {
-  width: 100px;
-  border-radius: 10px;
-  display: block;
-  margin: 0 auto 1rem;
 }
 
 .summary h3 {
@@ -980,11 +930,6 @@
   margin: 0.5rem 0;
 }
 
-.total {
-  font-weight: bold;
-  font-size: 1.2rem;
-}
-
 .button {
   margin-top: 1rem;
   width: 100%;
@@ -1001,7 +946,7 @@
   background: #1b5e20;
 }
 
-/* FOOTER CART */
+/* footer cart */
 .cart-footer {
   margin-top: 1rem;
   display: flex;
@@ -1014,7 +959,7 @@
   text-decoration: underline;
   cursor: pointer;
 }
-/* QUANTIDADE */
+/* quantidade */
 .qtd-box {
   display: flex;
   align-items: center;
@@ -1042,7 +987,7 @@
   text-align: center;
 }
 
-/* REMOVER */
+/* remover */
 .remover {
   display: inline-block;
   margin-top: 5px;
@@ -1056,79 +1001,86 @@
 }
 
 
-/*parte do LOGIN E CADASTRO */
+/*parte do login e cadastro */
 
-/* --- NOVO ESTILO PARA O MODAL LOGIN/CADASTRO --- */
+/* --- novo estilo para o modal login/cadastro --- */
+
+.modal {
+  --bs-modal-bg: transparent !important; 
+}
 .auth-card {
-    background: #fff;
+    background: rgba(255, 255, 255, 0.767);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255,255,255,0.3);
     border-radius: 20px;
     overflow: hidden;
     width: 100%;
-    min-width: 300px; /* Impede que o modal fique muito estreito */
+    min-width: 300px; /* impede que o modal fique muito estreito */
+    font-family:  "Poppins", Arial, sans-serif;
 }
 
 .auth-header {
-    background-color: #F2A1B1; /* Rosa do cabeçalho */
+    background-color: #521928;
     padding: 20px;
     text-align: center;
   }
 
 .auth-header h2 {
-    color: #5D4037; /* Marrom escuro */
+    color: #ffe3eb;
     font-weight: 800;
     margin: 0;
     font-size: 1.5rem;
     text-transform: uppercase;
+    font-family:  "Poppins", Arial, sans-serif
 }
 
 .auth-body {
     padding: 25px;
 }
 
-/* Inputs arredondados com borda rosa */
+/* inputs arredondados com borda rosa */
 .auth-body input {
-    display: block;
     width: 100%;
     padding: 12px 20px;
     margin-bottom: 15px;
-    border: 2.5px solid #F2A1B1;
+    border: 2.5px solid #7c263d;
     border-radius: 30px;
     outline: none;
-    color: #555;
+    color: #313131;
 }
 
 .auth-body input::placeholder {
-    color: #bbb;
+    color: #999999;
 }
 
-/* Container do input e do olho */
+/* container do input e do olho */
 .input-group-auth {
-    position: relative; /* Isso permite que o olho seja fixado dentro dele */
+    position: relative; /* isso permite que o olho seja fixado dentro dele */
     width: 100%;
 }
 
-/* Estilo do ícone do olho */
+/* estilo do ícone do olho */
 .toggle-password {
     position: absolute;
-    right: 20px;       /* Distância da borda direita */
-    top: 13px;         /* Ajuste conforme a altura do seu input */
-    color: #F2A1B1;    /* Cor rosa igual à sua borda */
+    right: 20px;       /* distância da borda direita */
+    top: 13px;         /* ajuste conforme a altura do seu input */
+    color: #521928;   
     cursor: pointer;
-    z-index: 10;       /* Garante que ele fique em cima do input */
+    z-index: 10;       /* garante que ele fique em cima do input */
 }
 
-/* Ajuste no input para o texto não ficar embaixo do olho */
+/* ajuste no input para o texto não ficar embaixo do olho */
 .auth-body input {
     padding-right: 50px !important; 
 }
 
-/* Botão Salmon de Enviar */
+/* botão salmon de enviar */
 .btn-enviar {
     width: 100%;
     padding: 14px;
-    background-color: #ED716C;
-    color: white;
-    border: none;
+    background-color: #52192821;
+    color: #521928;
+    border: 2.5px solid #521928;
     border-radius: 30px;
     font-weight: bold;
     font-size: 1.2rem;
@@ -1145,25 +1097,25 @@
 }
 
 .login-link span {
-    color: #ED716C;
+    color: #521928;
     font-weight: bold;
     cursor: pointer;
 }
 
-/* Garante que o formulário de login apareça primeiro */
+/* garante que o formulário de login apareça primeiro */
 #loginForm {
     display: block;
 }
 
-/* Faz o cabeçalho ser a referência para o botão posicionado */
+/* faz o cabeçalho ser a referência para o botão posicionado */
 .auth-header {
     position: relative; 
-    background-color: #F2A1B1 !important;
+    background-color: #521928 !important;
     padding: 20px;
     text-align: center;
 }
 
-/* Estilo do botão X */
+/* estilo do botão x */
 .btn-close-custom {
     position: absolute;
     top: 10px;
@@ -1172,31 +1124,27 @@
     border: none;
     font-size: 1.8rem;
     font-weight: bold;
-    color: #5D4037; /* Marrom igual ao título */
+    color: #ffe3eb; /* marrom igual ao título */
     cursor: pointer;
     line-height: 1;
     transition: 0.2s;
 }
 
 .btn-close-custom:hover {
-    color: #30211c; /* Muda para salmão ao passar o mouse */
     transform: scale(1.1);
 }
 
 
 
-
-
-
-/*TESTE PERSONALIZADO*/
+/*teste personalizado*/
 /* ==========================================================================
-   FOLHA DE ESTILO - PERSONALIZADOS (FINAL OTIMIZADO)
+   folha de estilo - personalizados (final otimizado)
    ========================================================================== */
 
 :root {
-  --primary-color: #d65a7d;       /* Rosa Confeitaria Premium */
+  --primary-color: #d65a7d;       /* rosa confeitaria premium */
   --primary-hover: #b83f60;
-  --secondary-color: #4a3e3d;     /* Marrom Café */
+  --secondary-color: #4a3e3d;     /* marrom café */
   --bg-light: #fff9f9;
   --text-dark: #2d2525;
   --text-muted: #756a6a;
@@ -1208,7 +1156,7 @@ body {
   background-color: var(--bg-light);
 }
 
-/* Ajustes de Títulos */
+/* ajustes de títulos */
 h2, .section-title {
   font-family: 'Playfair Display', serif;
   color: var(--secondary-color);
@@ -1216,10 +1164,10 @@ h2, .section-title {
 }
 
 /* ==========================================================================
-   RESET E ALINHAMENTO DO FORMULÁRIO PERSONALIZADO
+   reset e alinhamento do formulário personalizado
    ========================================================================== */
 
-/* Garante que o container do Bootstrap funcione sem interferências */
+/* garante que o container do bootstrap funcione sem interferências */
 .container.my-5 {
     display: block !important;
     width: 100% !important;
@@ -1229,7 +1177,7 @@ h2, .section-title {
     float: none !important;
 }
 
-/* Força a linha do Bootstrap a se comportar como flex centralizado */
+/* força a linha do bootstrap a se comportar como flex centralizado */
 .row.justify-content-center {
     display: flex !important;
     flex-wrap: wrap !important;
@@ -1239,13 +1187,13 @@ h2, .section-title {
     margin: 0 auto !important;
 }
 
-/* Corrige a coluna para não flutuar para a direita */
+/* corrige a coluna para não flutuar para a direita */
 .col-md-8 {
     float: none !important;
     margin: 0 auto !important;
 }
 
-/* Estilização do Card Centralizado */
+/* estilização do card centralizado */
 .card-custom {
     background-color: #ffffff !important;
     border-radius: 16px !important;
@@ -1258,7 +1206,7 @@ h2, .section-title {
     box-sizing: border-box !important;
 }
 
-/* Alinhamento dos Labels */
+/* alinhamento dos labels */
 .custom-label {
     display: block !important;
     font-weight: 600 !important;
@@ -1268,7 +1216,7 @@ h2, .section-title {
     text-align: left !important; 
 }
 
-/* Inputs Ocupando toda a largura do Card */
+/* inputs ocupando toda a largura do card */
 .custom-input {
     display: block !important;
     width: 100% !important;
@@ -1288,7 +1236,7 @@ h2, .section-title {
     outline: none !important;
 }
 
-/* Botão de Envio Centralizado/Largo */
+/* botão de envio centralizado/largo */
 .btn-custom-submit {
     display: inline-flex !important;
     align-items: center !important;
@@ -1312,7 +1260,7 @@ h2, .section-title {
     box-shadow: 0 6px 15px rgba(40, 167, 69, 0.3) !important;
 }
 
-/* Alertas Corrigidos */
+/* alertas corrigidos */
 .alert-custom-warning {
     background-color: #fff3cd !important;
     border: 1px solid #ffeeba !important;
@@ -1320,7 +1268,7 @@ h2, .section-title {
     border-radius: 8px !important;
     padding: 1rem !important;
 }
-/*parte do INDEX.PHP - ADMIN*/
+/*parte do index.php - admin*/
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -1330,7 +1278,7 @@ h2, .section-title {
             color: #5A433D !important;
         }
         
-        /* SIDEBAR COMBINANDO COM A AGENDA */
+        /* sidebar combinando com a agenda */
         .sidebar  {
             background-color: #61463B !important  ;
             min-height: 100vh;
@@ -1359,15 +1307,15 @@ h2, .section-title {
             color: #FFF;
         }
         
-        /* CONTEÚDO PRINCIPAL AJUSTADO POR CAUSA DA SIDEBAR FIXA */
+        /* conteúdo principal ajustado por causa da sidebar fixa */
         .main-content {
-            margin-left: 16.666667%; /* Alinha com o col-md-2 da sidebar */
+            margin-left: 16.666667%; /* alinha com o col-md-2 da sidebar */
             padding: 40px;
             background-color: #FDF9F9;
             min-height: 100vh;
         }
         
-        /* HEADER COMBINANDO */
+        /* header combinando */
         .header-admin {
             background-color: #FFFFFF;
             padding: 22px;
@@ -1396,7 +1344,7 @@ h2, .section-title {
             font-weight: 500;
         }
         
-        /* CARDS DE ESTATÍSTICA */
+        /* cards de estatística */
         .card-stat {
             background: #FFFFFF;
             border-radius: 24px;
@@ -1418,7 +1366,7 @@ h2, .section-title {
             margin-top: 5px;
         }
         
-        /* IFRAMES DASHBOARD */
+        /* iframes dashboard */
         .section {
             display: none;
         }
@@ -1438,13 +1386,13 @@ h2, .section-title {
             margin-bottom: 20px;
         }
         
-        /* Ajustes de responsividade para esconder sidebar fixa se necessário */
+        /* ajustes de responsividade para esconder sidebar fixa se necessário */
         @media (max-width: 768px) {
             .sidebar { position: relative; min-height: auto; }
             .main-content { margin-left: 0; padding: 20px; }
         }
 
-        /* INDEX.PHP - PRODUTOS */
+        /* index.php - produtos */
     .badge-disponivel { background-color: #28a745; }
     .badge-indisponivel { background-color: #dc3545; }
 
@@ -1462,7 +1410,7 @@ h2, .section-title {
         margin-bottom: 20px;
     }
 
-    /*CHECKOUT_FORM.PHP*/
+    /*checkout_form.php*/
         .checkout-section {
             background: white;
             padding: 20px;
@@ -1491,7 +1439,7 @@ h2, .section-title {
             color: #8b6f47;
         }
 
-        /*INDEX.PHP - PEDIDOS*/
+        /*index.php - pedidos*/
         .badge-pendente { background-color: #ffc107; }
         .badge-confirmado { background-color: #17a2b8; }
         .badge-preparacao { background-color: #fd7e14; }
@@ -1499,14 +1447,14 @@ h2, .section-title {
         .badge-entregue { background-color: #28a745; }
         .badge-cancelado { background-color: #dc3545; }
 
-        /*INDEX.PHP - CLIENTES*/
+        /*index.php - clientes*/
         .card-cliente {
             background: white;
             border-left: 4px solid #8b6f47;
             margin-bottom: 15px;
         }
 
-        /*AGENDA_CLIENTE.PHP*/
+        /*agenda_cliente.php*/
         .calendar-container {
             background: white;
             border-radius: 8px;
@@ -1604,20 +1552,20 @@ h2, .section-title {
 
 
 
-        /* --- PARTE DO MINHA CONTA --- */
+        /* --- parte do minha conta --- */
 
 body.bg-confeitaria {
-    background-color: #fcf8f5; /* Creme bem suave */
+    background-color: #fcf8f5; /* creme bem suave */
     background-image: radial-gradient(#f3e1ec 1.5px, transparent 1.5px), radial-gradient(#f3e1ec 1.5px, #fcf8f5 1.5px);
     background-size: 40px 40px;
     background-position: 0 0, 20px 20px;
     font-family: 'Poppins', sans-serif;
-    color: #4a3b32; /* Marrom escuro suave em vez de preto puro */
+    color: #4a3b32; /* marrom escuro suave em vez de preto puro */
 }
 
 .title-confeitaria {
     font-family: 'Comfortaa', cursive;
-    color: #d65a8a; /* Rosa Confeitaria */
+    color: #d65a8a; /* rosa confeitaria */
     font-weight: 700;
 }
 
@@ -1634,7 +1582,7 @@ body.bg-confeitaria {
     border-bottom: 3px dashed #ffffff;
 }
 
-/* --- DESIGN DO AVATAR / PREVIEW DA FOTO --- */
+/* --- design do avatar / preview da foto --- */
 .avatar-container {
     display: flex;
     justify-content: center;
@@ -1681,7 +1629,7 @@ body.bg-confeitaria {
     opacity: 1;
 }
 
-/* --- ELEMENTOS DE FORMULÁRIO --- */
+/* --- elementos de formulário --- */
 .section-title {
     font-family: 'Comfortaa', cursive;
     color: #845c47;
@@ -1714,7 +1662,7 @@ body.bg-confeitaria {
     opacity: 1;
 }
 
-/* --- BOTÕES PERSONALIZADOS --- */
+/* --- botões personalizados --- */
 .btn-custom-primary {
     background-color: #d65a8a;
     border: none;
@@ -1756,7 +1704,7 @@ body.bg-confeitaria {
     color: #a83232;
 }
 
-/* --- HISTÓRICO DE PEDIDOS --- */
+/* --- histórico de pedidos --- */
 .table-custom {
     border-collapse: separate;
     border-spacing: 0 8px;
@@ -1809,7 +1757,7 @@ body.bg-confeitaria {
     justify-content: center;
     overflow: hidden;
     text-align: center;
-    background: linear-gradient(135deg, #5a1228 0%, #3a0d1e 40%, #7a2040 100%);
+    background: linear-gradient(135deg, #ffd6e3 10%, #ffb9d3 40% 80%, #ffd5e4de 100%)
 }
 
 .bemvindo-fundo {
@@ -1905,14 +1853,14 @@ body.bg-confeitaria {
     cursor: pointer;
     border: 1px solid transparent;
     background: #fff;
-    color: #c0395a;
+    color: #c0397d;
     border-color: #fff;
 }
 
 .botaoclaro:hover {
-    background: #c0395a;
+    background: #812f48;
     color: #fff;
-    border-color: #c0395a;
+    border-color: #5c1a2e;
 }
 
 .botaoescuro {
@@ -1939,7 +1887,7 @@ body.bg-confeitaria {
 }
 
 
-/*CARROSSELLLLLLLLL*/
+/*carrosselllllllll*/
 
 .carrossel {
   padding: 80px;
@@ -1952,7 +1900,7 @@ body.bg-confeitaria {
   font-weight: 500;
   letter-spacing: 3.5px;
   text-transform: uppercase;
-  color: #c0395a;
+  color: #b84374;
   display: block;
   margin-bottom: 10px;
 }
@@ -1968,7 +1916,7 @@ body.bg-confeitaria {
 
 .carrossel-titulo em {
     font-style: italic;
-    color: #c0395a;
+    color: #b63270;
 }
 
 .carrosselofc {
@@ -2012,8 +1960,8 @@ body.bg-confeitaria {
 }
 
 .carrossel-btnnext:hover {
-    background: #c0395b79;
-    border-color: #c0395a;
+    background: #c0397879;
+    border-color: #c0396d;
 }
 
 .carrossel-btnprev {
@@ -2280,64 +2228,6 @@ body.bg-confeitaria {
 }
 
 
-/*fontes*/
-
-@font-face {
-  font-family: 'Poppins';
-  src: url('../fontes/poppins/Poppins-Regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Poppins';
-  src: url('../fontes/poppins/Poppins-Italic.ttf') format('truetype');
-  font-weight: 400;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: 'Poppins';
-  src: url('../fontes/poppins/Poppins-Medium.ttf') format('truetype');
-  font-weight: 500;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Poppins';
-  src: url('../fontes/poppins/Poppins-MediumItalic.ttf') format('truetype');
-  font-weight: 500;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: 'Poppins';
-  src: url('../fontes/poppins/Poppins-SemiBold.ttf') format('truetype');
-  font-weight: 600;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Poppins';
-  src: url('../fontes/poppins/Poppins-SemiBoldItalic.ttf') format('truetype');
-  font-weight: 600;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: 'Cormorant Garamond';
-  src: url('../fontes/cormorant-garamond/CormorantGaramond-VariableFont_wght.ttf') format('truetype');
-  font-weight: 300 700;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Cormorant Garamond';
-  src: url('../fontes/cormorant-garamond/CormorantGaramond-Italic-VariableFont_wght.ttf') format('truetype');
-  font-weight: 300 700;
-  font-style: italic;
-}
-
 
 *{
     margin:0;
@@ -2354,11 +2244,8 @@ body{
     overflow-x:hidden;
 }
 
-header{
-    height:120px;
-}
 
-/*NAVBAR*/
+/*navbar*/
 
 nav{
     position:fixed;
@@ -2367,7 +2254,7 @@ nav{
     font-family: 'Poppins', Arial, sans-serif;
     width:100%;
 
-    background: #ffb8ce59;
+    background: #ffc2d5ce;
     /*vidro*/
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -2381,14 +2268,12 @@ nav{
 
 .fixed-nav{
     background: linear-gradient(to right, #fadae4 0%, #fbf5f9 50%, #fadae4 100%);
-
     box-shadow:0 5px 15px rgba(0,0,0,0.1);
 }
 
 .nav-center{
     width:90vw;
-    max-width:1170px;
-
+    max-width: 1400px;
     margin:0 auto;
 }
 
@@ -2449,7 +2334,7 @@ nav{
 
     padding:1rem 0;
 
-    color:#5A3220;
+    color:#5A3220 !important;
 
     font-size:1.1rem;
 
@@ -2465,7 +2350,7 @@ nav{
 }
 
 .links a:hover{
-    color:#8f1a5a;
+    color:#8f1a5a !important;
 
     padding-left:10px;
 }
@@ -2500,27 +2385,36 @@ nav{
 
 .nav-icons{
     display:flex;
-
-    gap:25px;
-
-    padding:1rem 0;
+    align-items: center;
+    gap:8px;
+    margin-left: 30px;
+    padding: 0;
 }
 
 .nav-icons a{
     color:#5A3220;
-
+    display: flex;
+    align-items: center;
+    gap: 6px;
     font-size:1.7rem;
-
+    text-decoration: none;
     transition:0.5s ease;
+    padding: 6px 10px;
+    border-radius: 6px;
 }
 
 .nav-icons a:hover{
     transform:scale(1.2);
 
-    color:#8f1a5a;
+    color:#8f1a5a !important;
 }
 
-/*FOOTER*/
+.nav-icons p {
+  margin: 0;
+    font-size: 14px;
+}
+
+/*footer*/
 
 footer {
   background-color: #fcedf5;
@@ -2666,7 +2560,7 @@ footer {
     }
 
     .links a{
-        margin:0 1rem;
+        margin:0 1.5rem;
 
         padding:0;
     }
@@ -2678,7 +2572,8 @@ footer {
     .nav-icons{
         padding:0;
 
-        margin-left:30px;
+        margin-left:10px;
+        gap:16px;
     }
 
 }
@@ -2719,7 +2614,7 @@ ul li a {
   background: rgba(255, 184, 206, 0.85);
   backdrop-filter: blur(8px); //vidro 
   -webkit-backdrop-filter: blur(8px);
-  border-bottom: 2px solid #5A3220; 
+  border-bottom: 2px solid #5a3220; 
   transition: background 0.4s ease;
 }
 /* css card*/
@@ -2743,15 +2638,6 @@ ul li a {
   color: black;
   margin: 0.75rem;
 }
-
-.card:hover {
-  border: 1px solid black;
-  transform: scale(1.05);
-}
-
-.card:active {
-  transform: scale(0.95) rotateZ(1.7deg);
-}
 .btn-primary {
   background-color: #FFB8CE;
   border-color: #FFB8CE;
@@ -2773,3 +2659,26 @@ ul li a {
   transform: scale(1.01);
 }
 
+.prev, .next { position: absolute; top: 50%; padding: 0.5rem 0.7rem; cursor: pointer;  }
+    .prev { left: 10px; }
+    .next { right: 10px; }
+
+
+    /*
+    _____________________
+    SOBRE NOS
+    ___________
+    
+    */
+
+.sobre-intro {
+    position: relative;
+    height: 100vh;
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    text-align: center;
+    background: linear-gradient(135deg, #9D7E6F 0%, #5F4A47 40%, #3D2C2A 75%, #1B0F0F 100%);
+}
