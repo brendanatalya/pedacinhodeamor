@@ -3,24 +3,8 @@
     require_once DBAPI; 
     include(HEADER_TEMPLATE);
 ?>
-<body>
-<header>
-    <h1>Pedacinho de Amor</h1>
-    <nav>
-        <ul>
-            <li><a href="../index.php">Home</a></li>
-            <li><a href="sobrenos.php">Sobre Nós</a></li>
-            <li><a href="cardapio.php">Cardápio</a></li>
-            <li><a href="personalizados.php">Personalizados</a></li>
-            <a class="btn btn-primary text-white" href="../index.php" style="text-decoration:none;">
-                Login
-            </a>
-   
-            <button><li><a href="cesta.php">Cesta</a></li></button>
-        </ul>
-    </nav>
-</header>
 
+<body>
     <main>
         <section class="sobre-intro">
             <!-- bloco de bem vindo do site -->
@@ -130,7 +114,11 @@
         </section>
     </main>
 
-    <?php include(FOOTER_TEMPLATE);?>
+    <?php
+        include '../inc/modal.php'; 
+        include(FOOTER_TEMPLATE);
+ 
+    ?>
 
 </body>
 </html>

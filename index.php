@@ -1,10 +1,40 @@
 
+<?php  
+    require_once "config.php"; 
+    require_once DBAPI; 
+    include(HEADER_TEMPLATE);
+?>
+
+<?php 
+if(!isset($_SESSION)) session_start();
+
+// Verificar se cliente tem pedido entregue sem avaliação
+if (!empty($_SESSION['logado']) && $_SESSION['tipo'] === 'cliente') {
+    require_once 'config.php';
+    require_once ABSPATH . 'inc/database.php';
+
+    $conn = open_database();
+    $stmt = $conn->prepare("
+        SELECT p.id 
+        FROM pedidos p
+        LEFT JOIN avaliacoes a ON a.id_pedido = p.id
+        WHERE p.id_cliente = ? 
+          AND p.status = 'entregue'
+          AND a.id IS NULL
+        ORDER BY p.data_pedido DESC
+        LIMIT 1
+    ");
+    $stmt->execute([$_SESSION['id']]);
+    $pendente = $stmt->fetch();
+    close_database($conn);
+
+    $_SESSION['pedido_avaliar_id'] = $pendente ? $pendente['id'] : null;
+}
+?>
 <?php
 if (!isset($_SESSION)) session_start();
 require_once 'config.php';
 require_once ABSPATH . 'inc/database.php';
-require_once DBAPI; 
-include(HEADER_TEMPLATE);
 
 // Verificar se cliente tem pedido entregue sem avaliação
 if (!empty($_SESSION['logado']) && $_SESSION['tipo'] === 'cliente') {
@@ -57,8 +87,8 @@ close_database($conn);
                         e carinho que buscamos levar até você.
                     </p>
                     <div class="bemvindo-botoes">
-                        <a href="paginas/personalizados.php" class="botaoclaro">Encomendar</a>
-                        <a href="paginas/sobrenos.php" class="botaoescuro">Sobre nós</a>
+                        <a href="<?php echo BASEURL; ?>paginas/personalizados.php" class="botaoclaro">Encomendar</a>
+                        <a href="<?php echo BASEURL; ?>paginas/sobrenos.php" class="botaoescuro">Sobre nós</a>
                     </div>
                 </div>
 
@@ -96,26 +126,6 @@ close_database($conn);
             <div style="height: 100px; background: linear-gradient(to bottom, #fdf2f4, #fde0e5);"></div>
 
             <section class="cards py-5">
-                <!-- PArte dos carss fofinhos rs -->
-
-                <div class="container position-relative">
-                    <h2 class="text-center mb-4">Esses fazem sucesso por aqui!</h2>
-                    <div class="product-slider-wrapper">
-                        <div class="product-slider">
-                            
-                            <div class="product-card" style="background-image: url('imagens/doce1.webp');">
-                                <div class="product-card-body">
-                                    <span>Croissants</span>
-                                    <button class="btn btn-confira" src="paginas/doces.php">Confira</button>
-                                </div>
-                            </div>
-                            
-                            <div class="product-card" style="background-image: url('imagens/doce2.webp');">
-                                <div class="product-card-body">
-                                    <span>Cookies</span>
-                                    <button class="btn btn-confira">Confira</button>
-                                </div>
-                            </div>
 
                 <!-- PArte dos carss fofinhos rs para desktop aff -->
 
@@ -125,41 +135,38 @@ close_database($conn);
                         <h2 class="carrossel-titulo">Esses fazem <em>sucesso</em> por aqui!</h2>
                     </div>
 
-                    <div class="product-slider">
-
-                    <div class="product-slider d-none d-lg-flex">
-
+                    <div class="campeoes-slider d-none d-lg-flex">
                         
-                        <div class="product-card" style="background-image: url('imagens/doce1.webp');">
-                            <div class="product-card-body">
+                        <div class="campeoes-card" style="background-image: url('<?php echo BASEURL; ?>imagens/torta.jpg');">
+                            <div class="campeoes-card-body">
                                 <span>Tortas</span>
-                                <button class="btn-confira" src="./paginas/doces.php">Confira</button>
+                                <button class="btn-confira" src="<?php echo BASEURL; ?>paginas/cardapio.php">Confira</button>
                             </div>
                         </div>
                         
-                        <div class="product-card" style="background-image: url('imagens/doce2.webp');">
-                            <div class="product-card-body">
+                        <div class="campeoes-card" style="background-image: url('<?php echo BASEURL; ?>imagens/salgados.jpg');">
+                            <div class="campeoes-card-body">
                                 <span>Salgados</span>
-                                <button class="btn-confira">Confira</button>
+                                <button class="btn-confira" src="<?php echo BASEURL; ?>paginas/cardapio.php">Confira</button>
                             </div>
                         </div>
                     
-                        <div class="product-card" style="background-image: url('imagens/doce2.webp');">
-                            <div class="product-card-body">
+                        <div class="campeoes-card" style="background-image: url('<?php echo BASEURL; ?>imagens/bolos.jpg');">
+                            <div class="campeoes-card-body">
                                 <span>Bolos</span>
-                                <button class="btn-confira">Confira</button>
+                                <button class="btn-confira" src="<?php echo BASEURL; ?>paginas/cardapio.php">Confira</button>
                             </div>
                         </div>
                     
-                        <div class="product-card" style="background-image: url('imagens/doce3.webp');">
-                            <div class="product-card-body">
+                        <div class="campeoes-card" style="background-image: url('<?php echo BASEURL; ?>imagens/cones.jpg');">
+                            <div class="campeoes-card-body">
                                 <span>Cones</span>
-                                <button class="btn-confira">Confira</button>
+                                <button class="btn-confira" src="<?php echo BASEURL; ?>paginas/cardapio.php">Confira</button>
                             </div>
                         </div>
                     </div>
 
-                    <!-- carrossel aparece em tela pequena -->
+                    <!-- carrossel aparece em tela pequena
                     <div id="cards" class="carousel slide product-slider d-lg-none" data-bs-ride="false">
                         
                         <div class="carousel-inner">
@@ -205,19 +212,10 @@ close_database($conn);
                             <i class="fa-solid fa-angle-right"></i>
                         </button>
                     </div>
+                     -->
                     
                 </div>
             </section>
-
-            
-            <section class="feedbacks-section py-5">
-                <div class="container">
-                    <div class="feedbacks-header">
-                        <h2>Eles amam! Feedbacks que amamos!</h2>
-                    </div>
-
-                    <?php if (!empty($avaliacoes_home)): ?>
-
 
             <!-- transição de cor-->
             <div style="height: 100px; background: linear-gradient(to top, #fdf2f4, #fde0e5);"></div>
@@ -229,7 +227,8 @@ close_database($conn);
                         <p class="carrossel-subtitulo">Depoimentos</p>
                         <h2 class="carrossel-titulo">O que nossos <em>clientes</em> dizem sobre nós?</h2>
                     </div>
-
+                    
+                    <?php if (!empty($avaliacoes_home)): ?>
 
                     <div class="feedbacks-wrapper">
                         <button class="feedback-arrow prev-feedback" type="button" aria-label="Feedback anterior">&#10094;</button>
@@ -262,19 +261,15 @@ close_database($conn);
                         <button class="feedback-arrow next-feedback" type="button" aria-label="Próximo feedback">&#10095;</button>
                     </div>
                     <?php else: ?>
-                    <p class="text-center text-muted py-4">Ainda não há avaliações — seja o primeiro! 🎂</p>
+                        <p class="text-center text-muted py-4">Ainda não há avaliações — seja o primeiro! 🎂</p>
                     <?php endif; ?>
                 </div>
             </section>
 
         </main>
 
-
-        <script src="js/bootstrap/bootstrap.bundle.min.js"></script>
-
         <?php include 'inc/modal.php'; 
-        include_once __DIR__ .'/inc/footer.php';?>
-        
+        include(FOOTER_TEMPLATE);?>
         
     </body>
 </html>

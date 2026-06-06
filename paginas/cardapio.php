@@ -2,6 +2,9 @@
 if (!isset($_SESSION)) session_start();
 require_once '../config.php';
 require_once ABSPATH . 'inc/database.php';
+require_once DBAPI; 
+include(HEADER_TEMPLATE);
+
 
 $usuario_logado = !empty($_SESSION['logado']) && $_SESSION['logado'] === true;
 
@@ -13,17 +16,7 @@ unset($_SESSION['cart_message']);
 
 $total_carrinho = array_sum($_SESSION['cart'] ?? []);
 ?>
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cardápio - Pedacinho de Amor</title>
-    <link rel="stylesheet" href="../css_pda/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css_pda/style_pda.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
-    <!--brendinhaaa 
+<!--brendinhaaa 
 aqui ta a parte do css do cardapio ta, fiz so pra ter uma nocao de como vai ser o design, depois fica a vontade pra fazer sua magia diva rs
 e o cardapio é onde eu juntei e coloquei o salgado e doce ta -->
 
@@ -33,105 +26,19 @@ na hora de salvar quando for add um novo produto pra colocar o nome certo, pq se
 chocolate ele vai cair em outros.
 fiz isso por agora, qlqr coisa eu falo com as meninas dps pra add isso no banco msm, pra ter uma subcategoria de doce e salgado pra nao ter q fazer essa gambiarra rs -->
       
-    <style>
-        /* ── Seção âncora ── */
-        .secao-categoria {
-            padding: 3rem 0 1rem;
-        }
-        .secao-categoria h2 {
-            font-size: 2rem;
-            font-weight: 900;
-            color: #7a2f2f;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            border-bottom: 3px solid #ffb3d9;
-            padding-bottom: 0.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        /* ── Filtros de subcategoria ── */
-        .subcategoria-bar {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
-        }
-        .sub-btn {
-            border: 2px solid #ffb3d9;
-            background: #fff;
-            color: #7a2f2f;
-            padding: 7px 18px;
-            border-radius: 30px;
-            font-size: 0.88rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .sub-btn:hover {
-            background: #ffdcec;
-        }
-        .sub-btn.ativo {
-            background: #7a2f2f;
-            border-color: #7a2f2f;
-            color: #fff;
-        }
-
-        /* ── Grid de produtos ── */
-        .produtos-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 24px;
-            margin-bottom: 2rem;
-        }
-        .produto-item[data-hidden="true"] {
-            display: none;
-        }
-
-        /* ── Msg sem produtos ── */
-        .sem-produtos {
-            display: none;
-            color: #888;
-            font-style: italic;
-            padding: 1rem 0 2rem;
-        }
-        .sem-produtos.visivel {
-            display: block;
-        }
-    </style>
-</head>
-<body>
-
-    <!-- NAV -->
-    <header>
-        <h1>Pedacinho de Amor</h1>
-        <nav>
-            <ul>
-                <li><a href="../index.php">Home</a></li>
-                <li><a href="sobrenos.php">Sobre Nós</a></li>
-                <li><a href="cardapio.php" class="active">Cardápio</a></li>
-                <li><a href="personalizados.php">Personalizados</a></li>
-                <li>
-                    <a href="carrinho.php">
-                        <i class="fas fa-shopping-cart"></i>
-                        Carrinho (<?php echo $total_carrinho; ?>)
-                    </a>
-                </li>
-                <?php if ($usuario_logado): ?>
-                    <li><a href="../inc/logout.php">Sair</a></li>
-                <?php else: ?>
-                    <li><a class="btn btn-primary text-white" href="../index.php">Login</a></li>
-                <?php endif; ?>
-            </ul>
-        </nav>
-    </header>
-
     <main>
-        <!-- HERO -->
-        <section class="doces-hero" style="background-image:url('../imagens/doce3.webp');">
-            <div class="doces-hero__overlay"></div>
-            <div class="doces-hero__content">
-                <h1>CARDÁPIO</h1>
-                <p>Tudo feito com carinho, do doce ao salgado!</p>
+         <section class="doces-intro" style="background: url('<?php echo BASEURL; ?>/imagens/brigadeiros.jpg') no-repeat center center; background-size: cover;">
+            <div class="doces-fundo"></div>
+
+            <div class="conteudodoces">
+                <div class="doces-header">
+                    <h1 class="doces-titulo">Cardápio</h1>
+                    <!-- linha bonitinha -->
+                    <div class="doce-detalhe"></div>
+                </div>
+                <p class="doces-subtitulo">
+                    udo feito com carinho, do doce ao salgado!
+                </p>
             </div>
         </section>
 
@@ -141,17 +48,16 @@ fiz isso por agora, qlqr coisa eu falo com as meninas dps pra add isso no banco 
                 <div class="alert alert-success mt-3"><?php echo htmlspecialchars($cartMessage); ?></div>
             <?php endif; ?>
 
+            <!--arruma isso bonitnho depois, transvforma em modal-->
             <?php if (!$usuario_logado): ?>
                 <div class="alert alert-warning mt-3">
                     Faça <a href="../index.php">login</a> para adicionar produtos ao carrinho.
                 </div>
             <?php endif; ?>
 
-            <!-- ════════════════════════════
-                 SEÇÃO DOCES
-            ════════════════════════════ -->
+            <!-- doce-->
             <section class="secao-categoria" id="secao-doces">
-                <h2>🍬 Doces</h2>
+                <h2>Doces</h2>
 
                 <div class="subcategoria-bar" id="filtros-doces">
                     <button class="sub-btn ativo" data-sub="todos" onclick="filtrar('doces', 'todos', this)">Todos</button>
@@ -182,7 +88,7 @@ fiz isso por agora, qlqr coisa eu falo com as meninas dps pra add isso no banco 
                             <div class="product-info">
                                 <h3><?php echo htmlspecialchars($p['nome']); ?></h3>
                                 <p><?php echo htmlspecialchars($p['descricao'] ?? 'Delicioso produto artesanal'); ?></p>
-                                <div class="product-price">R$ <?php echo number_format($p['preco'], 2, ',', '.'); ?></div>
+                                <div class="product-price"><?php echo number_format($p['preco'], 2, ',', '.'); ?></div>
                                 <?php if (!$p['disponivel']): ?>
                                     <div class="unavailable-badge">Indisponível</div>
                                 <?php endif; ?>
@@ -203,11 +109,9 @@ fiz isso por agora, qlqr coisa eu falo com as meninas dps pra add isso no banco 
                 </div>
             </section>
 
-            <!-- ════════════════════════════
-                 SEÇÃO SALGADOS
-            ════════════════════════════ -->
+            <!--salgados-->
             <section class="secao-categoria" id="secao-salgados">
-                <h2>🥐 Salgados</h2>
+                <h2>Salgados</h2>
 
                 <div class="subcategoria-bar" id="filtros-salgados">
                     <button class="sub-btn ativo" data-sub="todos"      onclick="filtrar('salgados', 'todos', this)">Todos</button>
@@ -232,13 +136,14 @@ fiz isso por agora, qlqr coisa eu falo com as meninas dps pra add isso no banco 
                          data-sub="<?php echo htmlspecialchars($sub); ?>">
                         <div class="product-card <?php echo !$p['disponivel'] ? 'unavailable' : ''; ?>">
                             <?php if (!empty($p['imagem_referencia'])): ?>
-                                <img src="../<?php echo htmlspecialchars($p['imagem_referencia']); ?>"
-                                     alt="<?php echo htmlspecialchars($p['nome']); ?>">
+                                <img src="<?php echo BASEURL . "/imagens/"; ?><?php echo htmlspecialchars($p['imagem_referencia']); ?>" alt="<?php echo htmlspecialchars($p['nome']); ?>">
+                            <?php else: ?>
+                                <img src="<?php echo BASEURL . "/imagens/"; ?><?php echo htmlspecialchars($p['imagem_referencia']); ?>" alt="<?php echo htmlspecialchars($p['nome']); ?>">
                             <?php endif; ?>
                             <div class="product-info">
                                 <h3><?php echo htmlspecialchars($p['nome']); ?></h3>
                                 <p><?php echo htmlspecialchars($p['descricao'] ?? 'Delicioso produto artesanal'); ?></p>
-                                <div class="product-price">R$ <?php echo number_format($p['preco'], 2, ',', '.'); ?></div>
+                                <div class="product-price"><?php echo number_format($p['preco'], 2, ',', '.'); ?></div>
                                 <?php if (!$p['disponivel']): ?>
                                     <div class="unavailable-badge">Indisponível</div>
                                 <?php endif; ?>
@@ -259,7 +164,7 @@ fiz isso por agora, qlqr coisa eu falo com as meninas dps pra add isso no banco 
                 </div>
             </section>
 
-        </div><!-- /container -->
+        </div>
     </main>
 
     <script src="../js/bootstrap/bootstrap.bundle.min.js"></script>
@@ -288,32 +193,34 @@ fiz isso por agora, qlqr coisa eu falo com as meninas dps pra add isso no banco 
 </html>
 
 <?php
-/**
- * Tenta adivinhar a subcategoria de um produto pelo nome.
- * Você pode ajustar as palavras-chave conforme os produtos reais do banco.
- */
-function extrair_subcategoria(string $nome): string {
-    $nome = mb_strtolower($nome, 'UTF-8');
+    /**
+     * Tenta adivinhar a subcategoria de um produto pelo nome.
+     */
+    function extrair_subcategoria(string $nome): string {
+        $nome = mb_strtolower($nome, 'UTF-8');
 
-    $mapa = [
-        'cone'        => ['cone'],
-        'trufa'       => ['trufa'],
-        'brigadeiro'  => ['brigadeiro'],
-        'bolo'        => ['bolo'],
-        'docinho'     => ['docinho', 'camafeu', 'beijinho', 'olho de sogra', 'cajuzinho', 'quindim', 'bicho de pé', 'bixo de pé'],
-        'croissant'   => ['croissant'],
-        'assado'      => ['assado', 'enroladinho', 'esfiha', 'esfirra'],
-        'pao de queijo' => ['pão de queijo', 'pao de queijo'],
-        'coxinha'     => ['coxinha'],
-        'empada'      => ['empada'],
-    ];
+        $mapa = [
+            'cone'        => ['cone'],
+            'trufa'       => ['trufa'],
+            'brigadeiro'  => ['brigadeiro'],
+            'bolo'        => ['bolo'],
+            'docinho'     => ['docinho', 'camafeu', 'beijinho', 'olho de sogra', 'cajuzinho', 'quindim', 'bicho de pé', 'bixo de pé'],
+            'croissant'   => ['croissant'],
+            'assado'      => ['assado', 'enroladinho', 'esfiha', 'esfirra'],
+            'pao de queijo' => ['pão de queijo', 'pao de queijo'],
+            'coxinha'     => ['coxinha'],
+            'empada'      => ['empada'],
+        ];
 
-    foreach ($mapa as $sub => $palavras) {
-        foreach ($palavras as $palavra) {
-            if (str_contains($nome, $palavra)) return $sub;
+        foreach ($mapa as $sub => $palavras) {
+            foreach ($palavras as $palavra) {
+                if (str_contains($nome, $palavra)) return $sub;
+            }
         }
+
+        return 'outro';
     }
 
-    return 'outro';
-}
+    include '../inc/modal.php'; 
+    include(FOOTER_TEMPLATE);
 ?>
