@@ -194,47 +194,67 @@ body {
 
 
 /* parte dos doces ---- depois mudar a fonte q nao tem e tirar o url da foto(? talvez nao precise mas vai que o lf ne) */
-.doces-hero {
+
+
+.doces-intro {
+    position: relative;
+    height: 100vh;
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    text-align: center;
+    
+}
+
+.doces-fundo {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(135deg, transparent 10%, #000000b6 40% 80%, #000000 100%)
+}
+
+.conteudodoces {
   position: relative;
-  min-height: 420px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 4rem 1rem;
-  background: linear-gradient(180deg, rgba(0,0,0,0.22) 0%, rgba(0,0,0,0.5) 100%);
-  color: #fff;
-  overflow: hidden;
+    z-index: 2;
+    max-width: 700px;
+    padding: 0 24px;
+    animation: heroFadeUp 1s ease 0.3s both;
 }
 
-.doces-hero__overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.28);
+.doces-titulo {
+    font-family: "Poppins", Arial, sans-serif; 
+    font-size: clamp(48px, 8vw, 88px);
+    font-weight: 600;
+    line-height: 1.05;
+    color: #fff;
+    text-transform: uppercase;
 }
 
-.doces-hero__content {
-  position: relative;
-  text-align: center;
-  max-width: 760px;
-  z-index: 1;
+.doces-subtitulo {
+    font-family: "Poppins", Arial, sans-serif;
+    font-size: clamp(14px, 2vw, 17px);
+    font-weight: 300;
+    line-height: 1.7;
+    color: #f4c0d1;
+    margin-top: 10px;
 }
 
-.doces-hero__content h1 {
-  margin: 0 0 0.75rem;
-  font-size: 4rem;
-  font-weight: 900;
-  text-transform: uppercase;
-  color: #ff9ccf;
-  letter-spacing: 0.15em;
-  font-family: 'Copperplate';
+.doce-detalhe {
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(to right, transparent, #ffffff 90%, transparent);
+    animation: scrollLine 2s ease infinite;
 }
 
-.doces-hero__content p {
-  margin: 0;
-  font-size: 1.75rem;
-  color: #fff;
+.doces-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
 }
-
+/*
 .doces-shop {
   padding: 3rem 1rem 5rem;
   background: #6b3f28;
@@ -282,6 +302,7 @@ body {
   margin: 0 auto;
 }
 
+
 .doces-card {
   background: #e2bdb4;
   border-radius: 26px;
@@ -289,7 +310,7 @@ body {
   text-align: center;
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
   padding-bottom: 1.2rem;
-  justify-content: space-between; /* empurra o preço pra baixo */
+  justify-content: space-between; /* empurra o preço pra baixo 
   flex-direction: column;
   display: flex;
 }
@@ -307,7 +328,7 @@ body {
   color: #4e2d1f;
   text-transform: 'Glacial Indifference';
 }
-/* preço */
+/* preço 
 .doces-card span {
   background: #f1c3cf;
   padding: 0.6rem;
@@ -367,9 +388,7 @@ body {
   color: #5a3e2b;
 }
 
-/* =========================
-   filtros
-========================= */
+/* filtros */
 
 .filter-buttons {
     display: flex;
@@ -400,119 +419,155 @@ body {
     color: white;
 }
 
-/* =========================
-   produtos
-========================= */
+/* produtos*/
 
 #products-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 25px;
-    margin-bottom: 60px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-bottom: 60px;
+  padding: 2rem 0;
 }
 
 .product-card {
-    background: #f3e5df;
-    border-radius: 28px;
+    background: #ffffff;
+    border-radius: 24px;
     overflow: hidden;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
-    transition: 0.3s;
+    box-shadow: 0 8px 24px rgba(90, 20, 40, 0.08);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     position: relative;
     display: flex;
     flex-direction: column;
+    height: 100%;
+    border: 1px solid rgba(214, 90, 125, 0.1);
 }
 
 .product-card:hover {
-    transform: translateY(-5px);
+  transform: translateY(-12px);
+  box-shadow: 0 20px 50px rgba(90, 20, 40, 0.15);
+  border-color: rgba(214, 90, 125, 0.25);
 }
 
 .product-card img {
-    width: 100%;
-    height: 260px;
-    object-fit: cover;
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
 }
 
-/* =========================
-   indisponível
-========================= */
+/* indisponível */
 
 .product-card.unavailable {
-    opacity: 0.6;
-    filter: grayscale(100%);
+  opacity: 0.6;
+  filter: grayscale(30%);
+}
+
+.product-card.unavailable:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
 }
 
 .unavailable-badge {
     position: absolute;
-    top: 15px;
-    right: 15px;
-    background: #a00000;
+    top: 16px;
+    right: 16px;
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
     color: white;
-    padding: 8px 14px;
+    padding: 8px 16px;
     border-radius: 20px;
-    font-size: 0.85rem;
-    font-weight: bold;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    z-index: 3;
+    box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
 }
 
-/* =========================
-   conteúdo
-========================= */
+/*conteúdo */
 
 .product-info {
-    padding: 22px;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
+  padding: 1.8rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  position: relative;
+  z-index: 2;
 }
 
 .product-info h3 {
-    font-size: 1.2rem;
-    color: #4e2d1f;
-    margin-bottom: 10px;
-    font-weight: bold;
+  font-size: 1.3rem;
+  color: #291815;
+  margin: 0 0 0.8rem 0;
+  font-weight: 600;
+  font-family: 'Poppins', Arial, sans-serif;
+  letter-spacing: 0.5px;
+  line-height: 1.3;
 }
 
 .product-info p {
-    color: #6b4b3e;
-    font-size: 0.95rem;
-    margin-bottom: 15px;
+  color: #756a6a;
+  font-size: 0.9rem;
+  margin: 0 0 1.2rem 0;
+  line-height: 1.5;
+  flex: 1;
 }
 
-/* =========================
-   preço
-========================= */
+/* preco*/
 
 .product-price {
-    font-size: 1.5rem;
-    font-weight: 800;
-    color: #8b0000;
-    margin-bottom: 20px;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #d65a7d;
+  margin: 0 0 1.5rem 0;
+  font-family: 'Poppins', Arial, sans-serif;
+  letter-spacing: 0.5px;
 }
 
-/* =========================
-   botão carrinho
-========================= */
+.product-price::before {
+    content: 'R$ ';
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+
+/*botao carrinho */
 
 .add-to-cart-btn {
     margin-top: auto;
     border: none;
-    background: #2d6a00;
+    background: linear-gradient(135deg, #d65a7d 0%, #b84374 100%);
     color: white;
-    padding: 14px;
-    border-radius: 16px;
-    font-weight: bold;
-    transition: 0.3s;
+    padding: 14px 24px;
+    border-radius: 12px;
+    font-weight: 600;
+    transition: all 0.3s ease;
     cursor: pointer;
-    font-size: 1rem;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 6px 16px rgba(214, 90, 125, 0.25);
 }
 
 .add-to-cart-btn:hover {
-    background: #3f8a00;
-    transform: scale(1.02);
+    background: linear-gradient(135deg, #b84374 0%, #a03562 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(214, 90, 125, 0.35);
 }
 
 .add-to-cart-btn:disabled {
-    background: #999;
+    background: #d8d6d1;
+    color: #888;
     cursor: not-allowed;
+    box-shadow: none;
+}
+
+.add-to-cart-btn i {
+    font-size: 1rem;
 }
 
 /* parte do carrinho */
@@ -1573,7 +1628,7 @@ body.bg-confeitaria {
 }
 
 .bemvindo-titulo {
-    font-family: Arial, Helvetica, sans-serif; /*mudar*/
+    font-family: "Poppins", Arial, sans-serif; 
     font-size: clamp(48px, 8vw, 88px);
     font-weight: 600;
     line-height: 1.05;
@@ -1587,7 +1642,7 @@ body.bg-confeitaria {
 }
 
 .bemvindo-subtitulo2 {
-    font-family: Arial, Helvetica, sans-serif; /*mudar*/
+    font-family: "Poppins", Arial, sans-serif; 
     font-size: clamp(14px, 2vw, 17px);
     font-weight: 300;
     line-height: 1.7;
@@ -1633,7 +1688,7 @@ body.bg-confeitaria {
 
 .botaoclaro {
     display: inline-block;
-    font-family: Arial, Helvetica, sans-serif; /*mudar*/
+    font-family: "Poppins", Arial, sans-serif; 
     font-size: 12px;
     font-weight: 500;
     letter-spacing: 2px;
@@ -1657,7 +1712,7 @@ body.bg-confeitaria {
 
 .botaoescuro {
     display: inline-block;
-    font-family: Arial, Helvetica, sans-serif; /*mudar*/
+    font-family: "Poppins", Arial, sans-serif;
     font-size: 12px;
     font-weight: 500;
     letter-spacing: 2px;
@@ -1705,7 +1760,7 @@ body.bg-confeitaria {
 }
 
 .carrossel-subtitulo {
-  font-family: Arial, Helvetica, sans-serif; /*mudar*/
+  font-family: "Poppins", Arial, sans-serif; 
   font-size: clamp(10px, 2vw, 15px);;
   font-weight: 500;
   letter-spacing: 3.5px;
@@ -1716,7 +1771,7 @@ body.bg-confeitaria {
 }
 
 .carrossel-titulo {
-    font-family: Arial, Helvetica, sans-serif; /*mudar*/
+    font-family: "Poppins", Arial, sans-serif; 
     font-size: clamp(26px, 4vw, 40px);
     font-weight: 600;
     line-height: 1.15;
@@ -1862,7 +1917,7 @@ body.bg-confeitaria {
   transform: scale(0.95) rotateZ(1.7deg);
 }
 
-.product-slider {
+.campeoes-slider {
   display: flex;
   justify-content: center;
   gap: 1.5rem;
@@ -1871,7 +1926,7 @@ body.bg-confeitaria {
   padding: 40px 40px 90px;
 }
 
-.product-card {
+.campeoes-card {
   position: relative;
   min-width: 240px;
   height: 380px;
@@ -1886,12 +1941,12 @@ body.bg-confeitaria {
   transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
-.product-card:hover {
+.campeoes-card:hover {
   transform: translateY(-8px);
   box-shadow: 0 28px 56px rgba(90, 20, 40, 0.22);
 }
 
-.product-card::before {
+.campeoes-card::before {
     content: '';
     position: absolute;
     inset: 0;
@@ -1901,11 +1956,11 @@ body.bg-confeitaria {
     z-index: 1;
 }
 
-.product-card:hover::before {
+.campeoes-card:hover::before {
     opacity: 1;
 }
 
-.product-card-body {
+.campeoes-card-body {
     position: relative;
     z-index: 2;
     width: 100%;
@@ -1922,9 +1977,9 @@ body.bg-confeitaria {
     flex-shrink: 0;
 }
 
-.product-card-body span {
+.campeoes-card-body span {
   display: block;
-  font-family: Arial, Helvetica, sans-serif; /*mudar*/
+  font-family: "Poppins", Arial, sans-serif; 
   margin-bottom: 1rem;
   font-size: 1.5rem;
   letter-spacing: 0.08em;
@@ -2837,6 +2892,7 @@ ___________
   .escolha-texto p {
     font-size: 0.9rem;
   }
+
 }
 
 @media (max-width: 980px) {
@@ -2915,8 +2971,11 @@ ___________
     .btn-confira {
         opacity: 1;
     }
+     
+}
 
-     /*navbar*/
+@media (min-width: 1300px) {
+/*navbar*/
     nav{
       padding:0.5rem 0;
     }
@@ -2966,5 +3025,4 @@ ___________
         gap:16px;
     }
 }
-
 

@@ -2,6 +2,8 @@
 if (!isset($_SESSION)) session_start();
 require_once '../config.php';
 require_once ABSPATH . 'inc/database.php';
+require_once DBAPI; 
+include(HEADER_TEMPLATE);
 
 $usuario_logado = !empty($_SESSION['logado']) && $_SESSION['logado'] === true;
 $tipos = [
@@ -17,46 +19,27 @@ $produtos = find_products($tipo === 'all' ? null : $tipo);
 $cartMessage = $_SESSION['cart_message'] ?? '';
 unset($_SESSION['cart_message']);
 ?>
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Doces - Pedacinho de Amor</title>
-    <link rel="stylesheet" href="../css_pda/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css_pda/style_pda.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-</head>
-<body>
-    <header>
-        <h1>Pedacinho de Amor</h1>
-        <nav>
-            <ul>
-                <li><a href="../index.php">Home</a></li>
-                <li><a href="../paginas/sobrenos.html">Sobre Nós</a></li>
-                <li><a href="doces.php" class="active">Doces</a></li>
-                <li><a href="salgados.php">Salgados</a></li>
-                <li><a href="personalizados.php">Personalizados</a></li>
-                <li><a href="carrinho.php"><i class="fas fa-shopping-cart"></i> Carrinho (<?php echo array_sum($_SESSION['cart'] ?? []); ?>)</a></li>
-                <?php if ($usuario_logado): ?>
-                    <li><a href="../inc/logout.php">Sair</a></li>
-                <?php else: ?>
-                    <li><a class="btn btn-primary text-white" href="../index.php">Login</a></li>
-                <?php endif; ?>
-            </ul>
-        </nav>
-    </header>
 
+<body>
     <main>
-        <section class="doces-hero" style="background-image:url('imagens/doce3.webp');">
-            <div class="doces-hero__overlay"></div>
-            <div class="doces-hero__content">
-                <h1>DOCES</h1>
-                <p>Deliciosamente feitos com carinho!</p>
+        <section class="doces-intro" style="background: url('<?php echo BASEURL; ?>/imagens/brigadeiros.jpg') no-repeat center center; background-size: cover;">
+            <!-- bloco de bem vindo do site -->
+            <div class="doces-fundo"></div>
+
+
+            <div class="conteudodoces">
+                <div class="doces-header">
+                    <h1 class="doces-titulo">doces</h1>
+                    <!-- linha bonitinha -->
+                    <div class="doce-detalhe"></div>
+                </div>
+                <p class="doces-subtitulo">
+                    Para adoçar e trazer aconchego a cada mordida!
+                </p>
             </div>
         </section>
 
-        <div class="container">
+        <section class="container">
             <?php if ($cartMessage): ?>
                 <div class="alert alert-success"><?php echo htmlspecialchars($cartMessage); ?></div>
             <?php endif; ?>
@@ -81,7 +64,7 @@ unset($_SESSION['cart_message']);
                         <div class="col">
                             <div class="product-card <?php echo !$produto['disponivel'] ? 'unavailable' : ''; ?>">
                                 <?php if (!empty($produto['imagem_referencia'])): ?>
-                                    <img src="<?php echo htmlspecialchars($produto['imagem_referencia']); ?>" alt="<?php echo htmlspecialchars($produto['nome']); ?>">
+                                    <img src="<?php echo BASEURL . htmlspecialchars($produto['imagem_referencia']); ?>" alt="<?php echo htmlspecialchars($produto['nome']); ?>">
                                 <?php endif; ?>
                                 <div class="product-info">
                                     <h3><?php echo htmlspecialchars($produto['nome']); ?></h3>
@@ -104,9 +87,9 @@ unset($_SESSION['cart_message']);
                     <?php endforeach; ?>
                 </div>
             <?php endif; ?>
-        </div>
+        </section>
     </main>
 
-    <script src="js/bootstrap/bootstrap.bundle.min.js"></script>
+        <?php include(FOOTER_TEMPLATE);?>
 </body>
 </html>

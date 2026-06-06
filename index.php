@@ -135,34 +135,31 @@ close_database($conn);
                         <h2 class="carrossel-titulo">Esses fazem <em>sucesso</em> por aqui!</h2>
                     </div>
 
-                    <div class="product-slider">
-
-                    <div class="product-slider d-none d-lg-flex">
-
+                    <div class="campeoes-slider d-none d-lg-flex">
                         
-                        <div class="product-card" style="background-image: url('<?php echo BASEURL; ?>imagens/doce1.webp');">
-                            <div class="product-card-body">
+                        <div class="campeoes-card" style="background-image: url('<?php echo BASEURL; ?>imagens/torta.jpg');">
+                            <div class="campeoes-card-body">
                                 <span>Tortas</span>
                                 <button class="btn-confira" src="<?php echo BASEURL; ?>paginas/doces.php">Confira</button>
                             </div>
                         </div>
                         
-                        <div class="product-card" style="background-image: url('<?php echo BASEURL; ?>imagens/doce2.webp');">
-                            <div class="product-card-body">
+                        <div class="campeoes-card" style="background-image: url('<?php echo BASEURL; ?>imagens/salgados.jpg');">
+                            <div class="campeoes-card-body">
                                 <span>Salgados</span>
                                 <button class="btn-confira" src="<?php echo BASEURL; ?>paginas/salgados.php">Confira</button>
                             </div>
                         </div>
                     
-                        <div class="product-card" style="background-image: url('<?php echo BASEURL; ?>imagens/doce2.webp');">
-                            <div class="product-card-body">
+                        <div class="campeoes-card" style="background-image: url('<?php echo BASEURL; ?>imagens/bolos.jpg');">
+                            <div class="campeoes-card-body">
                                 <span>Bolos</span>
                                 <button class="btn-confira" src="<?php echo BASEURL; ?>paginas/doces.php">Confira</button>
                             </div>
                         </div>
                     
-                        <div class="product-card" style="background-image: url('<?php echo BASEURL; ?>imagens/doce3.webp');">
-                            <div class="product-card-body">
+                        <div class="campeoes-card" style="background-image: url('<?php echo BASEURL; ?>imagens/cones.jpg');">
+                            <div class="campeoes-card-body">
                                 <span>Cones</span>
                                 <button class="btn-confira" src="<?php echo BASEURL; ?>paginas/personalizados.php">Confira</button>
                             </div>
