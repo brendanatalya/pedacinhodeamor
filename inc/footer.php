@@ -130,11 +130,13 @@ window.addEventListener("scroll", function(){
     resetFeedbackAutoplay(); 
 </script>
 
+<script src="js/bootstrap/bootstrap.bundle.min.js"></script>
+
 <footer>
   <div class="footer-container">
 
     <div class="footer-logo">
-      <img src="imagens/logo.png" alt="Logo Pedacinho de Amor" style="max-width: 300px;">
+      <img src="<?php echo BASEURL; ?>imagens/logo.png" alt="Logo Pedacinho de Amor" style="max-width: 300px;">
       <p>Confeitaria artesanal, produtos feitos com o carinho de quem ama o que faz.</p>
       <p>CNPJ: 12.345.678/0001-90</p>
 

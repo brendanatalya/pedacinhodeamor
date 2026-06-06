@@ -4,24 +4,29 @@
 
 <meta charset="utf-8">
 
-	<link rel="icon" type="image/x-icon" href="imagens/icon.png">
+	<link rel="icon" type="image/x-icon" href="<?php echo BASEURL;?>imagens/icon.png">
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Brenda e Iris">
     <title>Pedacinho de Amor</title>
 
+
     <!-- bootstrap -->
-    <link rel="stylesheet" href="css_pda/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/bootstrap/bootstrap.min.css">
 
     <!-- font awesome -->
-    <link rel="stylesheet" href="css_pda/awesome/all.min.css">
+    <link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/awesome/all.min.css">
 
-    <!-- css -->
-    <link rel="stylesheet" href="css_pda/style_pda.css">
+          <!-- css -->
+    <link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/style_pda.css">
+
+
+  
 </head>
 
 <header id="home">
+    <?php  if(!isset($_SESSION)) session_start();  ?>
 
     <!-- NAVBAR -->
     <nav id="nav">
@@ -31,8 +36,8 @@
             <!-- LOGO -->
             <div class="nav-header">
 
-                <a href="index.php">
-                    <img src="imagens/logo.png" class="logo" alt="">
+                <a href="<?php echo BASEURL; ?>index.php">
+                    <img src="<?php echo BASEURL; ?>imagens/logo.png" class="logo" alt="">
                 </a>
 
                 <!-- BOTÃO MOBILE -->
@@ -48,11 +53,11 @@
                 <ul class="links">
 
                     <li>
-                        <a href="../index.php">Início</a>
+                        <a href="<?php echo BASEURL; ?>index.php">Início</a>
                     </li>
 
                     <li>
-                        <a href="../paginas/sobrenos.php">Sobre nós</a>
+                        <a href="<?php echo BASEURL; ?>paginas/sobrenos.php">Sobre nós</a>
                     </li>
 
                     <li>
@@ -61,7 +66,7 @@
 
 
                     <li>
-                        <a href="../paginas/personalizados.php">Personalizados</a>
+                        <a href="<?php echo BASEURL; ?>paginas/personalizados.php">Personalizados</a>
                     </li>
 
                 </ul>
@@ -70,11 +75,15 @@
                 <div class="nav-icons">
 
                     <?php if(!empty($_SESSION['logado']) && $_SESSION['logado'] === true): ?>
+                        <a href="<?php echo BASEURL; ?>minha_conta.php">
+                            <i class="fa-regular fa-circle-user"></i>
+                            <p>Olá, <?php echo htmlspecialchars($_SESSION['nome']); ?></p>
+                        </a>
 
                     <?php else: ?>
-                        <a href="#">
+                        <a data-bs-toggle="modal" data-bs-target="#modalLogin">
                             <i class="fa-regular fa-circle-user"></i>
-                            <p>Olá, <?php //echo htmlspecialchars($_SESSION['nome']); ?></p>
+                            <p>Login</p>
                         </a>
                     <?php endif; ?>
                     
