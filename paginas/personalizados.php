@@ -45,9 +45,10 @@ $redirect_uri = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL);
         <nav>
             <ul>
                 <li><a href="../index.php">Home</a></li>
-                <li><a href="sobrenos.html">Sobre Nós</a></li>
-                <li><a href="doces.php">Doces</a></li>
-                <li><a href="salgados.php">Salgados</a></li>
+                <li><a href="sobrenos.php">Sobre Nós</a></li>
+                
+                
+                <li><a href="cardapio.php">Cardápio</a></li>
                 <li><a href="personalizados.php" class="active">Personalizados</a></li>
                 <li>
                     <a href="carrinho.php">

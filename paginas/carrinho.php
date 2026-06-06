@@ -57,15 +57,14 @@ unset($_SESSION['cart_message']);
         <nav>
             <ul>
                 <li><a href="../index.php">Home</a></li>
-                <li><a href="sobrenos.html">Sobre Nós</a></li>
-                <li><a href="doces.php">Doces</a></li>
-                <li><a href="salgados.php">Salgados</a></li>
+                <li><a href="sobrenos.php">Sobre Nós</a></li>
+                <li><a href="cardapio.php">Cardápio</a></li>
                 <li><a href="personalizados.php">Personalizados</a></li>
                 <li><a href="carrinho.php" class="active"><i class="fas fa-shopping-cart"></i> Carrinho (<?php echo $total_itens_carrinho; ?>)</a></li>
                 <?php if ($usuario_logado): ?>
-                    <li><a href="inc/logout.php">Sair</a></li>
+                    <li><a href="../inc/logout.php">Sair</a></li>
                 <?php else: ?>
-                    <li><a class="btn btn-primary text-white" href="index.php">Login</a></li>
+                    <li><a class="btn btn-primary text-white" href="../index.php">Login</a></li>
                 <?php endif; ?>
             </ul>
         </nav>
@@ -83,7 +82,7 @@ unset($_SESSION['cart_message']);
         <?php endif; ?>
 
         <?php if ($carrinho_vazio): ?>
-            <div class="alert alert-secondary">Seu carrinho está vazio. <a href="doces.php">Continuar comprando</a></div>
+            <div class="alert alert-secondary">Seu carrinho está vazio. <a href="cardapio.php">Continuar comprando</a></div>
         <?php else: ?>
             <div class="cart">
                 <div class="cart-items">

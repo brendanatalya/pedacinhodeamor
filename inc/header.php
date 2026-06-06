@@ -61,12 +61,9 @@
                     </li>
 
                     <li>
-                        <a href="<?php echo BASEURL; ?>paginas/doces.php">Doces</a>
+                        <a href="./paginas/cardapio.php">Cardápio</a>
                     </li>
 
-                    <li>
-                        <a href="<?php echo BASEURL; ?>paginas/salgados.php">Salgados</a>
-                    </li>
 
                     <li>
                         <a href="<?php echo BASEURL; ?>paginas/personalizados.php">Personalizados</a>
