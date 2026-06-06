@@ -5,21 +5,21 @@ require_once ABSPATH . 'inc/database.php';
 
 // Só aceita POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ' . BASEURL . 'paginas/doces.php');
+    header('Location: ' . BASEURL . 'paginas/cardapio.php');
     exit;
 }
 
 // Usuário precisa estar logado
 if (empty($_SESSION['logado']) || $_SESSION['logado'] !== true) {
     $_SESSION['cart_message'] = 'Faça login para adicionar produtos ao carrinho.';
-    $redirect = $_POST['redirect'] ?? BASEURL . 'paginas/doces.php';
+    $redirect = $_POST['redirect'] ?? BASEURL . 'paginas/cardapio.php';
     header('Location: ' . $redirect);
     exit;
 }
 
 $product_id = $_POST['product_id'] ?? null;
 $quantity   = max(1, intval($_POST['quantity'] ?? 1));
-$redirect   = $_POST['redirect'] ?? BASEURL . 'paginas/doces.php';
+$redirect   = $_POST['redirect'] ?? BASEURL . 'paginas/cardapio.php';
 
 // ─── PRODUTO PERSONALIZADO ────────────────────────────────────────────────────
 if ($product_id === 'personalizado') {

@@ -148,7 +148,7 @@ close_database($conn);
                             <div class="product-card" style="background-image: url('imagens/doce1.webp');">
                                 <div class="product-card-body">
                                     <span>Croissants</span>
-                                    <button class="btn btn-confira" src="paginas/doces.php">Confira</button>
+                                    <button class="btn btn-confira" src="paginas/cardapio.php">Confira</button>
                                 </div>
                             </div>
                             
@@ -179,7 +179,7 @@ close_database($conn);
                         <div class="product-card" style="background-image: url('imagens/doce1.webp');">
                             <div class="product-card-body">
                                 <span>Tortas</span>
-                                <button class="btn-confira" src="./paginas/doces.php">Confira</button>
+                                <button class="btn-confira" src="./paginas/cardapio.php">Confira</button>
                             </div>
                         </div>
                         
@@ -213,7 +213,7 @@ close_database($conn);
                                 <div class="product-card" style="background-image: url('imagens/doce1.webp');">
                                     <div class="product-card-body">
                                         <span>Tortas</span>
-                                        <button class="btn-confira" src="./paginas/doces.php">Confira</button>
+                                        <button class="btn-confira" src="./paginas/cardapio.php">Confira</button>
                                     </div>
                                 </div>
                             </div>

@@ -56,12 +56,9 @@
                     </li>
 
                     <li>
-                        <a href="../paginas/doces.php">Doces</a>
+                        <a href="./paginas/cardapio.php">Cardápio</a>
                     </li>
 
-                    <li>
-                        <a href="../paginas/salgados.php">Salgados</a>
-                    </li>
 
                     <li>
                         <a href="../paginas/personalizados.php">Personalizados</a>

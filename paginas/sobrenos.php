@@ -14,9 +14,8 @@
     <nav>
         <ul>
             <li><a href="../index.php">Home</a></li>
-            <li><a href="sobrenos.html">Sobre Nós</a></li>
-            <li><a href="doces.php">Doces</a></li>
-            <li><a href="salgados.php">Salgados</a></li>
+            <li><a href="sobrenos.php">Sobre Nós</a></li>
+            <li><a href="cardapio.php">Cardápio</a></li>
             <li><a href="personalizados.php">Personalizados</a></li>
             <a class="btn btn-primary text-white" href="../index.php" style="text-decoration:none;">
                 Login
