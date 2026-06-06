@@ -1794,7 +1794,7 @@ body.bg-confeitaria {
 .carrosselofc img {
     width: 100%;
     flex-shrink: 0;
-    aspect-ratio: 16/6;
+    aspect-ratio: 16/9;
     object-fit: cover;
     display: block;
 }
@@ -2012,7 +2012,7 @@ body.bg-confeitaria {
     transition: opacity 0.3s ease, transform 0.3s ease, background 0.3s ease;
 }
 
-.product-card:hover .btn-confira {
+.campeoes-card:hover .btn-confira {
     opacity: 1;
     transform: translateY(0);
 }
@@ -2021,34 +2021,6 @@ body.bg-confeitaria {
     background: #c0395b79;
     border-color: #c0395a;
     transform: translateY(-1px);
-}
-
-/*arrumando o bootstrap do carrossel*/
-
-#cards {
-    padding: 20px 0 60px;
-    overflow: hidden;
-}
-
-#cards .carousel-inner {
-    height: 420px;
-    overflow: hidden;
-}
-
-#cards .carousel-item {
-    height: 420px;
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
-    /*esse cubic-bezier é oque da aquele movimento bonito*/
-}
-
-#cards .product-card {
-    width: 75vw;
-    max-width: 300px;
-    height: 380px;
-    min-width: unset;
 }
 
 /*feedbacks*/
@@ -2737,10 +2709,6 @@ ___________
 
   .carrossel {
     padding: 56px 0;
-  }
-
-  .carrosselofc img {
-    aspect-ratio: 16/9; 
   }
 
   .footer-container {

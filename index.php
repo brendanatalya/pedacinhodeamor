@@ -107,9 +107,9 @@ close_database($conn);
                     </div>
                     <div class="carrosselofc" id="carrossel" tabindex="0">
                         <div class="slides">
-                            <img src="<?php echo BASEURL; ?>imagens/doce1.webp" alt="Imagem 1">
-                            <img src="<?php echo BASEURL; ?>imagens/doce2.webp" alt="Imagem 2">
-                            <img src="<?php echo BASEURL; ?>imagens/doce3.webp" alt="Imagem 3">
+                            <img src="<?php echo BASEURL; ?>imagens/bolocarrossel.jpg" alt="Imagem 1">
+                            <img src="<?php echo BASEURL; ?>imagens/salgadoscarrossel.jpg" alt="Imagem 2">
+                            <img src="<?php echo BASEURL; ?>imagens/copinhocarrossel.jpg" alt="Imagem 3">
                         </div>
                         <button class="prev carrossel-btnprev">
                             <i class="fa-solid fa-angle-left"></i>
