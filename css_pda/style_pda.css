@@ -289,7 +289,7 @@ body {
     justify-content: center;
 }
 .sub-btn {
-    border: 2px solid #ffb3d9;
+    border: 2px solid #81304481;
     background: #fff;
     color: #813044;
     padding: 7px 18px;
@@ -300,7 +300,7 @@ body {
     transition: 0.2s;
 }
 .sub-btn:hover {
-    background: #ffdcec;
+    background: #ffd7e1;
 }
 .sub-btn.ativo {
     background: #813044;

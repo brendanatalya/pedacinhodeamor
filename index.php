@@ -2,71 +2,43 @@
 <?php  
     require_once "config.php"; 
     require_once DBAPI; 
-    include(HEADER_TEMPLATE);
-?>
-
-<?php 
-if(!isset($_SESSION)) session_start();
-
-// Verificar se cliente tem pedido entregue sem avaliação
-if (!empty($_SESSION['logado']) && $_SESSION['tipo'] === 'cliente') {
-    require_once 'config.php';
     require_once ABSPATH . 'inc/database.php';
+    include(HEADER_TEMPLATE);
 
+    if (!isset($_SESSION)) session_start();
+    
+
+    // Verificar se cliente tem pedido entregue sem avaliação
+    if (!empty($_SESSION['logado']) && $_SESSION['tipo'] === 'cliente') {
+        $conn = open_database();
+        $stmt = $conn->prepare("
+            SELECT p.id
+            FROM pedidos p
+            LEFT JOIN avaliacoes a ON a.id_pedido = p.id
+            WHERE p.id_cliente = ?
+            AND p.status = 'entregue'
+            AND a.id IS NULL
+            ORDER BY p.data_pedido DESC
+            LIMIT 1
+        ");
+        $stmt->execute([$_SESSION['id']]);
+        $pendente = $stmt->fetch();
+        close_database($conn);
+        $_SESSION['pedido_avaliar_id'] = $pendente ? $pendente['id'] : null;
+    }
+
+    // Buscar as últimas 10 avaliações de todos os clientes
     $conn = open_database();
     $stmt = $conn->prepare("
-        SELECT p.id 
-        FROM pedidos p
-        LEFT JOIN avaliacoes a ON a.id_pedido = p.id
-        WHERE p.id_cliente = ? 
-          AND p.status = 'entregue'
-          AND a.id IS NULL
-        ORDER BY p.data_pedido DESC
-        LIMIT 1
+        SELECT a.nota_produto, a.nota_atend, a.comentario, a.criado_em, u.nome
+        FROM avaliacoes a
+        INNER JOIN usuarios u ON u.id = a.id_cliente
+        ORDER BY a.criado_em DESC
+        LIMIT 10
     ");
-    $stmt->execute([$_SESSION['id']]);
-    $pendente = $stmt->fetch();
+    $stmt->execute();
+    $avaliacoes_home = $stmt->fetchAll(PDO::FETCH_ASSOC);
     close_database($conn);
-
-    $_SESSION['pedido_avaliar_id'] = $pendente ? $pendente['id'] : null;
-}
-?>
-<?php
-if (!isset($_SESSION)) session_start();
-require_once 'config.php';
-require_once ABSPATH . 'inc/database.php';
-
-// Verificar se cliente tem pedido entregue sem avaliação
-if (!empty($_SESSION['logado']) && $_SESSION['tipo'] === 'cliente') {
-    $conn = open_database();
-    $stmt = $conn->prepare("
-        SELECT p.id
-        FROM pedidos p
-        LEFT JOIN avaliacoes a ON a.id_pedido = p.id
-        WHERE p.id_cliente = ?
-          AND p.status = 'entregue'
-          AND a.id IS NULL
-        ORDER BY p.data_pedido DESC
-        LIMIT 1
-    ");
-    $stmt->execute([$_SESSION['id']]);
-    $pendente = $stmt->fetch();
-    close_database($conn);
-    $_SESSION['pedido_avaliar_id'] = $pendente ? $pendente['id'] : null;
-}
-
-// Buscar as últimas 10 avaliações de todos os clientes
-$conn = open_database();
-$stmt = $conn->prepare("
-    SELECT a.nota_produto, a.nota_atend, a.comentario, a.criado_em, u.nome
-    FROM avaliacoes a
-    INNER JOIN usuarios u ON u.id = a.id_cliente
-    ORDER BY a.criado_em DESC
-    LIMIT 10
-");
-$stmt->execute();
-$avaliacoes_home = $stmt->fetchAll(PDO::FETCH_ASSOC);
-close_database($conn);
 ?>
 
     <body>

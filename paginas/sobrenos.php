@@ -1,5 +1,7 @@
 <?php  
-    require_once "../config.php"; 
+    if (!isset($_SESSION)) session_start();
+    require_once '../config.php';
+    require_once ABSPATH . 'inc/database.php';
     require_once DBAPI; 
     include(HEADER_TEMPLATE);
 ?>
