@@ -1,4 +1,3 @@
-
 <?php  
     require_once "config.php"; 
     require_once DBAPI; 
@@ -242,6 +241,5 @@
 
         <?php include 'inc/modal.php'; 
         include(FOOTER_TEMPLATE);?>
-        
     </body>
 </html>

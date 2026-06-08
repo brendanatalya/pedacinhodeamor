@@ -34,4 +34,5 @@ define('FOOTER_TEMPLATE', ABSPATH . 'inc/footer.php');
 
 /** número WhatsApp da confeitaria (só números, com DDI) **/
 define('WHATSAPP_NUMBER', '5515988329726');
+
 ?>

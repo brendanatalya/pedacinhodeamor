@@ -160,3 +160,4 @@ window.addEventListener("scroll", function(){
     <p>Feito com <i class="fa-solid fa-heart" style="color: #8f1a5a;"></i> para adoçar seus momentos.</p>
   </div>
 </footer>
+<script src="js/cookies.js"></script>
