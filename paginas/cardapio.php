@@ -27,7 +27,7 @@ chocolate ele vai cair em outros.
 fiz isso por agora, qlqr coisa eu falo com as meninas dps pra add isso no banco msm, pra ter uma subcategoria de doce e salgado pra nao ter q fazer essa gambiarra rs -->
       
     <main>
-         <section class="doces-intro" style="background: url('<?php echo BASEURL; ?>/imagens/brigadeiros.jpg') no-repeat center center; background-size: cover;">
+        <section class="doces-intro" style="background: url('<?php echo BASEURL; ?>/imagens/brigadeiros.jpg') no-repeat center center; background-size: cover;">
             <div class="doces-fundo"></div>
 
             <div class="conteudodoces">
@@ -37,7 +37,7 @@ fiz isso por agora, qlqr coisa eu falo com as meninas dps pra add isso no banco 
                     <div class="doce-detalhe"></div>
                 </div>
                 <p class="doces-subtitulo">
-                    udo feito com carinho, do doce ao salgado!
+                    Tudo feito com carinho, do doce ao salgado!
                 </p>
             </div>
         </section>

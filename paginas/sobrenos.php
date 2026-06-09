@@ -8,7 +8,7 @@
 
 <body>
     <main>
-        <section class="sobre-intro">
+        <section class="sobre-intro" style="background: url('<?php echo BASEURL; ?>/imagens/boloframboesa.jpg') no-repeat center center; background-size: cover;">
             <!-- bloco de bem vindo do site -->
             <div class="bemvindo-fundo"></div>
 
@@ -33,7 +33,7 @@
         <section class="sobre-nos">
             <div class="sobre">
                 <div class="sobre-foto">
-                    <img src="<?php echo BASEURL; ?>imagens/doce1.webp" alt="Quem somos">
+                    <img src="<?php echo BASEURL; ?>imagens/sobrenos.jpg" alt="Quem somos">
                 </div>
                 <div class="sobre-texto">
                     <h2>Quem Somos?</h2>
@@ -53,7 +53,7 @@
                     <p>Produzimos em pequenas quantidades para garantir qualidade excepcional e sabor autêntico, mantendo sempre o nosso toque caseiro que nos diferencia. Nenhum produto em nossa cozinha é feito por máquina - tudo é feito à mão, com atenção e carinho.</p>
                 </div>
                 <div class="trabalho-foto">
-                    <img src="<?php echo BASEURL; ?>imagens/doce3.webp" alt="Como trabalhamos">
+                    <img src="<?php echo BASEURL; ?>imagens/comotrabalhamos.jpg" alt="Como trabalhamos">
                 </div>
             </div>
         </section>

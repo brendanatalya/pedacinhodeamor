@@ -1341,20 +1341,20 @@ h2, .section-title {
 
 
 
-        /* --- parte do minha conta --- */
+/*MINHA CONTA*/
 
-body.bg-confeitaria {
-    background-color: #fcf8f5; /* creme bem suave */
-    background-image: radial-gradient(#f3e1ec 1.5px, transparent 1.5px), radial-gradient(#f3e1ec 1.5px, #fcf8f5 1.5px);
+.minhaconta {
+    background-color: #fdf2f4;
+    /*background-image: radial-gradient(#f3e1ec 1.5px, transparent 1.5px), radial-gradient(#f3e1ec 1.5px, #fcf8f5 1.5px);*/
     background-size: 40px 40px;
     background-position: 0 0, 20px 20px;
-    font-family: 'Poppins', sans-serif;
-    color: #4a3b32; /* marrom escuro suave em vez de preto puro */
+    font-family: 'Poppins',Arial, sans-serif;
+    color: #4a3b32; 
 }
 
 .title-confeitaria {
-    font-family: 'Comfortaa', cursive;
-    color: #d65a8a; /* rosa confeitaria */
+    font-family: 'Poppins',Arial, sans-serif;
+    color: #d65a8a;
     font-weight: 700;
 }
 

@@ -1,10 +1,14 @@
 <?php
+
+
 if (!isset($_SESSION)) {
     session_start();
 }
 
 require_once 'config.php';
 require_once ABSPATH . 'inc/database.php';
+require_once DBAPI; 
+include(HEADER_TEMPLATE);
 
 if (empty($_SESSION['logado'])) {
     header('Location: index.php');
@@ -39,49 +43,34 @@ $type = $_SESSION['type'] ?? '';
 unset($_SESSION['message'], $_SESSION['type']);
 ?>
 
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minha Conta | Doce Sabor</title>
-
-    <link rel="stylesheet" href="css_pda/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css_pda/style_pda.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-</head>
-<body class="bg-confeitaria">
-
-<div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-9">
-            
-            <div class="conta-card shadow-sm">
-                <div class="conta-header text-center">
-                            <?php 
-                    // 1. Verifica se o cliente tem uma foto personalizada cadastrada E se ela existe na pasta
-                    if (!empty($user['foto']) && file_exists($user['foto'])): 
-                    ?>
-                        <img src="<?php echo htmlspecialchars($user['foto']); ?>" class="avatar-img" id="previewFoto">
-                    
-                    <?php else: ?>
-                        <img src="imagens/uploads/usuarios/usuario_basico.jpg" class="avatar-img" id="previewFoto">
-                    
-                    <?php endif; ?>
-
-                    <div class="avatar-overlay">
-                        <i class="fas fa-camera"></i>
+<body>
+    <main class="minhaconta">
+        <div class="container py-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-9">
+                    <div class="conta-card shadow-sm">
+                        <div class="conta-header text-center">
+                            <?php
+                                // 1. Verifica se o cliente tem uma foto personalizada cadastrada E se ela existe na pasta
+                                if (!empty($user['foto']) && file_exists($user['foto'])):
+                            ?>
+                            <img src="<?php echo htmlspecialchars($user['foto']); ?>" class="avatar-img" id="previewFoto">
+        
+                            <?php else: ?>
+                                <img src="imagens/uploads/usuarios/usuario_basico.jpg" class="avatar-img" id="previewFoto">
+                            <?php endif; ?>
+        
+                            <div class="avatar-overlay">
+                                <i class="fas fa-camera"></i>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-
                     <h2 class="mt-3 title-confeitaria">Olá, <?php echo htmlspecialchars($nome); ?>!</h2>
                     <p class="text-muted">Acompanhe seus pedidos e gerencie seu perfil doce.</p>
                 </div>
-
+        
                 <div class="conta-body p-4 p-md-5">
-                    
+
                     <?php if ($message): ?>
                         <div class="alert alert-<?php echo $type === 'danger' ? 'danger' : 'success'; ?> alert-dismissible fade show" role="alert">
                             <i class="fas <?php echo $type === 'danger' ? 'fa-circle-xmark' : 'fa-circle-check'; ?> me-2"></i>
@@ -91,11 +80,11 @@ unset($_SESSION['message'], $_SESSION['type']);
                     <?php endif; ?>
 
                     <form action="salvar_conta.php" method="POST" enctype="multipart/form-data">
-                        
+
                         <input type="file" name="foto" class="d-none" accept="image/*" id="inputFoto">
 
                         <h5 class="section-title mb-4"><i class="fas fa-user-cookie me-2"></i>Seus Dados Pessoais</h5>
-                        
+
                         <div class="row">
                             <div class="col-md-6 mb-4">
                                 <label class="form-label-custom"><i class="fas fa-user me-2"></i>Nome Completo</label>
@@ -116,7 +105,7 @@ unset($_SESSION['message'], $_SESSION['type']);
                         <hr class="my-4 custom-hr">
 
                         <h5 class="section-title mb-4"><i class="fas fa-key me-2"></i>Alterar Senha <small class="text-muted fs-6">(Opcional)</small></h5>
-                        
+
                         <div class="row">
                             <div class="col-md-4 mb-4">
                                 <label class="form-label-custom">Senha Atual</label>
@@ -172,7 +161,7 @@ unset($_SESSION['message'], $_SESSION['type']);
                                                 <td><span class="fw-bold text-pink">#<?php echo $pedido['id']; ?></span></td>
                                                 <td><small class="text-muted"><?php echo date('d/m/Y H:i', strtotime($pedido['data_pedido'])); ?></small></td>
                                                 <td>
-                                                    <?php 
+                                                    <?php
                                                         $statusClass = 'bg-warning text-dark';
                                                         if($pedido['status'] == 'entregue' || $pedido['status'] == 'concluido') $statusClass = 'bg-success text-white';
                                                         if($pedido['status'] == 'cancelado') $statusClass = 'bg-danger text-white';
@@ -209,13 +198,10 @@ unset($_SESSION['message'], $_SESSION['type']);
                             </div>
                         <?php endif; ?>
                     </div>
-
                 </div>
             </div>
-
         </div>
-    </div>
-</div>
+    </main>
 
 <script src="js/bootstrap/bootstrap.bundle.min.js"></script>
 <script>
