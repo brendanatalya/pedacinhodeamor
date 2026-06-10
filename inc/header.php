@@ -66,7 +66,7 @@
 
 
                     <li>
-                        <a href="<?php //echo BASEURL; ?>paginas/personalizados.php" style="bloqueado" style="color: #5a322056 !important; cursor: not-allowed;">Personalizados</a>
+                        <a>Personalizados</a>
                     </li>
                     
                 </ul>
@@ -88,7 +88,7 @@
                     <?php endif; ?>
                     
 
-                    <a href="<?php echo BASEURL; ?>/paginas/carrinho.php">
+                    <a>
                         <i class="fas fa-shopping-cart"></i>
                         <p>Carrinho (<?php echo array_sum($_SESSION['cart'] ?? []); ?>)</p>
                     </a>

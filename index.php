@@ -145,25 +145,25 @@
                                 <div class="campeoes-card" style="background-image: url('<?php echo BASEURL; ?>imagens/torta.jpg');">
                                     <div class="campeoes-card-body">
                                         <span>Tortas</span>
-                                        <button class="btn-confira">Confira</button>
+                                        <a class="btn-confira" href="<?php echo BASEURL; ?>paginas/cardapio.php">Confira</a>
                                     </div>
                                 </div>
                                 <div class="campeoes-card" style="background-image: url('<?php echo BASEURL; ?>imagens/salgados.jpg');">
                                     <div class="campeoes-card-body">
                                         <span>Salgados</span>
-                                        <button class="btn-confira">Confira</button>
+                                        <a class="btn-confira" href="<?php echo BASEURL; ?>paginas/cardapio.php">Confira</a>
                                     </div>
                                 </div>
                                 <div class="campeoes-card" style="background-image: url('<?php echo BASEURL; ?>imagens/bolos.jpg');">
                                     <div class="campeoes-card-body">
                                         <span>Bolos</span>
-                                        <button class="btn-confira">Confira</button>
+                                        <a class="btn-confira" href="<?php echo BASEURL; ?>paginas/cardapio.php">Confira</a>
                                     </div>
                                 </div>
                                 <div class="campeoes-card" style="background-image: url('<?php echo BASEURL; ?>imagens/cones.jpg');">
                                     <div class="campeoes-card-body">
                                         <span>Cones</span>
-                                        <button class="btn-confira">Confira</button>
+                                        <a class="btn-confira" href="<?php echo BASEURL; ?>paginas/cardapio.php">Confira</a>
                                     </div>
                                 </div>
                             </div>
