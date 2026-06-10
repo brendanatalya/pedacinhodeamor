@@ -28,7 +28,6 @@ fiz isso por agora, qlqr coisa eu falo com as meninas dps pra add isso no banco 
       
     <main>
         <section class="doces-intro" style="background: url('<?php echo BASEURL; ?>/imagens/brigadeiros.jpg') no-repeat center center; background-size: cover;">
-            <div class="doces-fundo"></div>
 
             <div class="conteudodoces">
                 <div class="doces-header">

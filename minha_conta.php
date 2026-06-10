@@ -1,6 +1,4 @@
 <?php
-
-
 if (!isset($_SESSION)) {
     session_start();
 }
@@ -44,195 +42,348 @@ unset($_SESSION['message'], $_SESSION['type']);
 ?>
 
 <body>
-    <main class="minhaconta">
-        <div class="container py-5">
-            <div class="row justify-content-center">
-                <div class="col-lg-9">
-                    <div class="conta-card shadow-sm">
-                        <div class="conta-header text-center">
-                            <?php
-                                // 1. Verifica se o cliente tem uma foto personalizada cadastrada E se ela existe na pasta
-                                if (!empty($user['foto']) && file_exists($user['foto'])):
-                            ?>
-                            <img src="<?php echo htmlspecialchars($user['foto']); ?>" class="avatar-img" id="previewFoto">
+    <div class="minhaconta">
+        <aside class="minhaconta-sidebar">
         
-                            <?php else: ?>
-                                <img src="imagens/uploads/usuarios/usuario_basico.jpg" class="avatar-img" id="previewFoto">
-                            <?php endif; ?>
+            <!-- cabeçalho -->
+            <div class="sidebar-header">
         
-                            <div class="avatar-overlay">
-                                <i class="fas fa-camera"></i>
-                            </div>
-                        </div>
+                <!-- avatar clicável (o JS abre o input file) -->
+                <div class="minhaconta-perfil" id="avatarClickTrigger" title="Clique para trocar sua foto">
+                    <div class="minhaconta-fotoperfil">
+                        <?php
+                            if (!empty($user['foto']) && file_exists($user['foto'])):
+                        ?>
+                            <img src="<?php echo htmlspecialchars($user['foto']); ?>" alt="Foto de perfil" id="previewFoto">
+                        <?php else: ?>
+                            <img src="imagens/uploads/usuarios/usuario_basico.jpg" alt="Foto de perfil" id="previewFoto">
+                        <?php endif; ?>
                     </div>
-                    <h2 class="mt-3 title-confeitaria">Olá, <?php echo htmlspecialchars($nome); ?>!</h2>
-                    <p class="text-muted">Acompanhe seus pedidos e gerencie seu perfil doce.</p>
+                    <div class="trocarfoto-botao" title="Alterar foto">
+                        <i class="fas fa-camera"></i>
+                    </div>
                 </div>
+            
+                <h3 class="minhaconta-nome"><?php echo htmlspecialchars($nome); ?></h3>
+            
+                <p class="minhaconta-email"><?php echo htmlspecialchars($email); ?></p>
+            
+                <div class="minhaconta-statuspedidos">
+                    <div class="minhaconta-statuspedido">
+                        <span class="minhaconta-qtdpedidos"><?php echo count($pedidos); ?></span>
+                        <span class="minhaconta-statuspedido-texto">Pedidos</span>
+                    </div>
+                    <div class="minhaconta-statuspedido">
+                        <span class="minhaconta-qtdpedidos"><?php echo count($pedidos); ?></span>
+                        <span class="minhaconta-statuspedido-texto">Avaliações</span>
+                    </div>
+                </div>
+            </div>
         
-                <div class="conta-body p-4 p-md-5">
+            <!-- links de navegação -->
+            <div class="minhaconta-nav">
+                <a href="#" class="minhaconta-btnativo" data-tab="dados">
+                    <i class="fas fa-user"></i>
+                    Meus Dados
+                </a>
+                <a href="#" data-tab="pedidos">
+                    <i class="fas fa-box-open"></i>
+                    Meus Pedidos
+                    <!-- PHP: <span class="minhaconta-navbadge"><?= count($pedidos) ?></span> -->
+                    <span class="minhaconta-navbadge"><?php echo count($pedidos); ?></span>
+                </a>
+                <a href="#" data-tab="senha">
+                    <i class="fas fa-key"></i>
+                    Alterar Senha
+                </a>
+                <div class="linhadivisora"></div>
+                <a href="index.php">
+                    <i class="fas fa-store"></i>
+                    Ir para a Loja
+                </a>
+                <a href="inc/logout.php" class="btn-sair">
+                    <i class="fas fa-right-from-bracket"></i>
+                    Sair da Conta
+                </a>
+            </div>
+        
+        </aside>
 
-                    <?php if ($message): ?>
-                        <div class="alert alert-<?php echo $type === 'danger' ? 'danger' : 'success'; ?> alert-dismissible fade show" role="alert">
-                            <i class="fas <?php echo $type === 'danger' ? 'fa-circle-xmark' : 'fa-circle-check'; ?> me-2"></i>
-                            <?php echo htmlspecialchars($message); ?>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    <?php endif; ?>
+        <main class="mc-main">
+ 
 
+            <?php if ($message): ?>
+                <div class="mc-alert <?= $type === 'danger' ? 'mc-alert-danger' : 'mc-alert-success' ?>">
+                <i class="fas <?= $type === 'danger' ? 'fa-circle-xmark' : 'fa-circle-check' ?>"></i>
+                <?= htmlspecialchars($message) ?>
+                </div>
+            <?php endif; ?>
+
+            <div class="conta-dadospessoais conta-tab minhaconta-btnativo" id="panel-dados">
+                <div class="conta-dadoshead">
+                    <div class="conta-dadosicon"><i class="fas fa-user"></i></div>
+                    <div>
+                        <h2>Dados Pessoais</h2>
+                        <p>Mantenha suas informações sempre atualizadas</p>
+                    </div>
+                </div>
+            
+                <div class="conta-dadosbody">
                     <form action="salvar_conta.php" method="POST" enctype="multipart/form-data">
-
-                        <input type="file" name="foto" class="d-none" accept="image/*" id="inputFoto">
-
-                        <h5 class="section-title mb-4"><i class="fas fa-user-cookie me-2"></i>Seus Dados Pessoais</h5>
-
-                        <div class="row">
-                            <div class="col-md-6 mb-4">
-                                <label class="form-label-custom"><i class="fas fa-user me-2"></i>Nome Completo</label>
-                                <input type="text" name="nome" class="form-control form-control-custom" value="<?php echo htmlspecialchars($nome); ?>" required>
+                        <input type="hidden" name="acao" value="dados">
+                        <input type="file"   name="foto" id="inputFoto" accept="image/*" style="display:none">
+                
+                        <div class="conta-dadosdiv">
+                
+                            <div class="conta-campo">
+                                <label class="conta-campolabel" for="inp-nome">
+                                    <i class="fas fa-user"></i> Nome Completo
+                                </label>
+                                <!-- PHP: value="<?php echo htmlspecialchars($nome); ?>" -->
+                                <input type="text" id="inp-nome" name="nome" class="conta-campoinput" value="<?php echo htmlspecialchars($nome); ?>" required>
                             </div>
-
-                            <div class="col-md-6 mb-4">
-                                <label class="form-label-custom"><i class="fas fa-envelope me-2"></i>E-mail Cadastrado</label>
-                                <input type="email" name="email" class="form-control form-control-custom" value="<?php echo htmlspecialchars($email); ?>" required>
+                
+                            <div class="conta-campo">
+                                <label class="conta-campolabel" for="inp-email">
+                                    <i class="fas fa-envelope"></i> E-mail
+                                </label>
+                                <input type="email" id="inp-email" name="email" class="conta-campoinput" value="<?php echo htmlspecialchars($email); ?>" required>
                             </div>
-
-                            <div class="col-12 mb-4">
-                                <label class="form-label-custom"><i class="fas fa-location-dot : me-2"></i>Endereço para Entrega</label>
-                                <input type="text" name="endereco" class="form-control form-control-custom" value="<?php echo htmlspecialchars($endereco); ?>" placeholder="Rua, número, bairro, cidade e CEP">
+                
+                            <div class="conta-campo conta-ocupartudo">
+                                <label class="conta-campolabel" for="inp-end">
+                                    <i class="fas fa-location-dot"></i> Endereço para Entrega
+                                </label>
+                                <input type="text" id="inp-end" name="endereco" class="conta-campoinput" value="<?php echo htmlspecialchars($endereco); ?>" placeholder="Rua, número, bairro, cidade e CEP">
                             </div>
+                
                         </div>
-
-                        <hr class="my-4 custom-hr">
-
-                        <h5 class="section-title mb-4"><i class="fas fa-key me-2"></i>Alterar Senha <small class="text-muted fs-6">(Opcional)</small></h5>
-
-                        <div class="row">
-                            <div class="col-md-4 mb-4">
-                                <label class="form-label-custom">Senha Atual</label>
-                                <input type="password" name="senha_atual" class="form-control form-control-custom" placeholder="Sua senha vigente">
-                            </div>
-
-                            <div class="col-md-4 mb-4">
-                                <label class="form-label-custom">Nova Senha</label>
-                                <input type="password" name="nova_senha" class="form-control form-control-custom" placeholder="Mínimo 6 caracteres">
-                            </div>
-
-                            <div class="col-md-4 mb-4">
-                                <label class="form-label-custom">Confirmar Nova Senha</label>
-                                <input type="password" name="confirmar_senha" class="form-control form-control-custom" placeholder="Repita a nova senha">
-                            </div>
-                        </div>
-
-                        <div class="d-flex justify-content-between align-items-center mt-4 pt-2 flex-wrap gap-3">
-                            <a href="index.php" class="btn btn-custom-secondary">
-                                <i class="fas fa-arrow-left me-2"></i>Ir para a Loja
-                            </a>
-                            <div class="d-flex gap-2 flex-wrap">
-                                <a href="inc/logout.php" class="btn btn-custom-danger">
-                                    <i class="fas fa-right-from-bracket me-2"></i>Sair
-                                </a>
-                                <button type="submit" class="btn btn-custom-primary">
-                                    <i class="fas fa-floppy-disk me-2"></i>Salvar Alterações
-                                </button>
-                            </div>
+                
+                        <div class="conta-formactions">
+                            <button type="submit" class="contabotao cocontabotao-rosa">
+                                <i class="fas fa-floppy-disk"></i>
+                                Salvar Alterações
+                            </button>
                         </div>
                     </form>
-
-                    <div class="pedidos-box mt-5 pt-4 border-top custom-border">
-                        <h5 class="section-title mb-4">
-                            <i class="fas fa-cake-candles me-2"></i>Seus Pedidos Recentes
-                        </h5>
+                </div>
+            </div>
+        
+            <div class="conta-dadospessoais conta-tab" id="panel-pedidos">
+                <div class="conta-dadoshead">
+                    <div class="conta-dadosicon"><i class="fas fa-box-open"></i></div>
+                    <div>
+                        <h2>Meus Pedidos</h2>
+                        <p>Histórico completo das suas compras</p>
+                    </div>
+                </div>
+            
+                <div class="conta-dadosbody">
+                    <div class="minhaconta-pedidos">
 
                         <?php if (!empty($pedidos)): ?>
-                            <div class="table-responsive-md">
-                                <table class="table table-custom align-middle">
-                                    <thead>
-                                        <tr>
-                                            <th>Pedido</th>
-                                            <th>Data</th>
-                                            <th>Status</th>
-                                            <th class="text-end">Total</th>
-                                            <th>Ação</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php foreach ($pedidos as $pedido): ?>
-                                            <tr>
-                                                <td><span class="fw-bold text-pink">#<?php echo $pedido['id']; ?></span></td>
-                                                <td><small class="text-muted"><?php echo date('d/m/Y H:i', strtotime($pedido['data_pedido'])); ?></small></td>
-                                                <td>
-                                                    <?php
-                                                        $statusClass = 'bg-warning text-dark';
-                                                        if($pedido['status'] == 'entregue' || $pedido['status'] == 'concluido') $statusClass = 'bg-success text-white';
-                                                        if($pedido['status'] == 'cancelado') $statusClass = 'bg-danger text-white';
-                                                    ?>
-                                                    <span class="badge rounded-pill <?php echo $statusClass; ?>">
-                                                        <?php echo ucfirst($pedido['status']); ?>
-                                                    </span>
-                                                </td>
-                                                <td class="text-end fw-bold text-dark">R$ <?php echo number_format($pedido['valor_total'], 2, ',', '.'); ?></td>
-                                                <td>
-                                                    <?php
-                                                        $stmtAval = $database->prepare("SELECT id FROM avaliacoes WHERE id_pedido = ?");
-                                                        $stmtAval->execute([$pedido['id']]);
-                                                        $ja_avaliou = $stmtAval->fetch();
-
-                                                        if ($pedido['status'] === 'entregue' && !$ja_avaliou): ?>
-                                                            <a href="paginas/avaliar.php?pedido=<?= $pedido['id'] ?>
-                                                            " class="btn btn-sm btn-warning">
-                                                                ⭐ Avaliar
-                                                            </a>
-                                                        <?php elseif ($pedido['status'] === 'entregue' && $ja_avaliou): ?>
-                                                            <span class="text-success small">✔ Avaliado</span>
-                                                        <?php endif; ?>
-                                                </td>
-                                            </tr>
-                                        <?php endforeach; ?>
-                                    </tbody>
-                                </table>
+                        <?php foreach ($pedidos as $pedido): 
+                            $statusMap = [
+                                'pendente'   => 'contabadge-pendente',
+                                'confirmado' => 'contabadge-confirmado',
+                                'preparacao' => 'contabadge-preparacao',
+                                'pronto'     => 'contabadge-pronto',
+                                'entregue'   => 'contabadge-entregue',
+                                'concluido'  => 'contabadge-entregue',
+                                'cancelado'  => 'contabadge-cancelado',
+                            ];
+                            $badgeClass = $statusMap[$pedido['status']] ?? 'contabadge-pendente';
+                            $stmtAval = $database->prepare("SELECT id FROM avaliacoes WHERE id_pedido = ?");
+                            $stmtAval->execute([$pedido['id']]);
+                            $ja_avaliou = $stmtAval->fetch();
+                        ?>
+                        <div class="minhaconta-pedido">
+                            <div class="minhaconta-pedido-id">
+                                <strong><?php echo htmlspecialchars($pedido['id']); ?></strong>
+                                <span>#</span>
                             </div>
+                            <div class="minhaconta-pedido-info">
+                                <p class="minhaconta-pedido-date">
+                                    <?php echo date('d/m/Y \à\s H:i', strtotime($pedido['data_pedido'])); ?>
+                                </p>
+                                <p class="minhaconta-pedido-desc">Pedido #<?php echo htmlspecialchars($pedido['id']); ?></p>
+                            </div>
+                            <span class="contabadge <?= $badgeClass ?>">
+                                <?php echo ucfirst(htmlspecialchars($pedido['status'])); ?>
+                            </span>
+                            <div class="minhaconta-pedidovalor">
+                                R$ <?php echo number_format($pedido['valor_total'], 2, ',', '.'); ?>
+                            </div>
+                            <div>
+                                <?php if ($pedido['status'] === 'entregue' && !$ja_avaliou): ?>
+                                    <a href="paginas/avaliar.php?pedido=<?= $pedido['id'] ?>" class="conta-btnavaliar">⭐ Avaliar</a>
+                                <?php elseif ($pedido['status'] === 'entregue' && $ja_avaliou): ?>
+                                    <span class="conta-avaliado">
+                                        <i class="fas fa-circle-check"></i> Avaliado
+                                    </span>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <?php endforeach; ?>
                         <?php else: ?>
-                            <div class="text-center p-4 rounded-3 bg-light-pink">
-                                <i class="fas fa-basket-shopping fa-2x text-muted mb-2"></i>
-                                <p class="text-muted mb-0">Você ainda não realizou nenhum pedido. Que tal escolher um doce agora?</p>
+                            <div class="pedidos-vazio">
+                                <i class="fas fa-basket-shopping"></i>
+                                <p>Você ainda não realizou nenhum pedido.<br>Que tal escolher um doce agora?</p>
+                                <a href="doces.php" class="contabotao contabotao-rosa">
+                                    <i class="fas fa-store"></i> Ver Cardápio
+                                </a>
                             </div>
                         <?php endif; ?>
                     </div>
                 </div>
             </div>
-        </div>
-    </main>
-
-<script src="js/bootstrap/bootstrap.bundle.min.js"></script>
-<script>
-// Facilidade: Clicar no círculo da foto abre a seleção de arquivo
-document.getElementById('avatarClickTrigger').addEventListener('click', function() {
-    document.getElementById('inputFoto').click();
-});
-
-const inputFoto = document.getElementById('inputFoto');
-inputFoto.addEventListener('change', function(e){
-    const file = e.target.files[0];
-    if(file){
-        const reader = new FileReader();
-        reader.onload = function(event){
-            let preview = document.getElementById('previewFoto');
-            if(!preview) {
-                // Caso não existisse imagem prévia, substitui a div de avatar genérico
-                const wrapper = document.getElementById('avatarClickTrigger');
-                const oldAvatar = document.getElementById('previewAvatar');
-                if(oldAvatar) oldAvatar.remove();
+        
+            <div class="conta-dadospessoais conta-tab" id="panel-senha">
+                <div class="conta-dadoshead">
+                    <div class="conta-dadosicon"><i class="fas fa-key"></i></div>
+                    <div>
+                        <h2>Alterar Senha</h2>
+                        <p>Recomendamos uma senha forte e única</p>
+                    </div>
+                </div>
+            
+                <div class="conta-dadosbody">
+                    <form action="salvar_conta.php" method="POST">
+                        <input type="hidden" name="acao" value="senha">
                 
-                preview = document.createElement('img');
-                preview.id = 'previewFoto';
-                preview.className = 'avatar-img';
-                wrapper.insertBefore(preview, wrapper.firstChild);
-            }
-            preview.src = event.target.result;
-        }
+                        <div class="conta-dadosdiv">
+                
+                            <div class="conta-campo conta-ocupartudo">
+                                <label class="conta-campolabel" for="senhaAtual">
+                                    <i class="fas fa-lock"></i> Senha Atual
+                                </label>
+                                <div class="senha-wrap">
+                                    <input type="password" id="senhaAtual" name="senha_atual" class="conta-campoinput" placeholder="Sua senha atual">
+                                    <button type="button" class="mc-pw-eye" onclick="togglePw('senhaAtual',this)">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                
+                            <div class="conta-campo">
+                                <label class="conta-campolabel" for="novaSenha">
+                                    <i class="fas fa-lock-open"></i> Nova Senha
+                                </label>
+                                <div class="senha-wrap">
+                                    <input type="password" id="novaSenha" name="nova_senha" class="conta-campoinput" placeholder="Mínimo 6 caracteres">
+                                    <button type="button" class="mc-pw-eye" onclick="togglePw('novaSenha',this)">
+                                    <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                
+                            <div class="conta-campo">
+                                <label class="conta-campolabel" for="confirmarSenha">
+                                    <i class="fas fa-check-double"></i> Confirmar Nova Senha
+                                </label>
+                                <div class="senha-wrap">
+                                    <input type="password" id="confirmarSenha" name="confirmar_senha" class="conta-campoinput" placeholder="Repita a nova senha">
+                                    <button type="button" class="mc-pw-eye" onclick="togglePw('confirmarSenha',this)">
+                                    <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                
+                        </div>
+                
+                        <div class="conta-formactions">
+                            <button type="submit" class="contabotao contabotao-rosa">
+                                <i class="fas fa-shield-halved"></i>
+                                Atualizar Senha
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        
+        </main>
+    </div>
+
+    <script src="js/bootstrap/bootstrap.bundle.min.js"></script>
+
+
+
+    <script>
+    /* troca de tabs do minha conta */
+    const tabLinks  = document.querySelectorAll('[data-tab]');
+    const tabPanels = document.querySelectorAll('.conta-tab');
+    
+    tabLinks.forEach(function(link) {
+        link.addEventListener('click', function(e) {
+        e.preventDefault();
+        var target = this.dataset.tab;
+    
+        tabLinks.forEach(function(l) { l.classList.remove('minhaconta-btnativo'); });
+        tabPanels.forEach(function(p) { p.classList.remove('minhaconta-btnativo'); });
+    
+        this.classList.add('minhaconta-btnativo');
+        document.getElementById('panel-' + target).classList.add('minhaconta-btnativo');
+        });
+    });
+    /* add foto de usuario do minhaconta */
+    document.getElementById('avatarClickTrigger').addEventListener('click', function() {
+        document.getElementById('inputFoto').click();
+    });
+    
+    document.getElementById('inputFoto').addEventListener('change', function(e) {
+        var file = e.target.files[0];
+        if (!file) return;
+        var reader = new FileReader();
+        reader.onload = function(ev) {
+        document.getElementById('previewFoto').src = ev.target.result;
+        };
         reader.readAsDataURL(file);
+    });
+    
+    /* ocultar senha ne */
+    function togglePw(inputId, btn) {
+        var input = document.getElementById(inputId);
+        var icon  = btn.querySelector('i');
+        if (input.type === 'password') {
+        input.type   = 'text';
+        icon.className = 'fas fa-eye-slash';
+        } else {
+        input.type   = 'password';
+        icon.className = 'fas fa-eye';
+        }
     }
-});
-</script>
+    </script>
+
+        <script>
+    // Facilidade: Clicar no círculo da foto abre a seleção de arquivo
+    /*
+    document.getElementById('avatarClickTrigger').addEventListener('click', function() {
+        document.getElementById('inputFoto').click();
+    });
+
+    const inputFoto = document.getElementById('inputFoto');
+    inputFoto.addEventListener('change', function(e){
+        const file = e.target.files[0];
+        if(file){
+            const reader = new FileReader();
+            reader.onload = function(event){
+                let preview = document.getElementById('previewFoto');
+                if(!preview) {
+                    // Caso não existisse imagem prévia, substitui a div de avatar genérico
+                    const wrapper = document.getElementById('avatarClickTrigger');
+                    const oldAvatar = document.getElementById('previewAvatar');
+                    if(oldAvatar) oldAvatar.remove();
+                    
+                    preview = document.createElement('img');
+                    preview.id = 'previewFoto';
+                    preview.className = 'avatar-img';
+                    wrapper.insertBefore(preview, wrapper.firstChild);
+                }
+                preview.src = event.target.result;
+            }
+            reader.readAsDataURL(file);
+        }
+    });*/
+    </script>
 </body>
 </html>

@@ -66,9 +66,9 @@
 
 
                     <li>
-                        <a href="<?php echo BASEURL; ?>paginas/personalizados.php">Personalizados</a>
+                        <a href="<?php //echo BASEURL; ?>paginas/personalizados.php" style="bloqueado" style="color: #5a322056 !important; cursor: not-allowed;">Personalizados</a>
                     </li>
-
+                    
                 </ul>
 
                 <!-- ICONES -->

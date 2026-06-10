@@ -953,7 +953,7 @@ body {
 
 /* ajustes de títulos */
 h2, .section-title {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Poppins',Arial, serif;
   color: var(--secondary-color);
   font-weight: 600;
 }
@@ -1949,6 +1949,7 @@ h2, .section-title {
     opacity: 0;
     transform: translateY(8px);
     transition: opacity 0.3s ease, transform 0.3s ease, background 0.3s ease;
+    text-decoration: none;
 }
 
 .campeoes-card:hover .btn-confira {
@@ -2553,6 +2554,701 @@ ___________
 }
 
 
+/*MINHA CONTA*/
+
+    .minhaconta {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 7.5rem 1.5rem 4rem;
+      display: grid;
+      grid-template-columns: 268px 1fr;
+      gap: 1.75rem;
+      align-items: start;
+    }
+ 
+    /* sidebar */
+    .minhaconta-sidebar {
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(82,25,40,.09);
+      border: 1px solid #f0e2eb;
+      overflow: hidden;
+      position: sticky;
+      top: 96px;
+    }
+ 
+    /* cabeçalho da sidebar  */
+    .sidebar-header {
+      background: linear-gradient(160deg, #7c263d 0%, #521928 55%, #3a0e18 100%);
+      padding: 2rem 1.5rem 2rem;
+      text-align: center;
+    }
+ 
+    /* foto de perfil */
+
+    .minhaconta-perfil {
+      position: relative;
+      width: 90px;
+      height: 90px;
+      margin: 0 auto;
+      cursor: pointer;
+    }
+ 
+    .minhaconta-fotoperfil {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      padding: 3px;
+      background: linear-gradient(135deg, #f4c0d1, #d65a7d, #f4c0d1);
+      display: block;
+    }
+ 
+    .minhaconta-fotoperfil img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #3a0e18;
+      display: block;
+      background: #f4c0d1;
+    }
+ 
+    .trocarfoto-botao {
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+      width: 26px;
+      height: 26px;
+      background: #d65a7d;
+      border: 2px solid #3a0e18;
+      border-radius: 50%;
+      color: #fff;
+      font-size: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .trocarfoto-botao:hover {
+      background:  #b84374
+    }
+ 
+    .minhaconta-nome {
+      font-family: 'Poppins', arial, serif;
+      font-size: 1.45rem;
+      font-weight: 600;
+      font-style: italic;
+      color: #fff;
+      margin: .9rem 0 .2rem;
+      line-height: 1.2;
+    }
+ 
+    .minhaconta-email {
+      font-size: .73rem;
+      color: rgba(255,255,255,.55);
+      word-break: break-all;
+      letter-spacing: .2px;
+    }
+ 
+    /* status dos pedidos */
+    .minhaconta-statuspedidos {
+      display: flex;
+      margin-top: 1.25rem;
+      padding-top: 1.1rem;
+      border-top: 1px solid rgba(255,255,255,.1);
+    }
+
+    .minhaconta-statuspedido {
+      flex: 1;
+      text-align: center;
+      padding: 0 .5rem;
+    }
+
+    .minhaconta-statuspedido + .minhaconta-statuspedido {
+      border-left: 1px solid rgba(255,255,255,.1);
+    }
+ 
+    .minhaconta-qtdpedidos {
+      display: block;
+      font-family: 'Poppins', arial, serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #f4c0d1;
+      line-height: 1;
+    }
+
+    .minhaconta-statuspedido-texto {
+      display: block;
+      font-size: .64rem;
+      color: rgba(255,255,255,.45);
+      margin-top: 3px;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+    }
+ 
+    /* navegação */
+.minhaconta-nav {
+  padding: .65rem 0;
+}
+ 
+    .minhaconta-nav a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: .82rem 1.4rem;
+      color: #8a6e6e;
+      text-decoration: none;
+      font-size: .875rem;
+      font-weight: 500;
+      border-left: 3px solid transparent;
+      transition: all .2s ease;
+    }
+
+.minhaconta-nav a i {
+  font-size: .9rem;
+  width: 18px;
+  text-align: center;
+  flex-shrink: 0;
+}
+ 
+.minhaconta-nav a:hover {
+  color:  #d65a7d;
+  background: #fff5f8;
+  border-left-color: #f4c0d1;
+}
+
+.minhaconta-nav a.minhaconta-btnativo {
+      color: #521928;
+      background: #fff0f5;
+      border-left-color: #d65a7d;
+      font-weight: 600;
+    }
+ 
+    /* badge de qtd*/
+.minhaconta-nav-badge {
+      margin-left: auto;
+      background: #d65a7d;
+      color: #fff;
+      font-size: .67rem;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 10px;
+      line-height: 1.5;
+    }
+ 
+.minhaconta-nav-divider {
+      height: 1px;
+      background: #f0e2eb;
+      margin: .45rem 1.4rem;
+    }
+ 
+.minhaconta-nav a.btn-sair {
+  color: #c94a4a;
+}
+
+.minhaconta-nav a.btn-sair:hover{
+      background: #fff5f5;
+      border-left-color: #f0b0b0;
+      color: #a83232;
+    }
+ 
+    /* main*/
+    .mc-main {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+ 
+    /* feedback*/
+    .mc-alert {
+      padding: .95rem 1.25rem;
+      border-radius: 10px;
+      font-size: .87rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: fadeDown .35s ease;
+    }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    
+    .mc-alert-success {
+      background: #e6f8ee; 
+      color: #1a6b3a; 
+      border: 1px solid #b0e5c8;
+    }
+
+    .mc-alert-danger  {
+      background: #fce8e8; 
+      color: #8b1a1a; 
+      border: 1px solid #f0c0c0;
+    }
+ 
+    /* paineis de infosss */
+    .conta-dadospessoais {
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(82,25,40,.09);
+      border: 1px solid #f0e2eb;
+      overflow: hidden;
+    }
+ 
+    /* cabeçalhoss */
+    .conta-dadoshead {
+      padding: 1.4rem 1.75rem;
+      border-bottom: 1px solid #f0e2eb;
+      display: flex;
+      align-items: center;
+      gap: 13px;
+    }
+
+    .conta-dadosicon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #fff0f5, #fde8f0);
+      border: 1px solid #f4d5e0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #d65a7d;
+      font-size: .95rem;
+      flex-shrink: 0;
+    }
+    .conta-dadoshead h2 {
+      font-size: 1.02rem;
+      font-weight: 600;
+      color: #2d2020;
+      margin: 0;
+    }
+
+    .conta-dadoshead p {
+      font-size: .76rem;
+      color: #8a6e6e;
+      margin: 2px 0 0;
+    }
+ 
+    .conta-dadosbody {
+      padding: 1.75rem;
+    }
+ 
+    /* tabs (controle de visibilidade) */
+    .conta-tab {
+      display: none;
+    }
+
+    .conta-tab.minhaconta-btnativo {
+      display: block;
+    }
+ 
+    /* form */
+    .conta-dadosdiv {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+    }
+
+    .conta-ocupartudo {
+      grid-column: 1 / -1;
+    }
+ 
+    .conta-campo {
+      display: flex;
+      flex-direction: column; gap: 6px;
+    }
+ 
+    .conta-campolabel {
+      font-size: .76rem;
+      font-weight: 600;
+      color: #8a6e6e;
+      letter-spacing: .4px;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .conta-campolabel i {
+      color: #d65a7d;
+      font-size: .72rem; 
+    }
+ 
+    .conta-campoinput {
+      padding: .72rem 1rem;
+      border: 2px solid #f0e2eb;
+      border-radius: 10px;
+      font-family: 'Poppins', sans-serif;
+      font-size: .9rem;
+      color: #2d2020;
+      background: #fdfbfc;
+      transition: all .2s ease;
+      outline: none;
+      width: 100%;
+    }
+    .conta-campoinput:focus {
+      border-color: #d65a7d;
+      background: #fff;
+      box-shadow: 0 0 0 4px rgba(214,90,125,.1);
+    }
+
+    .conta-campoinput::placeholder {
+      color: #c4b0b8; 
+    }
+ 
+    /* input de senha + olhinho ver tudo */
+    .senha-wrap {
+      position: relative; 
+    }
+
+    .senha-wrap .conta-campoinput { 
+      padding-right: 44px; 
+    }
+    
+    .mc-pw-eye {
+      position: absolute;
+      right: 13px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: #8a6e6e;
+      cursor: pointer;
+      font-size: .88rem;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      transition: color .2s;
+    }
+    .mc-pw-eye:hover {
+      color: #d65a7d; 
+    }
+ 
+    /* linha separa */
+    .linhadivisora {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: .73rem;
+      font-weight: 600;
+      color: #8a6e6e;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+
+    .linhadivisora::before, .linhadivisora::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #f0e2eb;
+    }
+ 
+    /* ações do form */
+    .conta-formactions {
+      display: flex;
+      justify-content: flex-end;
+      gap: .75rem;
+      margin-top: 1.6rem;
+      padding-top: 1.4rem;
+      border-top: 1px solid #f0e2eb;
+      flex-wrap: wrap;
+    }
+ 
+    /* botoes */
+
+    .contabotao {
+      padding: .68rem 1.35rem;
+      border-radius: 10px;
+      font-family: 'Poppins',arial,  sans-serif;
+      font-size: .84rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      border: none;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .contabotao i {
+      font-size: .82rem; 
+    }
+ 
+    .contabotao-rosa {
+      background: #d65a7d;
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(214,90,125,.25);
+    }
+    .contabotao-rosa:hover {
+      background: #b84374;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(214,90,125,.35);
+      color: #fff;
+    }
+ 
+    .contabotao-ghost {
+      background: #f5f0f3;
+      color: #6e5546;
+      border: 1px solid #e1d5de;
+    }
+
+    .contabotao-ghost:hover { 
+      background: #ebe2e9; 
+      color: #2d2020; 
+    }
+ 
+    /* pedidos */
+    .minhaconta-pedidos {
+      display: flex; 
+      flex-direction: column; 
+      gap: .85rem; }
+ 
+    .minhaconta-pedido {
+      border: 1px solid #f0e2eb;
+      border-radius: 14px;
+      padding: 1rem 1.35rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: #fdfbfc;
+      transition: all .2s ease;
+    }
+
+    .minhaconta-pedido:hover {
+      border-color: #e0b0c8;
+      box-shadow: 0 4px 14px rgba(214,90,125,.07);
+      background: #fff;
+    }
+ 
+    /* número do pedido */
+    .minhaconta-pedido-id {
+      flex-shrink: 0;
+      width: 48px;
+      height: 48px;
+      border-radius: 11px;
+      background: linear-gradient(135deg, #8b0025, #d65a7d);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #f4c0d1;
+    }
+
+    .minhaconta-pedido-id strong {
+      font-family: 'Poppins', Arial, serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .minhaconta-pedido-id span {
+      font-size: .52rem;
+      color: rgba(244,192,209,.55);
+      font-family: 'Poppins', Arial, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: .4px;
+    }
+ 
+    /* informações */
+    .minhaconta-pedido-info {
+      flex: 1; 
+      min-width: 0; 
+    }
+
+    .minhaconta-pedido-date {
+      font-size: .74rem;
+      color: #8a6e6e;
+      margin-bottom: 2px;
+    }
+    
+    .minhaconta-pedido-desc {
+      font-size: .87rem;
+      font-weight: 500;
+      color: #2d2020;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+ 
+    /* valor */
+    .minhaconta-pedidovalor {
+      font-family: 'Poppins', Arial, serif;
+      font-size: 1.12rem;
+      font-weight: 700;
+      color: #521928;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+ 
+    /* badge de status */
+    .contabadge {
+      flex-shrink: 0;
+      padding: 4px 11px;
+      border-radius: 20px;
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .2px;
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    .contabadge-pendente    { background: #fff8e1; color: #7a5900; }
+    .contabadge-confirmado  { background: #e1f0ff; color: #0a4d8a; }
+    .contabadge-preparacao  { background: #fff3e1; color: #7a3d00; }
+    .contabadge-pronto      { background: #e1fff5; color: #0a6b42; }
+    .contabadge-entregue    { background: #e1fce8; color: #0d5c33; }
+    .contabadge-cancelado   { background: #fde8e8; color: #8b1a1a; }
+ 
+    /* botão avaliar */
+    .conta-btnavaliar {
+      padding: 4px 13px;
+      background: #fff9e0;
+      color: #7a5c00;
+      border: 1px solid #f0d980;
+      border-radius: 20px;
+      font-size: .74rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: .2s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-family: 'Poppins', Arial, sans-serif;
+      white-space: nowrap;
+    }
+
+    .conta-btnavaliar:hover {
+      background: #f5e570; 
+      border-color: #c8a800; 
+      color: #5a3d00; 
+    }
+ 
+    .conta-avaliado {
+      font-size: .76rem;
+      color: #1a7a4a;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+ 
+    /* nenhum pedido */
+
+    .pedidos-vazio {
+      text-align: center;
+      padding: 2.5rem 1.5rem;
+    }
+
+    .pedidos-vazio i {
+      font-size: 2.2rem;
+      color: #e0c8d4;
+      display: block;
+      margin-bottom: .9rem;
+    }
+    .pedidos-vazio p { 
+      color: #8a6e6e; 
+      font-size: .88rem; 
+      margin-bottom: 1.2rem; }
+ 
+ 
+    /* tablet: sidebar vai para cima em linha */
+    @media (max-width: 900px) {
+      .minhaconta {
+        grid-template-columns: 1fr;
+        padding: 5.5rem 1.25rem 3rem;
+        gap: 1.25rem;
+      }
+ 
+      .minhaconta-sidebar {
+        position: relative;
+        top: 0;
+        display: grid;
+        grid-template-columns: 180px 1fr;
+        overflow: visible;
+      }
+ 
+      .sidebar-header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 1.5rem 1.25rem;
+        border-radius: 20px 0 0 20px;
+        min-height: 160px;
+      }
+ 
+      .minhaconta-statuspedidos { display: none; }
+ 
+  .minhaconta-nav {
+        display: flex;
+        flex-wrap: wrap;
+        align-content: flex-start;
+        padding: .75rem;
+        gap: .35rem;
+      }
+  .minhaconta-nav a {
+        border-left: none;
+        border-radius: 8px;
+        padding: .55rem .95rem;
+        font-size: .82rem;
+      }
+  .minhaconta-nav a.minhaconta-btnativo {
+        background: var(--rosa);
+        color: #fff;
+        border-left: none;
+      }
+  .minhaconta-nav-divider { display: none; }
+ 
+      .conta-dadosdiv { grid-template-columns: 1fr; }
+      .conta-ocupartudo { grid-column: 1; }
+    }
+ 
+    /* mobile: sidebar empilhada (portrait) */
+    @media (max-width: 580px) {
+      .minhaconta { padding: 5rem .9rem 2.5rem; gap: 1rem; }
+ 
+      .minhaconta-sidebar { grid-template-columns: 1fr; }
+ 
+      .sidebar-header {
+        border-radius: 20px 20px 0 0;
+        padding: 1.5rem 1rem;
+        min-height: auto;
+      }
+ 
+      .minhaconta-statuspedidos { display: flex; }
+ 
+  .minhaconta-nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+        border-top: 1px solid var(--border-soft);
+        padding: .65rem;
+      }
+  .minhaconta-nav a { font-size: .8rem; padding: .5rem .85rem; }
+ 
+      .conta-dadosbody { padding: 1.25rem; }
+      .conta-dadoshead { padding: 1.1rem 1.25rem; }
+ 
+      .minhaconta-pedido { flex-wrap: wrap; }
+      .minhaconta-pedidovalor { margin-left: auto; }
+ 
+      .conta-formactions {
+        flex-direction: column;
+      }
+      .conta-formactions .contabotao {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+
+
 @media (max-width: 768px) {
   .feedback-card {
     flex: 0 0 100%;
@@ -2800,6 +3496,40 @@ ___________
     font-size: 0.9rem;
   }
 
+   .feedbacks {
+    padding: 40px 16px;
+  }
+
+  .feedbacks-wrapper {
+    padding: 0;
+    gap: 8px;
+  }
+
+  .feedbacks-carrossel-track {
+    margin: 0;
+    padding-bottom: 0;
+  }
+
+  .feedback-arrow {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    font-size: 0.85rem;
+    /* garante que fiquem nas laterais sem sobrepor */
+    position: static;
+    align-self: center;
+  }
+
+  .feedback-card {
+    padding: 1.25rem;
+    font-size: 0.9rem;
+  }
+
+  .feedback-text {
+    font-size: 0.88rem;
+  }
+
+
 }
 
 @media (max-width: 980px) {
@@ -2878,8 +3608,94 @@ ___________
     .btn-confira {
         opacity: 1;
     }
+
+    .campeoes-slider {
+      display: none !important; /* esconde o flex desktop */
+    }
+
+    .campeoes-mobile-wrapper {
+      display: block;
+      position: relative;
+      padding: 0 48px;
+    }
+
+    .campeoes-mobile-track {
+      overflow: hidden;
+      border-radius: 20px;
+    }
+
+    .campeoes-mobile-inner {
+      display: flex;
+      transition: transform 0.45s ease;
+    }
+
+    /* cada card ocupa 100% no mobile */
+    .campeoes-mobile-inner .campeoes-card {
+      min-width: 100%;
+      flex-shrink: 0;
+      height: 340px;
+      border-radius: 20px;
+    }
+
+    /* mostra botão confira sempre no mobile */
+    .campeoes-mobile-inner .btn-confira {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+
+    .campeoes-mobile-inner .campeoes-card::before {
+      opacity: 1 !important;
+    }
+
+    /* setas do carrossel mobile */
+    .campeoes-prev,
+    .campeoes-next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: none;
+      background: #5c3b28;
+      color: #fff;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      transition: background 0.2s;
+    }
+    .campeoes-prev { left: 4px; }
+    .campeoes-next { right: 4px; }
+    .campeoes-prev:hover,
+    .campeoes-next:hover { background: #432917; }
+
+    /* dots */
+    .campeoes-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 16px;
+    }
+    .campeoes-dots button {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      border: none;
+      background: #d4a0b0;
+      cursor: pointer;
+      transition: 0.3s;
+      padding: 0;
+    }
+    .campeoes-dots button.active {
+      background: #813044;
+      transform: scale(1.3);
+    }
+  }
+
      
-}
 
 @media (min-width: 1300px) {
 /*navbar*/
