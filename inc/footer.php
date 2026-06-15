@@ -132,6 +132,7 @@ window.addEventListener("scroll", function(){
 
 
 <script src="js/bootstrap/bootstrap.bundle.min.js"></script>
+<script src="../js/bootstrap/bootstrap.bundle.min.js"></script>
 
 <footer>
   <div class="footer-container">

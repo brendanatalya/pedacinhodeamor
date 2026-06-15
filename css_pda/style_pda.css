@@ -512,289 +512,6 @@ body {
     font-size: 1rem;
 }
 
-/* parte do carrinho */
-
-/* header */
-.top-bar {
-  display: flex;
-  width: 100%;
-}
-
-.top-bar div {
-  flex: 1;
-  padding: 1rem;
-  font-weight: bold;
-  color: white;
-}
-
-.top-left {
-  background: #9c7b66;
-}
-
-.top-right {
-  background: #8b0000;
-  text-align: center;
-}
-
-/* layout */
-.container {
-  display: flex;
-  gap: 2rem;
-  padding: 2rem;
-  flex-wrap: wrap; /* responsivo */
-}
-
-/* lista */
-.cart {
-  flex: 2;
-  min-width: 300px;
-}
-.cart-item {
-    display: flex;
-    align-items: center;
-    background: #fff;
-    border-radius: 20px;
-    padding: 1.2rem;
-    margin-bottom: 1rem;
-    gap: 1.5rem;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    position: relative;
-    width: 100%; /* garante que ocupe a largura total */
-}
-
-.cart-item:hover {
-  transform: translateY(-2px);
-}
-
-.cart-item img {
-  width: 90px;
-  height: 90px;
-  border-radius: 12px;
-  object-fit: cover;
-}
-
-/* força a info a ocupar o meio */
-.item-info {
-    flex: 1; 
-    display: flex;
-    flex-direction: column;
-}
-.item-info h4 {
-  margin: 0;
-  font-size: 1.1rem;
-}
-
-.item-info p {
-  margin: 2px 0;
-  font-size: 0.9rem;
-  color: #555;
-}
-
-.price {
-  color: #c62828;
-  font-weight: bold;
-  font-size: 1rem;
-}
-
-/* checkbox */
-.item-check {
-  width: 18px;
-  height: 18px;
-  cursor: pointer;
-}
-
-/* resumo */
-.summary {
-  flex: 1;
-  min-width: 260px;
-  background: #fff;
-  padding: 1.5rem;
-  border-radius: 20px;
-  height: fit-content;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-}
-
-.summary img {
-  width: 100px;
-  border-radius: 10px;
-  display: block;
-  margin: 0 auto 1rem;
-}
-
-.row {
-  display: flex;
-  justify-content: space-between;
-  margin: 0.5rem 0;
-  font-size: 0.95rem;
-}
-
-.total {
-  font-weight: bold;
-  font-size: 1.2rem;
-}
-
-/*parte do indisponivel*/
-
-/* header */
-.top-bar {
-  display: flex;
-}
-
-/* layout */
-.container {
-  display: flex;
-  gap: 2rem;
-  padding: 2rem;
-}
-
-/* lista */
-.cart {
-  flex: 2;
-}
-
-.cart-item {
-  display: flex;
-  align-items: center;
-  background: #fff;
-  border-radius: 20px;
-  padding: 1rem;
-  margin-bottom: 1.5rem;
-  gap: 1rem;
-}
-
-.item-info {
-  flex: 1;
-}
-
-.item-info h4 {
-  margin: 0;
-}
-
-.price {
-  color: red;
-  font-weight: bold;
-}
-
-.checkbox {
-  width: 18px;
-  height: 18px;
-}
-
-/* resumo */
-.summary {
-  flex: 1;
-  background: #fff;
-  padding: 1.5rem;
-  border-radius: 20px;
-  height: fit-content;
-}
-
-.summary h3 {
-  margin-bottom: 1rem;
-}
-
-.observation { margin: 1rem 0; font-weight: bold; }
-
-.secure-payment {
-    border-top: 1px solid #eee;
-    padding-top: 1rem;
-    margin-top: 1rem;
-}
-
-.secure-payment span {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: bold;
-    font-size: 0.9rem;
-}
-
-.payment-icons {
-    display: flex;
-    gap: 8px;
-    margin: 10px 0;
-}
-
-.payment-icons img { height: 20px; }
-
-.secure-payment p { font-size: 0.75rem; color: #888; line-height: 1.2; }
-
-.row {
-  display: flex;
-  justify-content: space-between;
-  margin: 0.5rem 0;
-}
-
-.button {
-  margin-top: 1rem;
-  width: 100%;
-  padding: 0.8rem;
-  background: #2e7d32;
-  color: white;
-  border: none;
-  border-radius: 20px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.button:hover {
-  background: #1b5e20;
-}
-
-/* footer cart */
-.cart-footer {
-  margin-top: 1rem;
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.9rem;
-}
-
-.link {
-  color: red;
-  text-decoration: underline;
-  cursor: pointer;
-}
-/* quantidade */
-.qtd-box {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 8px;
-}
-
-.qtd-box button {
-  width: 28px;
-  height: 28px;
-  border: none;
-  background: #ddd;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.qtd-box button:hover {
-  background: #ccc;
-}
-
-.quantidade {
-  font-weight: bold;
-  min-width: 20px;
-  text-align: center;
-}
-
-/* remover */
-.remover {
-  display: inline-block;
-  margin-top: 5px;
-  color: #c62828;
-  font-size: 0.85rem;
-  cursor: pointer;
-}
-
-.remover:hover {
-  text-decoration: underline;
-}
-
 
 /*parte do login e cadastro */
 
@@ -951,12 +668,6 @@ body {
   background-color: var(--bg-light);
 }
 
-/* ajustes de títulos */
-h2, .section-title {
-  font-family: 'Poppins',Arial, serif;
-  color: var(--secondary-color);
-  font-weight: 600;
-}
 
 /* ==========================================================================
    reset e alinhamento do formulário personalizado
@@ -1055,14 +766,6 @@ h2, .section-title {
     box-shadow: 0 6px 15px rgba(40, 167, 69, 0.3) !important;
 }
 
-/* alertas corrigidos */
-.alert-custom-warning {
-    background-color: #fff3cd !important;
-    border: 1px solid #ffeeba !important;
-    color: #856404 !important;
-    border-radius: 8px !important;
-    padding: 1rem !important;
-}
 /*parte do index.php - admin*/
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
@@ -1199,152 +902,9 @@ h2, .section-title {
         margin-bottom: 20px;
     }
 
-    /*checkout_form.php*/
-        .checkout-section {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .section-title {
-            border-bottom: 2px solid #8b6f47;
-            padding-bottom: 10px;
-            margin-bottom: 15px;
-        }
-        .form-section {
-            margin-bottom: 30px;
-        }
-        .resumo-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid #eee;
-        }
-        .resumo-item.total {
-            border-bottom: 2px solid #8b6f47;
-            font-weight: bold;
-            font-size: 18px;
-            color: #8b6f47;
-        }
-
-        /*index.php - pedidos*/
-        .badge-pendente { background-color: #ffc107; }
-        .badge-confirmado { background-color: #17a2b8; }
-        .badge-preparacao { background-color: #fd7e14; }
-        .badge-pronto { background-color: #20c997; }
-        .badge-entregue { background-color: #28a745; }
-        .badge-cancelado { background-color: #dc3545; }
-
-        /*index.php - clientes*/
-        .card-cliente {
-            background: white;
-            border-left: 4px solid #8b6f47;
-            margin-bottom: 15px;
-        }
-
-        /*agenda_cliente.php*/
-        .calendar-container {
-            background: white;
-            border-radius: 8px;
-            padding: 20px;
-            margin-top: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .calendar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        .calendar-nav {
-            display: flex;
-            gap: 10px;
-        }
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        .calendar-cell {
-            background: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 4px;
-            padding: 10px;
-            min-height: 100px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .calendar-cell:hover {
-            background: #e9ecef;
-        }
-        .calendar-cell.other-month {
-            opacity: 0.5;
-        }
-        .calendar-cell.today {
-            background: #d4f1d4;
-            border-color: #28a745;
-        }
-        .calendar-cell-header {
-            font-weight: bold;
-            text-align: center;
-            background: #8b6f47;
-            color: white;
-            border: none !important;
-            padding: 8px;
-            margin-bottom: 5px;
-        }
-        .calendar-cell-date {
-            font-weight: bold;
-            font-size: 14px;
-            margin-bottom: 5px;
-            padding: 5px 0;
-        }
-        .agendamento-item {
-            background: #f5c2d6;
-            border-left: 3px solid #8b6f47;
-            padding: 5px;
-            margin: 2px 0;
-            font-size: 11px;
-            border-radius: 2px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .agendamento-item:hover {
-            background: #f0a0c0;
-            text-decoration: none;
-        }
-        .agendamento-retirada {
-            border-left-color: #28a745;
-            background: #d4edda;
-        }
-        .agendamento-entrega {
-            border-left-color: #007bff;
-            background: #cfe2ff;
-        }
-        .sidebar {
-            background: white;
-            border-radius: 8px;
-            padding: 20px;
-            margin-top: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .sidebar h6 {
-            border-bottom: 2px solid #8b6f47;
-            padding-bottom: 10px;
-            margin-bottom: 15px;
-        }
-        .badge-retirada { background-color: #28a745; }
-        .badge-entrega { background-color: #007bff; }
-
-
-
-
 /*MINHA CONTA*/
 
 .minhaconta {
-    background-color: #fdf2f4;
     /*background-image: radial-gradient(#f3e1ec 1.5px, transparent 1.5px), radial-gradient(#f3e1ec 1.5px, #fcf8f5 1.5px);*/
     background-size: 40px 40px;
     background-position: 0 0, 20px 20px;
@@ -1415,39 +975,6 @@ h2, .section-title {
 }
 
 .avatar-wrapper:hover .avatar-overlay {
-    opacity: 1;
-}
-
-/* --- elementos de formulário --- */
-.section-title {
-    font-family: 'Comfortaa', cursive;
-    color: #845c47;
-    font-weight: 700;
-}
-
-.form-label-custom {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: #6e5546;
-    margin-bottom: 6px;
-}
-
-.form-control-custom {
-    border: 2px solid #eee5ec;
-    border-radius: 10px;
-    padding: 10px 15px;
-    color: #4a3b32;
-    transition: all 0.2s ease;
-}
-
-.form-control-custom:focus {
-    border-color: #d65a8a;
-    box-shadow: 0 0 0 0.25rem rgba(214, 90, 138, 0.15);
-    background-color: #fffbfe;
-}
-
-.custom-hr {
-    border-top: 2px dotted #e6d5e1;
     opacity: 1;
 }
 
@@ -1552,7 +1079,7 @@ h2, .section-title {
 .bemvindo-fundo {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to bottom,rgba(26, 10, 10, 0.35) 0%,rgba(90, 20, 40, 0.55) 60%,rgba(26, 10, 10, 0.75) 100%);
+    background: linear-gradient(to bottom,rgba(26, 10, 10, 0.35) 0%,rgba(90, 20, 40, 0.904) 60%,rgba(26, 10, 10, 0.75) 100%);
     z-index: 1;
 }
 
@@ -2308,15 +1835,6 @@ ul li a {
   margin: 0.75rem;
 }
 
-.btn-primary {
-  background-color: #FFB8CE;
-  border-color: #FFB8CE;
-  color: #5A3220;
-  font-weight: bold;
-  width: 100%;
-  margin: 0.5rem 0;
-}
-
 .logoheader {
   max-height: 120px;
   padding: 10px;
@@ -2447,22 +1965,19 @@ ___________
 .valores-card {
   background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
   padding: 2.5rem;
   border-radius: 20px;
   box-shadow: 0 10px 30px rgba(74, 62, 61, 0.08);
   text-align: center;
   transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
   border-color: rgba(214, 90, 125, 0.3);
 }
 
 .valores-card:hover {
-  transform: translateY(-8px);
   box-shadow: 0 20px 40px rgba(214, 90, 125, 0.15);
   background: rgba(255, 255, 255, 0.212);
-  border: 2px solid rgba(214, 90, 125, 0.3);
+  border: 1px solid rgba(214, 90, 125, 0.3);
+  transform: translateY(-5px);
 }
 
 .valores-icon {
@@ -2504,9 +2019,10 @@ ___________
 
 .escolha-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: 480px 480px;
   gap: 2rem;
   margin-top: 2rem;
+  justify-content: center;
 }
 
 .escolha-card {
@@ -3157,95 +2673,637 @@ ___________
       font-size: .88rem; 
       margin-bottom: 1.2rem; }
  
- 
-    /* tablet: sidebar vai para cima em linha */
-    @media (max-width: 900px) {
-      .minhaconta {
-        grid-template-columns: 1fr;
-        padding: 5.5rem 1.25rem 3rem;
-        gap: 1.25rem;
-      }
- 
-      .minhaconta-sidebar {
-        position: relative;
-        top: 0;
-        display: grid;
-        grid-template-columns: 180px 1fr;
-        overflow: visible;
-      }
- 
-      .sidebar-header {
-        display: flex;
+
+      /*CARRINHO DIVONICO*/
+
+.titulocarrinho {
+  width: 100%;
+  text-align: center;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 7rem 1.5rem 4rem;
+}
+
+.container h2 {
+    font-family: 'Poppins', Arial, sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #521928;
+    margin-bottom: 1.75rem;
+}
+
+/* ── Alertas ── */
+
+.alert {
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 1.25rem;
+    border: none;
+}
+
+.alert-success {
+    background-color: #e6f8ee;
+    color: #1a6b3a;
+    border-left: 4px solid #28a745;
+}
+
+.alert-warning {
+    background-color: #fff8e1;
+    color: #7a5900;
+    border: 1px solid #ffc107;
+}
+
+.alert-warning a {
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #2b1f00;
+}
+
+.alert-secondary {
+    background-color: #f8f0f2;
+    color: #521928;
+    border: 1px solid #d65a7d;
+}
+
+.alert-secondary a {
+    color: #d65a7d;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.alert-secondary a:hover {
+    text-decoration: underline;
+}
+
+/* ── Layout carrinho: itens + resumo ── */
+
+.cart {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.cart-items {
+    flex: 2;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+}
+
+.cart-items h3 {
+    font-family: 'Poppins', Arial, sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #813044;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #f4c0d1;
+}
+
+/* ── Card de item ── */
+
+.cart-item {
+    display: flex;
+    align-items: flex-start;
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 1.2rem 1.4rem;
+    margin-bottom: 1rem;
+    gap: 1.25rem;
+    border: 1px solid #f0e2eb;
+    box-shadow: 0 4px 16px rgba(82, 25, 40, 0.06);
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.cart-item:hover {
+    box-shadow: 0 8px 28px rgba(82, 25, 40, 0.1);
+    transform: translateY(-2px);
+}
+
+.cart-item img {
+    width: 96px;
+    height: 96px;
+    border-radius: 12px;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 2px solid #f4c0d1;
+}
+
+/* ── Info textual do item ── */
+
+.cart-item-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.cart-item-info h4 {
+    font-family: 'Poppins', Arial, sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #291815;
+    margin: 0 0 4px 0;
+}
+
+.cart-item-info p {
+    font-size: 0.85rem;
+    color: #756a6a;
+    margin: 0 0 4px 0;
+    line-height: 1.5;
+}
+
+/* ── Controles de quantidade ── */
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0.6rem 0;
+}
+
+.quantity-btn {
+    width: 32px;
+    height: 32px;
+    border: 2px solid #d65a7d;
+    background: #ffffff;
+    color: #d65a7d;
+    font-size: 1.1rem;
+    font-weight: 700;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    line-height: 1;
+    padding: 0;
+}
+
+.quantity-btn:hover {
+    background: #d65a7d;
+    color: #ffffff;
+}
+
+.quantity-input {
+    width: 48px;
+    height: 32px;
+    text-align: center;
+    border: 2px solid #f0e2eb;
+    border-radius: 8px;
+    font-family: 'Poppins', Arial, sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #291815;
+    background: #fdf2f4;
+    -moz-appearance: textfield;
+}
+
+.quantity-input::-webkit-inner-spin-button,
+.quantity-input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+}
+
+/* ── Botão remover ── */
+
+.remove-btn {
+    background: none;
+    border: none;
+    color: #b84374;
+    font-size: 0.8rem;
+    font-weight: 600;
+    font-family: 'Poppins', Arial, sans-serif;
+    cursor: pointer;
+    padding: 0;
+    margin-top: 0.4rem;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: color 0.2s ease;
+    display: inline-block;
+}
+
+.remove-btn:hover {
+    color: #521928;
+}
+
+/* ── Seção de personalizados ── */
+
+.personalizados-section .cart-item {
+    border-left: 4px solid #d65a7d;
+}
+
+.personalizados-section .cart-item-info h4 {
+    color: #813044;
+}
+
+/* ── Seção de indisponíveis ── */
+
+.unavailable-section h3 {
+    color: #a83232;
+    border-bottom-color: #f7c1c1;
+}
+
+.unavailable-section .cart-item {
+    border-left: 4px solid #e24b4a;
+}
+
+.unavailable-section .cart-item:hover {
+    transform: none;
+    box-shadow: 0 4px 16px rgba(82, 25, 40, 0.06);
+}
+
+/* badge indisponível dentro do item */
+.unavailable-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #e24b4a, #a32d2d);
+    color: #ffffff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin: 4px 0 6px;
+    position: static;
+}
+
+/* botão excluir todos indisponíveis */
+.clear-unavailable-btn {
+    background: none;
+    border: 1px solid #e24b4a;
+    color: #a32d2d;
+    font-family: 'Poppins', Arial, sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-bottom: 0.85rem;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+.clear-unavailable-btn:hover {
+    background: #fce8e8;
+    border-color: #a32d2d;
+}
+
+/* ── Resumo da compra ── */
+
+.cart-summary {
+    flex: 1;
+    min-width: 260px;
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 1.75rem;
+    border: 1px solid #f0e2eb;
+    box-shadow: 0 8px 32px rgba(82, 25, 40, 0.08);
+    position: sticky;
+    top: 96px;
+    height: fit-content;
+}
+
+.cart-summary h4 {
+    font-family: 'Poppins', Arial, sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #521928;
+    margin: 0 0 1.2rem 0;
+    padding-bottom: 0.8rem;
+    border-bottom: 2px dashed #f4c0d1;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.55rem 0;
+    font-size: 0.88rem;
+    color: #756a6a;
+    border-bottom: 1px solid #f8f0f4;
+}
+
+.summary-row span:last-child {
+    font-weight: 600;
+    color: #291815;
+}
+
+.summary-row.total {
+    padding: 0.85rem 0;
+    margin-top: 0.3rem;
+    border-top: 2px solid #f4c0d1;
+    border-bottom: none;
+}
+
+.summary-row.total span {
+    font-family: 'Poppins', Arial, sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #521928;
+}
+
+/* ── Botão finalizar compra ── */
+
+.checkout-btn {
+    width: 100%;
+    margin-top: 1.2rem;
+    padding: 1rem;
+    background: linear-gradient(135deg, #d65a7d 0%, #b84374 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Poppins', Arial, sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 16px rgba(214, 90, 125, 0.3);
+}
+
+.checkout-btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, #b84374 0%, #a03562 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(214, 90, 125, 0.4);
+}
+
+.checkout-btn:disabled {
+    background: #d8d6d1;
+    color: #9a9a9a;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+/*checkout_form.php*/
+  .checkout-section {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  .section-title {
+      border-bottom: 2px solid #813044;
+      color: #813044;
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+      text-transform: uppercase;
+  }
+  .form-section {
+      margin-bottom: 30px;
+  }
+  .resumo-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid #eee;
+  }
+  .resumo-item.total {
+      border-bottom: 2px solid #c9327d;
+      font-weight: bold;
+      font-size: 18px;
+      color: #c9327d;
+  }
+
+  .btn-primary {
+    width: 100%;
+    margin-top: 1.2rem;
+    padding: 1rem;
+    background: linear-gradient(135deg, #d65a7d 0%, #b84374 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Poppins', Arial, sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.5s ease;
+    box-shadow: 0 6px 16px rgba(214, 90, 125, 0.3);
+    margin: 0.5rem 0;
+}
+
+.btn-primary:hover:not(:disabled) {
+    background: linear-gradient(135deg, #3dac94 0%, #277e72 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(214, 90, 125, 0.521);
+}
+
+
+
+  /*index.php - pedidos*/
+  .badge-pendente { background-color: #ffc107; }
+  .badge-confirmado { background-color: #17a2b8; }
+  .badge-preparacao { background-color: #fd7e14; }
+  .badge-pronto { background-color: #20c997; }
+  .badge-entregue { background-color: #28a745; }
+  .badge-cancelado { background-color: #dc3545; }
+
+  /*index.php - clientes*/
+  .card-cliente {
+      background: white;
+      border-left: 4px solid #8b6f47;
+      margin-bottom: 15px;
+  }
+
+  /*agenda_cliente.php*/
+  .calendar-container {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+  }
+  .calendar-nav {
+      display: flex;
+      gap: 10px;
+  }
+  .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+  }
+  .calendar-cell {
+      background: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 4px;
+      padding: 10px;
+      min-height: 100px;
+      cursor: pointer;
+      transition: all 0.3s;
+  }
+  .calendar-cell:hover {
+      background: #e9ecef;
+  }
+  .calendar-cell.other-month {
+      opacity: 0.5;
+  }
+  .calendar-cell.today {
+      background: #d4f1d4;
+      border-color: #28a745;
+  }
+  .calendar-cell-header {
+      font-weight: bold;
+      text-align: center;
+      background: #8b6f47;
+      color: white;
+      border: none !important;
+      padding: 8px;
+      margin-bottom: 5px;
+  }
+  .calendar-cell-date {
+      font-weight: bold;
+      font-size: 14px;
+      margin-bottom: 5px;
+      padding: 5px 0;
+  }
+  .agendamento-item {
+      background: #f5c2d6;
+      border-left: 3px solid #8b6f47;
+      padding: 5px;
+      margin: 2px 0;
+      font-size: 11px;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: all 0.2s;
+  }
+  .agendamento-item:hover {
+      background: #f0a0c0;
+      text-decoration: none;
+  }
+  .agendamento-retirada {
+      border-left-color: #28a745;
+      background: #d4edda;
+  }
+  .agendamento-entrega {
+      border-left-color: #007bff;
+      background: #cfe2ff;
+  }
+  .sidebar {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  .sidebar h6 {
+      border-bottom: 2px solid #8b6f47;
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+  }
+  .badge-retirada { background-color: #28a745; }
+  .badge-entrega { background-color: #007bff; }
+
+
+/* --- elementos de formulário --- */
+
+.form-label-custom {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #6e5546;
+  margin-bottom: 6px;
+}
+
+.form-control-custom {
+  border: 2px solid #eee5ec;
+  border-radius: 10px;
+  padding: 10px 15px;
+  color: #4a3b32;
+  transition: all 0.2s ease;
+}
+
+.form-control-custom:focus {
+  border-color: #d65a8a;
+  box-shadow: 0 0 0 0.25rem rgba(214, 90, 138, 0.15);
+  background-color: #fffbfe;
+}
+
+.custom-hr {
+  border-top: 2px dotted #e6d5e1;
+  opacity: 1;
+}
+
+
+/* ── Responsivo ── */
+
+@media (max-width: 900px) {
+    .cart {
         flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 1.5rem 1.25rem;
-        border-radius: 20px 0 0 20px;
-        min-height: 160px;
-      }
- 
-      .minhaconta-statuspedidos { display: none; }
- 
-  .minhaconta-nav {
-        display: flex;
-        flex-wrap: wrap;
-        align-content: flex-start;
-        padding: .75rem;
-        gap: .35rem;
-      }
-  .minhaconta-nav a {
-        border-left: none;
-        border-radius: 8px;
-        padding: .55rem .95rem;
-        font-size: .82rem;
-      }
-  .minhaconta-nav a.minhaconta-btnativo {
-        background: var(--rosa);
-        color: #fff;
-        border-left: none;
-      }
-  .minhaconta-nav-divider { display: none; }
- 
-      .conta-dadosdiv { grid-template-columns: 1fr; }
-      .conta-ocupartudo { grid-column: 1; }
     }
- 
-    /* mobile: sidebar empilhada (portrait) */
-    @media (max-width: 580px) {
-      .minhaconta { padding: 5rem .9rem 2.5rem; gap: 1rem; }
- 
-      .minhaconta-sidebar { grid-template-columns: 1fr; }
- 
-      .sidebar-header {
-        border-radius: 20px 20px 0 0;
-        padding: 1.5rem 1rem;
-        min-height: auto;
-      }
- 
-      .minhaconta-statuspedidos { display: flex; }
- 
-  .minhaconta-nav {
-        flex-direction: row;
-        flex-wrap: wrap;
-        border-top: 1px solid var(--border-soft);
-        padding: .65rem;
-      }
-  .minhaconta-nav a { font-size: .8rem; padding: .5rem .85rem; }
- 
-      .conta-dadosbody { padding: 1.25rem; }
-      .conta-dadoshead { padding: 1.1rem 1.25rem; }
- 
-      .minhaconta-pedido { flex-wrap: wrap; }
-      .minhaconta-pedidovalor { margin-left: auto; }
- 
-      .conta-formactions {
-        flex-direction: column;
-      }
-      .conta-formactions .contabotao {
+
+    .cart-summary {
+        position: static;
         width: 100%;
-        justify-content: center;
-      }
     }
+
+    .cart-items {
+      width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding-top: 5.5rem;
+    }
+
+    .cart-summary {
+        padding: 1.25rem;
+    }
+}
+
+
+@media (max-width: 580px) {
+  .minhaconta { padding: 5rem .9rem 2.5rem; gap: 1rem; }
+
+  .minhaconta-sidebar { grid-template-columns: 1fr; }
+
+  .sidebar-header {
+    border-radius: 20px 20px 0 0;
+    padding: 1.5rem 1rem;
+    min-height: auto;
+  }
+
+  .minhaconta-statuspedidos { display: flex; }
+
+  .minhaconta-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    border-top: 1px solid var(--border-soft);
+    padding: .65rem;
+  }
+  .minhaconta-nav a { font-size: .8rem; padding: .5rem .85rem; }
+
+  .conta-dadosbody { padding: 1.25rem; }
+  .conta-dadoshead { padding: 1.1rem 1.25rem; }
+
+  .minhaconta-pedido { flex-wrap: wrap; }
+  .minhaconta-pedidovalor { margin-left: auto; }
+
+  .conta-formactions {
+    flex-direction: column;
+  }
+  .conta-formactions .contabotao {
+    width: 100%;
+    justify-content: center;
+  }
+}
 
 
 
@@ -3443,6 +3501,7 @@ ___________
     grid-template-columns: 1fr;
     gap: 1.5rem;
     margin-top: 2rem;
+    margin-bottom: 2rem;
   }
  
   .valores-card {
@@ -3548,6 +3607,55 @@ ___________
   .about-text h2 {
     font-size: 2rem;
   }
+
+  .minhaconta {
+      grid-template-columns: 1fr;
+      padding: 5.5rem 1.25rem 3rem;
+      gap: 1.25rem;
+    }
+
+    .minhaconta-sidebar {
+      position: relative;
+      top: 0;
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      overflow: visible;
+    }
+
+    .sidebar-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem 1.25rem;
+      border-radius: 20px 0 0 20px;
+      min-height: 160px;
+    }
+
+    .minhaconta-statuspedidos { display: none; }
+
+.minhaconta-nav {
+      display: flex;
+      flex-wrap: wrap;
+      align-content: flex-start;
+      padding: .75rem;
+      gap: .35rem;
+    }
+.minhaconta-nav a {
+      border-left: none;
+      border-radius: 8px;
+      padding: .55rem .95rem;
+      font-size: .82rem;
+    }
+.minhaconta-nav a.minhaconta-btnativo {
+      background: var(--rosa);
+      color: #fff;
+      border-left: none;
+    }
+.minhaconta-nav-divider { display: none; }
+
+    .conta-dadosdiv { grid-template-columns: 1fr; }
+    .conta-ocupartudo { grid-column: 1; }
 }
 
 @media (max-width: 1024px) {
@@ -3667,6 +3775,7 @@ ___________
       z-index: 10;
       transition: background 0.2s;
     }
+
     .campeoes-prev { left: 4px; }
     .campeoes-next { right: 4px; }
     .campeoes-prev:hover,

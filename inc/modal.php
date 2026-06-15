@@ -149,6 +149,22 @@ document.getElementById('formAvaliacao').addEventListener('submit', function(e) 
 </div>
 
 <script>
+    
+    function togglePassword(inputId, icon) {
+        const input = document.getElementById(inputId);
+        if (input.type === "password") {
+            input.type = "text";
+            icon.classList.remove("fa-eye");
+            icon.classList.add("fa-eye-slash");
+        } else {
+            input.type = "password";
+            icon.classList.remove("fa-eye-slash");
+            icon.classList.add("fa-eye");
+        }
+    }
+</script>
+
+<script>
 document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.getElementById('loginForm');
     const cadastroForm = document.getElementById('cadastroForm');
@@ -175,18 +191,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    function togglePassword(inputId, icon) {
-        const input = document.getElementById(inputId);
-        if (input.type === "password") {
-            input.type = "text";
-            icon.classList.remove("fa-eye");
-            icon.classList.add("fa-eye-slash");
-        } else {
-            input.type = "password";
-            icon.classList.remove("fa-eye-slash");
-            icon.classList.add("fa-eye");
-        }
-    }
 
     // VALIDAÇÃO E ENVIO DO LOGIN
     loginForm.addEventListener('submit', async (e) => {
@@ -206,8 +210,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (data.success) {
                 // Login bem-sucedido, redireciona para URL apropriada
-                const redirectUrl = data.redirect_url || '<?php echo BASEURL; ?>index.php';
-                window.location.href = redirectUrl;
+                //const redirectUrl = data.redirect_url || '<?php //echo BASEURL; ?>index.php';
+                //window.location.href = redirectUrl;
+                window.location.reload();
+
             } else {
                 // Erro, exibe no modal
                 loginError.textContent = data.message;
@@ -246,7 +252,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (data.success) {
                 // Cadastro bem-sucedido, redireciona
-                window.location.href = '<?php echo BASEURL; ?>index.php';
+
+                 window.location.href = '<?php echo BASEURL; ?>index.php';
+                
             } else {
                 // Erro, exibe no modal
                 cadastroError.textContent = data.message;

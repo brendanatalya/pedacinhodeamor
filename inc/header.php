@@ -88,7 +88,7 @@
                     <?php endif; ?>
                     
 
-                    <a>
+                    <a href="<?php echo BASEURL; ?>paginas/carrinho.php">
                         <i class="fas fa-shopping-cart"></i>
                         <p>Carrinho (<?php echo array_sum($_SESSION['cart'] ?? []); ?>)</p>
                     </a>

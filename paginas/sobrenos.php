@@ -119,8 +119,8 @@
     <?php
         include '../inc/modal.php'; 
         include(FOOTER_TEMPLATE);
- 
     ?>
 
 </body>
 </html>
+    

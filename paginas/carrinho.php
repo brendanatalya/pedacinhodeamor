@@ -2,6 +2,8 @@
 if (!isset($_SESSION)) session_start();
 require_once '../config.php';
 require_once ABSPATH . 'inc/database.php';
+require_once DBAPI; 
+include(HEADER_TEMPLATE);
 
 $usuario_logado = !empty($_SESSION['logado']) && $_SESSION['logado'] === true;
 $cart = $_SESSION['cart'] ?? [];
@@ -41,37 +43,10 @@ $carrinho_vazio = empty($availableItems) && empty($unavailableItems) && empty($c
 $cartMessage = $_SESSION['cart_message'] ?? '';
 unset($_SESSION['cart_message']);
 ?>
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carrinho - Pedacinho de Amor</title>
-    <link rel="stylesheet" href="../css_pda/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css_pda/style_pda.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-</head>
 <body>
-    <header>
-        <h1>Pedacinho de Amor</h1>
-        <nav>
-            <ul>
-                <li><a href="../index.php">Home</a></li>
-                <li><a href="sobrenos.php">Sobre Nós</a></li>
-                <li><a href="cardapio.php">Cardápio</a></li>
-                <li><a href="personalizados.php">Personalizados</a></li>
-                <li><a href="carrinho.php" class="active"><i class="fas fa-shopping-cart"></i> Carrinho (<?php echo $total_itens_carrinho; ?>)</a></li>
-                <?php if ($usuario_logado): ?>
-                    <li><a href="../inc/logout.php">Sair</a></li>
-                <?php else: ?>
-                    <li><a class="btn btn-primary text-white" href="../index.php">Login</a></li>
-                <?php endif; ?>
-            </ul>
-        </nav>
-    </header>
 
     <div class="container">
-        <h2 class="my-4">Seu Carrinho</h2>
+        <h2 class="mt-4 titulocarrinho">Seu Carrinho</h2>
 
         <?php if ($cartMessage): ?>
             <div class="alert alert-success"><?php echo htmlspecialchars($cartMessage); ?></div>
@@ -92,7 +67,7 @@ unset($_SESSION['cart_message']);
                         <?php foreach ($availableItems as $produto): ?>
                             <div class="cart-item">
                                 <?php if (!empty($produto['imagem_referencia'])): ?>
-                                    <img src="<?php echo '../' . htmlspecialchars($produto['imagem_referencia']); ?>" alt="<?php echo htmlspecialchars($produto['nome']); ?>">
+                                    <img src="../imagens/<?php echo htmlspecialchars($produto['imagem_referencia']); ?>" alt="<?php echo htmlspecialchars($produto['nome']); ?>">
                                 <?php endif; ?>
                                 <div class="cart-item-info">
                                     <h4><?php echo htmlspecialchars($produto['nome']); ?></h4>
@@ -114,7 +89,7 @@ unset($_SESSION['cart_message']);
                                     <p>Subtotal: R$ <?php echo number_format($produto['subtotal'], 2, ',', '.'); ?></p>
                                     <form action="update_carrinho.php" method="POST" class="d-inline">
                                         <input type="hidden" name="product_id" value="<?php echo $produto['id']; ?>">
-                                        <button type="submit" name="action" value="remove" class="remove-btn">Remover</button>
+                                        <button type="submit" name="action" value="remove" class="remove-btn"> Remover</button>
                                     </form>
                                 </div>
                             </div>
@@ -204,7 +179,7 @@ unset($_SESSION['cart_message']);
                         <span>R$ <?php echo number_format($total, 2, ',', '.'); ?></span>
                     </div>
                     <div class="summary-row">
-                        <small class="text-muted"><i class="fas fa-shopping-bag me-1"></i>Somente retirada na loja</small>
+                        <small class="text-muted"><i class="fa-solid fa-store"></i> Somente retirada na loja</small>
                     </div>
 
                     <button class="checkout-btn" onclick="checkout()" <?php echo (!$usuario_logado || $total_itens_carrinho <= 0) ? 'disabled' : ''; ?>>Finalizar Compra</button>
@@ -222,6 +197,7 @@ unset($_SESSION['cart_message']);
             window.location.href = 'checkout_form.php';
         }
     </script>
-    <script src="../js/bootstrap/bootstrap.bundle.min.js"></script>
+    <?php include '../inc/modal.php'; 
+        include(FOOTER_TEMPLATE);?>
 </body>
 </html>

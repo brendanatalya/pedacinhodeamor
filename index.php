@@ -42,7 +42,7 @@
 
     <body>
         <main>
-            <section class="index-bemvindo">
+             <section class="index-bemvindo" style="background: url('./imagens/boloindex.jpg') no-repeat center center; background-size: cover;">
                 <!-- bloco de bem vindo do site -->
                 <div class="bemvindo-fundo"></div>
 
