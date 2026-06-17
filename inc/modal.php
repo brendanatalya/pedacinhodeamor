@@ -12,7 +12,7 @@
             Seu pedido <strong>#<?php echo $_SESSION['pedido_avaliar_id']; ?></strong> foi entregue!<br>
             Conta pra gente como foi?
         </p>
-        <form id="formAvaliacao" method="POST" action="paginas/avaliar.php?pedido=<?php echo $_SESSION['pedido_avaliar_id']; ?>">
+        <form id="formAvaliacao" method="POST" action="<?php echo BASEURL; ?>paginas/avaliar.php?pedido=<?php echo $_SESSION['pedido_avaliar_id']; ?>">
 
             <p style="font-weight:600; margin-bottom:4px;">🎂 Qualidade do Produto</p>
             <div class="star-group" id="grupo-produto" style="display:flex;flex-direction:row-reverse;justify-content:center;gap:6px;margin-bottom:16px;">
@@ -79,7 +79,7 @@ function selectStars(grupoId, nota) {
 
 function fecharModalAvaliacao() {
     // Fecha o modal e marca sessão para não abrir de novo nessa visita
-    fetch('paginas/avaliar_dispensar.php?pedido=<?php echo $_SESSION['pedido_avaliar_id']; ?>');
+    fetch('<?php echo BASEURL; ?>paginas/avaliar_dispensar.php?pedido=<?php echo $_SESSION['pedido_avaliar_id']; ?>');
     bootstrap.Modal.getInstance(document.getElementById('modalAvaliacao')).hide();
 }
 
@@ -108,7 +108,7 @@ document.getElementById('formAvaliacao').addEventListener('submit', function(e) 
     <h2 id="titulo">LOGIN</h2>
 </div>
 <div class="auth-body">
-    <form id="loginForm" action="inc/valida.php" method="POST">
+    <form id="loginForm" action="<?php echo BASEURL; ?>inc/valida.php" method="POST">
         <div id="loginError" style="color: #ff4d4d; font-size: 0.95rem; text-align: center; display: none; margin-bottom: 15px; padding: 10px; background-color: #ffe0e0; border-radius: 4px;"></div>
         
         <input type="email" name="email" placeholder="E-mail" required>
@@ -122,7 +122,7 @@ document.getElementById('formAvaliacao').addEventListener('submit', function(e) 
         <p class="login-link">Não tem conta? <span id="switchCadastro">Cadastrar</span></p>
     </form>
 
-    <form id="cadastroForm" action="cadastro.php" method="POST" style="display:none;" onsubmit="return validarSenha()">
+    <form id="cadastroForm" action="<?php echo BASEURL; ?>inc/cadastro.php" method="POST" style="display:none;" onsubmit="return validarSenha()">
         <div id="cadastroError" style="color: #ff4d4d; font-size: 0.95rem; text-align: center; display: none; margin-bottom: 15px; padding: 10px; background-color: #ffe0e0; border-radius: 4px;"></div>
         
         <input type="text" name="name" placeholder="Nome completo" required>
@@ -147,6 +147,22 @@ document.getElementById('formAvaliacao').addEventListener('submit', function(e) 
 </div>
 </div>
 </div>
+
+<script>
+    
+    function togglePassword(inputId, icon) {
+        const input = document.getElementById(inputId);
+        if (input.type === "password") {
+            input.type = "text";
+            icon.classList.remove("fa-eye");
+            icon.classList.add("fa-eye-slash");
+        } else {
+            input.type = "password";
+            icon.classList.remove("fa-eye-slash");
+            icon.classList.add("fa-eye");
+        }
+    }
+</script>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -175,18 +191,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    function togglePassword(inputId, icon) {
-        const input = document.getElementById(inputId);
-        if (input.type === "password") {
-            input.type = "text";
-            icon.classList.remove("fa-eye");
-            icon.classList.add("fa-eye-slash");
-        } else {
-            input.type = "password";
-            icon.classList.remove("fa-eye-slash");
-            icon.classList.add("fa-eye");
-        }
-    }
 
     // VALIDAÇÃO E ENVIO DO LOGIN
     loginForm.addEventListener('submit', async (e) => {
@@ -197,7 +201,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const formData = new FormData(loginForm);
         
         try {
-            const response = await fetch('inc/valida.php', {
+            const response = await fetch('<?php echo BASEURL; ?>inc/valida.php', {
                 method: 'POST',
                 body: formData
             });
@@ -206,8 +210,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (data.success) {
                 // Login bem-sucedido, redireciona para URL apropriada
-                const redirectUrl = data.redirect_url || 'index.php';
-                window.location.href = redirectUrl;
+                //const redirectUrl = data.redirect_url || '<?php //echo BASEURL; ?>index.php';
+                //window.location.href = redirectUrl;
+                window.location.reload();
+
             } else {
                 // Erro, exibe no modal
                 loginError.textContent = data.message;
@@ -237,7 +243,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const formData = new FormData(cadastroForm);
         
         try {
-            const response = await fetch('cadastro.php', {
+            const response = await fetch('<?php echo BASEURL; ?>inc/cadastro.php', {
                 method: 'POST',
                 body: formData
             });
@@ -246,7 +252,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (data.success) {
                 // Cadastro bem-sucedido, redireciona
-                window.location.href = 'index.php';
+
+                 window.location.href = '<?php echo BASEURL; ?>index.php';
+                
             } else {
                 // Erro, exibe no modal
                 cadastroError.textContent = data.message;

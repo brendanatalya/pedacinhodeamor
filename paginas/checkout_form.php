@@ -2,6 +2,8 @@
 if (!isset($_SESSION)) session_start();
 include '../config.php';
 require_once ABSPATH . 'inc/database.php';
+require_once DBAPI; 
+include(HEADER_TEMPLATE);
 
 // Precisa estar logado como cliente
 if (empty($_SESSION['logado']) || $_SESSION['tipo'] !== 'cliente') {
@@ -42,23 +44,11 @@ if (empty($cart_items) && empty($cart_personalizado)) {
     exit;
 }
 ?>
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Finalizar Compra - Pedacinho de Amor</title>
-    <link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/style_pda.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
+
 <body>
-    <?php include '../inc/header.php'; ?>
 
     <div class="container mt-5 mb-5">
-        <h2 class="mb-4">
-            <i class="fas fa-cash-register"></i> Finalizar Compra
-        </h2>
+        <h2 class="mb-4 titulocarrinho">Finalizar Compra</h2>
 
         <!-- Mensagem de erro/sucesso -->
         <div id="alertMsg" class="alert d-none" role="alert"></div>

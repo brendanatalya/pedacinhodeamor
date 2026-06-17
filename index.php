@@ -76,7 +76,7 @@ close_database($conn);
 
     <body>
         <main>
-            <section class="index-bemvindo">
+             <section class="index-bemvindo" style="background: url('./imagens/boloindex.jpg') no-repeat center center; background-size: cover;">
                 <!-- bloco de bem vindo do site -->
                 <div class="bemvindo-fundo"></div>
 
@@ -92,8 +92,8 @@ close_database($conn);
                         e carinho que buscamos levar até você.
                     </p>
                     <div class="bemvindo-botoes">
-                        <a href="paginas/personalizados.php" class="botaoclaro">Encomendar</a>
-                        <a href="paginas/sobrenos.php" class="botaoescuro">Sobre nós</a>
+                        <a href="<?php echo BASEURL; ?>paginas/personalizados.php" class="botaoclaro">Encomendar</a>
+                        <a href="<?php echo BASEURL; ?>paginas/sobrenos.php" class="botaoescuro">Sobre nós</a>
                     </div>
                 </div>
 
@@ -112,9 +112,9 @@ close_database($conn);
                     </div>
                     <div class="carrosselofc" id="carrossel" tabindex="0">
                         <div class="slides">
-                            <img src="imagens/doce1.webp" alt="Imagem 1">
-                            <img src="imagens/doce2.webp" alt="Imagem 2">
-                            <img src="imagens/doce3.webp" alt="Imagem 3">
+                            <img src="<?php echo BASEURL; ?>imagens/bolocarrossel.jpg" alt="Imagem 1">
+                            <img src="<?php echo BASEURL; ?>imagens/salgadoscarrossel.jpg" alt="Imagem 2">
+                            <img src="<?php echo BASEURL; ?>imagens/copinhocarrossel.jpg" alt="Imagem 3">
                         </div>
                         <button class="prev carrossel-btnprev">
                             <i class="fa-solid fa-angle-left"></i>
@@ -131,133 +131,82 @@ close_database($conn);
             <div style="height: 100px; background: linear-gradient(to bottom, #fdf2f4, #fde0e5);"></div>
 
             <section class="cards py-5">
-<<<<<<< HEAD
-                <!-- PArte dos carss fofinhos rs -->
-<<<<<<< HEAD
-                <div class="container position-relative">
-                    <h2 class="text-center mb-4">Esses fazem sucesso por aqui!</h2>
-                    <div class="product-slider-wrapper">
-                        <div class="product-slider">
-                            
-                            <div class="product-card" style="background-image: url('imagens/doce1.webp');">
-                                <div class="product-card-body">
-                                    <span>Croissants</span>
-                                    <button class="btn btn-confira" src="paginas/doces.php">Confira</button>
-                                </div>
-                            </div>
-                            
-                            <div class="product-card" style="background-image: url('imagens/doce2.webp');">
-                                <div class="product-card-body">
-                                    <span>Cookies</span>
-                                    <button class="btn btn-confira">Confira</button>
-                                </div>
-                            </div>
-=======
-=======
+
                 <!-- PArte dos carss fofinhos rs para desktop aff -->
->>>>>>> 939b4d7346d2a5b8fa9354a84e91ae190cad2f15
+
                 <div class="container-xxl" style="overflow: visible;">
                     <div>
                         <p class="carrossel-subtitulo">Campeões de Vendas</p>
                         <h2 class="carrossel-titulo">Esses fazem <em>sucesso</em> por aqui!</h2>
                     </div>
-                    
 
-<<<<<<< HEAD
-                    <div class="product-slider">
->>>>>>> 58ab223e473b7eee82f24c6075429e9912de9cdd
-=======
-                    <div class="product-slider d-none d-lg-flex">
->>>>>>> 939b4d7346d2a5b8fa9354a84e91ae190cad2f15
+                    <div class="campeoes-slider d-none d-lg-flex">
                         
-                        <div class="product-card" style="background-image: url('imagens/doce1.webp');">
-                            <div class="product-card-body">
+                        <div class="campeoes-card" style="background-image: url('<?php echo BASEURL; ?>imagens/torta.jpg');">
+                            <div class="campeoes-card-body">
                                 <span>Tortas</span>
-                                <button class="btn-confira" src="./paginas/doces.php">Confira</button>
+                                <a class="btn-confira" href="<?php echo BASEURL; ?>paginas/cardapio.php">Confira</a>
                             </div>
                         </div>
                         
-                        <div class="product-card" style="background-image: url('imagens/doce2.webp');">
-                            <div class="product-card-body">
+                        <div class="campeoes-card" style="background-image: url('<?php echo BASEURL; ?>imagens/salgados.jpg');">
+                            <div class="campeoes-card-body">
                                 <span>Salgados</span>
-                                <button class="btn-confira">Confira</button>
+                                <a class="btn-confira" href="<?php echo BASEURL; ?>paginas/cardapio.php">Confira</a>
                             </div>
                         </div>
                     
-                        <div class="product-card" style="background-image: url('imagens/doce2.webp');">
-                            <div class="product-card-body">
+                        <div class="campeoes-card" style="background-image: url('<?php echo BASEURL; ?>imagens/bolos.jpg');">
+                            <div class="campeoes-card-body">
                                 <span>Bolos</span>
-                                <button class="btn-confira">Confira</button>
+                                <a class="btn-confira" href="<?php echo BASEURL; ?>paginas/cardapio.php">Confira</a>
                             </div>
                         </div>
                     
-                        <div class="product-card" style="background-image: url('imagens/doce3.webp');">
-                            <div class="product-card-body">
+                        <div class="campeoes-card" style="background-image: url('<?php echo BASEURL; ?>imagens/cones.jpg');">
+                            <div class="campeoes-card-body">
                                 <span>Cones</span>
-                                <button class="btn-confira">Confira</button>
+                                <a class="btn-confira" href="<?php echo BASEURL; ?>paginas/cardapio.php">Confira</a>
                             </div>
                         </div>
                     </div>
 
-                    <!-- carrossel aparece em tela pequena -->
-                    <div id="cards" class="carousel slide product-slider d-lg-none" data-bs-ride="false">
-                        
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <div class="product-card" style="background-image: url('imagens/doce1.webp');">
-                                    <div class="product-card-body">
+                    <!-- carrossel aparece em tela pequena-->
+                    <div class="campeoes-mobile-wrapper d-lg-none mt-5">
+                        <button class="campeoes-prev"><i class="fa-solid fa-angle-left"></i></button>
+                        <div class="campeoes-mobile-track">
+                            <div class="campeoes-mobile-inner">
+                                <div class="campeoes-card" style="background-image: url('<?php echo BASEURL; ?>imagens/torta.jpg');">
+                                    <div class="campeoes-card-body">
                                         <span>Tortas</span>
-                                        <button class="btn-confira" src="./paginas/doces.php">Confira</button>
+                                        <a class="btn-confira" href="<?php echo BASEURL; ?>paginas/cardapio.php">Confira</a>
                                     </div>
                                 </div>
-                            </div>
-                            
-                            <div class="carousel-item">
-                                <div class="product-card" style="background-image: url('imagens/doce2.webp');">
-                                    <div class="product-card-body">
+                                <div class="campeoes-card" style="background-image: url('<?php echo BASEURL; ?>imagens/salgados.jpg');">
+                                    <div class="campeoes-card-body">
                                         <span>Salgados</span>
-                                        <button class="btn-confira">Confira</button>
+                                        <a class="btn-confira" href="<?php echo BASEURL; ?>paginas/cardapio.php">Confira</a>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="carousel-item">
-                                <div class="product-card" style="background-image: url('imagens/doce2.webp');">
-                                    <div class="product-card-body">
+                                <div class="campeoes-card" style="background-image: url('<?php echo BASEURL; ?>imagens/bolos.jpg');">
+                                    <div class="campeoes-card-body">
                                         <span>Bolos</span>
-                                        <button class="btn-confira">Confira</button>
+                                        <a class="btn-confira" href="<?php echo BASEURL; ?>paginas/cardapio.php">Confira</a>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="carousel-item">
-                                <div class="product-card" style="background-image: url('imagens/doce3.webp');">
-                                    <div class="product-card-body">
+                                <div class="campeoes-card" style="background-image: url('<?php echo BASEURL; ?>imagens/cones.jpg');">
+                                    <div class="campeoes-card-body">
                                         <span>Cones</span>
-                                        <button class="btn-confira">Confira</button>
+                                        <a class="btn-confira" href="<?php echo BASEURL; ?>paginas/cardapio.php">Confira</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        <button class="carrossel-btnprev carousel-control-prev" type="button" data-bs-target="#cards" data-bs-slide="prev">
-                            <i class="fa-solid fa-angle-left"></i>
-                        </button>
-                        <button class="carrossel-btnnext carousel-control-next" type="button" data-bs-target="#cards" data-bs-slide="next">
-                            <i class="fa-solid fa-angle-right"></i>
-                        </button>
+                        <button class="campeoes-next"><i class="fa-solid fa-angle-right"></i></button>
+                        <div class="campeoes-dots"></div>
                     </div>
-                    
                 </div>
             </section>
-<<<<<<< HEAD
-            
-            <section class="feedbacks-section py-5">
-                <div class="container">
-                    <div class="feedbacks-header">
-                        <h2>Eles amam! Feedbacks que amamos!</h2>
-                    </div>
-
-                    <?php if (!empty($avaliacoes_home)): ?>
-=======
 
             <!-- transição de cor-->
             <div style="height: 100px; background: linear-gradient(to top, #fdf2f4, #fde0e5);"></div>
@@ -269,8 +218,9 @@ close_database($conn);
                         <p class="carrossel-subtitulo">Depoimentos</p>
                         <h2 class="carrossel-titulo">O que nossos <em>clientes</em> dizem sobre nós?</h2>
                     </div>
+                    
+                    <?php if (!empty($avaliacoes_home)): ?>
 
->>>>>>> 939b4d7346d2a5b8fa9354a84e91ae190cad2f15
                     <div class="feedbacks-wrapper">
                         <button class="feedback-arrow prev-feedback" type="button" aria-label="Feedback anterior">&#10094;</button>
                         <div class="feedbacks-carrossel-track">
@@ -302,21 +252,45 @@ close_database($conn);
                         <button class="feedback-arrow next-feedback" type="button" aria-label="Próximo feedback">&#10095;</button>
                     </div>
                     <?php else: ?>
-                    <p class="text-center text-muted py-4">Ainda não há avaliações — seja o primeiro! 🎂</p>
+                        <p class="text-center text-muted py-4">Ainda não há avaliações — seja o primeiro! 🎂</p>
                     <?php endif; ?>
                 </div>
             </section>
 
         </main>
+<script>
+// ── Carrossel mobile dos Campeões ──
+(function () {
+  const inner = document.querySelector('.campeoes-mobile-inner');
+  if (!inner) return;
 
+  const cards  = inner.querySelectorAll('.campeoes-card');
+  const dotsEl = document.querySelector('.campeoes-dots');
+  let current  = 0;
 
-        <script src="js/bootstrap/bootstrap.bundle.min.js"></script>
+  // cria dots
+  cards.forEach((_, i) => {
+    const btn = document.createElement('button');
+    if (i === 0) btn.classList.add('active');
+    btn.addEventListener('click', () => goTo(i));
+    dotsEl.appendChild(btn);
+  });
 
+  function goTo(index) {
+    current = (index + cards.length) % cards.length;
+    inner.style.transform = `translateX(-${current * 100}%)`;
+    dotsEl.querySelectorAll('button').forEach((b, i) =>
+      b.classList.toggle('active', i === current)
+    );
+  }
+
+  document.querySelector('.campeoes-prev')
+    .addEventListener('click', () => goTo(current - 1));
+  document.querySelector('.campeoes-next')
+    .addEventListener('click', () => goTo(current + 1));
+})();
+</script>
         <?php include 'inc/modal.php'; 
-        include_once __DIR__ .'/inc/footer.php';?>
-        <?php include_once ABSPATH . COOKIE_TEMPLATE; ?>
-
-        
-        
+        include(FOOTER_TEMPLATE);?>
     </body>
 </html>

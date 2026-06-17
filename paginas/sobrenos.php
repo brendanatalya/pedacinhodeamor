@@ -1,28 +1,14 @@
 <?php  
-    require_once "../config.php"; 
+    if (!isset($_SESSION)) session_start();
+    require_once '../config.php';
+    require_once ABSPATH . 'inc/database.php';
     require_once DBAPI; 
     include(HEADER_TEMPLATE);
 ?>
-<body>
-<header>
-    <h1>Pedacinho de Amor</h1>
-    <nav>
-        <ul>
-            <li><a href="../index.php">Home</a></li>
-            <li><a href="sobrenos.php">Sobre Nós</a></li>
-            <li><a href="cardapio.php">Cardápio</a></li>
-            <li><a href="personalizados.php">Personalizados</a></li>
-            <a class="btn btn-primary text-white" href="../index.php" style="text-decoration:none;">
-                Login
-            </a>
-   
-            <button><li><a href="cesta.php">Cesta</a></li></button>
-        </ul>
-    </nav>
-</header>
 
+<body>
     <main>
-        <section class="sobre-intro">
+        <section class="sobre-intro" style="background: url('<?php echo BASEURL; ?>/imagens/boloframboesa.jpg') no-repeat center center; background-size: cover;">
             <!-- bloco de bem vindo do site -->
             <div class="bemvindo-fundo"></div>
 
@@ -47,7 +33,7 @@
         <section class="sobre-nos">
             <div class="sobre">
                 <div class="sobre-foto">
-                    <img src="<?php echo BASEURL; ?>imagens/doce1.webp" alt="Quem somos">
+                    <img src="<?php echo BASEURL; ?>imagens/sobrenos.jpg" alt="Quem somos">
                 </div>
                 <div class="sobre-texto">
                     <h2>Quem Somos?</h2>
@@ -67,7 +53,7 @@
                     <p>Produzimos em pequenas quantidades para garantir qualidade excepcional e sabor autêntico, mantendo sempre o nosso toque caseiro que nos diferencia. Nenhum produto em nossa cozinha é feito por máquina - tudo é feito à mão, com atenção e carinho.</p>
                 </div>
                 <div class="trabalho-foto">
-                    <img src="<?php echo BASEURL; ?>imagens/doce3.webp" alt="Como trabalhamos">
+                    <img src="<?php echo BASEURL; ?>imagens/comotrabalhamos.jpg" alt="Como trabalhamos">
                 </div>
             </div>
         </section>
@@ -130,7 +116,11 @@
         </section>
     </main>
 
-    <?php include(FOOTER_TEMPLATE);?>
+    <?php
+        include '../inc/modal.php'; 
+        include(FOOTER_TEMPLATE);
+    ?>
 
 </body>
 </html>
+    

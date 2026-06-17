@@ -61,14 +61,14 @@
                     </li>
 
                     <li>
-                        <a href="./paginas/cardapio.php">Cardápio</a>
+                        <a href="<?php echo BASEURL; ?>paginas/cardapio.php">Cardápio</a>
                     </li>
 
 
                     <li>
-                        <a href="<?php echo BASEURL; ?>paginas/personalizados.php">Personalizados</a>
+                        <a>Personalizados</a>
                     </li>
-
+                    
                 </ul>
 
                 <!-- ICONES -->
@@ -88,8 +88,8 @@
                     <?php endif; ?>
                     
 
-                    <a href="#">
-                        <i class="fa-solid fa-basket-shopping"></i>
+                    <a href="<?php echo BASEURL; ?>paginas/carrinho.php">
+                        <i class="fas fa-shopping-cart"></i>
                         <p>Carrinho (<?php echo array_sum($_SESSION['cart'] ?? []); ?>)</p>
                     </a>
 

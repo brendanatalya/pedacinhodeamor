@@ -37,4 +37,9 @@ define('FOOTER_TEMPLATE', ABSPATH . 'inc/footer.php');
  
 /** número WhatsApp da confeitaria (só números, com DDI) **/
 define('WHATSAPP_NUMBER', '5515988329726');
+
+/** caminhos para o modal do cookie **/
+define('COOKIE_TEMPLATE', ABSPATH . 'cookies/cookiemodal.php');
+ 
+
 ?>

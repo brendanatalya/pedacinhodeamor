@@ -1,4 +1,5 @@
 <script>
+    <?php include(COOKIE_TEMPLATE); ?>
 
 const navToggle = document.querySelector(".nav-toggle");
 const linksContainer = document.querySelector(".links-container");
@@ -130,7 +131,9 @@ window.addEventListener("scroll", function(){
     resetFeedbackAutoplay(); 
 </script>
 
+
 <script src="js/bootstrap/bootstrap.bundle.min.js"></script>
+<script src="../js/bootstrap/bootstrap.bundle.min.js"></script>
 
 <footer>
   <div class="footer-container">
@@ -160,6 +163,5 @@ window.addEventListener("scroll", function(){
     <p>Feito com <i class="fa-solid fa-heart" style="color: #8f1a5a;"></i> para adoçar seus momentos.</p>
   </div>
 
-  <?php include_once ABSPATH . COOKIE_TEMPLATE; ?>
-<script src="<?php echo BASEURL; ?>js/cookies.js"></script>
 </footer>
+<script src="<?php echo BASEURL; ?>js/cookies.js"></script>
