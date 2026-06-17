@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?php 
 if(!isset($_SESSION)) session_start();
 
@@ -55,6 +54,7 @@ $stmt = $conn->prepare("
     SELECT a.nota_produto, a.nota_atend, a.comentario, a.criado_em, u.nome
     FROM avaliacoes a
     INNER JOIN usuarios u ON u.id = a.id_cliente
+    WHERE a.comentario IS NOT NULL AND a.comentario <> ''
     ORDER BY a.criado_em DESC
     LIMIT 10
 ");
@@ -73,12 +73,6 @@ close_database($conn);
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     </head>
-=======
-<?php if(!isset($_SESSION)) session_start(); 
-    require_once "config.php"; 
-    require_once DBAPI; 
-    include(HEADER_TEMPLATE); ?>
->>>>>>> 939b4d7346d2a5b8fa9354a84e91ae190cad2f15
 
     <body>
         <main>
@@ -320,6 +314,8 @@ close_database($conn);
 
         <?php include 'inc/modal.php'; 
         include_once __DIR__ .'/inc/footer.php';?>
+        <?php include_once ABSPATH . COOKIE_TEMPLATE; ?>
+
         
         
     </body>

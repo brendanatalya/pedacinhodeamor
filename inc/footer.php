@@ -159,4 +159,7 @@ window.addEventListener("scroll", function(){
     <p>© 2026 Pedacinho de Amor. Todos os direitos reservados.</p>
     <p>Feito com <i class="fa-solid fa-heart" style="color: #8f1a5a;"></i> para adoçar seus momentos.</p>
   </div>
+
+  <?php include_once ABSPATH . COOKIE_TEMPLATE; ?>
+<script src="<?php echo BASEURL; ?>js/cookies.js"></script>
 </footer>
