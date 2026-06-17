@@ -3,29 +3,67 @@ if (!isset($_SESSION)) session_start();
 require_once '../config.php';
 require_once ABSPATH . 'inc/database.php';
 
+// ── Função de subcategoria (no topo, antes de tudo) ──────────────────────────
+function extrair_subcategoria_doce(string $nome): string {
+    $nome = mb_strtolower($nome, 'UTF-8');
+
+    $mapa = [
+        'cone'       => ['cone'],
+        'trufa'      => ['trufa'],
+        'brigadeiro' => ['brigadeiro'],
+        'bolo'       => ['bolo'],
+        'docinho'    => ['docinho', 'camafeu', 'beijinho', 'olho de sogra', 'cajuzinho',
+                         'quindim', 'bicho de pé', 'bixo de pé'],
+    ];
+
+    foreach ($mapa as $sub => $palavras) {
+        foreach ($palavras as $palavra) {
+            if (str_contains($nome, $palavra)) return $sub;
+        }
+    }
+
+    return 'outro';
+}
+
+// ── Dados ─────────────────────────────────────────────────────────────────────
 $usuario_logado = !empty($_SESSION['logado']) && $_SESSION['logado'] === true;
 
-// Carrega só os produtos salgados
-$todos = array_filter(find_products(null), fn($p) => $p['tipo'] === 'salgado');
+$todos = array_values(array_filter(
+    find_products(null),
+    fn($p) => in_array($p['tipo'], ['doce', 'bolo'])
+));
 
 $cartMessage = $_SESSION['cart_message'] ?? '';
 unset($_SESSION['cart_message']);
 
-$total_carrinho = array_sum($_SESSION['cart'] ?? []);
+// ── Contagens por subcategoria ────────────────────────────────────────────────
+$contagem = ['todos' => count($todos)];
+foreach ($todos as $p) {
+    $sub = extrair_subcategoria_doce($p['nome']);
+    $contagem[$sub] = ($contagem[$sub] ?? 0) + 1;
+}
+
+$botoes = [
+    'cone'       => '🍦 Cones',
+    'trufa'      => '🍫 Trufas',
+    'brigadeiro' => '🍬 Brigadeiros',
+    'bolo'       => '🎂 Bolos',
+    'docinho'    => '🌸 Docinhos',
+    'outro'      => '✨ Outros',
+];
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Salgados - Pedacinho de Amor</title>
+    <title>Doces - Pedacinho de Amor</title>
     <link rel="icon" type="image/x-icon" href="../imagens/icon.png">
     <link rel="stylesheet" href="../css_pda/bootstrap/bootstrap.min.css">
-    <link rel="stylesheet" href="../css_pda/style_pda.css">
+    <link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/style_pda.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
-        /* ── Filtros de subcategoria ── */
         .subcategoria-bar {
             display: flex;
             flex-wrap: wrap;
@@ -43,41 +81,24 @@ $total_carrinho = array_sum($_SESSION['cart'] ?? []);
             cursor: pointer;
             transition: 0.2s;
         }
-        .sub-btn:hover {
-            background: #ffdcec;
-        }
-        .sub-btn.ativo {
-            background: #7a2f2f;
-            border-color: #7a2f2f;
-            color: #fff;
-        }
+        .sub-btn:hover  { background: #ffdcec; }
+        .sub-btn.ativo  { background: #7a2f2f; border-color: #7a2f2f; color: #fff; }
 
-        /* ── Grid de produtos ── */
         .produtos-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 24px;
             margin-bottom: 2rem;
         }
-        .produto-item[data-hidden="true"] {
-            display: none;
-        }
+        .produto-item[data-hidden="true"] { display: none; }
 
-        /* ── Msg sem produtos ── */
-        .sem-produtos {
-            display: none;
-            color: #888;
-            font-style: italic;
-            padding: 1rem 0 2rem;
-        }
-        .sem-produtos.visivel {
-            display: block;
-        }
+        .sem-produtos { display: none; color: #888; font-style: italic; padding: 1rem 0 2rem; }
+        .sem-produtos.visivel { display: block; }
 
-        /* ── Link de navegação entre páginas ── */
         .nav-cardapio {
             display: flex;
-            gap: 1rem;
+            flex-wrap: wrap;
+            gap: 0.75rem;
             margin: 2rem 0 1rem;
         }
         .nav-cardapio a {
@@ -91,24 +112,19 @@ $total_carrinho = array_sum($_SESSION['cart'] ?? []);
             transition: 0.2s;
         }
         .nav-cardapio a.ativo,
-        .nav-cardapio a:hover {
-            background: #7a2f2f;
-            color: #fff;
-        }
+        .nav-cardapio a:hover { background: #7a2f2f; color: #fff; }
     </style>
 </head>
 <body>
 
-    <!-- NAV -->
     <?php include_once ABSPATH . 'inc/header.php'; ?>
 
     <main>
-        <!-- HERO -->
         <section class="doces-hero" style="background-image:url('../imagens/doce3.webp');">
             <div class="doces-hero__overlay"></div>
             <div class="doces-hero__content">
-                <h1>🥐 SALGADOS</h1>
-                <p>Assados e fritos com muito carinho!</p>
+                <h1>🍬 DOCES</h1>
+                <p>Tudo feito com carinho para adoçar seus momentos!</p>
             </div>
         </section>
 
@@ -124,28 +140,30 @@ $total_carrinho = array_sum($_SESSION['cart'] ?? []);
                 </div>
             <?php endif; ?>
 
-            <!-- Navegação entre Doces e Salgados -->
             <div class="nav-cardapio">
-                <a href="doces.php">🍬 Doces</a>
-                <a href="salgados.php" class="ativo">🥐 Salgados</a>
+                <a href="doces.php" class="ativo">🍬 Doces</a>
+                <a href="salgados.php">🥐 Salgados</a>
+                <a href="personalizados.php">🎨 Personalizados</a>
             </div>
 
-            <!-- Filtros -->
-            <div class="subcategoria-bar" id="filtros-salgados">
-                <button class="sub-btn ativo" data-sub="todos"      onclick="filtrar('todos', this)">Todos</button>
-                <button class="sub-btn" data-sub="croissant"        onclick="filtrar('croissant', this)">Croissant</button>
-                <button class="sub-btn" data-sub="assado"           onclick="filtrar('assado', this)">Assados</button>
-                <button class="sub-btn" data-sub="pao de queijo"    onclick="filtrar('pao de queijo', this)">Pão de Queijo</button>
-                <button class="sub-btn" data-sub="coxinha"          onclick="filtrar('coxinha', this)">Coxinha</button>
-                <button class="sub-btn" data-sub="empada"           onclick="filtrar('empada', this)">Empada</button>
-                <button class="sub-btn" data-sub="outro"            onclick="filtrar('outro', this)">Outros</button>
+            <div class="subcategoria-bar" id="filtros-doces">
+                <button class="sub-btn ativo" data-sub="todos" onclick="filtrar('todos', this)">
+                    Todos (<?php echo $contagem['todos']; ?>)
+                </button>
+                <?php foreach ($botoes as $key => $label): ?>
+                    <?php if (!empty($contagem[$key])): ?>
+                        <button class="sub-btn" data-sub="<?php echo $key; ?>" onclick="filtrar('<?php echo $key; ?>', this)">
+                            <?php echo $label; ?> (<?php echo $contagem[$key]; ?>)
+                        </button>
+                    <?php endif; ?>
+                <?php endforeach; ?>
             </div>
 
             <p class="sem-produtos" id="sem-produtos">Nenhum produto encontrado nesta categoria.</p>
 
-            <div class="produtos-grid" id="grid-salgados">
+            <div class="produtos-grid" id="grid-doces">
                 <?php foreach ($todos as $p):
-                    $sub = strtolower(extrair_subcategoria($p['nome']));
+                    $sub = extrair_subcategoria_doce($p['nome']);
                 ?>
                 <div class="col produto-item" data-sub="<?php echo htmlspecialchars($sub); ?>">
                     <div class="product-card <?php echo !$p['disponivel'] ? 'unavailable' : ''; ?>">
@@ -162,7 +180,7 @@ $total_carrinho = array_sum($_SESSION['cart'] ?? []);
                             <?php endif; ?>
                             <form action="add_carrinho.php" method="POST">
                                 <input type="hidden" name="product_id" value="<?php echo $p['id']; ?>">
-                                <input type="hidden" name="quantity" value="1">
+                                <input type="hidden" name="quantity"   value="1">
                                 <input type="hidden" name="redirect"
                                        value="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>">
                                 <button type="submit" class="add-to-cart-btn"
@@ -176,25 +194,22 @@ $total_carrinho = array_sum($_SESSION['cart'] ?? []);
                 <?php endforeach; ?>
             </div>
 
-        </div><!-- /container -->
+        </div>
     </main>
 
     <?php include_once ABSPATH . 'inc/footer.php'; ?>
 
-    <script src="../js/bootstrap/bootstrap.bundle.min.js"></script>
-    <script src="<?php echo BASEURL; ?>js/cookies.js"></script>
-
     <script>
     function filtrar(sub, btn) {
-        document.querySelectorAll('#filtros-salgados .sub-btn').forEach(b => b.classList.remove('ativo'));
+        document.querySelectorAll('#filtros-doces .sub-btn').forEach(b => b.classList.remove('ativo'));
         btn.classList.add('ativo');
 
-        const itens = document.querySelectorAll('#grid-salgados .produto-item');
+        const itens = document.querySelectorAll('#grid-doces .produto-item');
         let visiveis = 0;
 
         itens.forEach(item => {
             const dataSub = item.dataset.sub || '';
-            const mostrar = sub === 'todos' || dataSub.includes(sub);
+            const mostrar = sub === 'todos' || dataSub === sub;
             item.dataset.hidden = mostrar ? 'false' : 'true';
             if (mostrar) visiveis++;
         });
@@ -204,25 +219,3 @@ $total_carrinho = array_sum($_SESSION['cart'] ?? []);
     </script>
 </body>
 </html>
-
-<?php
-function extrair_subcategoria(string $nome): string {
-    $nome = mb_strtolower($nome, 'UTF-8');
-
-    $mapa = [
-        'croissant'     => ['croissant'],
-        'assado'        => ['assado', 'enroladinho', 'esfiha', 'esfirra'],
-        'pao de queijo' => ['pão de queijo', 'pao de queijo'],
-        'coxinha'       => ['coxinha'],
-        'empada'        => ['empada'],
-    ];
-
-    foreach ($mapa as $sub => $palavras) {
-        foreach ($palavras as $palavra) {
-            if (str_contains($nome, $palavra)) return $sub;
-        }
-    }
-
-    return 'outro';
-}
-?>

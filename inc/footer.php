@@ -1,5 +1,24 @@
+<script type="text/javascript" src="//www.freeprivacypolicy.com/public/cookie-consent/4.1.0/cookie-consent.js" charset="UTF-8"></script>
+<script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+    cookieconsent.run({
+        "notice_banner_type": "simple",
+        "consent_type": "express",
+        "palette": "light",
+        "language": "pt",
+        "page_load_consent_levels": ["strictly-necessary"],
+        "notice_banner_reject_button_hide": false,
+        "preferences_center_close_button_hide": false,
+        "page_refresh_confirmation_buttons": false,
+        "website_name": "Pedacinho de Amor",
+        "website_privacy_policy_url": "<?php echo BASEURL; ?>paginas/politica_privacidade.php"
+    });
+});
+
+</script>
+
+
 <script>
-    <?php include(COOKIE_TEMPLATE); ?>
 
 const navToggle = document.querySelector(".nav-toggle");
 const linksContainer = document.querySelector(".links-container");
@@ -36,6 +55,55 @@ window.addEventListener("scroll", function(){
 });
 
 </script>
+<style>
+    /* BRENDINHAAAA entao esse bando de coisa q em baixo é o css forçando o css do cookies, pq essa
+     bosta de site do lf nao consegui mudar
+     pq o proprio site tem o seu trequinho la, ai pra nao ficar feio eu forcei aq */
+/* ── Banner de cookies (freeprivacypolicy) ── */
+.freeprivacypolicy-com---nb {
+    background-color: #fff5f8 !important;
+    border-top: 3px solid #7a2f2f !important;
+}
+
+.cc-nb-title {
+    color: #7a2f2f !important;
+    font-weight: 700 !important;
+}
+
+.cc-nb-text {
+    color: #444 !important;
+}
+
+button.cc-nb-okagree {
+    background-color: #7a2f2f !important;
+    border-color: #7a2f2f !important;
+    color: #fff !important;
+    border-radius: 30px !important;
+}
+
+button.cc-nb-reject {
+    background-color: #fff !important;
+    border: 2px solid #7a2f2f !important;
+    color: #7a2f2f !important;
+    border-radius: 30px !important;
+}
+
+button.cc-nb-changep {
+    background-color: transparent !important;
+    border: 2px solid #ccc !important;
+    color: #555 !important;
+    border-radius: 30px !important;
+}
+
+button.cc-nb-okagree:hover {
+    background-color: #5c1e1e !important;
+}
+
+button.cc-nb-reject:hover {
+    background-color: #ffdcec !important;
+    color: #7a2f2f !important;
+}
+</style>
 
 <script>
     // --- CARROSSEL PRINCIPAL ---
@@ -78,7 +146,7 @@ window.addEventListener("scroll", function(){
     showImage(0);
     startAutoplay();
 
-    // --- FEEDBACKS (2 cards visíveis, avança 1 por vez) ---
+    // --- FEEDBACKS ---
     const feedbackscarrossel = document.getElementById('feedbackscarrossel');
     const feedbackCards     = feedbackscarrossel ? feedbackscarrossel.querySelectorAll('.feedback-card') : [];
     const prevFeedbackBtn   = document.querySelector('.prev-feedback');
@@ -87,14 +155,8 @@ window.addEventListener("scroll", function(){
     let feedbackIndex    = 0;
     let feedbackInterval = null;
 
-    // Quantos cards ficam visíveis de uma vez (muda no mobile via JS)
-    function visibleCount() {
-        return 1;
-    }
-
-    function maxIndex() {
-        return Math.max(0, feedbackCards.length - visibleCount());
-    }
+    function visibleCount() { return 1; }
+    function maxIndex() { return Math.max(0, feedbackCards.length - visibleCount()); }
 
     function showFeedback(i) {
         feedbackIndex = Math.max(0, Math.min(i, maxIndex()));
@@ -113,27 +175,18 @@ window.addEventListener("scroll", function(){
     }
 
     if (prevFeedbackBtn) {
-        prevFeedbackBtn.addEventListener('click', () => {
-            showFeedback(feedbackIndex - 1);
-            resetFeedbackAutoplay();
-        });
+        prevFeedbackBtn.addEventListener('click', () => { showFeedback(feedbackIndex - 1); resetFeedbackAutoplay(); });
     }
-
     if (nextFeedbackBtn) {
-        nextFeedbackBtn.addEventListener('click', () => {
-            showFeedback(feedbackIndex + 1);
-            resetFeedbackAutoplay();
-        });
+        nextFeedbackBtn.addEventListener('click', () => { showFeedback(feedbackIndex + 1); resetFeedbackAutoplay(); });
     }
 
     window.addEventListener('resize', () => showFeedback(feedbackIndex));
     showFeedback(0);
-    resetFeedbackAutoplay(); 
-</script>
-
-
-<script src="js/bootstrap/bootstrap.bundle.min.js"></script>
-<script src="../js/bootstrap/bootstrap.bundle.min.js"></script>
+    resetFeedbackAutoplay();
+    
+    
+    </script>
 
 <footer>
   <div class="footer-container">
@@ -145,7 +198,6 @@ window.addEventListener("scroll", function(){
 
       <div class="footer-icones">
         <a href="https://www.instagram.com/_pedacinhodeamor_o?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-        <!-- <a href="#"><i class="fa-brands fa-facebook-f"></i></a> -->
       </div>
     </div>
 
@@ -164,4 +216,3 @@ window.addEventListener("scroll", function(){
   </div>
 
 </footer>
-<script src="<?php echo BASEURL; ?>js/cookies.js"></script>

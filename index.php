@@ -1,29 +1,3 @@
-<?php 
-if(!isset($_SESSION)) session_start();
-
-// Verificar se cliente tem pedido entregue sem avaliação
-if (!empty($_SESSION['logado']) && $_SESSION['tipo'] === 'cliente') {
-    require_once 'config.php';
-    require_once ABSPATH . 'inc/database.php';
-
-    $conn = open_database();
-    $stmt = $conn->prepare("
-        SELECT p.id 
-        FROM pedidos p
-        LEFT JOIN avaliacoes a ON a.id_pedido = p.id
-        WHERE p.id_cliente = ? 
-          AND p.status = 'entregue'
-          AND a.id IS NULL
-        ORDER BY p.data_pedido DESC
-        LIMIT 1
-    ");
-    $stmt->execute([$_SESSION['id']]);
-    $pendente = $stmt->fetch();
-    close_database($conn);
-
-    $_SESSION['pedido_avaliar_id'] = $pendente ? $pendente['id'] : null;
-}
-?>
 <?php
 if (!isset($_SESSION)) session_start();
 require_once 'config.php';
@@ -48,7 +22,7 @@ if (!empty($_SESSION['logado']) && $_SESSION['tipo'] === 'cliente') {
     $_SESSION['pedido_avaliar_id'] = $pendente ? $pendente['id'] : null;
 }
 
-// Buscar as últimas 10 avaliações de todos os clientes
+// Buscar as últimas 10 avaliações com comentário
 $conn = open_database();
 $stmt = $conn->prepare("
     SELECT a.nota_produto, a.nota_atend, a.comentario, a.criado_em, u.nome
@@ -68,13 +42,14 @@ close_database($conn);
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Pedacinho de Amor</title>
-        <link rel="stylesheet" href="css_pda/bootstrap/css/bootstrap.min.css">
-        <link rel="stylesheet" href="css_pda/style_pda.css">
+       <link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/bootstrap/bootstrap.min.css">
+<link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/style_pda.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     </head>
 
     <body>
+          <?php include 'inc/header.php'; ?>
         <main>
              <section class="index-bemvindo" style="background: url('./imagens/boloindex.jpg') no-repeat center center; background-size: cover;">
                 <!-- bloco de bem vindo do site -->
@@ -257,40 +232,44 @@ close_database($conn);
                 </div>
             </section>
 
-        </main>
-<script>
-// ── Carrossel mobile dos Campeões ──
-(function () {
-  const inner = document.querySelector('.campeoes-mobile-inner');
-  if (!inner) return;
+       </main>
 
-  const cards  = inner.querySelectorAll('.campeoes-card');
-  const dotsEl = document.querySelector('.campeoes-dots');
-  let current  = 0;
+        <?php include 'inc/modal.php'; ?>
 
-  // cria dots
-  cards.forEach((_, i) => {
-    const btn = document.createElement('button');
-    if (i === 0) btn.classList.add('active');
-    btn.addEventListener('click', () => goTo(i));
-    dotsEl.appendChild(btn);
-  });
+        <script src="<?php echo BASEURL; ?>js/bootstrap/bootstrap.bundle.min.js"></script>
 
-  function goTo(index) {
-    current = (index + cards.length) % cards.length;
-    inner.style.transform = `translateX(-${current * 100}%)`;
-    dotsEl.querySelectorAll('button').forEach((b, i) =>
-      b.classList.toggle('active', i === current)
-    );
-  }
+        <script>
+        // ── Carrossel mobile dos Campeões ──
+        (function () {
+          const inner = document.querySelector('.campeoes-mobile-inner');
+          if (!inner) return;
 
-  document.querySelector('.campeoes-prev')
-    .addEventListener('click', () => goTo(current - 1));
-  document.querySelector('.campeoes-next')
-    .addEventListener('click', () => goTo(current + 1));
-})();
-</script>
-        <?php include 'inc/modal.php'; 
-        include(FOOTER_TEMPLATE);?>
+          const cards  = inner.querySelectorAll('.campeoes-card');
+          const dotsEl = document.querySelector('.campeoes-dots');
+          let current  = 0;
+
+          cards.forEach((_, i) => {
+            const btn = document.createElement('button');
+            if (i === 0) btn.classList.add('active');
+            btn.addEventListener('click', () => goTo(i));
+            dotsEl.appendChild(btn);
+          });
+
+          function goTo(index) {
+            current = (index + cards.length) % cards.length;
+            inner.style.transform = `translateX(-${current * 100}%)`;
+            dotsEl.querySelectorAll('button').forEach((b, i) =>
+              b.classList.toggle('active', i === current)
+            );
+          }
+
+          document.querySelector('.campeoes-prev')
+            .addEventListener('click', () => goTo(current - 1));
+          document.querySelector('.campeoes-next')
+            .addEventListener('click', () => goTo(current + 1));
+        })();
+        </script>
+
+        <?php include(FOOTER_TEMPLATE); ?>
     </body>
 </html>

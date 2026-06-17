@@ -3858,3 +3858,90 @@ ___________
     }
 }
 
+
+/* ── Modal de Cookies ── */
+.cookies-msg {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 860px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.13);
+    padding: 18px 24px;
+    display: none; /* escondido por padrão */
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    z-index: 9999;
+    flex-wrap: wrap;
+}
+
+.cookies-msg.mostrar {
+    display: flex; /* só aparece quando JS adiciona a classe */
+}
+
+.cookie-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex: 1;
+}
+
+.cookie-icon {
+    font-size: 1.6rem;
+    color: #c9567b;
+    flex-shrink: 0;
+}
+
+.cookie-text {
+    font-size: 0.88rem;
+    color: #555;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.cookie-actions {
+    display: flex;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.btn-recusar {
+    padding: 8px 18px;
+    border-radius: 30px;
+    border: 2px solid #c9567b;
+    background: #fff;
+    color: #c9567b;
+    font-weight: 700;
+    font-size: 0.88rem;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.btn-recusar:hover {
+    background: #ffeef5;
+}
+
+.btn-aceitar {
+    padding: 8px 18px;
+    border-radius: 30px;
+    border: none;
+    background: #c9567b;
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.88rem;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.btn-aceitar:hover {
+    background: #a8405f;
+}
+
+
+
+
+
+
+

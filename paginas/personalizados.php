@@ -17,70 +17,27 @@ $redirect_uri = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Personalizados - Pedacinho de Amor</title>
-    <link rel="stylesheet" href="../css_pda/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css_pda/style_pda.css">
+    <link rel="icon" type="image/x-icon" href="../imagens/icon.png">
+    <link rel="stylesheet" href="../css_pda/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/style_pda.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        .tipo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 25px; }
-        .tipo-card { border: 1px solid #ddd; border-radius: 12px; padding: 18px; text-align: center; cursor: pointer; transition: .2s; background: #fff; }
-        .tipo-card:hover { border-color: #0d6efd; }
-        .tipo-card.selected { background: #e7f1ff; border: 2px solid #0d6efd; }
-        .tipo-card i { display: block; margin-bottom: 8px; font-size: 24px; }
-        .field-group { display: none; }
-        .field-group.visible { display: block; }
-        .preview-pill { display: inline-block; padding: 6px 14px; border-radius: 30px; background: #d1e7dd; color: #0f5132; font-size: 13px; margin-bottom: 20px; }
-        .section-label { font-size: 12px; font-weight: 700; text-transform: uppercase; color: #777; margin: 25px 0 10px; border-top: 1px solid #eee; padding-top: 15px; }
-        .tag-row { display: flex; flex-wrap: wrap; gap: 8px; }
-        .tag { border: 1px solid #ccc; border-radius: 30px; padding: 8px 15px; background: #fff; cursor: pointer; font-size: 13px; transition: .2s; }
-        .tag:hover { background: #f8f9fa; }
-        .tag.selected { background: #0d6efd; border-color: #0d6efd; color: #fff; }
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .form-field { margin-bottom: 15px; }
-        @media(max-width:768px) { .tipo-grid { grid-template-columns: 1fr; } .form-row { grid-template-columns: 1fr; } }
-    </style>
 </head>
 <body>
-    <header>
-        <h1>Pedacinho de Amor</h1>
-        <nav>
-            <ul>
-                <li><a href="../index.php">Home</a></li>
-                <li><a href="sobrenos.php">Sobre Nós</a></li>
-                
-                
-                <li><a href="cardapio.php">Cardápio</a></li>
-                <li><a href="personalizados.php" class="active">Personalizados</a></li>
-                <li>
-                    <a href="carrinho.php">
-                        <i class="fas fa-shopping-cart"></i>
-                        Carrinho (<?php echo $itens_no_carrinho; ?>)
-                    </a>
-                </li>
-                <?php if ($usuario_logado): ?>
-                    <li><a href="../inc/logout.php">Sair</a></li>
-                <?php else: ?>
-                    <li><a class="btn btn-primary text-white" href="../index.php">Login</a></li>
-                <?php endif; ?>
-            </ul>
-        </nav>
-    </header>
+
+    <?php include_once ABSPATH . 'inc/header.php'; ?>
 
     <main>
         <?php if (isset($_SESSION['cart_message'])): ?>
             <div class="alert alert-info text-center container mt-3">
-                <?php echo $_SESSION['cart_message']; unset($_SESSION['cart_message']); ?>
+                <?php echo htmlspecialchars($_SESSION['cart_message']); unset($_SESSION['cart_message']); ?>
             </div>
         <?php endif; ?>
 
-        <section class="work-section">
-            <div class="work-container">
-                <div class="work-text">
-                    <h2>Como trabalhamos?</h2>
-                    <p>Cada doce, bolo e salgado é preparado de forma artesanal, com ingredientes selecionados e muito carinho.</p>
-                </div>
-                <div class="work-image">
-                    <img src="imagens/doce3.webp" alt="Como trabalhamos Pedacinho de Amor">
-                </div>
+        <section class="doces-hero" style="background-image:url('../imagens/doce3.webp');">
+            <div class="doces-hero__overlay"></div>
+            <div class="doces-hero__content">
+                <h1>🎨 PERSONALIZADOS</h1>
+                <p>Monte seu produto do jeito que você quiser!</p>
             </div>
         </section>
 
@@ -100,7 +57,6 @@ $redirect_uri = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL);
             <div class="row justify-content-center">
                 <div class="col-md-8">
 
-                    <!-- Abas -->
                     <ul class="nav nav-tabs mb-4" id="tabPersonalizado" role="tablist">
                         <li class="nav-item" role="presentation">
                             <button class="nav-link active" id="tab-doce" data-bs-toggle="tab" data-bs-target="#pane-doce" type="button" role="tab">
@@ -366,22 +322,7 @@ $redirect_uri = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL);
         </div>
     </main>
 
-    <script src="../css_pda/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script>
-        function selectTipo(tipo) {
-            document.querySelectorAll('.tipo-card').forEach(card => { card.classList.remove('selected'); });
-            document.querySelector('[data-tipo="' + tipo + '"]').classList.add('selected');
-            document.querySelectorAll('.field-group').forEach(grupo => { grupo.classList.remove('visible'); });
-            document.getElementById('grupo-' + tipo).classList.add('visible');
-            document.getElementById('tipoSelecionado').value = tipo;
-        }
+    <?php include_once ABSPATH . 'inc/footer.php'; ?>
 
-        function selectTag(btn, campo, valor) {
-            const grupo = btn.parentElement;
-            grupo.querySelectorAll('.tag').forEach(tag => { tag.classList.remove('selected'); });
-            btn.classList.add('selected');
-            document.getElementById(campo).value = valor;
-        }
-    </script>
 </body>
 </html>
