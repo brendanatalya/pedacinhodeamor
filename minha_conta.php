@@ -113,7 +113,7 @@ unset($_SESSION['message'], $_SESSION['type']);
  
 
             <?php if ($message): ?>
-                <div class="mc-alert <?= $type === 'danger' ? 'mc-alert-danger' : 'mc-alert-success' ?>">
+                <div class="mc-alert <?= $type === 'danger' ? 'mc-alert-danger' : 'alert-sucesso' ?>">
                 <i class="fas <?= $type === 'danger' ? 'fa-circle-xmark' : 'fa-circle-check' ?>"></i>
                 <?= htmlspecialchars($message) ?>
                 </div>

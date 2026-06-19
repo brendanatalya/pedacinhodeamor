@@ -475,7 +475,7 @@ body {
 
 /*botao carrinho */
 
-.add-to-cart-btn {
+.add-to-carrinho-btn {
     margin-top: auto;
     border: none;
     background: linear-gradient(135deg, #d65a7d 0%, #b84374 100%);
@@ -495,20 +495,20 @@ body {
     box-shadow: 0 6px 16px rgba(214, 90, 125, 0.25);
 }
 
-.add-to-cart-btn:hover {
+.add-to-carrinho-btn:hover {
     background: linear-gradient(135deg, #b84374 0%, #a03562 100%);
     transform: translateY(-2px);
     box-shadow: 0 10px 24px rgba(214, 90, 125, 0.35);
 }
 
-.add-to-cart-btn:disabled {
+.add-to-carrinho-btn:disabled {
     background: #d8d6d1;
     color: #888;
     cursor: not-allowed;
     box-shadow: none;
 }
 
-.add-to-cart-btn i {
+.add-to-carrinho-btn i {
     font-size: 1rem;
 }
 
@@ -2292,13 +2292,13 @@ ___________
       to   { opacity: 1; transform: translateY(0); }
     }
     
-    .mc-alert-success {
+    .alert-sucesso {
       background: #e6f8ee; 
       color: #1a6b3a; 
       border: 1px solid #b0e5c8;
     }
 
-    .mc-alert-danger  {
+    .alert-danger  {
       background: #fce8e8; 
       color: #8b1a1a; 
       border: 1px solid #f0c0c0;
@@ -2439,6 +2439,7 @@ ___________
       align-items: center;
       transition: color .2s;
     }
+    
     .mc-pw-eye:hover {
       color: #d65a7d; 
     }
@@ -2706,58 +2707,58 @@ ___________
     border: none;
 }
 
-.alert-success {
+.alert-sucesso {
     background-color: #e6f8ee;
     color: #1a6b3a;
     border-left: 4px solid #28a745;
 }
 
-.alert-warning {
+.alert-aviso {
     background-color: #fff8e1;
     color: #7a5900;
     border: 1px solid #ffc107;
 }
 
-.alert-warning a {
+.alert-aviso a {
   text-decoration: none;
   text-transform: uppercase;
   font-weight: bold;
   color: #2b1f00;
 }
 
-.alert-secondary {
+.alert-rosa {
     background-color: #f8f0f2;
     color: #521928;
     border: 1px solid #d65a7d;
 }
 
-.alert-secondary a {
+.alert-rosa a {
     color: #d65a7d;
     font-weight: 600;
     text-decoration: none;
 }
 
-.alert-secondary a:hover {
+.alert-rosa a:hover {
     text-decoration: underline;
 }
 
-/* ── Layout carrinho: itens + resumo ── */
+/*pagina do carrinho */
 
-.cart {
+.carrinho {
     display: flex;
     gap: 2rem;
     align-items: flex-start;
     flex-wrap: wrap;
 }
 
-.cart-items {
+.carrinho-itens {
     flex: 2;
     min-width: 300px;
     display: flex;
     flex-direction: column;
 }
 
-.cart-items h3 {
+.carrinho-itens h3 {
     font-family: 'Poppins', Arial, sans-serif;
     font-size: 0.9rem;
     font-weight: 700;
@@ -2771,7 +2772,7 @@ ___________
 
 /* ── Card de item ── */
 
-.cart-item {
+.carrinho-item {
     display: flex;
     align-items: flex-start;
     background: #ffffff;
@@ -2784,12 +2785,12 @@ ___________
     transition: box-shadow 0.25s ease, transform 0.25s ease;
 }
 
-.cart-item:hover {
+.carrinho-item:hover {
     box-shadow: 0 8px 28px rgba(82, 25, 40, 0.1);
     transform: translateY(-2px);
 }
 
-.cart-item img {
+.carrinho-item img {
     width: 96px;
     height: 96px;
     border-radius: 12px;
@@ -2800,12 +2801,12 @@ ___________
 
 /* ── Info textual do item ── */
 
-.cart-item-info {
+.carrinho-item-info {
     flex: 1;
     min-width: 0;
 }
 
-.cart-item-info h4 {
+.carrinho-item-info h4 {
     font-family: 'Poppins', Arial, sans-serif;
     font-size: 1.05rem;
     font-weight: 600;
@@ -2813,7 +2814,7 @@ ___________
     margin: 0 0 4px 0;
 }
 
-.cart-item-info p {
+.carrinho-item-info p {
     font-size: 0.85rem;
     color: #756a6a;
     margin: 0 0 4px 0;
@@ -2822,7 +2823,7 @@ ___________
 
 /* ── Controles de quantidade ── */
 
-.quantity-controls {
+.carrinho-item-qtd {
     display: flex;
     align-items: center;
     gap: 6px;
@@ -2895,11 +2896,11 @@ ___________
 
 /* ── Seção de personalizados ── */
 
-.personalizados-section .cart-item {
+.personalizados-section .carrinho-item {
     border-left: 4px solid #d65a7d;
 }
 
-.personalizados-section .cart-item-info h4 {
+.personalizados-section .carrinho-item-info h4 {
     color: #813044;
 }
 
@@ -2910,11 +2911,11 @@ ___________
     border-bottom-color: #f7c1c1;
 }
 
-.unavailable-section .cart-item {
+.unavailable-section .carrinho-item {
     border-left: 4px solid #e24b4a;
 }
 
-.unavailable-section .cart-item:hover {
+.unavailable-section .carrinho-item:hover {
     transform: none;
     box-shadow: 0 4px 16px rgba(82, 25, 40, 0.06);
 }
@@ -2957,7 +2958,7 @@ ___________
 
 /* ── Resumo da compra ── */
 
-.cart-summary {
+.carrinho-summary {
     flex: 1;
     min-width: 260px;
     background: #ffffff;
@@ -2970,7 +2971,7 @@ ___________
     height: fit-content;
 }
 
-.cart-summary h4 {
+.carrinho-summary h4 {
     font-family: 'Poppins', Arial, sans-serif;
     font-size: 1.1rem;
     font-weight: 700;
@@ -3241,19 +3242,99 @@ ___________
 }
 
 
+/* modal cookies */
+.cookies-msg {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 860px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.13);
+    padding: 18px 24px;
+    display: none; /* escondido por padrão */
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    z-index: 9999;
+    flex-wrap: wrap;
+}
+
+.cookies-msg.mostrar {
+    display: flex; /* só aparece quando JS adiciona a classe */
+}
+
+.cookie-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex: 1;
+}
+
+.cookie-icon {
+    font-size: 1.6rem;
+    color: #c9567b;
+    flex-shrink: 0;
+}
+
+.cookie-text {
+    font-size: 0.88rem;
+    color: #555;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.cookie-actions {
+    display: flex;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.btn-recusar {
+    padding: 8px 18px;
+    border-radius: 30px;
+    border: 2px solid #c9567b;
+    background: #fff;
+    color: #c9567b;
+    font-weight: 700;
+    font-size: 0.88rem;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.btn-recusar:hover {
+    background: #ffeef5;
+}
+
+.btn-aceitar {
+    padding: 8px 18px;
+    border-radius: 30px;
+    border: none;
+    background: #c9567b;
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.88rem;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.btn-aceitar:hover {
+    background: #a8405f;
+}
+
 /* ── Responsivo ── */
 
 @media (max-width: 900px) {
-    .cart {
+    .carrinho {
         flex-direction: column;
     }
 
-    .cart-summary {
+    .carrinho-summary {
         position: static;
         width: 100%;
     }
 
-    .cart-items {
+    .carrinho-itens {
       width: 100%;
     }
 }
@@ -3263,7 +3344,7 @@ ___________
         padding-top: 5.5rem;
     }
 
-    .cart-summary {
+    .carrinho-summary {
         padding: 1.25rem;
     }
 }
@@ -3634,29 +3715,29 @@ ___________
 
     .minhaconta-statuspedidos { display: none; }
 
-.minhaconta-nav {
-      display: flex;
-      flex-wrap: wrap;
-      align-content: flex-start;
-      padding: .75rem;
-      gap: .35rem;
-    }
-.minhaconta-nav a {
-      border-left: none;
-      border-radius: 8px;
-      padding: .55rem .95rem;
-      font-size: .82rem;
-    }
-.minhaconta-nav a.minhaconta-btnativo {
-      background: var(--rosa);
-      color: #fff;
-      border-left: none;
-    }
-.minhaconta-nav-divider { display: none; }
+    .minhaconta-nav {
+          display: flex;
+          flex-wrap: wrap;
+          align-content: flex-start;
+          padding: .75rem;
+          gap: .35rem;
+        }
+    .minhaconta-nav a {
+          border-left: none;
+          border-radius: 8px;
+          padding: .55rem .95rem;
+          font-size: .82rem;
+        }
+    .minhaconta-nav a.minhaconta-btnativo {
+          background: var(--rosa);
+          color: #fff;
+          border-left: none;
+        }
+    .minhaconta-nav-divider { display: none; }
 
-    .conta-dadosdiv { grid-template-columns: 1fr; }
-    .conta-ocupartudo { grid-column: 1; }
-}
+        .conta-dadosdiv { grid-template-columns: 1fr; }
+        .conta-ocupartudo { grid-column: 1; }
+    }
 
 @media (max-width: 1024px) {
   .doces-shop__cards {
@@ -3856,87 +3937,6 @@ ___________
         margin-left:10px;
         gap:16px;
     }
-}
-
-
-/* ── Modal de Cookies ── */
-.cookies-msg {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 90%;
-    max-width: 860px;
-    background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.13);
-    padding: 18px 24px;
-    display: none; /* escondido por padrão */
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    z-index: 9999;
-    flex-wrap: wrap;
-}
-
-.cookies-msg.mostrar {
-    display: flex; /* só aparece quando JS adiciona a classe */
-}
-
-.cookie-left {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    flex: 1;
-}
-
-.cookie-icon {
-    font-size: 1.6rem;
-    color: #c9567b;
-    flex-shrink: 0;
-}
-
-.cookie-text {
-    font-size: 0.88rem;
-    color: #555;
-    margin: 0;
-    line-height: 1.5;
-}
-
-.cookie-actions {
-    display: flex;
-    gap: 10px;
-    flex-shrink: 0;
-}
-
-.btn-recusar {
-    padding: 8px 18px;
-    border-radius: 30px;
-    border: 2px solid #c9567b;
-    background: #fff;
-    color: #c9567b;
-    font-weight: 700;
-    font-size: 0.88rem;
-    cursor: pointer;
-    transition: 0.2s;
-}
-.btn-recusar:hover {
-    background: #ffeef5;
-}
-
-.btn-aceitar {
-    padding: 8px 18px;
-    border-radius: 30px;
-    border: none;
-    background: #c9567b;
-    color: #fff;
-    font-weight: 700;
-    font-size: 0.88rem;
-    cursor: pointer;
-    transition: 0.2s;
-}
-.btn-aceitar:hover {
-    background: #a8405f;
 }
 
 

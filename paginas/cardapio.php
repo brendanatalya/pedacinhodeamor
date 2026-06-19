@@ -44,12 +44,12 @@ fiz isso por agora, qlqr coisa eu falo com as meninas dps pra add isso no banco 
         <div class="container">
 
             <?php if ($cartMessage): ?>
-                <div class="alert alert-success mt-3"><?php echo htmlspecialchars($cartMessage); ?></div>
+                <div class="alert mc-alert-success mt-3"><?php echo htmlspecialchars($cartMessage); ?></div>
             <?php endif; ?>
 
             <!--arruma isso bonitnho depois, transvforma em modal-->
             <?php if (!$usuario_logado): ?>
-                <div class="alert alert-warning mt-3">
+                <div class="alert alert-aviso mt-3">
                     Faça <a href="../index.php">login</a> para adicionar produtos ao carrinho.
                 </div>
             <?php endif; ?>
@@ -96,7 +96,7 @@ fiz isso por agora, qlqr coisa eu falo com as meninas dps pra add isso no banco 
                                     <input type="hidden" name="quantity" value="1">
                                     <input type="hidden" name="redirect"
                                            value="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>">
-                                    <button type="submit" class="add-to-cart-btn"
+                                    <button type="submit" class="add-to-carrinho-btn"
                                             <?php echo (!$usuario_logado || !$p['disponivel']) ? 'disabled' : ''; ?>>
                                         <i class="fas fa-shopping-cart"></i> Adicionar ao Carrinho
                                     </button>
@@ -151,7 +151,7 @@ fiz isso por agora, qlqr coisa eu falo com as meninas dps pra add isso no banco 
                                     <input type="hidden" name="quantity" value="1">
                                     <input type="hidden" name="redirect"
                                            value="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>">
-                                    <button type="submit" class="add-to-cart-btn"
+                                    <button type="submit" class="add-to-carrinho-btn"
                                             <?php echo (!$usuario_logado || !$p['disponivel']) ? 'disabled' : ''; ?>>
                                         <i class="fas fa-shopping-cart"></i> Adicionar ao Carrinho
                                     </button>

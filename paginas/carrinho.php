@@ -37,7 +37,7 @@ foreach ($cart_personalizado as $item) {
 }
 $total_itens_carrinho = $qtd_normais + $qtd_personalizados;
 
-// Verifica se o carrinho inteiro está totalmente vazio (Normais + Personalizados)
+// Verifica se o cart inteiro está totalmente vazio (Normais + Personalizados)
 $carrinho_vazio = empty($availableItems) && empty($unavailableItems) && empty($cart_personalizado);
 
 $cartMessage = $_SESSION['cart_message'] ?? '';
@@ -49,31 +49,31 @@ unset($_SESSION['cart_message']);
         <h2 class="mt-4 titulocarrinho">Seu Carrinho</h2>
 
         <?php if ($cartMessage): ?>
-            <div class="alert alert-success"><?php echo htmlspecialchars($cartMessage); ?></div>
+            <div class="alert alert-sucesso"><?php echo htmlspecialchars($cartMessage); ?></div>
         <?php endif; ?>
 
         <?php if (!$usuario_logado): ?>
-            <div class="alert alert-warning">Faça login para finalizar seu pedido.</div>
+            <div class="alert alert-aviso">Faça login para finalizar seu pedido.</div>
         <?php endif; ?>
 
         <?php if ($carrinho_vazio): ?>
-            <div class="alert alert-secondary">Seu carrinho está vazio. <a href="cardapio.php">Continuar comprando</a></div>
+            <div class="alert alert-rosa">Seu carrinho está vazio. <a href="cardapio.php">Continuar comprando</a></div>
         <?php else: ?>
-            <div class="cart">
-                <div class="cart-items">
+            <div class="carrinho">
+                <div class="carrinho-itens">
 
                     <?php if (!empty($availableItems)): ?>
                         <h3>Itens Disponíveis</h3>
                         <?php foreach ($availableItems as $produto): ?>
-                            <div class="cart-item">
+                            <div class="carrinho-item">
                                 <?php if (!empty($produto['imagem_referencia'])): ?>
                                     <img src="../imagens/<?php echo htmlspecialchars($produto['imagem_referencia']); ?>" alt="<?php echo htmlspecialchars($produto['nome']); ?>">
                                 <?php endif; ?>
-                                <div class="cart-item-info">
+                                <div class="carrinho-item-info">
                                     <h4><?php echo htmlspecialchars($produto['nome']); ?></h4>
                                     <p><?php echo htmlspecialchars($produto['descricao'] ?? 'Produto artesanal'); ?></p>
                                     <p>R$ <?php echo number_format($produto['preco'], 2, ',', '.'); ?></p>
-                                    <div class="quantity-controls">
+                                    <div class="carrinho-item-qtd">
                                         <form action="update_carrinho.php" method="POST" class="d-inline">
                                             <input type="hidden" name="product_id" value="<?php echo $produto['id']; ?>">
                                             <input type="hidden" name="quantity" value="<?php echo $produto['quantity'] - 1; ?>">
@@ -100,12 +100,12 @@ unset($_SESSION['cart_message']);
                         <div class="personalizados-section mt-4">
                             <h3>Produtos Personalizados (Sob Encomenda)</h3>
                             <?php foreach ($cart_personalizado as $i => $item): ?>
-                                <div class="cart-item">
+                                <div class="carrinho-item">
                                     <?php if (!empty($item['imagem_path'])): ?>
                                         <img src="<?php echo '../' . htmlspecialchars($item['imagem_path']); ?>"
                                              alt="Referência" style="width:80px;height:80px;object-fit:cover;border-radius:8px;">
                                     <?php endif; ?>
-                                    <div class="cart-item-info">
+                                    <div class="carrinho-item-info">
                                         <h4><?php echo ucfirst($item['tipo']); ?> — <?php echo $item['tema']; ?></h4>
                                         <p><strong>Sabor:</strong> <?php echo $item['sabor']; ?></p>
                                         <?php if (!empty($item['tamanho'])): ?>
@@ -143,11 +143,11 @@ unset($_SESSION['cart_message']);
                                 <button type="submit" name="action" value="remove_unavailable" class="clear-unavailable-btn">Excluir todos os itens indisponíveis</button>
                             </form>
                             <?php foreach ($unavailableItems as $produto): ?>
-                                <div class="cart-item" style="opacity: 0.6;">
+                                <div class="carrinho-item" style="opacity: 0.6;">
                                     <?php if (!empty($produto['imagem_referencia'])): ?>
                                         <img src="<?php echo '../' . htmlspecialchars($produto['imagem_referencia']); ?>" alt="<?php echo htmlspecialchars($produto['nome']); ?>">
                                     <?php endif; ?>
-                                    <div class="cart-item-info">
+                                    <div class="carrinho-item-info">
                                         <h4><?php echo htmlspecialchars($produto['nome']); ?></h4>
                                         <p><?php echo htmlspecialchars($produto['descricao'] ?? 'Produto artesanal'); ?></p>
                                         <div class="unavailable-badge">Indisponível</div>
@@ -164,7 +164,7 @@ unset($_SESSION['cart_message']);
 
                 </div>
 
-                <div class="cart-summary">
+                <div class="carrinho-summary">
                     <h4>Resumo da Compra</h4>
                     <div class="summary-row">
                         <span>Total de itens</span>
