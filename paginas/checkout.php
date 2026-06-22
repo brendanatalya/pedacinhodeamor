@@ -1,20 +1,21 @@
 <?php
 if (!isset($_SESSION)) session_start();
+
+// Header JSON deve vir antes de qualquer include para evitar output HTML em erros
+header('Content-Type: application/json; charset=utf-8');
+
 include '../config.php';
 require_once ABSPATH . 'inc/database.php';
 
 if (empty($_SESSION['logado']) || $_SESSION['tipo'] !== 'cliente') {
-    header('Content-Type: application/json');
     echo json_encode(['success' => false, 'message' => 'Você precisa estar logado para continuar']);
     exit;
 }
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ' . BASEURL);
+    echo json_encode(['success' => false, 'message' => 'Método não permitido']);
     exit;
 }
-
-header('Content-Type: application/json; charset=utf-8');
 
 $usuario_id     = $_SESSION['id'];
 $cart           = $_SESSION['cart'] ?? [];
@@ -80,6 +81,8 @@ try {
     }
 
     // ─── 2) Inserir pedido ────────────────────────────────────────────────────
+    $conn->beginTransaction();
+
     $stmt = $conn->prepare("
         INSERT INTO pedidos (
             id_cliente, valor_total, status, observacao, tipo,
@@ -95,6 +98,7 @@ try {
         $data_entrega,
         $tipo_entrega,
         $hora_entrega
+
     ]);
 
     $id_pedido = $conn->lastInsertId();
@@ -128,14 +132,18 @@ try {
     $avisos_estoque = [];
 
     foreach ($itens_pedido as $item) {
-        $stmt = $conn->prepare("
-            SELECT pi.id_ingrediente, pi.qtd_necessaria, ei.nome, ei.unidade, ei.qtd_estoque
-            FROM produto_ingrediente pi
-            INNER JOIN estoque_ingredientes ei ON ei.id = pi.id_ingrediente
-            WHERE pi.id_produto = ?
-        ");
-        $stmt->execute([$item['id_produto']]);
-        $ingredientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+      $stmt = $conn->prepare("
+    SELECT
+        pi.id_ingrediente,
+        pi.qtd_necessaria,
+        ei.nome,
+        ei.unidade,
+        ei.qtd_estoque
+    FROM produto_ingrediente pi
+    INNER JOIN estoque_ingredientes ei
+        ON ei.id = pi.id_ingrediente
+    WHERE pi.id_produto = ?
+");
 
         foreach ($ingredientes as $ing) {
             $qtd_necessaria = $ing['qtd_necessaria'] * $item['quantidade'];
@@ -194,6 +202,7 @@ try {
     $msg_wpp .= "\n💰 *Total: R$ " . number_format($total, 2, ',', '.') . "*";
 
     // ─── 6) Limpar sessão ─────────────────────────────────────────────────────
+    $conn->commit();
     unset($_SESSION['cart'], $_SESSION['cart_personalizado']);
 
     close_database($conn);
@@ -211,7 +220,9 @@ try {
     ]);
 
 } catch (Exception $e) {
-    if (isset($conn)) $conn->rollBack();
+    if (isset($conn)) {
+        try { $conn->rollBack(); } catch (\Throwable $t) {}
+    }
     echo json_encode([
         'success' => false,
         'message' => 'Erro ao criar pedido: ' . $e->getMessage()

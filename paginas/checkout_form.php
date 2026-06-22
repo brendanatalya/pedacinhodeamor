@@ -255,88 +255,100 @@ if (empty($cart_items) && empty($cart_personalizado)) {
 
     <script src="<?php echo BASEURL; ?>js/bootstrap/bootstrap.bundle.min.js"></script>
     <script>
-    // ----- Mínimo da data: amanhã -----
     document.addEventListener('DOMContentLoaded', function () {
+
+        // ----- Mínimo da data: amanhã -----
         const dataInput = document.getElementById('data_entrega');
         if (dataInput && !dataInput.min) {
             const amanha = new Date();
             amanha.setDate(amanha.getDate() + 1);
             dataInput.min = amanha.toISOString().split('T')[0];
         }
-    });
 
-    // ----- Submit via fetch -----
-    document.getElementById('checkoutForm').addEventListener('submit', async function (e) {
-        e.preventDefault();
-
+        // ----- Submit via fetch -----
+        const form    = document.getElementById('checkoutForm');
         const btn     = document.getElementById('submitBtn');
         const alertEl = document.getElementById('alertMsg');
-        alertEl.className = 'alert d-none';
 
-        btn.disabled = true;
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+        if (!form) return;
 
-        try {
-            const response = await fetch('checkout.php', {
-                method: 'POST',
-                body: new FormData(this),
-            });
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault();
 
-            const data = await response.json();
+            alertEl.className = 'alert d-none';
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
 
-            if (!data.success) {
-                alertEl.className  = 'alert alert-danger';
-                alertEl.textContent = data.message;
+            try {
+                const response = await fetch('checkout.php', {
+                    method: 'POST',
+                    body: new FormData(this),
+                });
+
+                // Lê como texto primeiro para depurar erros PHP
+                const rawText = await response.text();
+                let data;
+                try {
+                    data = JSON.parse(rawText);
+                } catch (_) {
+                    console.error('Resposta inválida do servidor:', rawText);
+                    throw new Error('Resposta inesperada do servidor. Verifique o console.');
+                }
+
+                if (!data.success) {
+                    alertEl.className   = 'alert alert-danger';
+                    alertEl.textContent = data.message;
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-check-circle"></i> Confirmar Pedido';
+                    return;
+                }
+
+                // ----- Monta mensagem WhatsApp -----
+                const nomeCliente = `<?php echo addslashes(htmlspecialchars($usuario['nome'])); ?>`;
+                const telefone    = `<?php echo addslashes(htmlspecialchars($usuario['telefone'] ?? '')); ?>`;
+                const dataEntrega = document.getElementById('data_entrega').value;
+                const horaEntrega = document.getElementById('hora_entrega').value;
+                const observacoes = document.querySelector('textarea[name="observacoes"]').value;
+
+                let msg = `🎂 *NOVO PEDIDO - PEDACINHO DE AMOR*\n\n`;
+                msg += `📌 *Pedido:* #${data.pedido_id}\n`;
+                msg += `👤 *Cliente:* ${nomeCliente}\n`;
+                if (telefone) msg += `📞 *Telefone:* ${telefone}\n`;
+                msg += `🏪 *Retirada na loja*\n`;
+                msg += `📅 *Data:* ${dataEntrega}\n`;
+                msg += `⏰ *Horário:* ${horaEntrega}\n\n`;
+                msg += `🧁 *ITENS DO PEDIDO*\n\n`;
+
+                <?php foreach ($cart_items as $item): ?>
+                msg += `• <?php echo addslashes($item['nome']); ?> x<?php echo $item['quantity']; ?> — R$ <?php echo number_format($item['subtotal'], 2, ',', '.'); ?>\n`;
+                <?php endforeach; ?>
+
+                <?php if (!empty($cart_personalizado)): ?>
+                msg += `\n🎨 *Personalizados:*\n`;
+                <?php foreach ($cart_personalizado as $p): ?>
+                msg += `• <?php echo addslashes(ucfirst($p['tipo'])); ?> — <?php echo addslashes($p['sabor']); ?><?php echo !empty($p['tema']) ? ' | Tema: ' . addslashes($p['tema']) : ''; ?> (Qtd: <?php echo $p['quantity']; ?>)\n`;
+                <?php endforeach; ?>
+                <?php endif; ?>
+
+                if (observacoes) msg += `\n📝 *Obs:* ${observacoes}\n`;
+                msg += `\n💰 *Total produtos:* R$ <?php echo number_format($total, 2, ',', '.'); ?>`;
+                msg += `\n✅ Pedido registrado no sistema!`;
+
+                const numeroWpp = '<?php echo WHATSAPP_NUMBER; ?>';
+                window.open(`https://wa.me/${numeroWpp}?text=${encodeURIComponent(msg)}`, '_blank');
+
+                setTimeout(() => {
+                    window.location.href = '<?php echo BASEURL; ?>minha_conta.php?sucesso=1';
+                }, 1500);
+
+            } catch (err) {
+                console.error(err);
+                alertEl.className   = 'alert alert-danger';
+                alertEl.textContent = err.message || 'Erro de conexão ao finalizar pedido. Tente novamente.';
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-check-circle"></i> Confirmar Pedido';
-                return;
             }
-
-            // ----- Monta mensagem WhatsApp -----
-            const nomeCliente = `<?php echo addslashes(htmlspecialchars($usuario['nome'])); ?>`;
-            const telefone    = `<?php echo addslashes(htmlspecialchars($usuario['telefone'] ?? '')); ?>`;
-            const dataEntrega = document.getElementById('data_entrega').value;
-            const horaEntrega = document.getElementById('hora_entrega').value;
-            const observacoes = document.querySelector('textarea[name="observacoes"]').value;
-
-            let msg = `🎂 *NOVO PEDIDO - PEDACINHO DE AMOR*\n\n`;
-            msg += `📌 *Pedido:* #${data.pedido_id}\n`;
-            msg += `👤 *Cliente:* ${nomeCliente}\n`;
-            if (telefone) msg += `📞 *Telefone:* ${telefone}\n`;
-            msg += `🏪 *Retirada na loja*\n`;
-            msg += `📅 *Data:* ${dataEntrega}\n`;
-            msg += `⏰ *Horário:* ${horaEntrega}\n\n`;
-            msg += `🧁 *ITENS DO PEDIDO*\n\n`;
-
-            <?php foreach ($cart_items as $item): ?>
-            msg += `• <?php echo addslashes($item['nome']); ?> x<?php echo $item['quantity']; ?> — R$ <?php echo number_format($item['subtotal'], 2, ',', '.'); ?>\n`;
-            <?php endforeach; ?>
-
-            <?php if (!empty($cart_personalizado)): ?>
-            msg += `\n🎨 *Personalizados:*\n`;
-            <?php foreach ($cart_personalizado as $p): ?>
-            msg += `• <?php echo addslashes(ucfirst($p['tipo'])); ?> — <?php echo addslashes($p['sabor']); ?><?php echo !empty($p['tema']) ? ' | Tema: ' . addslashes($p['tema']) : ''; ?> (Qtd: <?php echo $p['quantity']; ?>)\n`;
-            <?php endforeach; ?>
-            <?php endif; ?>
-
-            if (observacoes) msg += `\n📝 *Obs:* ${observacoes}\n`;
-            msg += `\n💰 *Total produtos:* R$ <?php echo number_format($total, 2, ',', '.'); ?>`;
-            msg += `\n✅ Pedido registrado no sistema!`;
-
-            const numeroWpp = '<?php echo WHATSAPP_NUMBER; ?>';
-            window.open(`https://wa.me/${numeroWpp}?text=${encodeURIComponent(msg)}`, '_blank');
-
-            setTimeout(() => {
-                window.location.href = '<?php echo BASEURL; ?>minha_conta.php?sucesso=1';
-            }, 1500);
-
-        } catch (err) {
-            console.error(err);
-            alertEl.className  = 'alert alert-danger';
-            alertEl.textContent = 'Erro de conexão ao finalizar pedido. Tente novamente.';
-            btn.disabled = false;
-            btn.innerHTML = '<i class="fas fa-check-circle"></i> Confirmar Pedido';
-        }
+        });
     });
     </script>
 </body>

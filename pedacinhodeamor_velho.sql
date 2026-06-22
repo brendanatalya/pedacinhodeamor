@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Tempo de geração: 22/06/2026 às 16:39
--- Versão do servidor: 10.4.32-MariaDB
--- Versão do PHP: 8.2.12
+-- Host: sql309.infinityfree.com
+-- Tempo de geração: 22/06/2026 às 07:33
+-- Versão do servidor: 11.4.12-MariaDB
+-- Versão do PHP: 7.2.22
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -18,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Banco de dados: `pedacinhodeamor`
+-- Banco de dados: `if0_42097572_pedacinhodeamor`
 --
 
 -- --------------------------------------------------------
@@ -64,9 +65,9 @@ CREATE TABLE `estoque_ingredientes` (
 --
 
 INSERT INTO `estoque_ingredientes` (`id`, `nome`, `unidade`, `qtd_estoque`, `qtd_minima`) VALUES
-(1, 'Farinha de Trigo', 'kg', 10.000, 4.000),
-(2, 'Açúcar', 'kg', 12.000, 3.000),
-(3, 'Leite em Pó', 'kg', 4.000, 2.000);
+(1, 'Farinha de Trigo', 'kg', '10.000', '4.000'),
+(2, 'Açúcar', 'kg', '12.000', '3.000'),
+(3, 'Leite em Pó', 'kg', '4.000', '2.000');
 
 -- --------------------------------------------------------
 
@@ -89,18 +90,18 @@ CREATE TABLE `itens_pedido` (
 --
 
 INSERT INTO `itens_pedido` (`id`, `id_pedido`, `id_produto`, `qtd`, `preco_unitario`, `subtotal`, `observacao`) VALUES
-(1, 7, 1, 1, 12.00, 12.00, ''),
-(2, 8, 1, 1, 12.00, 12.00, ''),
-(3, 11, 1, 1, 12.00, 12.00, ''),
-(4, 12, 4, 1, 12.22, 12.22, ''),
-(5, 13, 1, 1, 12.00, 12.00, ''),
-(6, 14, 4, 1, 12.22, 12.22, ''),
-(7, 15, 1, 2, 12.00, 24.00, ''),
-(8, 16, 1, 3, 12.00, 36.00, ''),
-(9, 17, 13, 1, 4.50, 4.50, ''),
-(10, 17, 14, 1, 9.00, 9.00, ''),
-(11, 17, 3, 2, 3.00, 6.00, ''),
-(0, 0, 12, 3, 8.50, 25.50, '');
+(1, 7, 1, 1, '12.00', '12.00', ''),
+(2, 8, 1, 1, '12.00', '12.00', ''),
+(3, 11, 1, 1, '12.00', '12.00', ''),
+(4, 12, 4, 1, '12.22', '12.22', ''),
+(5, 13, 1, 1, '12.00', '12.00', ''),
+(6, 14, 4, 1, '12.22', '12.22', ''),
+(7, 15, 1, 2, '12.00', '24.00', ''),
+(8, 16, 1, 3, '12.00', '36.00', ''),
+(9, 17, 13, 1, '4.50', '4.50', ''),
+(10, 17, 14, 1, '9.00', '9.00', ''),
+(11, 17, 3, 2, '3.00', '6.00', ''),
+(0, 0, 12, 3, '8.50', '25.50', '');
 
 -- --------------------------------------------------------
 
@@ -129,9 +130,10 @@ CREATE TABLE `pedidos` (
 --
 
 INSERT INTO `pedidos` (`id`, `id_cliente`, `valor_total`, `status`, `observacao`, `tipo`, `imagem_referencia`, `qtd_itens`, `data_pedido`, `data_entrega`, `forma_pagamento`, `tipo_entrega`, `hora_entrega`) VALUES
-(1, 1, 24.00, 'pendente', NULL, 'normal', NULL, 2, '2026-06-01 08:56:54', '2026-06-01 13:56:30', NULL, 'retirada', '00:00:00'),
-(16, 8, 36.00, 'entregue', NULL, 'normal', NULL, 3, '2026-05-28 10:30:00', '2026-05-29 00:00:00', 'pix', 'entrega', '14:00:00'),
-(17, 1, 19.50, 'entregue', NULL, 'normal', NULL, 3, '2026-06-02 10:15:00', '2026-06-03 00:00:00', 'pix', 'retirada', '16:30:00');
+(0, 1, '25.50', 'pendente', '', 'normal', NULL, 1, '2026-06-18 03:29:22', '2026-06-26 00:00:00', 'WhatsApp', 'retirada', '13:29:00'),
+(1, 1, '24.00', 'pendente', NULL, 'normal', NULL, 2, '2026-06-01 08:56:54', '2026-06-01 13:56:30', NULL, 'retirada', '00:00:00'),
+(16, 8, '36.00', 'entregue', NULL, 'normal', NULL, 3, '2026-05-28 10:30:00', '2026-05-29 00:00:00', 'pix', 'entrega', '14:00:00'),
+(17, 1, '19.50', 'entregue', NULL, 'normal', NULL, 3, '2026-06-02 10:15:00', '2026-06-03 00:00:00', 'pix', 'retirada', '16:30:00');
 
 -- --------------------------------------------------------
 
@@ -154,27 +156,15 @@ CREATE TABLE `produtos` (
 --
 
 INSERT INTO `produtos` (`id`, `nome`, `descricao`, `preco`, `disponivel`, `tipo`, `imagem_referencia`) VALUES
-(1, 'Coxinha', 'Coxinha de frango', 6.00, 1, 'salgado', 'coxinha.jpg'),
-(3, 'Brigadeiro', 'Brigadeiro tradicional', 2.50, 1, 'doce', 'brigadeiro.jpg'),
-(4, 'Beijinho', 'Beijinho de coco', 2.50, 1, 'doce', 'beijinho.jpg'),
-(5, 'Bolo de Chocolate', 'Fatia de bolo de chocolate', 8.00, 1, 'bolo', 'bolodechocolate.jpg'),
-(6, 'Bolo de Cenoura', 'Fatia de bolo de cenoura', 7.50, 1, 'bolo', 'bolodecenoura.jpg'),
-(12, 'Copinho da Felicidade', 'Copinho com creme e chocolate', 8.50, 1, 'doce', 'copinho.jpg'),
-(13, 'Pão de Queijo', 'Pão de queijo tradicional', 4.50, 1, 'salgado', 'paodequeijo.jpg'),
-(14, 'Croissant de Presunto e Queijo', 'Croissant recheado com presunto e queijo', 9.00, 1, 'salgado', 'croissantqueijo.jpg'),
-(16, 'Croissant de chocolate', 'Croissant recheado com chocolate', 8.00, 1, 'doce', 'croissantchocolate.jpg');
-
--- --------------------------------------------------------
-
---
--- Estrutura para tabela `produto_ingrediente`
---
-
-CREATE TABLE `produto_ingrediente` (
-  `id_produto` int(11) NOT NULL,
-  `id_ingrediente` int(11) NOT NULL,
-  `qtd_necessaria` decimal(10,3) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+(1, 'Coxinha', 'Coxinha de frango', '6.00', 1, 'salgado', 'coxinha.jpg'),
+(3, 'Brigadeiro', 'Brigadeiro tradicional', '2.50', 1, 'doce', 'brigadeiro.jpg'),
+(4, 'Beijinho', 'Beijinho de coco', '2.50', 1, 'doce', 'beijinho.jpg'),
+(5, 'Bolo de Chocolate', 'Fatia de bolo de chocolate', '8.00', 1, 'bolo', 'bolodechocolate.jpg'),
+(6, 'Bolo de Cenoura', 'Fatia de bolo de cenoura', '7.50', 1, 'bolo', 'bolodecenoura.jpg'),
+(12, 'Copinho da Felicidade', 'Copinho com creme e chocolate', '8.50', 1, 'doce', 'copinho.jpg'),
+(13, 'Pão de Queijo', 'Pão de queijo tradicional', '4.50', 1, 'salgado', 'paodequeijo.jpg'),
+(14, 'Croissant de Presunto e Queijo', 'Croissant recheado com presunto e queijo', '9.00', 1, 'salgado', 'croissantqueijo.jpg'),
+(16, 'Croissant de chocolate', 'Croissant recheado com chocolate', '8.00', 1, 'doce', 'croissantchocolate.jpg');
 
 -- --------------------------------------------------------
 
@@ -204,8 +194,18 @@ INSERT INTO `usuarios` (`id`, `nome`, `email`, `cpf`, `telefone`, `endereco`, `f
 (7, 'Administrador', 'adminpda@gmail.com', '123123123', '1212222222', 'sao bento', NULL, '$2y$10$8JS374iUX6sfM/RWKasDR.XWg5WyGqA32tN96DVAjWu2SOPZvmtN6', 'admin'),
 (8, 'brenda', 'brenda@gmail.com', '', NULL, '', NULL, '$2y$10$.iOHWrTR0uJoY.bjH4IUvemfk9pSXpKv6oyYhDRLWYIyTZPBLzIiu', 'cliente');
 
+
+
+
+--- produto_ingrediente //(intermédio entre a estoque e produtos)
+id_produto INT,
+id_ingrediente INT,
+qtd_necessaria DECIMAL(10,3) NOT NULL,
+PRIMARY KEY (id_produto, id_ingrediente),
+FOREIGN KEY (id_produto) REFERENCES produtos(id),
+FOREIGN KEY (id_ingrediente) REFERENCES estoque_ingredientes(id)
 --
--- Índices para tabelas despejadas
+-- Índices de tabelas apagadas
 --
 
 --
@@ -235,20 +235,13 @@ ALTER TABLE `produtos`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices de tabela `produto_ingrediente`
---
-ALTER TABLE `produto_ingrediente`
-  ADD PRIMARY KEY (`id_produto`,`id_ingrediente`),
-  ADD KEY `id_ingrediente` (`id_ingrediente`);
-
---
 -- Índices de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT para tabelas despejadas
+-- AUTO_INCREMENT de tabelas apagadas
 --
 
 --
@@ -276,7 +269,7 @@ ALTER TABLE `usuarios`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- Restrições para tabelas despejadas
+-- Restrições para dumps de tabelas
 --
 
 --
@@ -285,13 +278,6 @@ ALTER TABLE `usuarios`
 ALTER TABLE `avaliacoes`
   ADD CONSTRAINT `fk_aval_cliente` FOREIGN KEY (`id_cliente`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `fk_aval_pedido` FOREIGN KEY (`id_pedido`) REFERENCES `pedidos` (`id`) ON DELETE CASCADE;
-
---
--- Restrições para tabelas `produto_ingrediente`
---
-ALTER TABLE `produto_ingrediente`
-  ADD CONSTRAINT `produto_ingrediente_ibfk_1` FOREIGN KEY (`id_produto`) REFERENCES `produtos` (`id`),
-  ADD CONSTRAINT `produto_ingrediente_ibfk_2` FOREIGN KEY (`id_ingrediente`) REFERENCES `estoque_ingredientes` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
