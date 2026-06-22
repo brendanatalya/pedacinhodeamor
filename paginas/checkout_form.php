@@ -320,8 +320,26 @@ if (empty($cart_items) && empty($cart_personalizado)) {
                 msg += `🧁 *ITENS DO PEDIDO*\n\n`;
 
                 <?php foreach ($cart_items as $item): ?>
-                msg += `• <?php echo addslashes($item['nome']); ?> x<?php echo $item['quantity']; ?> — R$ <?php echo number_format($item['subtotal'], 2, ',', '.'); ?>\n`;
-                <?php endforeach; ?>
+msg += `• <?php echo addslashes($item['nome']); ?> x<?php echo $item['quantity']; ?> — R$ <?php echo number_format($item['subtotal'], 2, ',', '.'); ?>\n`;
+
+<?php
+$obs_partes = [];
+$sabor_massa   = $_POST['sabor_massa'][$item['id']]   ?? null; // não funciona aqui
+?>
+
+// Pega os campos do formulário dinamicamente
+const obsSaborMassa_<?php echo $item['id']; ?>   = document.querySelector('[name="sabor_massa[<?php echo $item['id']; ?>]"]')?.value;
+const obsSaborRecheio_<?php echo $item['id']; ?> = document.querySelector('[name="sabor_recheio[<?php echo $item['id']; ?>]"]')?.value;
+const obsTopping_<?php echo $item['id']; ?>      = document.querySelector('[name="topping[<?php echo $item['id']; ?>]"]')?.value;
+const obsDecoracao_<?php echo $item['id']; ?>    = document.querySelector('[name="decoracao[<?php echo $item['id']; ?>]"]')?.value;
+const obsItem_<?php echo $item['id']; ?>         = document.querySelector('[name="observacoes_item[<?php echo $item['id']; ?>]"]')?.value;
+
+if (obsSaborMassa_<?php echo $item['id']; ?>)   msg += `   └ Massa: ${obsSaborMassa_<?php echo $item['id']; ?>}\n`;
+if (obsSaborRecheio_<?php echo $item['id']; ?>) msg += `   └ Recheio: ${obsSaborRecheio_<?php echo $item['id']; ?>}\n`;
+if (obsTopping_<?php echo $item['id']; ?>)      msg += `   └ Topping: ${obsTopping_<?php echo $item['id']; ?>}\n`;
+if (obsDecoracao_<?php echo $item['id']; ?>)    msg += `   └ Decoração: ${obsDecoracao_<?php echo $item['id']; ?>}\n`;
+if (obsItem_<?php echo $item['id']; ?>)         msg += `   └ Obs: ${obsItem_<?php echo $item['id']; ?>}\n`;
+<?php endforeach; ?>
 
                 <?php if (!empty($cart_personalizado)): ?>
                 msg += `\n🎨 *Personalizados:*\n`;

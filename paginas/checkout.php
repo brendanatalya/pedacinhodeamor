@@ -1,7 +1,6 @@
 <?php
 if (!isset($_SESSION)) session_start();
 
-// Header JSON deve vir antes de qualquer include para evitar output HTML em erros
 header('Content-Type: application/json; charset=utf-8');
 
 include '../config.php';
@@ -97,8 +96,7 @@ try {
         count($cart),
         $data_entrega,
         $tipo_entrega,
-        $hora_entrega
-
+        $hora_entrega,
     ]);
 
     $id_pedido = $conn->lastInsertId();
@@ -122,34 +120,33 @@ try {
             $item['quantidade'],
             $item['preco_unitario'],
             $item['subtotal'],
-            rtrim($observacao_item, ' | ')
+            rtrim($observacao_item, ' | '),
         ]);
     }
 
     // ─── 4) Descontar estoque de ingredientes ─────────────────────────────────
-    // Se o produto não tiver ingredientes vinculados, ignora sem erro.
-    // Se estoque estiver baixo, avisa o admin mas NÃO cancela o pedido.
     $avisos_estoque = [];
 
     foreach ($itens_pedido as $item) {
-      $stmt = $conn->prepare("
-    SELECT
-        pi.id_ingrediente,
-        pi.qtd_necessaria,
-        ei.nome,
-        ei.unidade,
-        ei.qtd_estoque
-    FROM produto_ingrediente pi
-    INNER JOIN estoque_ingredientes ei
-        ON ei.id = pi.id_ingrediente
-    WHERE pi.id_produto = ?
-");
+        $stmt = $conn->prepare("
+            SELECT
+                pi.id_ingrediente,
+                pi.qtd_necessaria,
+                ei.nome,
+                ei.unidade,
+                ei.qtd_estoque
+            FROM produto_ingrediente pi
+            INNER JOIN estoque_ingredientes ei
+                ON ei.id = pi.id_ingrediente
+            WHERE pi.id_produto = ?
+        ");
+        $stmt->execute([$item['id_produto']]);
+        $ingredientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($ingredientes as $ing) {
             $qtd_necessaria = $ing['qtd_necessaria'] * $item['quantidade'];
 
             if ($ing['qtd_estoque'] >= $qtd_necessaria) {
-                // Estoque suficiente → desconta normalmente
                 $stmt2 = $conn->prepare("
                     UPDATE estoque_ingredientes
                     SET qtd_estoque = qtd_estoque - ?
@@ -157,7 +154,6 @@ try {
                 ");
                 $stmt2->execute([$qtd_necessaria, $ing['id_ingrediente']]);
             } else {
-                // Estoque insuficiente → zera e registra aviso
                 $conn->prepare("
                     UPDATE estoque_ingredientes SET qtd_estoque = 0 WHERE id = ?
                 ")->execute([$ing['id_ingrediente']]);
