@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Tempo de geração: 01/06/2026 às 14:36
--- Versão do servidor: 10.4.32-MariaDB
--- Versão do PHP: 8.2.12
+-- Host: sql309.infinityfree.com
+-- Tempo de geração: 22/06/2026 às 07:33
+-- Versão do servidor: 11.4.12-MariaDB
+-- Versão do PHP: 7.2.22
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -18,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Banco de dados: `pedacinhodeamor`
+-- Banco de dados: `if0_42097572_pedacinhodeamor`
 --
 
 -- --------------------------------------------------------
@@ -36,6 +37,14 @@ CREATE TABLE `avaliacoes` (
   `comentario` text DEFAULT NULL,
   `criado_em` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `avaliacoes`
+--
+
+INSERT INTO `avaliacoes` (`id`, `id_pedido`, `id_cliente`, `nota_produto`, `nota_atend`, `comentario`, `criado_em`) VALUES
+(1, 16, 8, 5, 5, 'Amei! Produto chegou fresquinho e o atendimento foi ótimo. Com certeza vou pedir de novo!', '2026-05-29 15:45:00'),
+(2, 17, 1, 5, 4, 'Tudo muito gostoso! O croissant estava perfeito e os doces vieram bem fresquinhos.', '2026-06-03 17:10:00');
 
 -- --------------------------------------------------------
 
@@ -56,9 +65,9 @@ CREATE TABLE `estoque_ingredientes` (
 --
 
 INSERT INTO `estoque_ingredientes` (`id`, `nome`, `unidade`, `qtd_estoque`, `qtd_minima`) VALUES
-(1, 'Farinha de Trigo', 'kg', 10.000, 4.000),
-(2, 'Açúcar', 'kg', 12.000, 3.000),
-(3, 'Leite em Pó', 'kg', 4.000, 2.000);
+(1, 'Farinha de Trigo', 'kg', '10.000', '4.000'),
+(2, 'Açúcar', 'kg', '12.000', '3.000'),
+(3, 'Leite em Pó', 'kg', '4.000', '2.000');
 
 -- --------------------------------------------------------
 
@@ -81,13 +90,18 @@ CREATE TABLE `itens_pedido` (
 --
 
 INSERT INTO `itens_pedido` (`id`, `id_pedido`, `id_produto`, `qtd`, `preco_unitario`, `subtotal`, `observacao`) VALUES
-(1, 7, 1, 1, 12.00, 12.00, ''),
-(2, 8, 1, 1, 12.00, 12.00, ''),
-(3, 11, 1, 1, 12.00, 12.00, ''),
-(4, 12, 4, 1, 12.22, 12.22, ''),
-(5, 13, 1, 1, 12.00, 12.00, ''),
-(6, 14, 4, 1, 12.22, 12.22, ''),
-(7, 15, 1, 2, 12.00, 24.00, '');
+(1, 7, 1, 1, '12.00', '12.00', ''),
+(2, 8, 1, 1, '12.00', '12.00', ''),
+(3, 11, 1, 1, '12.00', '12.00', ''),
+(4, 12, 4, 1, '12.22', '12.22', ''),
+(5, 13, 1, 1, '12.00', '12.00', ''),
+(6, 14, 4, 1, '12.22', '12.22', ''),
+(7, 15, 1, 2, '12.00', '24.00', ''),
+(8, 16, 1, 3, '12.00', '36.00', ''),
+(9, 17, 13, 1, '4.50', '4.50', ''),
+(10, 17, 14, 1, '9.00', '9.00', ''),
+(11, 17, 3, 2, '3.00', '6.00', ''),
+(0, 0, 12, 3, '8.50', '25.50', '');
 
 -- --------------------------------------------------------
 
@@ -116,7 +130,10 @@ CREATE TABLE `pedidos` (
 --
 
 INSERT INTO `pedidos` (`id`, `id_cliente`, `valor_total`, `status`, `observacao`, `tipo`, `imagem_referencia`, `qtd_itens`, `data_pedido`, `data_entrega`, `forma_pagamento`, `tipo_entrega`, `hora_entrega`) VALUES
-(1, 1, 24.00, 'pendente', NULL, 'normal', NULL, 2, '2026-06-01 08:56:54', '2026-06-01 13:56:30', NULL, 'retirada', '00:00:00');
+(0, 1, '25.50', 'pendente', '', 'normal', NULL, 1, '2026-06-18 03:29:22', '2026-06-26 00:00:00', 'WhatsApp', 'retirada', '13:29:00'),
+(1, 1, '24.00', 'pendente', NULL, 'normal', NULL, 2, '2026-06-01 08:56:54', '2026-06-01 13:56:30', NULL, 'retirada', '00:00:00'),
+(16, 8, '36.00', 'entregue', NULL, 'normal', NULL, 3, '2026-05-28 10:30:00', '2026-05-29 00:00:00', 'pix', 'entrega', '14:00:00'),
+(17, 1, '19.50', 'entregue', NULL, 'normal', NULL, 3, '2026-06-02 10:15:00', '2026-06-03 00:00:00', 'pix', 'retirada', '16:30:00');
 
 -- --------------------------------------------------------
 
@@ -132,7 +149,22 @@ CREATE TABLE `produtos` (
   `disponivel` tinyint(1) NOT NULL DEFAULT 1,
   `tipo` enum('salgado','doce','bolo','personalizado') NOT NULL,
   `imagem_referencia` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Despejando dados para a tabela `produtos`
+--
+
+INSERT INTO `produtos` (`id`, `nome`, `descricao`, `preco`, `disponivel`, `tipo`, `imagem_referencia`) VALUES
+(1, 'Coxinha', 'Coxinha de frango', '6.00', 1, 'salgado', 'coxinha.jpg'),
+(3, 'Brigadeiro', 'Brigadeiro tradicional', '2.50', 1, 'doce', 'brigadeiro.jpg'),
+(4, 'Beijinho', 'Beijinho de coco', '2.50', 1, 'doce', 'beijinho.jpg'),
+(5, 'Bolo de Chocolate', 'Fatia de bolo de chocolate', '8.00', 1, 'bolo', 'bolodechocolate.jpg'),
+(6, 'Bolo de Cenoura', 'Fatia de bolo de cenoura', '7.50', 1, 'bolo', 'bolodecenoura.jpg'),
+(12, 'Copinho da Felicidade', 'Copinho com creme e chocolate', '8.50', 1, 'doce', 'copinho.jpg'),
+(13, 'Pão de Queijo', 'Pão de queijo tradicional', '4.50', 1, 'salgado', 'paodequeijo.jpg'),
+(14, 'Croissant de Presunto e Queijo', 'Croissant recheado com presunto e queijo', '9.00', 1, 'salgado', 'croissantqueijo.jpg'),
+(16, 'Croissant de chocolate', 'Croissant recheado com chocolate', '8.00', 1, 'doce', 'croissantchocolate.jpg');
 
 -- --------------------------------------------------------
 
@@ -160,10 +192,10 @@ INSERT INTO `usuarios` (`id`, `nome`, `email`, `cpf`, `telefone`, `endereco`, `f
 (1, 'joao', 'joao@gmail.com', '12312312312', '1212222222', 'rua x, bairro y]', NULL, '$2y$10$o5hpmtInSFO6jwhz1WaVDevx4UOr.bFJac21xSZ9cXcLZDjWyUcWu', 'cliente'),
 (3, 'Íris Pires Do Nascimento', 'irispirees@gmail.com', '', NULL, '', NULL, '$2y$10$UfG2oscilVRXmCKie0ECwepLcsJnlni/IAABaurPozRlA6vdQ/H8y', 'cliente'),
 (7, 'Administrador', 'adminpda@gmail.com', '123123123', '1212222222', 'sao bento', NULL, '$2y$10$8JS374iUX6sfM/RWKasDR.XWg5WyGqA32tN96DVAjWu2SOPZvmtN6', 'admin'),
-(8, 'brendinha', 'brendinha@gmail.com', NULL, NULL, NULL, '$2y$10$8JS374iUX6sfM/RWKasDR.XWg5WyGqA32tN96DVAjWu2SOPZvmtN6', 'cliente');
+(8, 'brenda', 'brenda@gmail.com', '', NULL, '', NULL, '$2y$10$.iOHWrTR0uJoY.bjH4IUvemfk9pSXpKv6oyYhDRLWYIyTZPBLzIiu', 'cliente');
 
 --
--- Índices para tabelas despejadas
+-- Índices de tabelas apagadas
 --
 
 --
@@ -187,20 +219,26 @@ ALTER TABLE `pedidos`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Índices de tabela `produtos`
+--
+ALTER TABLE `produtos`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Índices de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT para tabelas despejadas
+-- AUTO_INCREMENT de tabelas apagadas
 --
 
 --
 -- AUTO_INCREMENT de tabela `avaliacoes`
 --
 ALTER TABLE `avaliacoes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `estoque_ingredientes`
@@ -209,13 +247,19 @@ ALTER TABLE `estoque_ingredientes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT de tabela `produtos`
+--
+ALTER TABLE `produtos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- Restrições para tabelas despejadas
+-- Restrições para dumps de tabelas
 --
 
 --
