@@ -51,6 +51,10 @@ $msg = urlencode("Bem-vindo, {$user['name']}!");
 header("Location: index.html?status=ok&msg={$msg}");
 exit;
 ?>
+
+  <?php 
+    include ("../config.php");
+    include (HEADER_TEMPLATE);
 ?>
     <div id="actions" class="mt-5 mb-5">
         <form action="valida.php" method="post">
@@ -67,6 +71,8 @@ exit;
                     <button type="submit" class="btn btn-info mb-4"><i class="fa-solid fa-user"></i>Entrar</button>
                     <a href="<?php echo BASEURL;?>" class="btn btn-dark mb-4"><i class="fa-solid fa-x"></i> Cancelar</a>
                 </div>
+                  <a href="google_login.php">Entrar com Google</a>
+
             </div>
         </form>
     </div>

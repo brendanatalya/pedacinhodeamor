@@ -37,6 +37,11 @@ define('FOOTER_TEMPLATE', ABSPATH . 'inc/footer.php');
 /** número WhatsApp da confeitaria (só números, com DDI) **/
 define('WHATSAPP_NUMBER', '5515988329726');
 
+
+// Credenciais do Google Cloud Console
+define('GOOGLE_CLIENT_ID', '1040096064250-n7smmpsm97r6u31kk28rss8ugfpmkvtl.apps.googleusercontent.com');
+define('GOOGLE_CLIENT_SECRET', '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');
+define('GOOGLE_REDIRECT_URI', 'http://localhost/pedacinhodeamor/inc/google/google_callback.php');// Substitua pelo URL de redirecionamento correto, no caso dominio real
  
 
 ?>

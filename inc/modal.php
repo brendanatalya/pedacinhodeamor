@@ -119,6 +119,12 @@ document.getElementById('formAvaliacao').addEventListener('submit', function(e) 
         </div>
 
         <button type="submit" class="btn-enviar">ENTRAR</button>
+
+        <a href="<?php echo BASEURL; ?>inc/google/google_login.php" class="btn-enviar" style="display:flex;align-items:center;justify-content:center;gap:8px;background:#fff;color:#444;border:1px solid #ddd;text-decoration:none;margin-top:8px;">
+            <img src="https://www.google.com/favicon.ico" alt="" style="width:18px;height:18px;">
+            Entrar com Google
+        </a>
+
         <p class="login-link">Não tem conta? <span id="switchCadastro">Cadastrar</span></p>
     </form>
 
