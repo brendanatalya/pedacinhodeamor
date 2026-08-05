@@ -59,15 +59,15 @@
                     <li>
                         <a href="<?php echo BASEURL; ?>paginas/sobrenos.php">Sobre nós</a>
                     </li>
-
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                    Cárdapio
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item" href="<?php echo BASEURL; ?>paginas/doces.php">Doces</a></li>
-                    <li><a class="dropdown-item" href="<?php echo BASEURL; ?>paginas/salgados.php">Salgados</a></li>
-                </ul>
-
+    
+                    <!-- DROPDOWN AQUI -->
+                        <li class="nav-dropdown">
+                            <a href="#" class="nav-dropdown-link">Cárdapio</a>
+                            <ul class="nav-dropdown-menu">
+                                <li><a href="<?php echo BASEURL; ?>paginas/doces.php">Doces</a></li>
+                                <li><a href="<?php echo BASEURL; ?>paginas/salgados.php">Salgados</a></li>
+                            </ul>
+                        </li>
 
                     <li>
                         <a>Personalizados</a>

@@ -185,7 +185,21 @@ button.cc-nb-reject:hover {
     showFeedback(0);
     resetFeedbackAutoplay();
     
+    // ── Posicionar dropdown ──
+const navDropdowns = document.querySelectorAll('.nav-dropdown');
+navDropdowns.forEach(dropdown => {
+    const link = dropdown.querySelector('.nav-dropdown-link');
+    const menu = dropdown.querySelector('.nav-dropdown-menu');
     
+    function positionMenu() {
+        const rect = link.getBoundingClientRect();
+        menu.style.top = (rect.bottom + 5) + 'px';
+        menu.style.left = rect.left + 'px';
+    }
+    
+    dropdown.addEventListener('mouseenter', positionMenu);
+    window.addEventListener('resize', positionMenu);
+});
     </script>
 
 <footer>

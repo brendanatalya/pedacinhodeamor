@@ -3940,8 +3940,72 @@ ___________
 }
 
 
+/* ── NOVO DROPDOWN FUNCIONAL ── */
+.nav-dropdown {
+    position: relative;
+}
 
+.nav-dropdown-link {
+    display: block;
+    padding: 1rem 0 !important;
+    color: #5A3220 !important;
+    font-size: 1.1rem !important;
+    font-weight: bold !important;
+    text-transform: capitalize !important;
+    letter-spacing: 1px !important;
+    position: relative;
+}
 
+.nav-dropdown-menu {
+    position: fixed;
+    background: #fff;
+    min-width: 160px;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    list-style: none;
+    padding: 8px 0;
+    margin: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+}
+
+.nav-dropdown-menu li {
+    list-style: none;
+}
+
+.nav-dropdown-menu li a {
+    display: block;
+    padding: 12px 20px;
+    color: #333;
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.nav-dropdown-menu li a:hover {
+    background: #f5f5f5;
+    color: #8f1a5a;
+}
+
+/* Mostra o menu ao passar mouse */
+.nav-dropdown:hover .nav-dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+}
+
+.nav-dropdown:hover .nav-dropdown-link {
+    color: #8f1a5a !important;
+}
+
+/* Posiciona o menu com JavaScript */
+.nav-dropdown-menu.positioned {
+    position: fixed;
+}
 
 
 
