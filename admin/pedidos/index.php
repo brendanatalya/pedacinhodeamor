@@ -1,12 +1,17 @@
 <?php 
 if (!isset($_SESSION)) session_start();
 
+include dirname(__DIR__, 2) . '/config.php';
+
 if (empty($_SESSION['logado']) || $_SESSION['tipo'] !== 'admin') {
-header('Location: ' . BASEURL . 'index.php');    exit;
+    header('Location: ' . BASEURL . 'index.php');
+    exit;
 }
 
-include dirname(__DIR__, 2) . '/config.php';
 require_once(DBAPI);
+
+// Únicos status aceitos pelo fluxo do pedido
+const STATUS_VALIDOS = ['pendente', 'confirmado', 'em_preparacao', 'pronto', 'entregue', 'cancelado'];
 
 $mensagem = '';
 $tipo_mensagem = '';
@@ -14,10 +19,15 @@ $tipo_mensagem = '';
 // Processar mudança de status
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
+        $pedido_id = (int)$_POST['pedido_id'];
+        $status = $_POST['status'] ?? '';
+
+        if (!in_array($status, STATUS_VALIDOS, true)) {
+            throw new Exception('Status inválido.');
+        }
+
         $conn = open_database();
-        $pedido_id = $_POST['pedido_id'];
-        $status = $_POST['status'];
-        
+
         $stmt = $conn->prepare("UPDATE pedidos SET status = ? WHERE id = ?");
         $stmt->execute([$status, $pedido_id]);
         
@@ -26,6 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $mensagem = 'Status atualizado com sucesso!';
         $tipo_mensagem = 'success';
     } catch (Exception $e) {
+        error_log('admin/pedidos: ' . $e->getMessage());
         $mensagem = 'Erro: ' . $e->getMessage();
         $tipo_mensagem = 'danger';
     }
@@ -55,7 +66,7 @@ close_database($conn);
 // Buscar detalhes do pedido se solicitado
 $pedido_detalhes = null;
 if (isset($_GET['ver'])) {
-    $id = $_GET['ver'];
+    $id = (int)$_GET['ver'];
     $conn = open_database();
     
     $stmt = $conn->prepare("
@@ -93,8 +104,8 @@ if (isset($_GET['ver'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciar Pedidos - Admin</title>
-    <link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="<?php echo BASEURL; ?>../css_pda/style_pda.css">  
+    <link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/style_pda.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
 </head>

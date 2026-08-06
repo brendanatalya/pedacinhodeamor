@@ -138,17 +138,14 @@ try {
 
     http_response_code(500);
 
+    // Detalhe do erro fica só no log do servidor, nunca na resposta ao cliente
+    error_log('dashboard.php: ' . $e->getMessage());
+
     echo json_encode([
 
         'success' => false,
 
-        'message' => 'Erro interno do servidor.',
-
-        // REMOVA EM PRODUÇÃO
-        'error' => $e->getMessage()
+        'message' => 'Erro interno do servidor.'
 
     ], JSON_UNESCAPED_UNICODE);
 }
-
-
-?>

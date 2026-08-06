@@ -17,8 +17,7 @@ require_once(DBAPI);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel Admin - Pedacinho de Amor</title>
-    <link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/style_pda.css">
+<link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/bootstrap/bootstrap.min.css">    <link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/style_pda.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     
@@ -28,6 +27,7 @@ require_once(DBAPI);
         <div class="row">
             <div class="col-md-2 sidebar">
                 <div class="text-white p-3 mb-4" style="border-bottom: 1px dashed rgba(255,255,255,0.2);">
+                    
                     <h5 class="d-flex align-items-center gap-2" style="margin: 0; font-weight: 700;"><i class="fas fa-user-circle"></i> Admin</h5>
                     <small style="color: #E2D9D7;"><?php echo htmlspecialchars($_SESSION['nome']); ?></small>
                 </div>
@@ -74,14 +74,29 @@ require_once(DBAPI);
                         </small>
                     </div>
                     
-                    <div style="color: #61463B; text-align:right; font-size: 14px;">
-                        <small style="font-weight: 600; color: #8A736E;">
-                            <?php echo date('d/m/Y'); ?>
-                        </small>
-                        <br>
-                        <strong style="font-size: 18px; font-weight: 800; color: #8C475E;">
-                            <?php echo date('H:i'); ?>
-                        </strong>
+                    <div style="display:flex; gap:20px; align-items:center; justify-content:flex-end;">
+                        <div style="color: #61463B; text-align:right; font-size: 14px;">
+                            <small style="font-weight: 600; color: #8A736E;">
+                                <?php echo date('d/m/Y'); ?>
+                            </small>
+                            <br>
+                            <strong style="font-size: 18px; font-weight: 800; color: #8C475E;">
+                                <?php echo date('H:i'); ?>
+                            </strong>
+                        </div>
+
+                        <!-- DROPDOWN DO USUÁRIO ADMIN -->
+                        <div class="nav-dropdown" style="display:inline-block;">
+                            <a href="#" class="nav-dropdown-link" style="display:flex; align-items:center; gap:8px;">
+                                <i class="fa-regular fa-circle-user"></i>
+                                <span>Olá, <?php echo htmlspecialchars($_SESSION['nome']); ?></span>
+                            </a>
+                            <ul class="nav-dropdown-menu" style="min-width:150px;">
+                                <li><a href="<?php echo BASEURL; ?>minha_conta.php">Minha Conta</a></li>
+                                <li><a href="<?php echo BASEURL; ?>index.php"><i class="fas fa-home"></i> Voltar ao Site</a></li>
+                                <li><a href="<?php echo BASEURL; ?>inc/logout.php"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
 

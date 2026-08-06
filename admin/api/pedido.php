@@ -77,10 +77,12 @@ try {
 
 } catch (Exception $e) {
     http_response_code(500);
+
+    // Detalhe do erro fica só no log do servidor, nunca na resposta ao cliente
+    error_log('pedido.php: ' . $e->getMessage());
+
     echo json_encode([
         'success' => false,
-        'message' => 'Erro interno.',
-        'error'   => $e->getMessage()
+        'message' => 'Erro interno.'
     ], JSON_UNESCAPED_UNICODE);
 }
-?>

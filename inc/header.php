@@ -79,10 +79,25 @@
                 <div class="nav-icons">
 
                     <?php if(!empty($_SESSION['logado']) && $_SESSION['logado'] === true): ?>
-                        <a href="<?php echo BASEURL; ?>minha_conta.php">
-                            <i class="fa-regular fa-circle-user"></i>
-                            <p>Olá, <?php echo htmlspecialchars($_SESSION['nome']); ?></p>
-                        </a>
+
+                        <?php if ($_SESSION['tipo'] === 'admin'): ?>
+                            <!-- DROPDOWN DO USUÁRIO ADMIN -->
+                            <div class="nav-dropdown">
+                                <a href="#" class="nav-dropdown-link">
+                                    <i class="fa-regular fa-circle-user"></i>
+                                    <p>Olá, <?php echo htmlspecialchars($_SESSION['nome']); ?></p>
+                                </a>
+                                <ul class="nav-dropdown-menu">
+                                    <li><a href="<?php echo BASEURL; ?>minha_conta.php">Minha Conta</a></li>
+                                    <li><a href="<?php echo BASEURL; ?>admin/index.php"><i class="fas fa-gauge"></i> Painel Admin</a></li>
+                                </ul>
+                            </div>
+                        <?php else: ?>
+                            <a href="<?php echo BASEURL; ?>minha_conta.php">
+                                <i class="fa-regular fa-circle-user"></i>
+                                <p>Olá, <?php echo htmlspecialchars($_SESSION['nome']); ?></p>
+                            </a>
+                        <?php endif; ?>
 
                     <?php else: ?>
                         <a data-bs-toggle="modal" data-bs-target="#modalLogin">

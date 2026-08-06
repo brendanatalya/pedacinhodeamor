@@ -1,11 +1,13 @@
 <?php 
 if (!isset($_SESSION)) session_start();
 
+include dirname(__DIR__, 2) . '/config.php';
+
 if (empty($_SESSION['logado']) || $_SESSION['tipo'] !== 'admin') {
-header('Location: ' . BASEURL . 'index.php');    exit;
+    header('Location: ' . BASEURL . 'index.php');
+    exit;
 }
 
-include dirname(__DIR__, 2) . '/config.php';
 require_once(DBAPI);
 
 $conn = open_database();
@@ -33,7 +35,7 @@ $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 // Buscar detalhes do cliente se solicitado
 $cliente_detalhes = null;
 if (isset($_GET['ver'])) {
-    $id = $_GET['ver'];
+    $id = (int)$_GET['ver'];
     $stmt = $conn->prepare("
         SELECT * FROM usuarios WHERE id = ? AND tipo = 'cliente'
     ");
@@ -59,8 +61,8 @@ close_database($conn);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciar Clientes - Admin</title>
-    <link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="<?php echo BASEURL; ?>../css_pda/style_pda.css">
+    <link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/style_pda.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
 </head>

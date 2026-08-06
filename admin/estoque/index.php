@@ -1,11 +1,13 @@
 <?php
 if (!isset($_SESSION)) session_start();
 
+include dirname(__DIR__, 2) . '/config.php';
+
 if (empty($_SESSION['logado']) || $_SESSION['tipo'] !== 'admin') {
-header('Location: ' . BASEURL . 'index.php');    exit;
+    header('Location: ' . BASEURL . 'index.php');
+    exit;
 }
 
-include dirname(__DIR__, 2) . '/config.php';
 require_once(DBAPI);
 
 $mensagem = '';
@@ -43,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_POST['unidade'],
                 $_POST['qtd_estoque'],
                 $_POST['qtd_minima'],
-                $_POST['id']
+                (int)$_POST['id']
             ]);
             $mensagem = 'Ingrediente atualizado com sucesso!';
             $tipo_mensagem = 'success';
@@ -51,14 +53,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         elseif ($acao === 'deletar') {
             $stmt = $conn->prepare("DELETE FROM estoque_ingredientes WHERE id = ?");
-            $stmt->execute([$_POST['id']]);
+            $stmt->execute([(int)$_POST['id']]);
             $mensagem = 'Ingrediente removido!';
             $tipo_mensagem = 'success';
         }
 
         close_database($conn);
     } catch (Exception $e) {
-        $mensagem = 'Erro: ' . $e->getMessage();
+        error_log('admin/estoque: ' . $e->getMessage());
+        $mensagem = 'Ocorreu um erro ao processar a solicitação.';
         $tipo_mensagem = 'danger';
     }
 }
@@ -68,7 +71,7 @@ $ingrediente_edicao = null;
 if (isset($_GET['editar'])) {
     $conn = open_database();
     $stmt = $conn->prepare("SELECT * FROM estoque_ingredientes WHERE id = ?");
-    $stmt->execute([$_GET['editar']]);
+    $stmt->execute([(int)$_GET['editar']]);
     $ingrediente_edicao = $stmt->fetch(PDO::FETCH_ASSOC);
     close_database($conn);
 }
@@ -86,7 +89,7 @@ close_database($conn);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Estoque - Admin</title>
-    <link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/style_pda.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
