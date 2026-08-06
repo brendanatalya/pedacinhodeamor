@@ -128,7 +128,7 @@ document.getElementById('formAvaliacao').addEventListener('submit', function(e) 
         <p class="login-link">Não tem conta? <span id="switchCadastro">Cadastrar</span></p>
     </form>
 
-    <form id="cadastroForm" action="<?php echo BASEURL; ?>inc/cadastro.php" method="POST" style="display:none;" onsubmit="return validarSenha()">
+    <form id="cadastroForm" action="<?php echo BASEURL; ?>cadastro.php" method="POST" style="display:none;" onsubmit="return validarSenha()">
         <div id="cadastroError" style="color: #ff4d4d; font-size: 0.95rem; text-align: center; display: none; margin-bottom: 15px; padding: 10px; background-color: #ffe0e0; border-radius: 4px;"></div>
         
         <input type="text" name="name" placeholder="Nome completo" required>
@@ -249,7 +249,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const formData = new FormData(cadastroForm);
         
         try {
-            const response = await fetch('<?php echo BASEURL; ?>inc/cadastro.php', {
+            const response = await fetch('<?php echo BASEURL; ?>cadastro.php', {
                 method: 'POST',
                 body: formData
             });

@@ -63,7 +63,7 @@ $botoes = [
     <link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/style_pda.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-    <style>
+    <<style>
         .subcategoria-bar {
             display: flex;
             flex-wrap: wrap;
@@ -140,11 +140,7 @@ $botoes = [
                 </div>
             <?php endif; ?>
 
-            <div class="nav-cardapio">
-                <a href="doces.php" class="ativo">🍬 Doces</a>
-                <a href="salgados.php">🥐 Salgados</a>
-                <a href="personalizados.php">🎨 Personalizados</a>
-            </div>
+          
 
             <div class="subcategoria-bar" id="filtros-doces">
                 <button class="sub-btn ativo" data-sub="todos" onclick="filtrar('todos', this)">

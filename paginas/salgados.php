@@ -117,11 +117,7 @@ $botoes = [
                 </div>
             <?php endif; ?>
 
-            <div class="nav-cardapio">
-                <a href="doces.php">🍬 Doces</a>
-                <a href="salgados.php" class="ativo">🥐 Salgados</a>
-                <a href="personalizados.php">🎨 Personalizados</a>
-            </div>
+           
 
             <div class="subcategoria-bar" id="filtros-salgados">
                 <button class="sub-btn ativo" data-sub="todos" onclick="filtrar('todos', this)">

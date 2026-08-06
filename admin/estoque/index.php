@@ -2,8 +2,7 @@
 if (!isset($_SESSION)) session_start();
 
 if (empty($_SESSION['logado']) || $_SESSION['tipo'] !== 'admin') {
-    header('Location: ' . dirname(dirname(dirname(__DIR__))) . '/index.php');
-    exit;
+header('Location: ' . BASEURL . 'index.php');    exit;
 }
 
 include dirname(__DIR__, 2) . '/config.php';
