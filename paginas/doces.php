@@ -44,12 +44,12 @@ foreach ($todos as $p) {
 }
 
 $botoes = [
-    'cone'       => '🍦 Cones',
-    'trufa'      => '🍫 Trufas',
-    'brigadeiro' => '🍬 Brigadeiros',
-    'bolo'       => '🎂 Bolos',
-    'docinho'    => '🌸 Docinhos',
-    'outro'      => '✨ Outros',
+    'cone'       => 'Cones',
+    'trufa'      => 'Trufas',
+    'brigadeiro' => 'Brigadeiros',
+    'bolo'       => 'Bolos',
+    'docinho'    => 'Docinhos',
+    'outro'      => 'Outros',
 ];
 ?>
 <!DOCTYPE html>
@@ -123,7 +123,7 @@ $botoes = [
         <section class="doces-hero" style="background-image:url('../imagens/doce3.webp');">
             <div class="doces-hero__overlay"></div>
             <div class="doces-hero__content">
-                <h1>🍬 DOCES</h1>
+                <h1>DOCES</h1>
                 <p>Tudo feito com carinho para adoçar seus momentos!</p>
             </div>
         </section>
@@ -139,8 +139,6 @@ $botoes = [
                     Faça <a href="../index.php">login</a> para adicionar produtos ao carrinho.
                 </div>
             <?php endif; ?>
-
-          
 
             <div class="subcategoria-bar" id="filtros-doces">
                 <button class="sub-btn ativo" data-sub="todos" onclick="filtrar('todos', this)">
@@ -164,13 +162,13 @@ $botoes = [
                 <div class="col produto-item" data-sub="<?php echo htmlspecialchars($sub); ?>">
                     <div class="product-card <?php echo !$p['disponivel'] ? 'unavailable' : ''; ?>">
                         <?php if (!empty($p['imagem_referencia'])): ?>
-                            <img src="../<?php echo htmlspecialchars($p['imagem_referencia']); ?>"
+                            <img src="../imagens/<?php echo htmlspecialchars($p['imagem_referencia']); ?>"
                                  alt="<?php echo htmlspecialchars($p['nome']); ?>">
                         <?php endif; ?>
                         <div class="product-info">
                             <h3><?php echo htmlspecialchars($p['nome']); ?></h3>
                             <p><?php echo htmlspecialchars($p['descricao'] ?? 'Delicioso produto artesanal'); ?></p>
-                            <div class="product-price">R$ <?php echo number_format($p['preco'], 2, ',', '.'); ?></div>
+                            <div class="product-price"><?php echo number_format($p['preco'], 2, ',', '.'); ?></div>
                             <?php if (!$p['disponivel']): ?>
                                 <div class="unavailable-badge">Indisponível</div>
                             <?php endif; ?>
@@ -179,7 +177,7 @@ $botoes = [
                                 <input type="hidden" name="quantity"   value="1">
                                 <input type="hidden" name="redirect"
                                        value="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>">
-                                <button type="submit" class="add-to-cart-btn"
+                                <button type="submit" class="add-to-carrinho-btn"
                                         <?php echo (!$usuario_logado || !$p['disponivel']) ? 'disabled' : ''; ?>>
                                     <i class="fas fa-shopping-cart"></i> Adicionar ao Carrinho
                                 </button>
@@ -196,22 +194,22 @@ $botoes = [
     <?php include_once ABSPATH . 'inc/footer.php'; ?>
 
     <script>
-    function filtrar(sub, btn) {
-        document.querySelectorAll('#filtros-doces .sub-btn').forEach(b => b.classList.remove('ativo'));
-        btn.classList.add('ativo');
+        function filtrar(sub, btn) {
+            document.querySelectorAll('#filtros-doces .sub-btn').forEach(b => b.classList.remove('ativo'));
+            btn.classList.add('ativo');
 
-        const itens = document.querySelectorAll('#grid-doces .produto-item');
-        let visiveis = 0;
+            const itens = document.querySelectorAll('#grid-doces .produto-item');
+            let visiveis = 0;
 
-        itens.forEach(item => {
-            const dataSub = item.dataset.sub || '';
-            const mostrar = sub === 'todos' || dataSub === sub;
-            item.dataset.hidden = mostrar ? 'false' : 'true';
-            if (mostrar) visiveis++;
-        });
+            itens.forEach(item => {
+                const dataSub = item.dataset.sub || '';
+                const mostrar = sub === 'todos' || dataSub === sub;
+                item.dataset.hidden = mostrar ? 'false' : 'true';
+                if (mostrar) visiveis++;
+            });
 
-        document.getElementById('sem-produtos').classList.toggle('visivel', visiveis === 0);
-    }
+            document.getElementById('sem-produtos').classList.toggle('visivel', visiveis === 0);
+        }
     </script>
 </body>
 </html>

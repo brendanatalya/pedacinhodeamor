@@ -43,12 +43,12 @@ foreach ($todos as $p) {
 }
 
 $botoes = [
-    'croissant'     => '🥐 Croissants',
-    'assado'        => '🫓 Assados',
-    'pao de queijo' => '🧀 Pão de Queijo',
-    'coxinha'       => '🍗 Coxinhas',
-    'empada'        => '🥟 Empadas',
-    'outro'         => '✨ Outros',
+    'croissant'     => 'Croissants',
+    'assado'        => 'Assados',
+    'pao de queijo' => 'Pão de Queijo',
+    'coxinha'       => 'Coxinhas',
+    'empada'        => 'Empadas',
+    'outro'         => 'Outros',
 ];
 ?>
 <!DOCTYPE html>
@@ -100,7 +100,7 @@ $botoes = [
         <section class="doces-hero" style="background-image:url('../imagens/doce3.webp');">
             <div class="doces-hero__overlay"></div>
             <div class="doces-hero__content">
-                <h1>🥐 SALGADOS</h1>
+                <h1>SALGADOS</h1>
                 <p>Assados e fritos com muito carinho!</p>
             </div>
         </section>
@@ -141,7 +141,7 @@ $botoes = [
                 <div class="col produto-item" data-sub="<?php echo htmlspecialchars($sub); ?>">
                     <div class="product-card <?php echo !$p['disponivel'] ? 'unavailable' : ''; ?>">
                         <?php if (!empty($p['imagem_referencia'])): ?>
-                            <img src="../<?php echo htmlspecialchars($p['imagem_referencia']); ?>"
+                            <img src="../imagens/<?php echo htmlspecialchars($p['imagem_referencia']); ?>"
                                  alt="<?php echo htmlspecialchars($p['nome']); ?>">
                         <?php endif; ?>
                         <div class="product-info">
@@ -156,7 +156,7 @@ $botoes = [
                                 <input type="hidden" name="quantity"   value="1">
                                 <input type="hidden" name="redirect"
                                        value="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>">
-                                <button type="submit" class="add-to-cart-btn"
+                                <button type="submit" class="add-to-carrinho-btn"
                                         <?php echo (!$usuario_logado || !$p['disponivel']) ? 'disabled' : ''; ?>>
                                     <i class="fas fa-shopping-cart"></i> Adicionar ao Carrinho
                                 </button>
