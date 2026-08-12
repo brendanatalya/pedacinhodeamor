@@ -113,6 +113,7 @@ document.getElementById('formAvaliacao').addEventListener('submit', function(e) 
         
         <input type="email" name="email" placeholder="E-mail" required>
         
+        
         <div class="input-group-auth">
             <input type="password" name="senha" id="passLogin" placeholder="Senha" required>
             <i class="fas fa-eye toggle-password" onclick="togglePassword('passLogin', this)"></i>
@@ -120,11 +121,19 @@ document.getElementById('formAvaliacao').addEventListener('submit', function(e) 
 
         <button type="submit" class="btn-enviar">ENTRAR</button>
 
+        
+       
+<!-- Altere este bloco no seu código -->
+<div style="text-align: right; margin-top: -10px; margin-bottom: 15px;">
+    <button type="button" onclick="solicitarRecuperacao()" style="background: none; border: none; color: #f5a623; font-size: 0.85rem; cursor: pointer; text-decoration: underline; padding: 0;">
+        Esqueceu a senha?
+    </button>
+</div>
+
         <a href="<?php echo BASEURL; ?>inc/google/google_login.php" class="btn-enviar" style="display:flex;align-items:center;justify-content:center;gap:8px;background:#fff;color:#444;border:1px solid #ddd;text-decoration:none;margin-top:8px;">
             <img src="https://www.google.com/favicon.ico" alt="" style="width:18px;height:18px;">
             Entrar com Google
         </a>
-
         <p class="login-link">Não tem conta? <span id="switchCadastro">Cadastrar</span></p>
     </form>
 
@@ -168,6 +177,44 @@ document.getElementById('formAvaliacao').addEventListener('submit', function(e) 
             icon.classList.add("fa-eye");
         }
     }
+</script>
+
+<script>
+async function solicitarRecuperacao() {
+    // Captura o campo de email que está dentro do seu formulário de login
+    const emailInput = document.querySelector('#loginForm input[type="email"]');
+    const email = emailInput ? emailInput.value.trim() : '';
+    const erroDiv = document.getElementById('loginError');
+
+    // Valida se o usuário preencheu o e-mail antes de clicar
+    if (!email) {
+        erroDiv.textContent = 'Por favor, digite seu e-mail no campo acima para recuperar a senha.';
+        erroDiv.style.display = 'block';
+        emailInput.focus();
+        return;
+    }
+
+    try {
+        // Envia a requisição em segundo plano para o seu backend PHP
+        const resposta = await fetch('<?php echo BASEURL; ?>inc/esqueceu_senha.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: 'email=' + encodeURIComponent(email)
+        });
+
+        // Exibe uma resposta amigável ao usuário
+        erroDiv.style.backgroundColor = '#e0f4de'; // Muda para verde (sucesso)
+        erroDiv.style.color = '#2e6930';
+        erroDiv.textContent = 'Se o e-mail estiver cadastrado, enviamos as instruções de recuperação!';
+        erroDiv.style.display = 'block';
+
+    } catch (erro) {
+        erroDiv.style.backgroundColor = '#ffe0e0'; // Restaura vermelho (erro)
+        erroDiv.style.color = '#ff4d4d';
+        erroDiv.textContent = 'Ocorreu um erro ao processar. Tente novamente.';
+        erroDiv.style.display = 'block';
+    }
+}
 </script>
 
 <script>

@@ -43,5 +43,9 @@ define('GOOGLE_CLIENT_ID', '1040096064250-n7smmpsm97r6u31kk28rss8ugfpmkvtl.apps.
 define('GOOGLE_CLIENT_SECRET', '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');
 define('GOOGLE_REDIRECT_URI', 'http://localhost/pedacinhodeamor/inc/google/google_callback.php');// Substitua pelo URL de redirecionamento correto, no caso dominio real
  
+// ===== CONFIGURAÇÃO SMTP PARA RECUPERAÇÃO DE SENHA =====
+define('SMTP_HOST', 'sandbox.smtp.mailtrap.io');
+define('SMTP_USER', 'fe1c8b3e9cae63');        // ← SEU EMAIL DO GMAIL
+define('SMTP_PASS', '912f11fb3dea83');      // ← APP PASSWORD (16 caracteres)
 
 ?>
