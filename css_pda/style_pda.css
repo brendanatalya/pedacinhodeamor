@@ -646,12 +646,31 @@ body {
     transform: scale(1.1);
 }
 
+/*esqueceu a senha?*/
+
+.divesqueceu {
+  text-align: right;
+  margin-top: -10px;
+  margin-bottom: 15px;
+}
+
+.textoesqueceu {
+  color: #fff;
+  text-transform: uppercase;
+  background: none;
+  border: none;
+  color: #912e49;
+  font-size: 0.85rem;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+  font-weight: bold;
+  padding-top: 5%;
+}
+
 
 
 /*teste personalizado*/
-/* ==========================================================================
-   folha de estilo - personalizados (final otimizado)
-   ========================================================================== */
 
 :root {
   --primary-color: #d65a7d;       /* rosa confeitaria premium */

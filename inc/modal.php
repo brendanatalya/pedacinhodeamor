@@ -98,69 +98,94 @@ document.getElementById('formAvaliacao').addEventListener('submit', function(e) 
 
 <!-- MODAL LOGIN -->
 <div class="modal fade" id="modalLogin" tabindex="-1">
-<div class="modal-dialog modal-dialog-centered">
-<div class="modal-content p-0 border-0">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content p-0 border-0">
 
-<div class="auth-card">
+            <div class="auth-card">
 
-<div class="auth-header">
-    <button type="button" class="btn-close-custom" data-bs-dismiss="modal" aria-label="Close">&times;</button>
-    <h2 id="titulo">LOGIN</h2>
-</div>
-<div class="auth-body">
-    <form id="loginForm" action="<?php echo BASEURL; ?>inc/valida.php" method="POST">
-        <div id="loginError" style="color: #ff4d4d; font-size: 0.95rem; text-align: center; display: none; margin-bottom: 15px; padding: 10px; background-color: #ffe0e0; border-radius: 4px;"></div>
-        
-        <input type="email" name="email" placeholder="E-mail" required>
-        
-        
-        <div class="input-group-auth">
-            <input type="password" name="senha" id="passLogin" placeholder="Senha" required>
-            <i class="fas fa-eye toggle-password" onclick="togglePassword('passLogin', this)"></i>
+                <div class="auth-header">
+                    <button type="button" class="btn-close-custom" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+                    <h2 id="titulo">LOGIN</h2>
+                </div>
+                <div class="auth-body">
+                    <form id="loginForm" action="<?php echo BASEURL; ?>inc/valida.php" method="POST">
+                        <div id="loginError" style="color: #ff4d4d; font-size: 0.95rem; text-align: center; display: none; margin-bottom: 15px; padding: 10px; background-color: #ffe0e0; border-radius: 4px;"></div>
+                        
+                        <input type="email" name="email" placeholder="E-mail" required>
+                        
+                        
+                        <div class="input-group-auth">
+                            <input type="password" name="senha" id="passLogin" placeholder="Senha" required>
+                            <i class="fas fa-eye toggle-password" onclick="togglePassword('passLogin', this)"></i>
+                        </div>
+
+                        <button type="submit" class="btn-enviar">ENTRAR</button>
+
+                        <div class="divesqueceu">
+                            <button type="button" onclick="solicitarRecuperacao()" class="textoesqueceu">
+                                Esqueceu a senha?
+                            </button>
+                        </div>
+
+                        <a href="<?php echo BASEURL; ?>inc/google/google_login.php" class="btn-enviar" style="display:flex;align-items:center;justify-content:center;gap:8px;background:#fff;color:#444;border:1px solid #ddd;text-decoration:none;margin-top:8px;">
+                            <img src="https://www.google.com/favicon.ico" alt="" style="width:18px;height:18px;">
+                            Entrar com Google
+                        </a>
+                        <p class="login-link">Não tem conta? <span id="switchCadastro">Cadastrar</span></p>
+                    </form>
+
+                    <form id="cadastroForm" action="<?php echo BASEURL; ?>cadastro.php" method="POST" style="display:none;" onsubmit="return validarSenha()">
+                        <div id="cadastroError" style="color: #ff4d4d; font-size: 0.95rem; text-align: center; display: none; margin-bottom: 15px; padding: 10px; background-color: #ffe0e0; border-radius: 4px;"></div>
+                        
+                        <input type="text" name="name" placeholder="Nome completo" required>
+                        <input type="email" name="email" placeholder="E-mail" required>
+                        <input type="email" name="email_confirm" placeholder="Confirmar E-mail" required>
+                        
+                        <div class="input-group-auth">
+                            <input type="password" name="password" id="passCad" placeholder="Senha" required>
+                            <i class="fas fa-eye toggle-password" onclick="togglePassword('passCad', this)"></i>
+                        </div>
+
+                        <div class="input-group-auth">
+                            <input type="password" name="password_confirm" id="passCadConfirm" placeholder="Confirmar senha" required>
+                            <i class="fas fa-eye toggle-password" onclick="togglePassword('passCadConfirm', this)"></i>
+                        </div>
+
+                        <button type="submit" class="btn-enviar">CADASTRAR</button>
+                        <p class="login-link">Já tem conta? <span id="switchLogin">Login</span></p>
+                    </form>
+                </div>
+            </div>
         </div>
-
-        <button type="submit" class="btn-enviar">ENTRAR</button>
-
-        
-       
-<!-- Altere este bloco no seu código -->
-<div style="text-align: right; margin-top: -10px; margin-bottom: 15px;">
-    <button type="button" onclick="solicitarRecuperacao()" style="background: none; border: none; color: #f5a623; font-size: 0.85rem; cursor: pointer; text-decoration: underline; padding: 0;">
-        Esqueceu a senha?
-    </button>
+    </div>
 </div>
 
-        <a href="<?php echo BASEURL; ?>inc/google/google_login.php" class="btn-enviar" style="display:flex;align-items:center;justify-content:center;gap:8px;background:#fff;color:#444;border:1px solid #ddd;text-decoration:none;margin-top:8px;">
-            <img src="https://www.google.com/favicon.ico" alt="" style="width:18px;height:18px;">
-            Entrar com Google
-        </a>
-        <p class="login-link">Não tem conta? <span id="switchCadastro">Cadastrar</span></p>
-    </form>
+<!--confirmação de alteração-->
+<div class="modal fade" id="modalAlt" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content p-0 border-0">
 
-    <form id="cadastroForm" action="<?php echo BASEURL; ?>cadastro.php" method="POST" style="display:none;" onsubmit="return validarSenha()">
-        <div id="cadastroError" style="color: #ff4d4d; font-size: 0.95rem; text-align: center; display: none; margin-bottom: 15px; padding: 10px; background-color: #ffe0e0; border-radius: 4px;"></div>
-        
-        <input type="text" name="name" placeholder="Nome completo" required>
-        <input type="email" name="email" placeholder="E-mail" required>
-        <input type="email" name="email_confirm" placeholder="Confirmar E-mail" required>
-        
-        <div class="input-group-auth">
-            <input type="password" name="password" id="passCad" placeholder="Senha" required>
-            <i class="fas fa-eye toggle-password" onclick="togglePassword('passCad', this)"></i>
+            <div class="auth-card">
+
+                <div class="auth-header">
+                    <button type="button" class="btn-close-custom" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+                    <h2 id="titulo">Alterar</h2>
+                </div>
+                <div class="auth-body">
+                    <form id="modalConfirmacao" action="" method="POST">
+                        <div class="confirmaralt">
+                            <p class="">Deseja confirmar as alterações?</p>
+
+                            <div>
+                                <button type="submit"> <i class="fa-regular fa-circle-check"></i> Sim</button>
+                                <button type="button" data-bs-dismiss="modal"> <i class="fa-regular fa-circle-xmark"></i> Não, sair</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-
-        <div class="input-group-auth">
-            <input type="password" name="password_confirm" id="passCadConfirm" placeholder="Confirmar senha" required>
-            <i class="fas fa-eye toggle-password" onclick="togglePassword('passCadConfirm', this)"></i>
-        </div>
-
-        <button type="submit" class="btn-enviar">CADASTRAR</button>
-        <p class="login-link">Já tem conta? <span id="switchLogin">Login</span></p>
-    </form>
-</div>
-</div>
-</div>
-</div>
+    </div>
 </div>
 
 <script>

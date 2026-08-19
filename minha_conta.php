@@ -39,6 +39,8 @@ $message = $_SESSION['message'] ?? '';
 $type = $_SESSION['type'] ?? '';
 
 unset($_SESSION['message'], $_SESSION['type']);
+
+include 'inc/modal.php';
 ?>
 
 <body>
@@ -160,7 +162,7 @@ unset($_SESSION['message'], $_SESSION['type']);
                         </div>
                 
                         <div class="conta-formactions">
-                            <button type="submit" class="contabotao cocontabotao-rosa">
+                            <button data-bs-toggle="modal" data-bs-target="#modalAlt" class="contabotao cocontabotao-rosa">
                                 <i class="fas fa-floppy-disk"></i>
                                 Salvar Alterações
                             </button>
@@ -300,13 +302,10 @@ unset($_SESSION['message'], $_SESSION['type']);
                     </form>
                 </div>
             </div>
-        
         </main>
     </div>
 
     <script src="js/bootstrap/bootstrap.bundle.min.js"></script>
-
-
 
     <script>
     /* troca de tabs do minha conta */
@@ -385,5 +384,7 @@ unset($_SESSION['message'], $_SESSION['type']);
         }
     });*/
     </script>
+
+    <?php include(FOOTER_TEMPLATE);?>
 </body>
 </html>
