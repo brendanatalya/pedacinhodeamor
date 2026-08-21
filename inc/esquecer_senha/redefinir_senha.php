@@ -17,15 +17,18 @@ if (!empty($token) && $_SERVER['REQUEST_METHOD'] === 'GET') {
 
         // Busca usuario com este token e valida expiracao
         $sql = $database->prepare("
-            SELECT id, email 
+            SELECT id, email, nome
             FROM usuarios 
             WHERE token_recuperacao = ? 
             AND token_expiracao > NOW() 
             LIMIT 1
         ");
-        $sql->execute([$token]);
+        
+        if (!$sql->execute([$token])) {
+            throw new Exception("Erro ao executar query: " . implode(", ", $sql->errorInfo()));
+        }
+        
         $usuario = $sql->fetch(PDO::FETCH_ASSOC);
-
         close_database($database);
 
         if (!$usuario) {
@@ -34,7 +37,7 @@ if (!empty($token) && $_SERVER['REQUEST_METHOD'] === 'GET') {
             $token_valido = true;
         }
     } catch (Exception $e) {
-        $erro = 'Erro ao validar token.';
+        $erro = 'Erro ao validar token: ' . $e->getMessage();
         error_log($e->getMessage());
     }
 }
@@ -58,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         try {
             $database = open_database();
 
-            // Valida token
+            // Valida token novamente
             $sql = $database->prepare("
                 SELECT id 
                 FROM usuarios 
@@ -66,7 +69,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 AND token_expiracao > NOW() 
                 LIMIT 1
             ");
-            $sql->execute([$token]);
+            
+            if (!$sql->execute([$token])) {
+                throw new Exception("Erro ao validar token: " . implode(", ", $sql->errorInfo()));
+            }
+            
             $usuario = $sql->fetch(PDO::FETCH_ASSOC);
 
             if (!$usuario) {
@@ -83,13 +90,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         token_expiracao = NULL 
                     WHERE id = ?
                 ");
-                $update->execute([$novo_hash, $usuario['id']]);
+                
+                if (!$update->execute([$novo_hash, $usuario['id']])) {
+                    throw new Exception("Erro ao atualizar senha: " . implode(", ", $update->errorInfo()));
+                }
 
-                close_database($database);
                 $sucesso = true;
             }
+            
+            close_database($database);
         } catch (Exception $e) {
-            $erro = 'Erro ao redefinir senha. Tente novamente.';
+            $erro = 'Erro ao redefinir senha: ' . $e->getMessage();
             error_log($e->getMessage());
         }
     }
@@ -107,12 +118,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     Sua senha foi alterada com sucesso.<br>
                     Você pode fazer login com sua nova senha.
                 </p>
-                <a href="<?php echo BASEURL; ?>index.php" class="btn-enviar">
+                <a href="<?php echo BASEURL; ?>index.php" class="btn-enviar" style="display: inline-block;">
                     Voltar para Home
                 </a>
             </div>
 
-        <?php elseif ($token_valido || (!empty($_POST) && empty($erro))): ?>
+        <?php elseif ($token_valido): ?>
             <!-- FORMULARIO DE REDEFINIÇÃO -->
             <div class="auth-card">
                 <div class="auth-header">

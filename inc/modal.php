@@ -204,39 +204,38 @@ document.getElementById('formAvaliacao').addEventListener('submit', function(e) 
     }
 </script>
 
+
 <script>
 async function solicitarRecuperacao() {
-    // Captura o campo de email que está dentro do seu formulário de login
     const emailInput = document.querySelector('#loginForm input[type="email"]');
     const email = emailInput ? emailInput.value.trim() : '';
     const erroDiv = document.getElementById('loginError');
 
-    // Valida se o usuário preencheu o e-mail antes de clicar
     if (!email) {
-        erroDiv.textContent = 'Por favor, digite seu e-mail no campo acima para recuperar a senha.';
+        erroDiv.textContent = 'Por favor, digite seu e-mail...';
         erroDiv.style.display = 'block';
         emailInput.focus();
         return;
     }
 
     try {
-        // Envia a requisição em segundo plano para o seu backend PHP
-        const resposta = await fetch('<?php echo BASEURL; ?>inc/esqueceu_senha.php', {
+        const resposta = await fetch('<?php echo BASEURL; ?>inc/esquecer_senha/esqueceu_senha.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: 'email=' + encodeURIComponent(email)
         });
 
-        // Exibe uma resposta amigável ao usuário
-        erroDiv.style.backgroundColor = '#e0f4de'; // Muda para verde (sucesso)
-        erroDiv.style.color = '#2e6930';
-        erroDiv.textContent = 'Se o e-mail estiver cadastrado, enviamos as instruções de recuperação!';
-        erroDiv.style.display = 'block';
-
+        const data = await resposta.json();
+        
+        if (data.success) {
+            window.location.href = '<?php echo BASEURL; ?>inc/esquecer_senha/recuperacao_enviada.php?email=' + encodeURIComponent(email);
+        } else {
+            erroDiv.textContent = data.message || 'Erro ao processar';
+            erroDiv.style.display = 'block';
+        }
     } catch (erro) {
-        erroDiv.style.backgroundColor = '#ffe0e0'; // Restaura vermelho (erro)
-        erroDiv.style.color = '#ff4d4d';
-        erroDiv.textContent = 'Ocorreu um erro ao processar. Tente novamente.';
+        console.error('Erro:', erro);
+        erroDiv.textContent = 'Erro ao conectar: ' + erro.message;
         erroDiv.style.display = 'block';
     }
 }
