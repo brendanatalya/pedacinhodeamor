@@ -70,7 +70,7 @@
                         </li>
 
                     <li>
-                        <a>Personalizados</a>
+                        <a href="<?php echo BASEURL; ?>paginas/personalizados.php">personalizados</a>
                     </li>
                     
                 </ul>
