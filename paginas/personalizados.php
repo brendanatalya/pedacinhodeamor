@@ -100,8 +100,15 @@ $redirect_uri = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL);
                                         <input type="text" class="form-control custom-input" name="tema" placeholder="Ex: Festa junina, Natal, Aniversário">
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label class="custom-label">Cor Predominante</label>
-                                        <input type="text" class="form-control custom-input" name="cor" placeholder="Ex: Rosa e dourado">
+                                        <label class="custom-label">Quantidade de Camadas</label>
+                                        <input type="number" class="form-control custom-input" name="cor" placeholder="Ex: 2">
+                                    </div>
+                                    
+                                      <!-- arrumar essa parte pra quando o usuario selecionar as quantidades de camads,aparecer sozinho a quantidade no sabor camadas
+                                       sem precisar especificar cada sabor("camada 1 = morango, camada 2 = chocolate ), aparecer um botao para ja pronto, tp ("botao camada 1 = dai o usuario coloca o sabor , camada 2 = sabor 2") -->
+                                    <div class="col-md-6 mb-3">
+                                        <label class="custom-label">Sabor das Camadas </label>
+                                        <input type="text" class="form-control custom-input" name="cor" placeholder="Ex: ">
                                     </div>
                                 </div>
                                 <div class="mb-3">
