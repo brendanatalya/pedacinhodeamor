@@ -66,8 +66,8 @@ try {
     $mail->setFrom(SMTP_USER, 'Pedacinho de Amor');
     $mail->addAddress($email);
 
-    // Monta o link de recuperação
-    $linkRecuperacao = BASEURL . 'inc/esquecer_senha/redefinir_senha.php?token=' . urlencode($token);
+    // Monta URL absoluta do sistema a partir da configuração global
+    $linkRecuperacao = APP_URL . 'inc/esquecer_senha/redefinir_senha.php?token=' . urlencode($token);
 
     // 5. Conteúdo do email
     $mail->isHTML(true);
@@ -82,14 +82,14 @@ try {
             <p>Recebemos uma solicitação para redefinir sua senha na <strong>Pedacinho de Amor</strong>.</p>
             
             <p style='margin: 30px 0; text-align: center;'>
-                <a href='{$linkRecuperacao}' style='display: inline-block; background: #f5a623; color: white; padding: 12px 30px; text-decoration: none; border-radius: 4px; font-weight: bold;'>
+                <a href='" . htmlspecialchars($linkRecuperacao) . "' style='display: inline-block; background: #f5a623; color: white; padding: 12px 30px; text-decoration: none; border-radius: 4px; font-weight: bold;'>
                     Redefinir Senha
                 </a>
             </p>
             
             <p style='font-size: 0.9rem; color: #666;'>
                 <strong>Ou copie e cole este link no seu navegador:</strong><br>
-                <code style='background: #f5f5f5; padding: 8px; border-radius: 3px; display: block; word-break: break-all; margin-top: 8px;'>{$linkRecuperacao}</code>
+                <code style='background: #f5f5f5; padding: 8px; border-radius: 3px; display: block; word-break: break-all; margin-top: 8px; font-size: 0.85rem;'>" . htmlspecialchars($linkRecuperacao) . "</code>
             </p>
             
             <hr style='border: none; border-top: 1px solid #ddd; margin: 30px 0;'>

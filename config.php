@@ -24,6 +24,13 @@ if (!defined('ABSPATH'))
 if (!defined('BASEURL'))
     define('BASEURL', '/pedacinhodeamor/');
 
+/** URL absoluta do sistema para links em e-mails e redirects **/
+if (!defined('APP_URL')) {
+    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+    $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+    define('APP_URL', $protocol . '://' . $host . BASEURL);
+}
+
 /** caminho do arquivo de banco de dados **/
 if (!defined('DBAPI'))
     define('DBAPI', ABSPATH . 'inc/database.php');
