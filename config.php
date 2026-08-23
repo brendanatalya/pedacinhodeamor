@@ -1,6 +1,5 @@
 <?php
 
-
 /** O nome do banco de dados */
 define("DB_NAME", "pedacinhodeamor");
 
@@ -39,20 +38,29 @@ if (!defined('DBAPI'))
 define('HEADER_TEMPLATE', ABSPATH . 'inc/header.php');
 define('FOOTER_TEMPLATE', ABSPATH . 'inc/footer.php');
 
-
- 
 /** número WhatsApp da confeitaria (só números, com DDI) **/
 define('WHATSAPP_NUMBER', '5515988329726');
-
 
 // Credenciais do Google Cloud Console
 define('GOOGLE_CLIENT_ID', '1040096064250-n7smmpsm97r6u31kk28rss8ugfpmkvtl.apps.googleusercontent.com');
 define('GOOGLE_CLIENT_SECRET', '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');
-define('GOOGLE_REDIRECT_URI', 'http://localhost/pedacinhodeamor/inc/google/google_callback.php');// Substitua pelo URL de redirecionamento correto, no caso dominio real
- 
-// ===== CONFIGURAÇÃO SMTP PARA RECUPERAÇÃO DE SENHA =====
-define('SMTP_HOST', 'sandbox.smtp.mailtrap.io');
-define('SMTP_USER', 'fe1c8b3e9cae63');        // ← SEU EMAIL DO GMAIL
-define('SMTP_PASS', '912f11fb3dea83');      // ← APP PASSWORD (16 caracteres)
+define('GOOGLE_REDIRECT_URI', 'http://localhost/pedacinhodeamor/inc/google/google_callback.php');
+
+// ===== SMTP CONFIGURATION (Carrega do .env se existir) =====
+if (file_exists(__DIR__ . '/.env')) {
+    $env = parse_ini_file(__DIR__ . '/.env');
+    define('SMTP_HOST', $env['SMTP_HOST'] ?? 'smtp.gmail.com');
+    define('SMTP_USER', $env['SMTP_USER'] ?? '');
+    define('SMTP_PASS', $env['SMTP_PASS'] ?? '');
+    define('SMTP_PORT', $env['SMTP_PORT'] ?? 587);
+    define('SMTP_SECURE', $env['SMTP_SECURE'] ?? 'tls');
+} else {
+    // Fallback com valores padrão (ou deixa vazio)
+    define('SMTP_HOST', 'smtp.gmail.com');
+    define('SMTP_USER', ''); // Deixa vazio aqui, não coloca no código!
+    define('SMTP_PASS', '');
+    define('SMTP_PORT', 587);
+    define('SMTP_SECURE', 'tls');
+}
 
 ?>
