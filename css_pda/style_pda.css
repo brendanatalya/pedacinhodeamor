@@ -90,7 +90,6 @@ body {
 
 /* trilho com overflow hidden */
 .feedbacks-carrossel-track {
-  overflow: hidden;
   flex: 1;
   min-width: 0; /* evita overflow no flex */
   padding-bottom: 2rem; /* espaço para as setas */
@@ -374,7 +373,6 @@ body {
 .product-card {
     background: #ffffff;
     border-radius: 24px;
-    overflow: hidden;
     box-shadow: 0 8px 24px rgba(90, 20, 40, 0.08);
     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     position: relative;
@@ -1369,7 +1367,6 @@ body {
 /* css cards inicio index*/
 
 .cards {
-  padding: 80px;
   background-color: #fde0e5;
 }
 
@@ -2883,7 +2880,6 @@ ___________
     font-weight: 600;
     color: #291815;
     background: #fdf2f4;
-    -moz-appearance: textfield;
 }
 
 .quantity-input::-webkit-inner-spin-button,
@@ -3955,3 +3951,45 @@ ___________
     }
 }
 
+.swiper {
+  height: 500px;
+  width: 100%;
+
+}
+
+.swiper-wrapper{
+  align-items: center;
+  margin-top: 40px;
+}
+
+.swiper-button-prev .swiper-navigation-icon,
+.swiper-button-next .swiper-navigation-icon {
+  display: none !important;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  color: #fff;
+  width: 25px;
+  height: 25px;
+}
+
+.swiper-button-prev::after {
+  content: '\f053';
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  font-size: 25px;
+  color: #b63270;
+}
+
+.swiper-button-next::after {
+  content: '\f054';
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  font-size: 25px;
+  color: #b63270;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #b63270 !important;
+}

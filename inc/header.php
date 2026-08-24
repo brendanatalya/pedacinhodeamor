@@ -21,6 +21,7 @@
           <!-- css -->
     <link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/style_pda.css">
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css"/>
 
   
 </head>

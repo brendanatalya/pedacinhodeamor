@@ -1,4 +1,9 @@
 <script type="text/javascript" src="//www.freeprivacypolicy.com/public/cookie-consent/4.1.0/cookie-consent.js" charset="UTF-8"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
+
+<script src="<?php echo BASEURL; ?>js/swiper.js"></script>
+
+
 <script type="text/javascript" charset="UTF-8">
 document.addEventListener('DOMContentLoaded', function () {
     cookieconsent.run({
@@ -55,6 +60,8 @@ window.addEventListener("scroll", function(){
 });
 
 </script>
+
+
 <style>
     /* BRENDINHAAAA entao esse bando de coisa q em baixo é o css forçando o css do cookies, pq essa
      bosta de site do lf nao consegui mudar

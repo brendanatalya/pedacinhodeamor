@@ -109,66 +109,39 @@ close_database($conn);
 
                 <!-- PArte dos carss fofinhos rs para desktop aff -->
 
-                <div class="container-xxl" style="overflow: visible;">
+                <div class="container-xxl">
                     <div>
                         <p class="carrossel-subtitulo">Campeões de Vendas</p>
                         <h2 class="carrossel-titulo">Esses fazem <em>sucesso</em> por aqui!</h2>
                     </div>
-
-                    <div class="campeoes-slider d-none d-lg-flex">
-                        
-                        <div class="campeoes-card" style="background-image: url('<?php echo BASEURL; ?>imagens/torta.jpg');">
-                            <div class="campeoes-card-body">
-                                <span>Tortas</span>
-                                <a class="btn-confira" href="<?php echo BASEURL; ?>paginas/cardapio.php">Confira</a>
-                            </div>
-                        </div>
-                        
-                        <div class="campeoes-card" style="background-image: url('<?php echo BASEURL; ?>imagens/salgados.jpg');">
-                            <div class="campeoes-card-body">
-                                <span>Salgados</span>
-                                <a class="btn-confira" href="<?php echo BASEURL; ?>paginas/cardapio.php">Confira</a>
-                            </div>
-                        </div>
                     
-                        <div class="campeoes-card" style="background-image: url('<?php echo BASEURL; ?>imagens/bolos.jpg');">
-                            <div class="campeoes-card-body">
-                                <span>Bolos</span>
-                                <a class="btn-confira" href="<?php echo BASEURL; ?>paginas/cardapio.php">Confira</a>
-                            </div>
-                        </div>
-                    
-                        <div class="campeoes-card" style="background-image: url('<?php echo BASEURL; ?>imagens/cones.jpg');">
-                            <div class="campeoes-card-body">
-                                <span>Cones</span>
-                                <a class="btn-confira" href="<?php echo BASEURL; ?>paginas/cardapio.php">Confira</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- carrossel aparece em tela pequena-->
-                    <div class="campeoes-mobile-wrapper d-lg-none mt-5">
-                        <button class="campeoes-prev"><i class="fa-solid fa-angle-left"></i></button>
-                        <div class="campeoes-mobile-track">
-                            <div class="campeoes-mobile-inner">
+                    <div class="swiper">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
                                 <div class="campeoes-card" style="background-image: url('<?php echo BASEURL; ?>imagens/torta.jpg');">
                                     <div class="campeoes-card-body">
                                         <span>Tortas</span>
                                         <a class="btn-confira" href="<?php echo BASEURL; ?>paginas/cardapio.php">Confira</a>
                                     </div>
                                 </div>
-                                <div class="campeoes-card" style="background-image: url('<?php echo BASEURL; ?>imagens/salgados.jpg');">
+                            </div>
+                            <div class="swiper-slide">
+                                 <div class="campeoes-card" style="background-image: url('<?php echo BASEURL; ?>imagens/salgados.jpg');">
                                     <div class="campeoes-card-body">
                                         <span>Salgados</span>
                                         <a class="btn-confira" href="<?php echo BASEURL; ?>paginas/cardapio.php">Confira</a>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="swiper-slide">
                                 <div class="campeoes-card" style="background-image: url('<?php echo BASEURL; ?>imagens/bolos.jpg');">
                                     <div class="campeoes-card-body">
                                         <span>Bolos</span>
                                         <a class="btn-confira" href="<?php echo BASEURL; ?>paginas/cardapio.php">Confira</a>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="swiper-slide">
                                 <div class="campeoes-card" style="background-image: url('<?php echo BASEURL; ?>imagens/cones.jpg');">
                                     <div class="campeoes-card-body">
                                         <span>Cones</span>
@@ -176,10 +149,16 @@ close_database($conn);
                                     </div>
                                 </div>
                             </div>
+                            
                         </div>
-                        <button class="campeoes-next"><i class="fa-solid fa-angle-right"></i></button>
-                        <div class="campeoes-dots"></div>
+                        <div class="swiper-pagination"></div>
+
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
                     </div>
+
+
+                    
                 </div>
             </section>
 
