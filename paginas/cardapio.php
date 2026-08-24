@@ -2,6 +2,7 @@
 if (!isset($_SESSION)) session_start();
 require_once '../config.php';
 require_once ABSPATH . 'inc/database.php';
+require_once ABSPATH . 'inc/subcategorias.php'; // função extrair_subcategoria() compartilhada
 require_once DBAPI; 
 include(HEADER_TEMPLATE);
 
@@ -136,8 +137,6 @@ fiz isso por agora, qlqr coisa eu falo com as meninas dps pra add isso no banco 
                         <div class="product-card <?php echo !$p['disponivel'] ? 'unavailable' : ''; ?>">
                             <?php if (!empty($p['imagem_referencia'])): ?>
                                 <img src="<?php echo BASEURL . "/imagens/"; ?><?php echo htmlspecialchars($p['imagem_referencia']); ?>" alt="<?php echo htmlspecialchars($p['nome']); ?>">
-                            <?php else: ?>
-                                <img src="<?php echo BASEURL . "/imagens/"; ?><?php echo htmlspecialchars($p['imagem_referencia']); ?>" alt="<?php echo htmlspecialchars($p['nome']); ?>">
                             <?php endif; ?>
                             <div class="product-info">
                                 <h3><?php echo htmlspecialchars($p['nome']); ?></h3>
@@ -178,7 +177,7 @@ fiz isso por agora, qlqr coisa eu falo com as meninas dps pra add isso no banco 
 
         itens.forEach(item => {
             const dataSub = item.dataset.sub || '';
-            const mostrar = sub === 'todos' || dataSub.includes(sub);
+            const mostrar = sub === 'todos' || dataSub === sub;
             item.dataset.hidden = mostrar ? 'false' : 'true';
             if (mostrar) visiveis++;
         });
@@ -192,33 +191,8 @@ fiz isso por agora, qlqr coisa eu falo com as meninas dps pra add isso no banco 
 </html>
 
 <?php
-    /**
-     * Tenta adivinhar a subcategoria de um produto pelo nome.
-     */
-    function extrair_subcategoria(string $nome): string {
-        $nome = mb_strtolower($nome, 'UTF-8');
-
-        $mapa = [
-            'cone'        => ['cone'],
-            'trufa'       => ['trufa'],
-            'brigadeiro'  => ['brigadeiro'],
-            'bolo'        => ['bolo'],
-            'docinho'     => ['docinho', 'camafeu', 'beijinho', 'olho de sogra', 'cajuzinho', 'quindim', 'bicho de pé', 'bixo de pé'],
-            'croissant'   => ['croissant'],
-            'assado'      => ['assado', 'enroladinho', 'esfiha', 'esfirra'],
-            'pao de queijo' => ['pão de queijo', 'pao de queijo'],
-            'coxinha'     => ['coxinha'],
-            'empada'      => ['empada'],
-        ];
-
-        foreach ($mapa as $sub => $palavras) {
-            foreach ($palavras as $palavra) {
-                if (str_contains($nome, $palavra)) return $sub;
-            }
-        }
-
-        return 'outro';
-    }
+    // A função extrair_subcategoria() agora vive em inc/subcategorias.php
+    // (compartilhada com doces.php e salgados.php) — veja o require_once no topo.
 
     include '../inc/modal.php'; 
     include(FOOTER_TEMPLATE);

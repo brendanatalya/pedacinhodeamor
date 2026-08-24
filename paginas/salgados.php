@@ -173,6 +173,44 @@ $botoes = [
     <?php include_once ABSPATH . 'inc/footer.php'; ?>
 
     <script>
+    // ── Adicionar ao carrinho via AJAX (sem recarregar a página) ────────
+    // Progressive enhancement: se o JS falhar por algum motivo, o form
+    // ainda funciona normalmente (add_carrinho.php trata isso também).
+    document.querySelectorAll('form[action="add_carrinho.php"]').forEach(form => {
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const btn = form.querySelector('button[type="submit"]');
+            const btnHtmlOriginal = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Adicionando...';
+
+            try {
+                const resp = await fetch(form.action, {
+                    method: 'POST',
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                    body: new FormData(form)
+                });
+                const data = await resp.json();
+                mostrarToast(data.mensagem, data.sucesso);
+            } catch (err) {
+                mostrarToast('Não foi possível adicionar o produto. Tente novamente.', false);
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = btnHtmlOriginal;
+            }
+        });
+    });
+
+    function mostrarToast(mensagem, sucesso) {
+        const toast = document.createElement('div');
+        toast.className = 'alert ' + (sucesso ? 'alert-success' : 'alert-danger');
+        toast.style.cssText = 'position:fixed; top:20px; right:20px; z-index:9999; min-width:280px; box-shadow:0 4px 12px rgba(0,0,0,.15);';
+        toast.textContent = mensagem;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 3500);
+    }
+
     function filtrar(sub, btn) {
         document.querySelectorAll('#filtros-salgados .sub-btn').forEach(b => b.classList.remove('ativo'));
         btn.classList.add('ativo');

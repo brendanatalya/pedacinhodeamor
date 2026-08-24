@@ -10,9 +10,83 @@ $itens_pers    = (isset($_SESSION['cart_personalizado']) && is_array($_SESSION['
 $itens_no_carrinho = $itens_normais + $itens_pers;
 
 $redirect_uri = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL);
-
-// Path para add_carrinho.php (mesmo diretório)
 $add_carrinho_url = './add_carrinho.php';
+
+// ──────────────────────────────────────────────────────────────
+// DADOS DE OPÇÕES POR CATEGORIA
+// ──────────────────────────────────────────────────────────────
+
+// BOLO
+$opcoes_bolo = [
+    'sabores' => [
+        'chocolate' => '🍫 Chocolate',
+        'baunilha' => '✨ Baunilha',
+        'red_velvet' => '❤️ Red Velvet',
+        'cenoura' => '🥕 Cenoura',
+        'limao' => '🍋 Limão',
+        'morango' => '🍓 Morango',
+        'cafe' => '☕ Café',
+        'banana' => '🍌 Banana',
+        'abacaxi' => '🍍 Abacaxi'
+    ],
+    'coberturas' => [
+        'chantilly' => 'Chantilly',
+        'pasta_americana' => 'Pasta Americana',
+        'ganache' => 'Ganache',
+        'naked_cake' => 'Naked Cake',
+        'espelho' => 'Espelho',
+        'cobertura_fruta' => 'Cobertura com Frutas'
+    ]
+];
+
+// DOCE
+$opcoes_doce = [
+    'sabores' => [
+        'brigadeiro' => '🍫 Brigadeiro',
+        'beijinho' => 'Beijinho',
+        'cajuzinho' => 'Cajuzinho',
+        'broinhas' => 'Broinhas',
+        'olho_de_sogra' => 'Olho de Sogra',
+        'doce_leite' => '🍯 Doce de Leite',
+        'morango_champanhe' => '🍓 Morango com Champanhe',
+        'brownie' => '🍫 Brownie',
+        'torta' => '🎂 Torta',
+        'bombom' => '🎁 Bombom',
+        'trufa' => '✨ Trufa',
+        'fudge' => 'Fudge'
+    ],
+    'tipos_presentacao' => [
+        'individual' => 'Individual (Unidade)',
+        'pote' => 'Pote (Varios)',
+        'bandeja' => 'Bandeja',
+        'caixa' => 'Caixa Especial'
+    ]
+];
+
+// SALGADO
+$opcoes_salgado = [
+    'tipos' => [
+        'coxinha' => '🍗 Coxinha',
+        'esfiha' => '🥟 Esfiha',
+        'empada' => '🥧 Empada',
+        'bolinha_queijo' => '🧀 Bolinha de Queijo',
+        'enroladinho' => '🌮 Enroladinho',
+        'quiche' => '🍳 Quiche',
+        'pastel' => '📦 Pastel',
+        'acaraje' => 'Acarajé',
+        'churro_salgado' => '✨ Churro Salgado',
+        'cone_salgado' => '🌽 Cone Salgado'
+    ],
+    'recheios' => [
+        'frango_simples' => 'Frango Simples',
+        'frango_catupiry' => 'Frango com Catupiry',
+        'carne' => 'Carne Moída',
+        'palmito' => 'Palmito',
+        'queijo' => 'Queijo',
+        'espinafre' => 'Espinafre',
+        'mix' => 'Mix de Recheios'
+    ]
+];
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -70,27 +144,10 @@ $add_carrinho_url = './add_carrinho.php';
             pointer-events: none;
         }
 
-        .card-selector.skipped {
-            border-color: #bbb;
-            background: #f5f5f5;
-            opacity: 0.6;
-            cursor: not-allowed;
-            pointer-events: none;
-        }
-
-        .card-selector.skipped span {
-            text-decoration: line-through;
-        }
-
-        .card-selector.active {
-            cursor: default;
-        }
-
         .card-selector i {
             font-size: 40px;
             display: block;
             margin-bottom: 10px;
-            position: relative;
         }
 
         .card-selector.completed i::after {
@@ -98,13 +155,8 @@ $add_carrinho_url = './add_carrinho.php';
             font-family: 'Font Awesome 6 Free';
             font-weight: 900;
             position: absolute;
-            top: -8px;
-            right: 30px;
             font-size: 16px;
             color: #2e6930;
-            background: white;
-            border-radius: 50%;
-            padding: 2px 5px;
         }
 
         .card-selector span {
@@ -116,7 +168,6 @@ $add_carrinho_url = './add_carrinho.php';
         .step-label {
             display: block;
             font-size: 12px;
-            font-weight: 400;
             color: #999;
             margin-top: 4px;
         }
@@ -164,6 +215,8 @@ $add_carrinho_url = './add_carrinho.php';
             color: #7a2f2f;
             margin-bottom: 25px;
             font-weight: 600;
+            border-bottom: 2px solid #f5a623;
+            padding-bottom: 12px;
         }
 
         .custom-label {
@@ -182,10 +235,6 @@ $add_carrinho_url = './add_carrinho.php';
         .custom-input:focus {
             border-color: #f5a623;
             box-shadow: 0 0 0 0.2rem rgba(245, 166, 35, 0.25);
-        }
-
-        .form-select.custom-input {
-            padding: 10px;
         }
 
         .camadas-container {
@@ -268,12 +317,6 @@ $add_carrinho_url = './add_carrinho.php';
             margin-top: 15px;
         }
 
-        .alert-custom {
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 20px;
-        }
-
         .modal-sucesso {
             display: none;
             position: fixed;
@@ -310,9 +353,17 @@ $add_carrinho_url = './add_carrinho.php';
             margin-bottom: 15px;
         }
 
-        .modal-sucesso-content p {
-            color: #666;
-            margin-bottom: 20px;
+        .modal-sucesso-content ul {
+            text-align: left;
+            list-style: none;
+            padding: 0;
+            margin: 0 0 20px;
+        }
+
+        .modal-sucesso-content ul li {
+            padding: 6px 0;
+            color: #333;
+            border-bottom: 1px solid #eee;
         }
 
         .btn-modal-close {
@@ -327,25 +378,6 @@ $add_carrinho_url = './add_carrinho.php';
 
         .btn-modal-close:hover {
             background: #e09400;
-        }
-
-        .modal-sucesso-content ul {
-            text-align: left;
-            list-style: none;
-            padding: 0;
-            margin: 0 0 20px;
-        }
-
-        .modal-sucesso-content ul li {
-            padding: 6px 0;
-            color: #333;
-            border-bottom: 1px solid #eee;
-        }
-
-        .modal-sucesso-content ul li i {
-            font-size: 16px;
-            color: #2e6930;
-            margin-right: 8px;
         }
 
         .toast-container-custom {
@@ -383,6 +415,51 @@ $add_carrinho_url = './add_carrinho.php';
         @keyframes fadeOutToast {
             from { opacity: 1; }
             to { opacity: 0; }
+        }
+
+        .info-card {
+            background: #f0f8ff;
+            border-left: 4px solid #0066cc;
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            color: #333;
+        }
+
+        .info-card i {
+            color: #0066cc;
+            margin-right: 6px;
+        }
+
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 20px;
+                min-height: 400px;
+            }
+
+            .cards-container {
+                gap: 10px;
+                margin-bottom: 30px;
+            }
+
+            .card-selector {
+                width: 100px;
+                padding: 15px;
+            }
+
+            .card-selector i {
+                font-size: 30px;
+                margin-bottom: 6px;
+            }
+
+            .card-selector span {
+                font-size: 0.9rem;
+            }
+
+            .step-label {
+                font-size: 10px;
+            }
         }
     </style>
 </head>
@@ -441,9 +518,17 @@ $add_carrinho_url = './add_carrinho.php';
                     </div>
 
                     <!-- FORMULÁRIOS -->
+                    <!-- ══════════════════════════════════════════════════════════════════════════════════ -->
                     <!-- BOLO -->
+                    <!-- ══════════════════════════════════════════════════════════════════════════════════ -->
                     <div class="form-container active" id="form-bolo">
                         <h3>🎂 Personalizar Bolo</h3>
+                        
+                        <div class="info-card">
+                            <i class="fas fa-info-circle"></i>
+                            Os bolos são confeccionados sob encomenda. Preço será orçado conforme o tamanho e detalhes!
+                        </div>
+
                         <form id="form-bolo-submit">
                             <input type="hidden" name="tipo" value="bolo">
                             <input type="hidden" name="product_id" value="personalizado">
@@ -455,107 +540,121 @@ $add_carrinho_url = './add_carrinho.php';
                             </div>
 
                             <div class="form-fields" id="fields-bolo">
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label class="custom-label">Tema / Ocasião *</label>
-                                    <input type="text" class="form-control custom-input" name="tema" placeholder="Ex: Aniversário 1 ano" required>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="custom-label">Sabor da Massa *</label>
-                                    <select class="form-select custom-input" name="sabor" required>
-                                        <option value="">Selecione...</option>
-                                        <option value="chocolate">Chocolate</option>
-                                        <option value="baunilha">Baunilha</option>
-                                        <option value="red_velvet">Red Velvet</option>
-                                        <option value="cenoura">Cenoura</option>
-                                        <option value="limao">Limão</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label class="custom-label">Número de Andares *</label>
-                                    <select class="form-select custom-input" name="andares" id="andares-bolo" onchange="gerarCamadas('bolo')" required>
-                                        <option value="">Selecione...</option>
-                                        <option value="1">1 andar</option>
-                                        <option value="2">2 andares</option>
-                                        <option value="3">3 andares</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="custom-label">Número de Pessoas *</label>
-                                    <select class="form-select custom-input" name="pessoas" required>
-                                        <option value="">Selecione...</option>
-                                        <option value="10">Até 10 pessoas</option>
-                                        <option value="20">Até 20 pessoas</option>
-                                        <option value="30">Até 30 pessoas</option>
-                                        <option value="50">Até 50 pessoas</option>
-                                        <option value="80">Até 80 pessoas</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label class="custom-label">Cobertura</label>
-                                    <select class="form-select custom-input" name="cobertura">
-                                        <option value="">Selecione...</option>
-                                        <option value="chantilly">Chantilly</option>
-                                        <option value="pasta_americana">Pasta Americana</option>
-                                        <option value="ganache">Ganache</option>
-                                        <option value="naked_cake">Naked Cake</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="custom-label">Recheios</label>
-                                    <input type="text" class="form-control custom-input" name="recheios" placeholder="Ex: Ninho com morango, Brigadeiro">
-                                </div>
-                            </div>
-
-                            <!-- CAMADAS DINÂMICAS -->
-                            <div id="camadas-bolo-container"></div>
-
-                            <div class="mb-3">
-                                <label class="custom-label d-block">Restrições Alimentares</label>
-                                <div class="restricoes-group">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="restricoes[]" value="sem_gluten">
-                                        <label class="form-check-label">Sem glúten</label>
+                                <!-- INFORMAÇÕES BÁSICAS -->
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="custom-label">Tema / Ocasião *</label>
+                                        <input type="text" class="form-control custom-input" name="tema" placeholder="Ex: Aniversário 1 ano, Casamento" required>
                                     </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="restricoes[]" value="sem_lactose">
-                                        <label class="form-check-label">Sem lactose</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="restricoes[]" value="vegano">
-                                        <label class="form-check-label">Vegano</label>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="custom-label">Sabor da Massa *</label>
+                                        <select class="form-select custom-input" name="sabor" required>
+                                            <option value="">Selecione um sabor...</option>
+                                            <?php foreach ($opcoes_bolo['sabores'] as $valor => $label): ?>
+                                                <option value="<?php echo $valor; ?>"><?php echo $label; ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label class="custom-label">Data Desejada</label>
-                                    <input type="date" class="form-control custom-input" name="data_desejada" min="<?php echo date('Y-m-d', strtotime('+2 days')); ?>">
+                                <!-- TAMANHO E COBERTURA -->
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="custom-label">Número de Andares *</label>
+                                        <select class="form-select custom-input" name="andares" id="andares-bolo" onchange="gerarCamadas('bolo')" required>
+                                            <option value="">Selecione...</option>
+                                            <option value="1">1 andar</option>
+                                            <option value="2">2 andares</option>
+                                            <option value="3">3 andares</option>
+                                            <option value="4">4 andares</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="custom-label">Número de Pessoas *</label>
+                                        <select class="form-select custom-input" name="pessoas" required>
+                                            <option value="">Selecione...</option>
+                                            <option value="10">Até 10 pessoas</option>
+                                            <option value="20">Até 20 pessoas</option>
+                                            <option value="30">Até 30 pessoas</option>
+                                            <option value="50">Até 50 pessoas</option>
+                                            <option value="80">Até 80 pessoas</option>
+                                            <option value="100">Até 100 pessoas</option>
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="custom-label">Imagem de Referência</label>
-                                    <input type="file" class="form-control custom-input" name="imagem_referencia" accept="image/jpeg,image/png,image/webp">
-                                </div>
-                            </div>
 
-                            <div class="mb-3">
-                                <label class="custom-label">Detalhes Especiais</label>
-                                <textarea class="form-control custom-input" name="detalhes" rows="3" placeholder="Mensagem no bolo, cores..."></textarea>
+                                <!-- COBERTURA E RECHEIO -->
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="custom-label">Cobertura</label>
+                                        <select class="form-select custom-input" name="cobertura">
+                                            <option value="">Selecione...</option>
+                                            <?php foreach ($opcoes_bolo['coberturas'] as $valor => $label): ?>
+                                                <option value="<?php echo $valor; ?>"><?php echo $label; ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="custom-label">Recheios</label>
+                                        <input type="text" class="form-control custom-input" name="recheios" placeholder="Ex: Ninho com morango, Brigadeiro">
+                                    </div>
+                                </div>
+
+                                <!-- CAMADAS DINÂMICAS -->
+                                <div id="camadas-bolo-container"></div>
+
+                                <!-- RESTRIÇÕES ALIMENTARES -->
+                                <div class="mb-3">
+                                    <label class="custom-label d-block">Restrições Alimentares</label>
+                                    <div class="restricoes-group">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="restricoes[]" value="sem_gluten">
+                                            <label class="form-check-label">Sem glúten</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="restricoes[]" value="sem_lactose">
+                                            <label class="form-check-label">Sem lactose</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="restricoes[]" value="vegano">
+                                            <label class="form-check-label">Vegano</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- DATA E IMAGEM -->
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="custom-label">Data Desejada *</label>
+                                        <input type="date" class="form-control custom-input" name="data_desejada" min="<?php echo date('Y-m-d', strtotime('+3 days')); ?>" required>
+                                        <small class="text-muted">Prazo mínimo: 3 dias</small>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="custom-label">Imagem de Referência</label>
+                                        <input type="file" class="form-control custom-input" name="imagem_referencia" accept="image/jpeg,image/png,image/webp">
+                                    </div>
+                                </div>
+
+                                <!-- DETALHES ESPECIAIS -->
+                                <div class="mb-3">
+                                    <label class="custom-label">Detalhes Especiais</label>
+                                    <textarea class="form-control custom-input" name="detalhes" rows="3" placeholder="Mensagem no bolo, cores, decorações especiais..."></textarea>
+                                </div>
                             </div>
-                            </div><!-- /.form-fields -->
                         </form>
                     </div>
 
+                    <!-- ══════════════════════════════════════════════════════════════════════════════════ -->
                     <!-- DOCE -->
+                    <!-- ══════════════════════════════════════════════════════════════════════════════════ -->
                     <div class="form-container" id="form-doce">
                         <h3>🍬 Personalizar Doce</h3>
+                        
+                        <div class="info-card">
+                            <i class="fas fa-info-circle"></i>
+                            Doces são confeccionados sob encomenda. Pedido mínimo pode variar conforme o tipo!
+                        </div>
+
                         <form id="form-doce-submit">
                             <input type="hidden" name="tipo" value="doce">
                             <input type="hidden" name="product_id" value="personalizado">
@@ -567,77 +666,109 @@ $add_carrinho_url = './add_carrinho.php';
                             </div>
 
                             <div class="form-fields" id="fields-doce">
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label class="custom-label">Sabor Principal *</label>
-                                    <input type="text" class="form-control custom-input" name="sabor" placeholder="Ex: Brigadeiro, Beijinho" required>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="custom-label">Tema</label>
-                                    <input type="text" class="form-control custom-input" name="tema" placeholder="Ex: Festa junina, Natal">
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label class="custom-label">Número de Camadas *</label>
-                                    <select class="form-select custom-input" name="camadas" id="camadas-doce" onchange="gerarCamadas('doce')" required>
-                                        <option value="">Selecione...</option>
-                                        <option value="1">1 camada</option>
-                                        <option value="2">2 camadas</option>
-                                        <option value="3">3 camadas</option>
-                                        <option value="4">4 camadas</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="custom-label">Quantidade *</label>
-                                    <input type="number" class="form-control custom-input" name="quantidade" min="1" value="1" required>
-                                </div>
-                            </div>
-
-                            <!-- CAMADAS DINÂMICAS -->
-                            <div id="camadas-doce-container"></div>
-
-                            <div class="mb-3">
-                                <label class="custom-label d-block">Restrições Alimentares</label>
-                                <div class="restricoes-group">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="restricoes[]" value="sem_gluten">
-                                        <label class="form-check-label">Sem glúten</label>
+                                <!-- TIPO DE DOCE -->
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="custom-label">Tipo de Doce *</label>
+                                        <select class="form-select custom-input" name="sabor" required>
+                                            <option value="">Selecione um doce...</option>
+                                            <?php foreach ($opcoes_doce['sabores'] as $valor => $label): ?>
+                                                <option value="<?php echo $valor; ?>"><?php echo $label; ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
                                     </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="restricoes[]" value="sem_lactose">
-                                        <label class="form-check-label">Sem lactose</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="restricoes[]" value="vegano">
-                                        <label class="form-check-label">Vegano</label>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="custom-label">Tema / Ocasião</label>
+                                        <input type="text" class="form-control custom-input" name="tema" placeholder="Ex: Festa junina, Natal">
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label class="custom-label">Data Desejada</label>
-                                    <input type="date" class="form-control custom-input" name="data_desejada" min="<?php echo date('Y-m-d', strtotime('+2 days')); ?>">
+                                <!-- QUANTIDADE E APRESENTAÇÃO -->
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="custom-label">Quantidade *</label>
+                                        <input type="number" class="form-control custom-input" name="quantidade" min="1" max="999" value="1" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="custom-label">Tipo de Apresentação</label>
+                                        <select class="form-select custom-input" name="tamanho">
+                                            <option value="">Selecione...</option>
+                                            <?php foreach ($opcoes_doce['tipos_presentacao'] as $valor => $label): ?>
+                                                <option value="<?php echo $valor; ?>"><?php echo $label; ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="custom-label">Imagem de Referência</label>
-                                    <input type="file" class="form-control custom-input" name="imagem_referencia" accept="image/jpeg,image/png,image/webp">
-                                </div>
-                            </div>
 
-                            <div class="mb-3">
-                                <label class="custom-label">Detalhes Especiais</label>
-                                <textarea class="form-control custom-input" name="detalhes" rows="3" placeholder="Decorações, embalagem..."></textarea>
+                                <!-- CAMADAS (se aplicável) -->
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="custom-label">Número de Camadas (se aplicável)</label>
+                                        <select class="form-select custom-input" name="camadas" id="camadas-doce" onchange="gerarCamadas('doce')">
+                                            <option value="">Não tem camadas</option>
+                                            <option value="1">1 camada</option>
+                                            <option value="2">2 camadas</option>
+                                            <option value="3">3 camadas</option>
+                                            <option value="4">4 camadas</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- CAMADAS DINÂMICAS -->
+                                <div id="camadas-doce-container"></div>
+
+                                <!-- RESTRIÇÕES ALIMENTARES -->
+                                <div class="mb-3">
+                                    <label class="custom-label d-block">Restrições Alimentares</label>
+                                    <div class="restricoes-group">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="restricoes[]" value="sem_gluten">
+                                            <label class="form-check-label">Sem glúten</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="restricoes[]" value="sem_lactose">
+                                            <label class="form-check-label">Sem lactose</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="restricoes[]" value="vegano">
+                                            <label class="form-check-label">Vegano</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- DATA E IMAGEM -->
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="custom-label">Data Desejada *</label>
+                                        <input type="date" class="form-control custom-input" name="data_desejada" min="<?php echo date('Y-m-d', strtotime('+2 days')); ?>" required>
+                                        <small class="text-muted">Prazo mínimo: 2 dias</small>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="custom-label">Imagem de Referência</label>
+                                        <input type="file" class="form-control custom-input" name="imagem_referencia" accept="image/jpeg,image/png,image/webp">
+                                    </div>
+                                </div>
+
+                                <!-- DETALHES ESPECIAIS -->
+                                <div class="mb-3">
+                                    <label class="custom-label">Detalhes Especiais</label>
+                                    <textarea class="form-control custom-input" name="detalhes" rows="3" placeholder="Decorações, embalagem, mensagem..."></textarea>
+                                </div>
                             </div>
-                            </div><!-- /.form-fields -->
                         </form>
                     </div>
 
+                    <!-- ══════════════════════════════════════════════════════════════════════════════════ -->
                     <!-- SALGADO -->
+                    <!-- ══════════════════════════════════════════════════════════════════════════════════ -->
                     <div class="form-container" id="form-salgado">
                         <h3>🥐 Personalizar Salgado</h3>
+                        
+                        <div class="info-card">
+                            <i class="fas fa-info-circle"></i>
+                            Salgados são feitos sob encomenda. Quantidade mínima pode variar conforme o tipo!
+                        </div>
+
                         <form id="form-salgado-submit">
                             <input type="hidden" name="tipo" value="salgado">
                             <input type="hidden" name="product_id" value="personalizado">
@@ -649,74 +780,83 @@ $add_carrinho_url = './add_carrinho.php';
                             </div>
 
                             <div class="form-fields" id="fields-salgado">
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label class="custom-label">Tipo de Salgado *</label>
-                                    <select class="form-select custom-input" name="tipo_salgado" required>
-                                        <option value="">Selecione...</option>
-                                        <option value="coxinha">Coxinha</option>
-                                        <option value="esfiha">Esfiha</option>
-                                        <option value="empada">Empada</option>
-                                        <option value="bolinha_queijo">Bolinha de Queijo</option>
-                                        <option value="enroladinho">Enroladinho</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="custom-label">Recheio *</label>
-                                    <input type="text" class="form-control custom-input" name="recheio" placeholder="Ex: Frango, Carne" required>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label class="custom-label">Quantidade *</label>
-                                    <input type="number" class="form-control custom-input" name="quantidade" min="1" value="1" required>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="custom-label">Tamanho</label>
-                                    <select class="form-select custom-input" name="tamanho">
-                                        <option value="">Selecione...</option>
-                                        <option value="mini">Mini (coquetel)</option>
-                                        <option value="medio">Médio</option>
-                                        <option value="grande">Grande</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="custom-label d-block">Restrições Alimentares</label>
-                                <div class="restricoes-group">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="restricoes[]" value="sem_gluten">
-                                        <label class="form-check-label">Sem glúten</label>
+                                <!-- TIPO E RECHEIO -->
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="custom-label">Tipo de Salgado *</label>
+                                        <select class="form-select custom-input" name="tipo_salgado" required>
+                                            <option value="">Selecione um salgado...</option>
+                                            <?php foreach ($opcoes_salgado['tipos'] as $valor => $label): ?>
+                                                <option value="<?php echo $valor; ?>"><?php echo $label; ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
                                     </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="restricoes[]" value="sem_lactose">
-                                        <label class="form-check-label">Sem lactose</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="restricoes[]" value="vegano">
-                                        <label class="form-check-label">Vegano</label>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="custom-label">Recheio *</label>
+                                        <select class="form-select custom-input" name="recheio" required>
+                                            <option value="">Selecione o recheio...</option>
+                                            <?php foreach ($opcoes_salgado['recheios'] as $valor => $label): ?>
+                                                <option value="<?php echo $valor; ?>"><?php echo $label; ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label class="custom-label">Data Desejada</label>
-                                    <input type="date" class="form-control custom-input" name="data_desejada" min="<?php echo date('Y-m-d', strtotime('+2 days')); ?>">
+                                <!-- QUANTIDADE E TAMANHO -->
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="custom-label">Quantidade *</label>
+                                        <input type="number" class="form-control custom-input" name="quantidade" min="1" max="999" value="1" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="custom-label">Tamanho</label>
+                                        <select class="form-select custom-input" name="tamanho">
+                                            <option value="">Selecione...</option>
+                                            <option value="mini">Mini (coquetel)</option>
+                                            <option value="medio">Médio</option>
+                                            <option value="grande">Grande</option>
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="custom-label">Imagem de Referência</label>
-                                    <input type="file" class="form-control custom-input" name="imagem_referencia" accept="image/jpeg,image/png,image/webp">
-                                </div>
-                            </div>
 
-                            <div class="mb-3">
-                                <label class="custom-label">Detalhes Especiais</label>
-                                <textarea class="form-control custom-input" name="detalhes" rows="3" placeholder="Evento, quantidade por sabor..."></textarea>
+                                <!-- RESTRIÇÕES ALIMENTARES -->
+                                <div class="mb-3">
+                                    <label class="custom-label d-block">Restrições Alimentares</label>
+                                    <div class="restricoes-group">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="restricoes[]" value="sem_gluten">
+                                            <label class="form-check-label">Sem glúten</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="restricoes[]" value="sem_lactose">
+                                            <label class="form-check-label">Sem lactose</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="restricoes[]" value="vegano">
+                                            <label class="form-check-label">Vegano</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- DATA E IMAGEM -->
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="custom-label">Data Desejada *</label>
+                                        <input type="date" class="form-control custom-input" name="data_desejada" min="<?php echo date('Y-m-d', strtotime('+2 days')); ?>" required>
+                                        <small class="text-muted">Prazo mínimo: 2 dias</small>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="custom-label">Imagem de Referência</label>
+                                        <input type="file" class="form-control custom-input" name="imagem_referencia" accept="image/jpeg,image/png,image/webp">
+                                    </div>
+                                </div>
+
+                                <!-- DETALHES ESPECIAIS -->
+                                <div class="mb-3">
+                                    <label class="custom-label">Detalhes Especiais</label>
+                                    <textarea class="form-control custom-input" name="detalhes" rows="3" placeholder="Eventos, quantidade por tipo, embalagem..."></textarea>
+                                </div>
                             </div>
-                            </div><!-- /.form-fields -->
                         </form>
                     </div>
 
@@ -740,7 +880,7 @@ $add_carrinho_url = './add_carrinho.php';
         <div class="modal-sucesso-content">
             <i class="fas fa-check-circle"></i>
             <h3 id="modalSucessoTitulo">Produto Adicionado!</h3>
-            <p id="modalSucessoTexto">Os itens abaixo foram adicionados ao carrinho:</p>
+            <p>Os itens abaixo foram adicionados ao carrinho:</p>
             <ul id="modalSucessoLista"></ul>
             <button class="btn-modal-close" onclick="fecharModalSucesso()">Ir para o Carrinho</button>
         </div>
@@ -749,73 +889,50 @@ $add_carrinho_url = './add_carrinho.php';
     <!-- CONTAINER DE TOASTS -->
     <div class="toast-container-custom" id="toastContainer"></div>
 
-    <?php include_once ABSPATH . 'inc/footer.php'; ?>
+    <?php include '../inc/modal.php'; 
+        include(FOOTER_TEMPLATE);
+    ?>
 
     <script>
-        let tipoAtual = 'bolo';
+        // Estados dos itens
         const tipos = ['bolo', 'doce', 'salgado'];
-        const nomesTipo = { bolo: 'Bolo personalizado', doce: 'Doce personalizado', salgado: 'Salgado personalizado' };
-
-        // Estado de cada etapa: se foi pulada (não desejada) pelo usuário
-        const itemsState = {
+        const nomesTipo = { bolo: 'Bolo', doce: 'Doce', salgado: 'Salgado' };
+        let tipoAtual = 'bolo';
+        let itemsState = {
             bolo: { skip: false },
             doce: { skip: false },
             salgado: { skip: false }
         };
 
-        // Alterna se o usuário deseja ou não aquele item
-        function toggleSkip(tipo, checkbox) {
-            itemsState[tipo].skip = checkbox.checked;
-            const campos = document.getElementById('fields-' + tipo);
-            if (!campos) {
-                console.warn('Campos não encontrados para tipo: ' + tipo);
-                return;
-            }
-            campos.classList.toggle('skipped', checkbox.checked);
-        }
-
-        // Navega para uma etapa específica (usado só pelos botões de navegação)
+        // ──────────────────────────────────────────────────────────────
+        // NAVEGAÇÃO ENTRE TIPOS
+        // ──────────────────────────────────────────────────────────────
         function irParaEtapa(index) {
-            const novoTipo = tipos[index];
-            if (!novoTipo) {
-                console.warn('Tipo não encontrado para index: ' + index);
-                return;
-            }
+            if (index < 0 || index >= tipos.length) return;
 
-            document.querySelectorAll('.form-container').forEach(form => form.classList.remove('active'));
-            
-            const formElement = document.getElementById('form-' + novoTipo);
-            if (!formElement) {
-                console.warn('Form container não encontrado: form-' + novoTipo);
-                return;
-            }
-            
-            formElement.classList.add('active');
+            const novoTipo = tipos[index];
+            const formAtualContainer = document.getElementById(`form-${tipoAtual}`);
+            const novoFormContainer = document.getElementById(`form-${novoTipo}`);
+
+            if (formAtualContainer) formAtualContainer.classList.remove('active');
+            if (novoFormContainer) novoFormContainer.classList.add('active');
 
             tipoAtual = novoTipo;
             atualizarCards(index);
             atualizarBotoes();
-
-            const activeForm = document.querySelector('.form-container.active');
-            if (activeForm) {
-                activeForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
         }
 
-        // Atualiza a aparência dos cards: concluído / pulado / ativo / bloqueado
+        // ──────────────────────────────────────────────────────────────
+        // ATUALIZAR CARDS VISUAIS
+        // ──────────────────────────────────────────────────────────────
         function atualizarCards(indexAtual) {
-            tipos.forEach((tipo, i) => {
-                const card = document.querySelector(`[data-tipo="${tipo}"]`);
-                if (!card) {
-                    console.warn('Card não encontrado para tipo: ' + tipo);
-                    return;
-                }
-                
-                card.classList.remove('active', 'completed', 'skipped', 'disabled');
+            document.querySelectorAll('.card-selector').forEach((card, idx) => {
+                card.classList.remove('active', 'completed', 'disabled', 'skipped');
 
-                if (i === indexAtual) {
+                if (idx === indexAtual) {
                     card.classList.add('active');
-                } else if (i < indexAtual) {
+                } else if (idx < indexAtual) {
+                    const tipo = tipos[idx];
                     card.classList.add(itemsState[tipo].skip ? 'skipped' : 'completed');
                 } else {
                     card.classList.add('disabled');
@@ -823,16 +940,32 @@ $add_carrinho_url = './add_carrinho.php';
             });
         }
 
+        // ──────────────────────────────────────────────────────────────
+        // TOGGLE "NÃO DESEJO ESTE ITEM"
+        // ──────────────────────────────────────────────────────────────
+        function toggleSkip(tipo, checkbox) {
+            itemsState[tipo].skip = checkbox.checked;
+            const fieldsDiv = document.getElementById(`fields-${tipo}`);
+            if (fieldsDiv) {
+                fieldsDiv.classList.toggle('skipped', checkbox.checked);
+            }
+
+            const indexAtual = tipos.indexOf(tipoAtual);
+            atualizarCards(indexAtual);
+        }
+
+        // ──────────────────────────────────────────────────────────────
+        // NAVEGAR
+        // ──────────────────────────────────────────────────────────────
         function proximoTipo() {
             const indexAtual = tipos.indexOf(tipoAtual);
             const form = document.getElementById(`form-${tipoAtual}-submit`);
-            
+
             if (!form) {
                 console.warn('Form não encontrado para tipo: ' + tipoAtual);
                 return;
             }
 
-            // Só valida os campos obrigatórios se o usuário NÃO marcou "não desejo este item"
             if (!itemsState[tipoAtual].skip && !form.checkValidity()) {
                 form.reportValidity();
                 return;
@@ -862,10 +995,8 @@ $add_carrinho_url = './add_carrinho.php';
                 return;
             }
 
-            // Voltar desabilitado no primeiro
             btnVoltar.disabled = indexAtual === 0;
 
-            // Mudar texto do próximo no último
             if (indexAtual === tipos.length - 1) {
                 btnProximo.innerHTML = '<i class="fas fa-check me-2"></i> Concluído';
                 btnProximo.classList.remove('btn-proximo');
@@ -877,20 +1008,21 @@ $add_carrinho_url = './add_carrinho.php';
             }
         }
 
+        // ──────────────────────────────────────────────────────────────
+        // GERAR CAMADAS DINÂMICAS
+        // ──────────────────────────────────────────────────────────────
         function gerarCamadas(tipo) {
             const selectCamadas = tipo === 'bolo' 
                 ? document.getElementById('andares-bolo') 
                 : document.getElementById('camadas-doce');
             const container = document.getElementById(`camadas-${tipo}-container`);
-            
-            // Null checks para segurança
+
             if (!selectCamadas || !container) {
-                console.warn('Elemento não encontrado para genarCamadas(' + tipo + ')');
+                console.warn('Elemento não encontrado para gerarCamadas(' + tipo + ')');
                 return;
             }
-            
-            const numCamadas = parseInt(selectCamadas.value);
 
+            const numCamadas = parseInt(selectCamadas.value);
             container.innerHTML = '';
 
             if (numCamadas > 0) {
@@ -910,14 +1042,13 @@ $add_carrinho_url = './add_carrinho.php';
             }
         }
 
-        // Mostra um toast temporário no canto da tela
+        // ──────────────────────────────────────────────────────────────
+        // TOAST
+        // ──────────────────────────────────────────────────────────────
         function mostrarToast(mensagem, tipoToast = 'sucesso') {
             const container = document.getElementById('toastContainer');
-            if (!container) {
-                console.warn('Toast container não encontrado');
-                return;
-            }
-            
+            if (!container) return;
+
             const toast = document.createElement('div');
             toast.className = 'toast-custom' + (tipoToast === 'erro' ? ' erro' : '');
             toast.innerHTML = `<i class="fas ${tipoToast === 'erro' ? 'fa-circle-exclamation' : 'fa-circle-check'}"></i><span>${mensagem}</span>`;
@@ -929,9 +1060,10 @@ $add_carrinho_url = './add_carrinho.php';
             }, 3500);
         }
 
-        // Envia ao carrinho cada item que o usuário não marcou como "não desejo"
+        // ──────────────────────────────────────────────────────────────
+        // FINALIZAR PEDIDO
+        // ──────────────────────────────────────────────────────────────
         async function finalizarPedido() {
-            // Verificar se logado
             if (!<?php echo json_encode($usuario_logado); ?>) {
                 alert('Por favor, faça login primeiro!');
                 window.location.href = '<?php echo BASEURL; ?>index.php';
@@ -947,13 +1079,13 @@ $add_carrinho_url = './add_carrinho.php';
 
             const btnProximo = document.getElementById('btn-proximo');
             const btnVoltar = document.getElementById('btn-voltar');
-            
+
             if (!btnProximo || !btnVoltar) {
-                console.warn('Botões não encontrados para finalizarPedido');
+                console.warn('Botões não encontrados');
                 alert('Erro ao enviar pedido. Por favor, recarregue a página.');
                 return;
             }
-            
+
             btnProximo.disabled = true;
             btnVoltar.disabled = true;
             btnProximo.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Enviando...';
@@ -969,13 +1101,12 @@ $add_carrinho_url = './add_carrinho.php';
                         method: 'POST',
                         body: formData
                     });
-                    
-                    // Verificar se a resposta é JSON
+
                     const contentType = response.headers.get('content-type');
                     if (!contentType || !contentType.includes('application/json')) {
                         throw new Error('Resposta inválida do servidor');
                     }
-                    
+
                     const data = await response.json();
 
                     if (data.sucesso) {
@@ -1006,11 +1137,10 @@ $add_carrinho_url = './add_carrinho.php';
         function mostrarModalSucesso(itensAdicionados, itensComErro) {
             const lista = document.getElementById('modalSucessoLista');
             if (!lista) {
-                console.warn('Modal lista não encontrada');
                 window.location.href = '<?php echo BASEURL; ?>index.php?page=carrinho';
                 return;
             }
-            
+
             lista.innerHTML = '';
 
             itensAdicionados.forEach(nome => {
@@ -1042,7 +1172,7 @@ $add_carrinho_url = './add_carrinho.php';
             window.location.href = '<?php echo BASEURL; ?>index.php?page=carrinho';
         }
 
-        // Inicializar quando o DOM estiver pronto
+        // Inicializar
         document.addEventListener('DOMContentLoaded', function() {
             atualizarCards(0);
             atualizarBotoes();
