@@ -26,7 +26,7 @@
 </head>
 
 <header id="home">
-    <?php  if(!isset($_SESSION)) session_start();  ?>
+    <?php if(!isset($_SESSION)) session_start();  ?>
 
     <!-- NAVBAR -->
     <nav id="nav">
@@ -59,15 +59,14 @@
                     <li>
                         <a href="<?php echo BASEURL; ?>paginas/sobrenos.php">Sobre nós</a>
                     </li>
-    
-                    <!-- DROPDOWN AQUI -->
-                        <li class="nav-dropdown">
-                            <a href="#" class="nav-dropdown-link">Cárdapio</a>
-                            <ul class="nav-dropdown-menu">
-                                <li><a href="<?php echo BASEURL; ?>paginas/doces.php">Doces</a></li>
-                                <li><a href="<?php echo BASEURL; ?>paginas/salgados.php">Salgados</a></li>
-                            </ul>
-                        </li>
+
+                    <li>
+                        <a href="<?php echo BASEURL; ?>paginas/doces.php">Doces</a></li>
+                    </li>
+
+                    <li>
+                        <a href="<?php echo BASEURL; ?>paginas/salgados.php">Salgados</a></li>
+                    </li>
 
                     <li>
                         <a href="<?php echo BASEURL; ?>paginas/personalizados.php">personalizados</a>
