@@ -156,8 +156,6 @@ close_database($conn);
                         <div class="swiper-button-prev"></div>
                         <div class="swiper-button-next"></div>
                     </div>
-
-
                     
                 </div>
             </section>
@@ -174,19 +172,20 @@ close_database($conn);
                     </div>
                     
                     <?php if (!empty($avaliacoes_home)): ?>
+                    
+                    <!--swiper teste-->
 
-                    <div class="feedbacks-wrapper">
-                        <button class="feedback-arrow prev-feedback" type="button" aria-label="Feedback anterior">&#10094;</button>
-                        <div class="feedbacks-carrossel-track">
-                            <div class="feedbacks-carrossel" id="feedbackscarrossel">
-
-                                <?php foreach ($avaliacoes_home as $av): ?>
-                                <?php
-                                    $nota_media = round(($av['nota_produto'] + $av['nota_atend']) / 2);
-                                    $estrelas   = str_repeat('★', $nota_media) . str_repeat('☆', 5 - $nota_media);
-                                    $primeiro_nome = explode(' ', trim($av['nome']))[0];
-                                    $inicial = mb_strtoupper(mb_substr($av['nome'], 0, 1, 'UTF-8'), 'UTF-8');
-                                ?>
+                    <div class="swiper">
+                        <div class="swiper-wrapper">
+    
+                            <?php foreach ($avaliacoes_home as $av): ?>
+                            <?php
+                                $nota_media = round(($av['nota_produto'] + $av['nota_atend']) / 2);
+                                $estrelas   = str_repeat('★', $nota_media) . str_repeat('☆', 5 - $nota_media);
+                                $primeiro_nome = explode(' ', trim($av['nome']))[0];
+                                $inicial = mb_strtoupper(mb_substr($av['nome'], 0, 1, 'UTF-8'), 'UTF-8');
+                            ?>
+                            <div class="swiper-slide">
                                 <div class="feedback-card feedback-card-large">
                                     <div class="feedback-user">
                                         <div class="feedback-avatar" style="width:46px;height:46px;border-radius:50%;background:#e8d5f0;display:flex;align-items:center;justify-content:center;font-size:1.2rem;font-weight:700;color:#a855f7;flex-shrink:0;">
@@ -199,15 +198,20 @@ close_database($conn);
                                     </div>
                                     <p class="feedback-text"><?php echo htmlspecialchars($av['comentario']); ?></p>
                                 </div>
-                                <?php endforeach; ?>
-
                             </div>
+                            <?php endforeach; ?>
+                            
                         </div>
-                        <button class="feedback-arrow next-feedback" type="button" aria-label="Próximo feedback">&#10095;</button>
+
+                        <div class="swiper-pagination"></div>
+
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
                     </div>
+
                     <?php else: ?>
                         <p class="text-center text-muted py-4">Ainda não há avaliações — seja o primeiro! 🎂</p>
-                    <?php endif; ?>
+                    <?php endif; ?>                    
                 </div>
             </section>
 

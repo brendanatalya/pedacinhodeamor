@@ -1,4 +1,6 @@
 <script type="text/javascript" src="//www.freeprivacypolicy.com/public/cookie-consent/4.1.0/cookie-consent.js" charset="UTF-8"></script>
+
+<!--impirtações do js do swiper, o de baixo é inicialização de carrossel-->
 <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
 
 <script src="<?php echo BASEURL; ?>js/swiper.js"></script>
