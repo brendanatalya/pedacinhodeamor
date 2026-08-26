@@ -74,57 +74,16 @@ body {
 /* parte dos feedbacks ----  arrumar essas bosta de botao pra nao ficar em cima do texto essas bosta */
 /* ── feedbacks ─────────────────────────────────────────────── */
 
-
-/* wrapper: setas ficam nas laterais, trilho no meio */
-.feedbacks-wrapper {
-  position: relative;
-  margin: 0 auto;
-  max-width: 960px;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  box-sizing: border-box;
-  padding: 0 1rem;
-  height: auto;
-}
-
-/* trilho com overflow hidden */
-.feedbacks-carrossel-track {
-  flex: 1;
-  min-width: 0; /* evita overflow no flex */
-  padding-bottom: 2rem; /* espaço para as setas */
-  margin: 0 1rem; /* compensa o padding do wrapper */
-}
-
-/* faixa interna — gap entre cards */
-.feedbacks-carrossel {
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 0;
-  transition: transform 0.5s ease;
-  will-change: transform;
-}
-
-/* cada card: 50% menos metade do gap → 2 visíveis sem corte */
 .feedback-card {
-  border-left: 4px solid #a855f7;
-  min-width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
-  /*backdrop-filter: blur(6px);*/
+  width: 100%;
   border: 1px solid rgba(255,255,255,0.3);
-  color: #fff;
   border-radius: 20px;
   align-items: center;
-  justify-content: center;
-  z-index: 5;
   font-weight: 500;
   font-size: 11px;
-  padding: 1.75rem;
-  letter-spacing: 2px;
   background: #c0395b0a;
-  border-color: #813044;
-  flex: 0 0 100%
+  border-color: #8130449c;
+  flex: 0 0 100%;
 }
 
 .feedback-card-large {
@@ -154,7 +113,7 @@ body {
   color: #333;
 }
 
-.feedback-info p {
+.feedback-info {
   margin: 0.2rem 0 0;
   font-size: 0.8rem;
   color: #999;
@@ -191,6 +150,12 @@ body {
   transform: scale(1.07);
 }
 
+.feedback-estrela {
+  color:#c49e22;
+  font-size: 0.90rem;
+  letter-spacing: 1px;
+  margin: 0;
+}
 
 /* parte dos doces ---- depois mudar a fonte q nao tem e tirar o url da foto(? talvez nao precise mas vai que o lf ne) */
 
@@ -3957,6 +3922,50 @@ ___________
   height: 500px;
   width: 100%;
 
+}
+
+.swiper-wrapper{
+  align-items: center;
+  margin-top: 40px;
+}
+
+.swiper-button-prev .swiper-navigation-icon,
+.swiper-button-next .swiper-navigation-icon {
+  display: none !important;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  color: #fff;
+  width: 25px;
+  height: 25px;
+}
+
+.swiper-button-prev::after {
+  content: '\f053';
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  font-size: 25px;
+  color: #b63270;
+}
+
+.swiper-button-next::after {
+  content: '\f054';
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  font-size: 25px;
+  color: #b63270;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #b63270 !important;
+}
+
+
+/*swipper de avaliações*/
+.swiperstar {
+  height: 500px;
+  width: 100%;
 }
 
 .swiper-wrapper{

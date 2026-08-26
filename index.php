@@ -175,16 +175,17 @@ close_database($conn);
                     
                     <!--swiper teste-->
 
-                    <div class="swiper">
+                    <div class="swiper" id="avaliacao">
                         <div class="swiper-wrapper">
     
                             <?php foreach ($avaliacoes_home as $av): ?>
                             <?php
-                                $nota_media = round(($av['nota_produto'] + $av['nota_atend']) / 2);
-                                $estrelas   = str_repeat('★', $nota_media) . str_repeat('☆', 5 - $nota_media);
+                                $nota_media = $av['nota_produto'];
+                                $estrelas = str_repeat('<i class="fa-solid fa-star"></i>', $nota_media) . str_repeat('<i class="fa-regular fa-star"></i>', 5 - $nota_media);
                                 $primeiro_nome = explode(' ', trim($av['nome']))[0];
                                 $inicial = mb_strtoupper(mb_substr($av['nome'], 0, 1, 'UTF-8'), 'UTF-8');
                             ?>
+                            
                             <div class="swiper-slide">
                                 <div class="feedback-card feedback-card-large">
                                     <div class="feedback-user">
@@ -193,7 +194,7 @@ close_database($conn);
                                         </div>
                                         <div class="feedback-info">
                                             <h4><?php echo htmlspecialchars($primeiro_nome); ?></h4>
-                                            <p style="color:#f5a623;font-size:1rem;letter-spacing:1px;margin:0;"><?php echo $estrelas; ?></p>
+                                            <p class="feedback-estrela"><?php echo $estrelas; ?></p>
                                         </div>
                                     </div>
                                     <p class="feedback-text"><?php echo htmlspecialchars($av['comentario']); ?></p>
@@ -210,7 +211,7 @@ close_database($conn);
                     </div>
 
                     <?php else: ?>
-                        <p class="text-center text-muted py-4">Ainda não há avaliações — seja o primeiro! 🎂</p>
+                        <p class="text-center text-muted py-4">Ainda não há avaliações — seja o primeiro!</p>
                     <?php endif; ?>                    
                 </div>
             </section>

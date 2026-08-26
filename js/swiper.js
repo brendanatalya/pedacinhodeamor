@@ -32,16 +32,16 @@
 
       /*carrossel de avalizações*/
       
-        var swiper = new Swiper('.swiperstar', {
+        var swiperstar = new Swiper('#avaliacao', {
         loop: true,
         grabCursor: true,
         navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
+          nextEl: '.swiper-button-nextstar',
+          prevEl: '.swiper-button-prevstar',
         },
 
         pagination: {
-          el: '.swiper-pagination',
+          el: '.swiper-paginationstar',
           clickable: true,
         },
 
