@@ -51,10 +51,34 @@ if ($password !== $password_confirm) {
     exit;
 }
 
-if (strlen($password) < 6) {
+if (strlen($password) < 8) {
     echo json_encode([
         'success' => false,
-        'message' => 'A senha precisa ter pelo menos 6 caracteres.'
+        'message' => 'A senha deve ter no mínimo 8 caracteres.'
+    ]);
+    exit;
+}
+
+if (!preg_match('/[A-Z]/', $password)) {
+    echo json_encode([
+        'success' => false,
+        'message' => 'A senha deve conter pelo menos uma LETRA MAIÚSCULA.'
+    ]);
+    exit;
+}
+
+if (!preg_match('/[0-9]/', $password)) {
+    echo json_encode([
+        'success' => false,
+        'message' => 'A senha deve conter pelo menos um NÚMERO.'
+    ]);
+    exit;
+}
+
+if (!preg_match('/[!@#$%^&*()_+\-=\[\]{};\':"\\|,.<>\/?]/', $password)) {
+    echo json_encode([
+        'success' => false,
+        'message' => 'A senha deve conter pelo menos um CARACTERE ESPECIAL (!@#$%^&* etc).'
     ]);
     exit;
 }
