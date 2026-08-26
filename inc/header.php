@@ -18,9 +18,10 @@
     <!-- font awesome -->
     <link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/awesome/all.min.css">
 
-          <!-- css -->
+    <!-- css -->
     <link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/style_pda.css">
 
+    <!--css do swiper-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css"/>
 
   
