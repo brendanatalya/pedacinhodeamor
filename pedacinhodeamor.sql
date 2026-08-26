@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 22/06/2026 às 16:39
+-- Tempo de geração: 26/08/2026 às 15:45
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -191,18 +191,21 @@ CREATE TABLE `usuarios` (
   `endereco` varchar(255) DEFAULT NULL,
   `foto` varchar(255) DEFAULT NULL,
   `senha` varchar(255) NOT NULL,
-  `tipo` enum('admin','cliente') NOT NULL
+  `tipo` enum('admin','cliente') NOT NULL,
+  `token_recuperacao` varchar(64) DEFAULT NULL,
+  `token_expiracao` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `nome`, `email`, `cpf`, `telefone`, `endereco`, `foto`, `senha`, `tipo`) VALUES
-(1, 'joao', 'joao@gmail.com', '12312312312', '1212222222', 'rua x, bairro y]', NULL, '$2y$10$o5hpmtInSFO6jwhz1WaVDevx4UOr.bFJac21xSZ9cXcLZDjWyUcWu', 'cliente'),
-(3, 'Íris Pires Do Nascimento', 'irispirees@gmail.com', '', NULL, '', NULL, '$2y$10$UfG2oscilVRXmCKie0ECwepLcsJnlni/IAABaurPozRlA6vdQ/H8y', 'cliente'),
-(7, 'Administrador', 'adminpda@gmail.com', '123123123', '1212222222', 'sao bento', NULL, '$2y$10$8JS374iUX6sfM/RWKasDR.XWg5WyGqA32tN96DVAjWu2SOPZvmtN6', 'admin'),
-(8, 'brenda', 'brenda@gmail.com', '', NULL, '', NULL, '$2y$10$.iOHWrTR0uJoY.bjH4IUvemfk9pSXpKv6oyYhDRLWYIyTZPBLzIiu', 'cliente');
+INSERT INTO `usuarios` (`id`, `nome`, `email`, `cpf`, `telefone`, `endereco`, `foto`, `senha`, `tipo`, `token_recuperacao`, `token_expiracao`) VALUES
+(1, 'joao', 'joao@gmail.com', '12312312312', '1212222222', 'rua x, bairro y]', NULL, '$2y$10$o5hpmtInSFO6jwhz1WaVDevx4UOr.bFJac21xSZ9cXcLZDjWyUcWu', 'cliente', NULL, NULL),
+(3, 'Íris Pires Do Nascimento', 'irispirees@gmail.com', '', NULL, '', NULL, '$2y$10$UfG2oscilVRXmCKie0ECwepLcsJnlni/IAABaurPozRlA6vdQ/H8y', 'cliente', 'a1818baa8efb0ced927a87703b333a596a016b110e6c11948016079b78d87517', '2026-08-26 17:40:58'),
+(7, 'Administrador', 'adminpda@gmail.com', '123123123', '1212222222', 'sao bento', NULL, '$2y$10$8JS374iUX6sfM/RWKasDR.XWg5WyGqA32tN96DVAjWu2SOPZvmtN6', 'admin', NULL, NULL),
+(8, 'brenda', 'brenda@gmail.com', '', NULL, '', NULL, '$2y$10$.iOHWrTR0uJoY.bjH4IUvemfk9pSXpKv6oyYhDRLWYIyTZPBLzIiu', 'cliente', NULL, NULL),
+(9, 'Iris', 'iris.nascimento3@aluno.cps.sp.gov.br', '', NULL, NULL, NULL, '$2y$10$0GYhmmNxBAQ8/R.hXgbVxusO2hRutxwjzPOsgHaB6X65qwfPPMzsC', 'cliente', NULL, NULL);
 
 --
 -- Índices para tabelas despejadas
@@ -273,7 +276,7 @@ ALTER TABLE `produtos`
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Restrições para tabelas despejadas

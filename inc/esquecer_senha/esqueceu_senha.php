@@ -53,6 +53,12 @@ try {
 
     $mail = new PHPMailer\PHPMailer\PHPMailer();
 
+    //$mail->SMTPDebug = 2; 
+
+    $mail->isSMTP();
+    $mail->Host       = SMTP_HOST;
+
+
     $mail->isSMTP();
     $mail->Host       = SMTP_HOST;
     $mail->SMTPAuth   = true;
@@ -109,13 +115,15 @@ try {
     
     http_response_code(200);
     exit(json_encode(['success' => true, 'message' => 'Se o e-mail estiver cadastrado, você receberá instruções de recuperação.']));
-
+// Procure por esse bloco no final do seu esqueceu_senha.php:
 } catch (Exception $e) {
-    // Log do erro
     error_log('Erro ao enviar email de recuperação: ' . $e->getMessage());
     
-    // Retorna sucesso mesmo assim (segurança)
-    http_response_code(200);
-    exit(json_encode(['success' => true, 'message' => 'Se o e-mail estiver cadastrado, você receberá instruções de recuperação.']));
+    // COMMENTE ESTA LINHA ANTIGA:
+    // exit(json_encode(['success' => true, ...]));
+    
+    // ADICIONE ESTA LINHA TEMPORÁRIA PARA VER O ERRO DE VERDADE:
+    exit(json_encode(['success' => false, 'error' => $e->getMessage()]));
 }
+
 ?>
