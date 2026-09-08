@@ -36,20 +36,8 @@ $stmt->execute();
 $avaliacoes_home = $stmt->fetchAll(PDO::FETCH_ASSOC);
 close_database($conn);
 ?>
-<!DOCTYPE html>
-<html lang="pt-br">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Pedacinho de Amor</title>
-        <link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/bootstrap/bootstrap.min.css">
-        <link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/style_pda.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
-    </head>
-
     <body>
-          <?php include 'inc/header.php'; ?>
+        <?php include 'inc/header.php'; ?>
         <main>
              <section class="index-bemvindo" style="background: url('./imagens/boloindex.jpg') no-repeat center center; background-size: cover;">
                 <!-- bloco de bem vindo do site -->
