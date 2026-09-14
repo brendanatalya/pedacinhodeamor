@@ -760,7 +760,7 @@ body {
         
         /* sidebar combinando com a agenda */
         .sidebar  {
-            background-color: #61463B !important  ;
+            background-color: #530f2b !important  ;
             min-height: 100vh;
             padding: 25px 0;
             position: fixed;
@@ -769,7 +769,7 @@ body {
             z-index: 100;
         }
         .sidebar a {
-            color: #E2D9D7;
+            color: #b3aaa9;
             text-decoration: none;
             padding: 14px 25px;
             display: flex;
@@ -777,14 +777,15 @@ body {
             gap: 12px;
             font-size: 15px;
             font-weight: 500;
-            border-left: 4px solid transparent;
             transition: all 0.2s;
+            /* border-radius: 10px; */
+            margin-bottom: 5px;
         }
         .sidebar a:hover,
         .sidebar a.active {
-            background-color: #503930;
-            border-left-color: #FBB6CE;
+            /* border: #c794a6 1px solid; */
             color: #FFF;
+            border-bottom: 0.5px solid #c794a6;
         }
         
         /* conteúdo principal ajustado por causa da sidebar fixa */

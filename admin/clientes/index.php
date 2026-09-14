@@ -86,7 +86,9 @@ close_database($conn);
                             <p>
                                 <strong>Nome:</strong> <?php echo htmlspecialchars($cliente_detalhes['nome']); ?><br>
                                 <strong>Email:</strong> <?php echo htmlspecialchars($cliente_detalhes['email']); ?><br>
-                                <strong>Telefone:</strong> <?php echo htmlspecialchars($cliente_detalhes['telefone']); ?><br>
+                                <strong>Telefone:</strong>
+<?php echo htmlspecialchars($cliente['telefone'] ?? 'Não cadastrado'); ?>
+<br>
                                 <strong>CPF:</strong> <?php echo htmlspecialchars($cliente_detalhes['cpf']); ?><br>
                                 <strong>Endereço:</strong> <?php echo htmlspecialchars($cliente_detalhes['endereco']); ?><br>
                             </p>
@@ -175,7 +177,7 @@ close_database($conn);
                                 <small>
                                     <p class="mb-2">
                                         <strong>Email:</strong> <?php echo htmlspecialchars($cliente['email']); ?><br>
-                                        <strong>Telefone:</strong> <?php echo htmlspecialchars($cliente['telefone']); ?><br>
+                                        <strong>Telefone:</strong> <?php echo htmlspecialchars($cliente['telefone'] ?? 'Não cadastrado'); ?><br>
                                         <strong>CPF:</strong> <?php echo htmlspecialchars($cliente['cpf']); ?>
                                     </p>
                                     <p class="mb-2">

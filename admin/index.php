@@ -32,24 +32,26 @@ require_once(DBAPI);
                     <small style="color: #E2D9D7;"><?php echo htmlspecialchars($_SESSION['nome']); ?></small>
                 </div>
                 
-                <a href="#dashboard" onclick="showSection('dashboard', event)" class="menu-link active">
-                    <i class="fas fa-chart-line"></i> Visão Geral
-                </a>
-                <a href="#produtos" onclick="showSection('produtos', event)" class="menu-link">
-                    <i class="fas fa-box"></i> Produtos
-                </a>
-                <a href="#estoque" onclick="showSection('estoque', event)" class="menu-link">
-                    <i class="fas fa-boxes"></i> Estoque
-                </a>
-                <a href="#pedidos" onclick="showSection('pedidos', event)" class="menu-link">
-                    <i class="fas fa-shopping-bag"></i> Pedidos
-                </a>
-                <a href="#agenda" onclick="showSection('agenda', event)" class="menu-link">
-                    <i class="fas fa-calendar"></i> Agenda
-                </a>
-                <a href="#clientes" onclick="showSection('clientes', event)" class="menu-link">
-                    <i class="fas fa-users"></i> Clientes
-                </a>
+                <div class="align-items-start d-flex flex-column gap-2" style="padding: 0 10px;">
+                    <a href="#dashboard" onclick="showSection('dashboard', event)" class="menu-link active">
+                        <i class="fas fa-chart-line"></i> Visão Geral
+                    </a>
+                    <a href="#produtos" onclick="showSection('produtos', event)" class="menu-link">
+                        <i class="fas fa-box"></i> Produtos
+                    </a>
+                    <a href="#estoque" onclick="showSection('estoque', event)" class="menu-link">
+                        <i class="fas fa-boxes"></i> Estoque
+                    </a>
+                    <a href="#pedidos" onclick="showSection('pedidos', event)" class="menu-link">
+                        <i class="fas fa-shopping-bag"></i> Pedidos
+                    </a>
+                    <a href="#agenda" onclick="showSection('agenda', event)" class="menu-link">
+                        <i class="fas fa-calendar"></i> Agenda
+                    </a>
+                    <a href="#clientes" onclick="showSection('clientes', event)" class="menu-link">
+                        <i class="fas fa-users"></i> Clientes
+                    </a>
+                </div>
 
                 
                 <hr style="border-color: rgba(255,255,255,0.2); margin: 20px 0;">
