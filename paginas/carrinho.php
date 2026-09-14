@@ -93,7 +93,7 @@ if (!empty($cartMessage)) {
                                     
                                     <?php if (!empty($produto['imagem_referencia'])): ?>
                                         <img 
-                                            src="../imagens/<?php echo htmlspecialchars($produto['imagem_referencia']); ?>" 
+                                            src="<?php echo BASEURL . htmlspecialchars($produto['imagem_referencia']); ?>" 
                                             alt="<?php echo htmlspecialchars($produto['nome']); ?>"
                                             class="carrinho-item-img"
                                         >
@@ -333,7 +333,7 @@ if (!empty($cartMessage)) {
                                     
                                     <?php if (!empty($produto['imagem_referencia'])): ?>
                                         <img 
-                                            src="../imagens/<?php echo htmlspecialchars($produto['imagem_referencia']); ?>" 
+                                            src="<?php echo BASEURL . htmlspecialchars($produto['imagem_referencia']); ?>" 
                                             alt="<?php echo htmlspecialchars($produto['nome']); ?>"
                                             class="carrinho-item-img"
                                         >

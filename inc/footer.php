@@ -106,8 +106,10 @@ button.cc-nb-reject:hover {
 </style>
 
 <script>
-    // --- CARROSSEL PRINCIPAL ---
-    const carrossel = document.getElementById('carrossel');
+   // --- CARROSSEL PRINCIPAL ---
+const carrossel = document.getElementById('carrossel');
+
+if (carrossel) {
     const slides = document.querySelector('.slides');
     const images = document.querySelectorAll('.slides img');
     const prevBtn = document.querySelector('.prev');
@@ -145,12 +147,14 @@ button.cc-nb-reject:hover {
     carrossel.addEventListener('mouseleave', startAutoplay);
     showImage(0);
     startAutoplay();
+}
+// --- FEEDBACKS ---
+const feedbackscarrossel = document.getElementById('feedbackscarrossel');
 
-    // --- FEEDBACKS ---
-    const feedbackscarrossel = document.getElementById('feedbackscarrossel');
-    const feedbackCards     = feedbackscarrossel ? feedbackscarrossel.querySelectorAll('.feedback-card') : [];
-    const prevFeedbackBtn   = document.querySelector('.prev-feedback');
-    const nextFeedbackBtn   = document.querySelector('.next-feedback');
+if (feedbackscarrossel) {
+    const feedbackCards   = feedbackscarrossel.querySelectorAll('.feedback-card');
+    const prevFeedbackBtn = document.querySelector('.prev-feedback');
+    const nextFeedbackBtn = document.querySelector('.next-feedback');
 
     let feedbackIndex    = 0;
     let feedbackInterval = null;
@@ -184,6 +188,7 @@ button.cc-nb-reject:hover {
     window.addEventListener('resize', () => showFeedback(feedbackIndex));
     showFeedback(0);
     resetFeedbackAutoplay();
+}
     
     // ── Posicionar dropdown ──
 const navDropdowns = document.querySelectorAll('.nav-dropdown');

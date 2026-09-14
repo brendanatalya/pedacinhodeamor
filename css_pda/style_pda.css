@@ -785,6 +785,454 @@ body {
     box-shadow: 0 6px 15px rgba(40, 167, 69, 0.3) !important;
 }
 
+/* ==========================================================================
+   PERSONALIZADOS - MONTAGEM DE PRODUTO (bolo/doce/salgado)
+   Movido do <style> inline da página para o css do site e padronizado
+   com a paleta rosa/vinho já usada no resto do site (--primary-color etc).
+   ========================================================================== */
+
+.cards-container {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+}
+
+.card-selector {
+    width: 150px;
+    padding: 20px;
+    border: 3px solid #ddd;
+    border-radius: 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.card-selector:hover:not(.disabled) {
+    border-color: var(--primary-color);
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(214, 90, 125, 0.2);
+}
+
+.card-selector.active {
+    border-color: var(--primary-color);
+    background: #fff5f8;
+    box-shadow: 0 5px 20px rgba(214, 90, 125, 0.3);
+}
+
+.card-selector.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #f5f5f5;
+    pointer-events: none;
+}
+
+.card-selector.completed {
+    border-color: #2e6930;
+    background: #eafbea;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.card-selector i {
+    font-size: 40px;
+    display: block;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+}
+
+.card-selector.completed i {
+    color: #2e6930;
+}
+
+.card-selector.completed i::after {
+    content: '\f00c';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    font-size: 16px;
+    color: #2e6930;
+}
+
+.card-selector span {
+    display: block;
+    font-weight: 600;
+    color: #333;
+}
+
+.step-label {
+    display: block;
+    font-size: 12px;
+    color: #999;
+    margin-top: 4px;
+}
+
+.skip-item-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #fff5f8;
+    border: 1px dashed var(--primary-color);
+    border-radius: 8px;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+}
+
+/* neutraliza o float/margin negativo do .form-check do Bootstrap,
+   que exigia padding-left: 1.5em no pai (o .skip-item-box só tem 15px),
+   fazendo a caixinha "vazar" para fora do box e ficar desalinhada */
+.skip-item-box .form-check-input {
+    float: none;
+    flex-shrink: 0;
+    width: 1.15em;
+    height: 1.15em;
+    margin: 0;
+    cursor: pointer;
+    border-color: var(--primary-color);
+}
+
+/* o Bootstrap reskina o checkbox (appearance:none + background/border próprios),
+   então "accent-color" sozinho não muda a cor marcada — é preciso sobrescrever
+   o :checked e o :focus, que por padrão usam o azul do Bootstrap */
+.skip-item-box .form-check-input:checked {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.skip-item-box .form-check-input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(214, 90, 125, 0.25);
+}
+
+.skip-item-box label {
+    font-weight: 600;
+    color: #813044;
+    margin-left: 0;
+    margin-bottom: 0;
+    cursor: pointer;
+}
+
+.form-fields.skipped {
+    opacity: 0.35;
+    pointer-events: none;
+    filter: grayscale(40%);
+}
+
+.form-container {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    min-height: 500px;
+    display: none;
+}
+
+.form-container.active {
+    display: block;
+    animation: personalizadoFadeIn 0.3s ease;
+}
+
+@keyframes personalizadoFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.form-container h3 {
+    color: #813044;
+    margin-bottom: 25px;
+    font-weight: 600;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 12px;
+}
+
+.camadas-container {
+    background: #f9f9f9;
+    border-radius: 8px;
+    padding: 15px;
+    margin-top: 15px;
+    border-left: 4px solid var(--primary-color);
+}
+
+.camada-input {
+    margin-bottom: 15px;
+    padding: 10px;
+    background: white;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+}
+
+.camada-input label {
+    font-weight: 600;
+    color: #813044;
+    margin-bottom: 8px;
+}
+
+.navigation-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+    justify-content: space-between;
+}
+
+.btn-nav {
+    padding: 12px 30px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 16px;
+}
+
+.btn-voltar {
+    background: #e0e0e0;
+    color: #333;
+}
+
+.btn-voltar:hover:not(:disabled) {
+    background: #d0d0d0;
+}
+
+.btn-voltar:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-proximo {
+    background: var(--primary-color);
+    color: white;
+    flex: 1;
+}
+
+.btn-proximo:hover:not(:disabled) {
+    background: var(--primary-hover);
+}
+
+.btn-concluir {
+    background: #28a745;
+    color: white;
+    flex: 1;
+}
+
+.btn-concluir:hover {
+    background: #218838;
+}
+
+.restricoes-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 15px;
+}
+
+.modal-sucesso {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.modal-sucesso.active {
+    display: flex;
+}
+
+.modal-sucesso-content {
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.modal-sucesso-content i {
+    font-size: 60px;
+    color: #2e6930;
+    margin-bottom: 20px;
+}
+
+.modal-sucesso-content h3 {
+    color: #2e6930;
+    margin-bottom: 15px;
+}
+
+.modal-sucesso-content ul {
+    text-align: left;
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px;
+}
+
+.modal-sucesso-content ul li {
+    padding: 6px 0;
+    color: #333;
+    border-bottom: 1px solid #eee;
+}
+
+.btn-modal-close {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn-modal-close:hover {
+    background: var(--primary-hover);
+}
+
+.toast-container-custom {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    left: 20px;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+    pointer-events: none;
+}
+
+.toast-custom {
+    background: #2e6930;
+    color: white;
+    padding: 14px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    animation: personalizadoSlideInToast 0.3s ease;
+    min-width: 260px;
+    max-width: 100%;
+    box-sizing: border-box;
+    pointer-events: auto;
+}
+
+.toast-custom.erro {
+    background: #b23a3a;
+}
+
+@keyframes personalizadoSlideInToast {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes personalizadoFadeOutToast {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+/* card de informação padronizado com o .alert-rosa já usado no carrinho */
+.info-card {
+    background: #f8f0f2;
+    border-left: 4px solid var(--primary-color);
+    padding: 12px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    color: #521928;
+}
+
+.info-card i {
+    color: var(--primary-color);
+    margin-right: 6px;
+}
+
+/* ── Responsivo: tablets ── */
+@media (max-width: 768px) {
+    .form-container {
+        padding: 20px;
+        min-height: 400px;
+    }
+
+    .cards-container {
+        gap: 10px;
+        margin-bottom: 30px;
+    }
+
+    .card-selector {
+        width: 100px;
+        padding: 15px;
+    }
+
+    .card-selector i {
+        font-size: 30px;
+        margin-bottom: 6px;
+    }
+
+    .card-selector span {
+        font-size: 0.9rem;
+    }
+
+    .step-label {
+        font-size: 10px;
+    }
+}
+
+/* ── Responsivo: celulares pequenos ── */
+@media (max-width: 480px) {
+    .form-container {
+        padding: 16px;
+    }
+
+    .cards-container {
+        gap: 8px;
+    }
+
+    .card-selector {
+        width: 88px;
+        padding: 10px;
+    }
+
+    .card-selector i {
+        font-size: 24px;
+        margin-bottom: 4px;
+    }
+
+    .card-selector span {
+        font-size: 0.78rem;
+    }
+
+    .navigation-buttons {
+        flex-direction: column-reverse;
+    }
+
+    .btn-nav {
+        width: 100%;
+        padding: 14px 20px;
+    }
+
+    .modal-sucesso-content {
+        padding: 24px;
+    }
+
+    .toast-container-custom {
+        bottom: 12px;
+        right: 12px;
+        left: 12px;
+        align-items: stretch;
+    }
+
+    .toast-custom {
+        min-width: 0;
+    }
+}
+
 /*parte do index.php - admin*/
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
@@ -3955,3 +4403,156 @@ ___________
     }
 }
 
+/* =====================================================================
+   PERSONALIZADOS — acabamento visual isolado da página de encomendas
+   ===================================================================== */
+.page-personalizados {
+  background: linear-gradient(180deg, #fffafb 0, #fff4f7 42rem, #fff 78rem);
+  color: #4a2834;
+}
+
+.page-personalizados .personalizados-hero {
+  min-height: 330px;
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+  overflow: hidden;
+  background-position: center 45%;
+  background-size: cover;
+}
+
+.page-personalizados .personalizados-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(105deg, rgba(76, 19, 43, .9), rgba(132, 42, 75, .68) 55%, rgba(76, 19, 43, .55));
+}
+
+.page-personalizados .personalizados-hero .doces-hero__overlay { display: none; }
+
+.page-personalizados .personalizados-hero .doces-hero__content {
+  max-width: 760px;
+  padding: 2rem;
+  text-align: center;
+  color: #fff;
+}
+
+.page-personalizados .personalizados-hero h1 {
+  margin: 0 0 .7rem;
+  color: #fff;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  font-weight: 700;
+  line-height: .95;
+  letter-spacing: .045em;
+  text-shadow: 0 3px 18px rgba(41, 7, 22, .35);
+}
+
+.page-personalizados .personalizados-hero p {
+  margin: 0 auto;
+  max-width: 530px;
+  font-size: clamp(1rem, 2vw, 1.18rem);
+  color: #ffe7ef;
+}
+
+.page-personalizados .personalizados-conteudo { max-width: 1100px; }
+
+.page-personalizados .personalizados-intro { max-width: 690px; margin-inline: auto; }
+.page-personalizados .personalizados-intro .section-title {
+  color: #6b1939;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+}
+.page-personalizados .personalizados-intro .text-muted { color: #805967 !important; }
+
+.page-personalizados .cards-container {
+  position: relative;
+  gap: 14px;
+  margin-bottom: 26px;
+}
+
+.page-personalizados .card-selector {
+  position: relative;
+  width: min(30%, 190px);
+  min-height: 150px;
+  padding: 23px 16px 17px;
+  border: 1px solid #eed6df;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 7px 20px rgba(92, 22, 52, .07);
+}
+
+.page-personalizados .card-selector::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 22px;
+  left: 22px;
+  height: 4px;
+  border-radius: 0 0 5px 5px;
+  background: transparent;
+}
+
+.page-personalizados .card-selector:hover:not(.disabled) {
+  border-color: #b73e6b;
+  transform: translateY(-4px);
+  box-shadow: 0 13px 25px rgba(111, 25, 57, .16);
+}
+.page-personalizados .card-selector.active {
+  border-color: #9b244e;
+  background: linear-gradient(145deg, #fff, #fff3f7);
+  box-shadow: 0 13px 27px rgba(111, 25, 57, .18);
+}
+.page-personalizados .card-selector.active::before { background: #a92c59; }
+.page-personalizados .card-selector.completed { border-color: #a92c59; background: #fff7fa; }
+.page-personalizados .card-selector.completed i { color: #a92c59; }
+.page-personalizados .card-selector.skipped { border-style: dashed; border-color: #c69aa9; background: #fcf8f9; opacity: .72; }
+.page-personalizados .card-selector.skipped i { color: #aa788a; }
+.page-personalizados .card-selector.disabled { background: #f9f4f5; opacity: .68; }
+.page-personalizados .card-selector i { font-size: 2.2rem; color: #a92c59; }
+.page-personalizados .card-selector span { color: #632039; font-size: 1rem; }
+.page-personalizados .card-selector .step-label { color: #986979; font-size: .75rem; font-weight: 500; }
+
+.page-personalizados .form-container {
+  min-height: 0;
+  padding: clamp(1.25rem, 3vw, 2.5rem);
+  border: 1px solid #f0dce4;
+  border-radius: 22px;
+  box-shadow: 0 16px 38px rgba(94, 26, 53, .1);
+}
+.page-personalizados .form-container h3 {
+  color: #6f1d3f;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(1.75rem, 3vw, 2.35rem);
+  border-color: #e8bfd0;
+}
+.page-personalizados .info-card { border-radius: 12px; background: #fff4f7; border-left-color: #b52d5d; }
+.page-personalizados .custom-input { border-color: #ead7de !important; font-family: 'Poppins', Arial, sans-serif !important; }
+.page-personalizados .custom-input:focus { border-color: #aa2c59 !important; box-shadow: 0 0 0 4px rgba(170, 44, 89, .13) !important; }
+.page-personalizados .restricoes-group { gap: .7rem 1.25rem; margin-top: .7rem; }
+.page-personalizados .form-check-input:checked { background-color: #a92c59; border-color: #a92c59; }
+
+.page-personalizados .navigation-buttons { gap: 12px; margin-top: 22px; }
+.page-personalizados .btn-nav { min-height: 50px; border-radius: 12px; }
+.page-personalizados .btn-voltar { background: #f2e8eb; color: #6e3448; }
+.page-personalizados .btn-proximo,
+.page-personalizados .btn-concluir { background: linear-gradient(135deg, #8d2048, #bd3f70); box-shadow: 0 7px 16px rgba(141, 32, 72, .22); }
+.page-personalizados .btn-proximo:hover:not(:disabled),
+.page-personalizados .btn-concluir:hover:not(:disabled) { background: linear-gradient(135deg, #731936, #a32b59); transform: translateY(-1px); }
+.page-personalizados .btn-modal-close { border-radius: 10px; background: #a92c59; }
+
+@media (max-width: 576px) {
+  .page-personalizados .personalizados-hero { min-height: 250px; }
+  .page-personalizados .personalizados-hero .doces-hero__content { padding: 1.25rem; }
+  .page-personalizados .personalizados-conteudo { margin-top: 2rem !important; margin-bottom: 2rem !important; }
+  .page-personalizados .cards-container { flex-wrap: nowrap; gap: 7px; }
+  .page-personalizados .card-selector { width: calc((100% - 14px) / 3); min-height: 112px; padding: 13px 5px 10px; border-radius: 13px; }
+  .page-personalizados .card-selector i { margin-bottom: 4px; font-size: 1.55rem; }
+  .page-personalizados .card-selector span { font-size: .78rem; }
+  .page-personalizados .card-selector .step-label { font-size: .62rem; line-height: 1.2; }
+  .page-personalizados .form-container { border-radius: 16px; }
+  .page-personalizados .navigation-buttons { flex-direction: column-reverse; }
+  .page-personalizados .btn-nav { width: 100%; }
+}

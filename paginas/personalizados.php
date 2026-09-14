@@ -10,7 +10,7 @@ $itens_pers    = (isset($_SESSION['cart_personalizado']) && is_array($_SESSION['
 $itens_no_carrinho = $itens_normais + $itens_pers;
 
 $redirect_uri = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL);
-$add_carrinho_url = './add_carrinho.php';
+$add_carrinho_url = BASEURL . 'paginas/add_carrinho.php';
 
 // ──────────────────────────────────────────────────────────────
 // DADOS DE OPÇÕES POR CATEGORIA
@@ -98,370 +98,6 @@ $opcoes_salgado = [
     <link rel="stylesheet" href="../css_pda/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/style_pda.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        .cards-container {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 40px;
-        }
-
-        .card-selector {
-            width: 150px;
-            padding: 20px;
-            border: 3px solid #ddd;
-            border-radius: 12px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            background: white;
-        }
-
-        .card-selector:hover:not(.disabled) {
-            border-color: #f5a623;
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(245, 166, 35, 0.2);
-        }
-
-        .card-selector.active {
-            border-color: #f5a623;
-            background: #fff8f0;
-            box-shadow: 0 5px 20px rgba(245, 166, 35, 0.3);
-        }
-
-        .card-selector.disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            background: #f5f5f5;
-            pointer-events: none;
-        }
-
-        .card-selector.completed {
-            border-color: #2e6930;
-            background: #eafbea;
-            cursor: not-allowed;
-            pointer-events: none;
-        }
-
-        .card-selector i {
-            font-size: 40px;
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        .card-selector.completed i::after {
-            content: '\f00c';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            position: absolute;
-            font-size: 16px;
-            color: #2e6930;
-        }
-
-        .card-selector span {
-            display: block;
-            font-weight: 600;
-            color: #333;
-        }
-
-        .step-label {
-            display: block;
-            font-size: 12px;
-            color: #999;
-            margin-top: 4px;
-        }
-
-        .skip-item-box {
-            background: #fff8f0;
-            border: 1px dashed #f5a623;
-            border-radius: 8px;
-            padding: 12px 15px;
-            margin-bottom: 20px;
-        }
-
-        .skip-item-box label {
-            font-weight: 600;
-            color: #7a2f2f;
-            margin-left: 6px;
-        }
-
-        .form-fields.skipped {
-            opacity: 0.35;
-            pointer-events: none;
-            filter: grayscale(40%);
-        }
-
-        .form-container {
-            background: white;
-            border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            min-height: 500px;
-            display: none;
-        }
-
-        .form-container.active {
-            display: block;
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .form-container h3 {
-            color: #7a2f2f;
-            margin-bottom: 25px;
-            font-weight: 600;
-            border-bottom: 2px solid #f5a623;
-            padding-bottom: 12px;
-        }
-
-        .custom-label {
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 8px;
-        }
-
-        .custom-input {
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            padding: 10px;
-            transition: border-color 0.3s ease;
-        }
-
-        .custom-input:focus {
-            border-color: #f5a623;
-            box-shadow: 0 0 0 0.2rem rgba(245, 166, 35, 0.25);
-        }
-
-        .camadas-container {
-            background: #f9f9f9;
-            border-radius: 8px;
-            padding: 15px;
-            margin-top: 15px;
-            border-left: 4px solid #f5a623;
-        }
-
-        .camada-input {
-            margin-bottom: 15px;
-            padding: 10px;
-            background: white;
-            border-radius: 6px;
-            border: 1px solid #ddd;
-        }
-
-        .camada-input label {
-            font-weight: 600;
-            color: #7a2f2f;
-            margin-bottom: 8px;
-        }
-
-        .navigation-buttons {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
-            justify-content: space-between;
-        }
-
-        .btn-nav {
-            padding: 12px 30px;
-            border: none;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 16px;
-        }
-
-        .btn-voltar {
-            background: #e0e0e0;
-            color: #333;
-        }
-
-        .btn-voltar:hover:not(:disabled) {
-            background: #d0d0d0;
-        }
-
-        .btn-voltar:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .btn-proximo {
-            background: #f5a623;
-            color: white;
-            flex: 1;
-        }
-
-        .btn-proximo:hover:not(:disabled) {
-            background: #e09400;
-        }
-
-        .btn-concluir {
-            background: #2e6930;
-            color: white;
-            flex: 1;
-        }
-
-        .btn-concluir:hover {
-            background: #246620;
-        }
-
-        .restricoes-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            margin-top: 15px;
-        }
-
-        .modal-sucesso {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 9999;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-sucesso.active {
-            display: flex;
-        }
-
-        .modal-sucesso-content {
-            background: white;
-            padding: 40px;
-            border-radius: 12px;
-            text-align: center;
-            max-width: 400px;
-        }
-
-        .modal-sucesso-content i {
-            font-size: 60px;
-            color: #2e6930;
-            margin-bottom: 20px;
-        }
-
-        .modal-sucesso-content h3 {
-            color: #2e6930;
-            margin-bottom: 15px;
-        }
-
-        .modal-sucesso-content ul {
-            text-align: left;
-            list-style: none;
-            padding: 0;
-            margin: 0 0 20px;
-        }
-
-        .modal-sucesso-content ul li {
-            padding: 6px 0;
-            color: #333;
-            border-bottom: 1px solid #eee;
-        }
-
-        .btn-modal-close {
-            background: #f5a623;
-            color: white;
-            border: none;
-            padding: 10px 30px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-
-        .btn-modal-close:hover {
-            background: #e09400;
-        }
-
-        .toast-container-custom {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 10000;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .toast-custom {
-            background: #2e6930;
-            color: white;
-            padding: 14px 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            animation: slideInToast 0.3s ease;
-            min-width: 260px;
-        }
-
-        .toast-custom.erro {
-            background: #b23a3a;
-        }
-
-        @keyframes slideInToast {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-
-        @keyframes fadeOutToast {
-            from { opacity: 1; }
-            to { opacity: 0; }
-        }
-
-        .info-card {
-            background: #f0f8ff;
-            border-left: 4px solid #0066cc;
-            padding: 12px;
-            border-radius: 4px;
-            margin-bottom: 20px;
-            font-size: 0.9rem;
-            color: #333;
-        }
-
-        .info-card i {
-            color: #0066cc;
-            margin-right: 6px;
-        }
-
-        @media (max-width: 768px) {
-            .form-container {
-                padding: 20px;
-                min-height: 400px;
-            }
-
-            .cards-container {
-                gap: 10px;
-                margin-bottom: 30px;
-            }
-
-            .card-selector {
-                width: 100px;
-                padding: 15px;
-            }
-
-            .card-selector i {
-                font-size: 30px;
-                margin-bottom: 6px;
-            }
-
-            .card-selector span {
-                font-size: 0.9rem;
-            }
-
-            .step-label {
-                font-size: 10px;
-            }
-        }
-    </style>
 </head>
 <body>
 
@@ -529,7 +165,7 @@ $opcoes_salgado = [
                             Os bolos são confeccionados sob encomenda. Preço será orçado conforme o tamanho e detalhes!
                         </div>
 
-                        <form id="form-bolo-submit">
+                        <form id="form-bolo-submit" enctype="multipart/form-data">
                             <input type="hidden" name="tipo" value="bolo">
                             <input type="hidden" name="product_id" value="personalizado">
                             <input type="hidden" name="redirect" value="<?php echo htmlspecialchars($redirect_uri, ENT_QUOTES, 'UTF-8'); ?>">
@@ -655,7 +291,7 @@ $opcoes_salgado = [
                             Doces são confeccionados sob encomenda. Pedido mínimo pode variar conforme o tipo!
                         </div>
 
-                        <form id="form-doce-submit">
+                        <form id="form-doce-submit" enctype="multipart/form-data">
                             <input type="hidden" name="tipo" value="doce">
                             <input type="hidden" name="product_id" value="personalizado">
                             <input type="hidden" name="redirect" value="<?php echo htmlspecialchars($redirect_uri, ENT_QUOTES, 'UTF-8'); ?>">
@@ -769,7 +405,7 @@ $opcoes_salgado = [
                             Salgados são feitos sob encomenda. Quantidade mínima pode variar conforme o tipo!
                         </div>
 
-                        <form id="form-salgado-submit">
+                        <form id="form-salgado-submit" enctype="multipart/form-data">
                             <input type="hidden" name="tipo" value="salgado">
                             <input type="hidden" name="product_id" value="personalizado">
                             <input type="hidden" name="redirect" value="<?php echo htmlspecialchars($redirect_uri, ENT_QUOTES, 'UTF-8'); ?>">
@@ -1097,17 +733,20 @@ $opcoes_salgado = [
                 const form = document.getElementById(`form-${tipo}-submit`);
                 const formData = new FormData(form);
                 try {
-                    const response = await fetch('<?php echo $add_carrinho_url; ?>', {
+                    const response = await fetch('<?= $add_carrinho_url ?>', {
                         method: 'POST',
+                        headers: { 'X-Requested-With': 'XMLHttpRequest' },
                         body: formData
                     });
 
-                    const contentType = response.headers.get('content-type');
-                    if (!contentType || !contentType.includes('application/json')) {
-                        throw new Error('Resposta inválida do servidor');
+                    const textoResposta = await response.text();
+                    let data;
+                    try {
+                        data = JSON.parse(textoResposta);
+                    } catch (parseErro) {
+                        console.error('Resposta NÃO era JSON. Corpo bruto recebido:', textoResposta);
+                        throw new Error('Resposta inválida do servidor: ' + textoResposta.slice(0, 200));
                     }
-
-                    const data = await response.json();
 
                     if (data.sucesso) {
                         itensAdicionados.push(nomesTipo[tipo]);
