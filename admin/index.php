@@ -16,7 +16,7 @@ require_once(DBAPI);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel Admin - Pedacinho de Amor</title>
+    <title>Admin</title>
 <link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/bootstrap/bootstrap.min.css">    <link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/style_pda.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -33,7 +33,7 @@ require_once(DBAPI);
                 </div>
                 
                 <a href="#dashboard" onclick="showSection('dashboard', event)" class="menu-link active">
-                    <i class="fas fa-chart-line"></i> Dashboard
+                    <i class="fas fa-chart-line"></i> Visão Geral
                 </a>
                 <a href="#produtos" onclick="showSection('produtos', event)" class="menu-link">
                     <i class="fas fa-box"></i> Produtos
@@ -66,11 +66,10 @@ require_once(DBAPI);
                 <div class="header-admin">
                     <div>
                         <h1>
-                            <i class="fas fa-crown"></i>
                             Painel de Administração
                         </h1>
                         <small>
-                            Bem-vindo de volta, <?php echo htmlspecialchars($_SESSION['nome']); ?>!
+                            Bem-vindo, <?php echo htmlspecialchars($_SESSION['nome']); ?>!
                         </small>
                     </div>
                     
@@ -92,7 +91,6 @@ require_once(DBAPI);
                                 <span>Olá, <?php echo htmlspecialchars($_SESSION['nome']); ?></span>
                             </a>
                             <ul class="nav-dropdown-menu" style="min-width:150px;">
-                                <li><a href="<?php echo BASEURL; ?>minha_conta.php">Minha Conta</a></li>
                                 <li><a href="<?php echo BASEURL; ?>index.php"><i class="fas fa-home"></i> Voltar ao Site</a></li>
                                 <li><a href="<?php echo BASEURL; ?>inc/logout.php"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
                             </ul>
