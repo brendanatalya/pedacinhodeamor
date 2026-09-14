@@ -98,8 +98,10 @@ button.cc-nb-reject:hover {
 </style>
 
 <script>
-    // --- CARROSSEL PRINCIPAL ---
-    const carrossel = document.getElementById('carrossel');
+   // --- CARROSSEL PRINCIPAL ---
+const carrossel = document.getElementById('carrossel');
+
+if (carrossel) {
     const slides = document.querySelector('.slides');
     const images = document.querySelectorAll('.slides img');
     const prevBtn = document.querySelector('.prev');
@@ -141,11 +143,44 @@ button.cc-nb-reject:hover {
         startAutoplay();
     }
 
+<<<<<<< HEAD
+    function showImage(i) {
+        index = (i + total) % total;
+        slides.style.transform = `translateX(${-index * 100}%)`;
+        updateDots();
+    }
+
+    prevBtn.addEventListener('click', () => showImage(index - 1));
+    nextBtn.addEventListener('click', () => showImage(index + 1));
+
+    for (let i = 0; i < total; i++) {
+        const btn = document.createElement('button');
+        btn.addEventListener('click', () => showImage(i));
+        dotsContainer.appendChild(btn);
+    }
+
+    function startAutoplay() { intervalId = setInterval(() => showImage(index + 1), 4000); }
+    function stopAutoplay() { clearInterval(intervalId); }
+
+    carrossel.addEventListener('mouseenter', stopAutoplay);
+    carrossel.addEventListener('mouseleave', startAutoplay);
+    showImage(0);
+    startAutoplay();
+}
+// --- FEEDBACKS ---
+const feedbackscarrossel = document.getElementById('feedbackscarrossel');
+
+if (feedbackscarrossel) {
+    const feedbackCards   = feedbackscarrossel.querySelectorAll('.feedback-card');
+    const prevFeedbackBtn = document.querySelector('.prev-feedback');
+    const nextFeedbackBtn = document.querySelector('.next-feedback');
+=======
     // --- FEEDBACKS ---
     const feedbackscarrossel = document.getElementById('feedbackscarrossel');
     const feedbackCards     = feedbackscarrossel ? feedbackscarrossel.querySelectorAll('.feedback-card') : [];
     const prevFeedbackBtn   = document.querySelector('.prev-feedback');
     const nextFeedbackBtn   = document.querySelector('.next-feedback');
+>>>>>>> 5ced7e463d8c55c39db5d96d60fbcc74f07a00f6
 
     // Validação: Só executa se a estrutura de feedbacks existir na página atual
     if (feedbackscarrossel && feedbackCards.length > 0) {
@@ -182,6 +217,29 @@ button.cc-nb-reject:hover {
         showFeedback(0);
         resetFeedbackAutoplay();
     }
+<<<<<<< HEAD
+
+    function resetFeedbackAutoplay() {
+        clearInterval(feedbackInterval);
+        feedbackInterval = setInterval(() => {
+            const next = feedbackIndex >= maxIndex() ? 0 : feedbackIndex + 1;
+            showFeedback(next);
+        }, 6000);
+    }
+
+    if (prevFeedbackBtn) {
+        prevFeedbackBtn.addEventListener('click', () => { showFeedback(feedbackIndex - 1); resetFeedbackAutoplay(); });
+    }
+    if (nextFeedbackBtn) {
+        nextFeedbackBtn.addEventListener('click', () => { showFeedback(feedbackIndex + 1); resetFeedbackAutoplay(); });
+    }
+
+    window.addEventListener('resize', () => showFeedback(feedbackIndex));
+    showFeedback(0);
+    resetFeedbackAutoplay();
+}
+=======
+>>>>>>> 5ced7e463d8c55c39db5d96d60fbcc74f07a00f6
     
     // ── Posicionar dropdown ──
     const navDropdowns = document.querySelectorAll('.nav-dropdown');

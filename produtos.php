@@ -84,7 +84,7 @@ unset($_SESSION['cart_message']);
                             <h5 class="card-title"><?php echo htmlspecialchars($produto['nome']); ?></h5>
                             <p class="card-text"><?php echo nl2br(htmlspecialchars($produto['descricao'])); ?></p>
                             <p class="card-text"><strong>R$ <?php echo number_format($produto['preco'], 2, ',', '.'); ?></strong></p>
-                            <form action="add_carrinho.php" method="POST" class="mt-auto">
+                            <form action="paginas/add_carrinho.php" method="POST" class="mt-auto">
                                 <input type="hidden" name="product_id" value="<?php echo $produto['id']; ?>">
                                 <input type="hidden" name="quantity" value="1">
                                 <input type="hidden" name="redirect" value="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>">

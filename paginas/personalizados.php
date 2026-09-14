@@ -10,7 +10,7 @@ $itens_pers    = (isset($_SESSION['cart_personalizado']) && is_array($_SESSION['
 $itens_no_carrinho = $itens_normais + $itens_pers;
 
 $redirect_uri = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL);
-$add_carrinho_url = './add_carrinho.php';
+$add_carrinho_url = BASEURL . 'paginas/add_carrinho.php';
 
 
 // bolo
@@ -85,8 +85,22 @@ $opcoes_salgado = [
     ]
 ];
 ?>
+<<<<<<< HEAD
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personalizados - Pedacinho de Amor</title>
+    <link rel="icon" type="image/x-icon" href="../imagens/icon.png">
+    <link rel="stylesheet" href="../css_pda/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/style_pda.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+=======
 
 
+>>>>>>> 5ced7e463d8c55c39db5d96d60fbcc74f07a00f6
 <body>
 
     <?php include_once ABSPATH . 'inc/header.php'; ?>
@@ -152,7 +166,7 @@ $opcoes_salgado = [
                             Os bolos são confeccionados sob encomenda. Preço será orçado conforme o tamanho e detalhes!
                         </div>
 
-                        <form id="form-bolo-submit">
+                        <form id="form-bolo-submit" enctype="multipart/form-data">
                             <input type="hidden" name="tipo" value="bolo">
                             <input type="hidden" name="product_id" value="personalizado">
                             <input type="hidden" name="redirect" value="<?php echo htmlspecialchars($redirect_uri, ENT_QUOTES, 'UTF-8'); ?>">
@@ -252,7 +266,7 @@ $opcoes_salgado = [
                             Doces são confeccionados sob encomenda. Pedido mínimo pode variar conforme o tipo!
                         </div>
 
-                        <form id="form-doce-submit">
+                        <form id="form-doce-submit" enctype="multipart/form-data">
                             <input type="hidden" name="tipo" value="doce">
                             <input type="hidden" name="product_id" value="personalizado">
                             <input type="hidden" name="redirect" value="<?php echo htmlspecialchars($redirect_uri, ENT_QUOTES, 'UTF-8'); ?>">
@@ -341,7 +355,7 @@ $opcoes_salgado = [
                             Salgados são feitos sob encomenda. Quantidade mínima pode variar conforme o tipo!
                         </div>
 
-                        <form id="form-salgado-submit">
+                        <form id="form-salgado-submit" enctype="multipart/form-data">
                             <input type="hidden" name="tipo" value="salgado">
                             <input type="hidden" name="product_id" value="personalizado">
                             <input type="hidden" name="redirect" value="<?php echo htmlspecialchars($redirect_uri, ENT_QUOTES, 'UTF-8'); ?>">
@@ -633,17 +647,20 @@ $opcoes_salgado = [
                 const form = document.getElementById(`form-${tipo}-submit`);
                 const formData = new FormData(form);
                 try {
-                    const response = await fetch('<?php echo $add_carrinho_url; ?>', {
+                    const response = await fetch('<?= $add_carrinho_url ?>', {
                         method: 'POST',
+                        headers: { 'X-Requested-With': 'XMLHttpRequest' },
                         body: formData
                     });
 
-                    const contentType = response.headers.get('content-type');
-                    if (!contentType || !contentType.includes('application/json')) {
-                        throw new Error('Resposta inválida do servidor');
+                    const textoResposta = await response.text();
+                    let data;
+                    try {
+                        data = JSON.parse(textoResposta);
+                    } catch (parseErro) {
+                        console.error('Resposta NÃO era JSON. Corpo bruto recebido:', textoResposta);
+                        throw new Error('Resposta inválida do servidor: ' + textoResposta.slice(0, 200));
                     }
-
-                    const data = await response.json();
 
                     if (data.sucesso) {
                         itensAdicionados.push(nomesTipo[tipo]);

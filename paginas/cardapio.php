@@ -82,7 +82,7 @@ fiz isso por agora, qlqr coisa eu falo com as meninas dps pra add isso no banco 
                          data-sub="<?php echo htmlspecialchars($sub); ?>">
                         <div class="product-card <?php echo !$p['disponivel'] ? 'unavailable' : ''; ?>">
                             <?php if (!empty($p['imagem_referencia'])): ?>
-                                <img src="<?php echo BASEURL . "/imagens/"; ?><?php echo htmlspecialchars($p['imagem_referencia']); ?>"
+                                <img src="<?php echo BASEURL . htmlspecialchars($p['imagem_referencia']); ?>"
                                      alt="<?php echo htmlspecialchars($p['nome']); ?>">
                             <?php endif; ?>
                             <div class="product-info">
@@ -136,7 +136,7 @@ fiz isso por agora, qlqr coisa eu falo com as meninas dps pra add isso no banco 
                          data-sub="<?php echo htmlspecialchars($sub); ?>">
                         <div class="product-card <?php echo !$p['disponivel'] ? 'unavailable' : ''; ?>">
                             <?php if (!empty($p['imagem_referencia'])): ?>
-                                <img src="<?php echo BASEURL . "/imagens/"; ?><?php echo htmlspecialchars($p['imagem_referencia']); ?>" alt="<?php echo htmlspecialchars($p['nome']); ?>">
+                                <img src="<?php echo BASEURL . htmlspecialchars($p['imagem_referencia']); ?>" alt="<?php echo htmlspecialchars($p['nome']); ?>">
                             <?php endif; ?>
                             <div class="product-info">
                                 <h3><?php echo htmlspecialchars($p['nome']); ?></h3>

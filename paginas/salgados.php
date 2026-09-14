@@ -141,7 +141,7 @@ $botoes = [
                 <div class="col produto-item" data-sub="<?php echo htmlspecialchars($sub); ?>">
                     <div class="product-card <?php echo !$p['disponivel'] ? 'unavailable' : ''; ?>">
                         <?php if (!empty($p['imagem_referencia'])): ?>
-                            <img src="../imagens/<?php echo htmlspecialchars($p['imagem_referencia']); ?>"
+                            <img src="<?php echo BASEURL . htmlspecialchars($p['imagem_referencia']); ?>"
                                  alt="<?php echo htmlspecialchars($p['nome']); ?>">
                         <?php endif; ?>
                         <div class="product-info">
