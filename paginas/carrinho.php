@@ -76,7 +76,7 @@ if (!empty($cartMessage)) {
         <?php if ($carrinho_vazio): ?>
             <div class="alert alert-rosa" role="alert">
                 Seu carrinho está vazio. 
-                <a href="cardapio.php" class="alert-link">Continuar comprando</a>
+                <a href="../index.php" class="alert-link">Continuar comprando</a>
             </div>
 
         <?php else: ?>

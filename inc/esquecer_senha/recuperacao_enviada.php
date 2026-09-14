@@ -60,15 +60,15 @@ $email_oculto = substr($email, 0, 3) . '***' . substr(strrchr($email, '@'), 0);
 </div>
 
 <script>
-function solicitarNovamente() {
+function enviarEmail(isAutomatico = false) {
     const email = '<?php echo addslashes($email); ?>';
-    
+
     if (!email) {
-        alert('E-mail não informado');
+        if (!isAutomatico) alert('E-mail não informado');
         return;
     }
 
-    const btn = event.target;
+    const btn = document.querySelector('.btn-enviar');
     btn.disabled = true;
     btn.textContent = 'Enviando...';
 
@@ -91,9 +91,25 @@ function solicitarNovamente() {
         console.error('Erro:', error);
         btn.disabled = false;
         btn.textContent = 'Enviar Novamente';
-        alert('Erro ao enviar. Tente novamente.');
+        if (!isAutomatico) alert('Erro ao enviar. Tente novamente.');
     });
 }
+
+function solicitarNovamente() {
+    enviarEmail(false);
+}
+
+// Envia automaticamente ao abrir a página, mas só uma vez por sessão do navegador
+// (evita reenviar sozinho se a pessoa der F5 na página)
+document.addEventListener('DOMContentLoaded', function() {
+    const email = '<?php echo addslashes($email); ?>';
+    const chave = 'emailRecuperacaoEnviado_' + email;
+
+    if (!sessionStorage.getItem(chave)) {
+        sessionStorage.setItem(chave, '1');
+        enviarEmail(true);
+    }
+});
 </script>
 
 <?php include FOOTER_TEMPLATE; ?>

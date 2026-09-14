@@ -36,20 +36,8 @@ $stmt->execute();
 $avaliacoes_home = $stmt->fetchAll(PDO::FETCH_ASSOC);
 close_database($conn);
 ?>
-<!DOCTYPE html>
-<html lang="pt-br">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Pedacinho de Amor</title>
-        <link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/bootstrap/bootstrap.min.css">
-        <link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/style_pda.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
-    </head>
-
     <body>
-          <?php include 'inc/header.php'; ?>
+        <?php include 'inc/header.php'; ?>
         <main>
              <section class="index-bemvindo" style="background: url('./imagens/boloindex.jpg') no-repeat center center; background-size: cover;">
                 <!-- bloco de bem vindo do site -->
@@ -109,66 +97,39 @@ close_database($conn);
 
                 <!-- PArte dos carss fofinhos rs para desktop aff -->
 
-                <div class="container-xxl" style="overflow: visible;">
+                <div class="container-xxl">
                     <div>
                         <p class="carrossel-subtitulo">Campeões de Vendas</p>
                         <h2 class="carrossel-titulo">Esses fazem <em>sucesso</em> por aqui!</h2>
                     </div>
-
-                    <div class="campeoes-slider d-none d-lg-flex">
-                        
-                        <div class="campeoes-card" style="background-image: url('<?php echo BASEURL; ?>imagens/torta.jpg');">
-                            <div class="campeoes-card-body">
-                                <span>Tortas</span>
-                                <a class="btn-confira" href="<?php echo BASEURL; ?>paginas/cardapio.php">Confira</a>
-                            </div>
-                        </div>
-                        
-                        <div class="campeoes-card" style="background-image: url('<?php echo BASEURL; ?>imagens/salgados.jpg');">
-                            <div class="campeoes-card-body">
-                                <span>Salgados</span>
-                                <a class="btn-confira" href="<?php echo BASEURL; ?>paginas/cardapio.php">Confira</a>
-                            </div>
-                        </div>
                     
-                        <div class="campeoes-card" style="background-image: url('<?php echo BASEURL; ?>imagens/bolos.jpg');">
-                            <div class="campeoes-card-body">
-                                <span>Bolos</span>
-                                <a class="btn-confira" href="<?php echo BASEURL; ?>paginas/cardapio.php">Confira</a>
-                            </div>
-                        </div>
-                    
-                        <div class="campeoes-card" style="background-image: url('<?php echo BASEURL; ?>imagens/cones.jpg');">
-                            <div class="campeoes-card-body">
-                                <span>Cones</span>
-                                <a class="btn-confira" href="<?php echo BASEURL; ?>paginas/cardapio.php">Confira</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- carrossel aparece em tela pequena-->
-                    <div class="campeoes-mobile-wrapper d-lg-none mt-5">
-                        <button class="campeoes-prev"><i class="fa-solid fa-angle-left"></i></button>
-                        <div class="campeoes-mobile-track">
-                            <div class="campeoes-mobile-inner">
+                    <div class="swiper">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
                                 <div class="campeoes-card" style="background-image: url('<?php echo BASEURL; ?>imagens/torta.jpg');">
                                     <div class="campeoes-card-body">
                                         <span>Tortas</span>
                                         <a class="btn-confira" href="<?php echo BASEURL; ?>paginas/cardapio.php">Confira</a>
                                     </div>
                                 </div>
-                                <div class="campeoes-card" style="background-image: url('<?php echo BASEURL; ?>imagens/salgados.jpg');">
+                            </div>
+                            <div class="swiper-slide">
+                                 <div class="campeoes-card" style="background-image: url('<?php echo BASEURL; ?>imagens/salgados.jpg');">
                                     <div class="campeoes-card-body">
                                         <span>Salgados</span>
                                         <a class="btn-confira" href="<?php echo BASEURL; ?>paginas/cardapio.php">Confira</a>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="swiper-slide">
                                 <div class="campeoes-card" style="background-image: url('<?php echo BASEURL; ?>imagens/bolos.jpg');">
                                     <div class="campeoes-card-body">
                                         <span>Bolos</span>
                                         <a class="btn-confira" href="<?php echo BASEURL; ?>paginas/cardapio.php">Confira</a>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="swiper-slide">
                                 <div class="campeoes-card" style="background-image: url('<?php echo BASEURL; ?>imagens/cones.jpg');">
                                     <div class="campeoes-card-body">
                                         <span>Cones</span>
@@ -176,10 +137,14 @@ close_database($conn);
                                     </div>
                                 </div>
                             </div>
+                            
                         </div>
-                        <button class="campeoes-next"><i class="fa-solid fa-angle-right"></i></button>
-                        <div class="campeoes-dots"></div>
+                        <div class="swiper-pagination"></div>
+
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
                     </div>
+                    
                 </div>
             </section>
 
@@ -195,19 +160,21 @@ close_database($conn);
                     </div>
                     
                     <?php if (!empty($avaliacoes_home)): ?>
+                    
+                    <!--swiper teste-->
 
-                    <div class="feedbacks-wrapper">
-                        <button class="feedback-arrow prev-feedback" type="button" aria-label="Feedback anterior">&#10094;</button>
-                        <div class="feedbacks-carrossel-track">
-                            <div class="feedbacks-carrossel" id="feedbackscarrossel">
-
-                                <?php foreach ($avaliacoes_home as $av): ?>
-                                <?php
-                                    $nota_media = round(($av['nota_produto'] + $av['nota_atend']) / 2);
-                                    $estrelas   = str_repeat('★', $nota_media) . str_repeat('☆', 5 - $nota_media);
-                                    $primeiro_nome = explode(' ', trim($av['nome']))[0];
-                                    $inicial = mb_strtoupper(mb_substr($av['nome'], 0, 1, 'UTF-8'), 'UTF-8');
-                                ?>
+                    <div class="swiper" id="avaliacao">
+                        <div class="swiper-wrapper">
+    
+                            <?php foreach ($avaliacoes_home as $av): ?>
+                            <?php
+                                $nota_media = $av['nota_produto'];
+                                $estrelas = str_repeat('<i class="fa-solid fa-star"></i>', $nota_media) . str_repeat('<i class="fa-regular fa-star"></i>', 5 - $nota_media);
+                                $primeiro_nome = explode(' ', trim($av['nome']))[0];
+                                $inicial = mb_strtoupper(mb_substr($av['nome'], 0, 1, 'UTF-8'), 'UTF-8');
+                            ?>
+                            
+                            <div class="swiper-slide">
                                 <div class="feedback-card feedback-card-large">
                                     <div class="feedback-user">
                                         <div class="feedback-avatar" style="width:46px;height:46px;border-radius:50%;background:#e8d5f0;display:flex;align-items:center;justify-content:center;font-size:1.2rem;font-weight:700;color:#a855f7;flex-shrink:0;">
@@ -215,20 +182,25 @@ close_database($conn);
                                         </div>
                                         <div class="feedback-info">
                                             <h4><?php echo htmlspecialchars($primeiro_nome); ?></h4>
-                                            <p style="color:#f5a623;font-size:1rem;letter-spacing:1px;margin:0;"><?php echo $estrelas; ?></p>
+                                            <p class="feedback-estrela"><?php echo $estrelas; ?></p>
                                         </div>
                                     </div>
                                     <p class="feedback-text"><?php echo htmlspecialchars($av['comentario']); ?></p>
                                 </div>
-                                <?php endforeach; ?>
-
                             </div>
+                            <?php endforeach; ?>
+                            
                         </div>
-                        <button class="feedback-arrow next-feedback" type="button" aria-label="Próximo feedback">&#10095;</button>
+
+                        <div class="swiper-pagination"></div>
+
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
                     </div>
+
                     <?php else: ?>
-                        <p class="text-center text-muted py-4">Ainda não há avaliações — seja o primeiro! 🎂</p>
-                    <?php endif; ?>
+                        <p class="text-center text-muted py-4">Ainda não há avaliações — seja o primeiro!</p>
+                    <?php endif; ?>                    
                 </div>
             </section>
 

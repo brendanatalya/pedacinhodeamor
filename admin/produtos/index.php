@@ -239,7 +239,7 @@ if (isset($_GET['editar'])) {
                         <input type="file" name="imagem" class="form-control" accept="image/*">
                         <?php if ($produto_edicao && !empty($produto_edicao['imagem_referencia'])): ?>
                             <div class="mt-2">
-                                <img src="<?php echo BASEURL . $produto_edicao['imagem_referencia']; ?>" width="120" style="border-radius:10px;">
+                                <img src="<?php echo BASEURL . "imagens/" . $produto_edicao['imagem_referencia']; ?>" width="120" style="border-radius:10px;">
                             </div>
                         <?php endif; ?>
                     </div>
@@ -379,7 +379,7 @@ if (isset($_GET['editar'])) {
                                 <tr>
                                     <td>
                                         <?php if (!empty($p['imagem_referencia'])): ?>
-                                            <img src="<?php echo BASEURL . $p['imagem_referencia']; ?>"
+                                            <img src="<?php echo BASEURL . "imagens/" . $p['imagem_referencia']; ?>"
                                                 width="70" height="70"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#modalImagem<?php echo $p['id']; ?>"
@@ -395,7 +395,7 @@ if (isset($_GET['editar'])) {
                                                                 <i class="fas fa-times"></i>
                                                             </button>
                                                         </div>
-                                                        <img src="<?php echo BASEURL . $p['imagem_referencia']; ?>"
+                                                        <img src="<?php echo BASEURL . "imagens/" . $p['imagem_referencia']; ?>"
                                                             class="img-fluid rounded shadow"
                                                             style="max-height:80vh; object-fit:contain;">
                                                     </div>
