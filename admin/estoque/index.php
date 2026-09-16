@@ -206,13 +206,13 @@ close_database($conn);
                                         <?php endif; ?>
                                     </td>
                                     <td>
-                                        <a href="?editar=<?php echo $i['id']; ?>" class="btn btn-sm btn-warning" title="Editar">
+                                        <a href="?editar=<?php echo $i['id']; ?>" class="gpr-btn-icon editar" title="Editar">
                                             <i class="fas fa-edit"></i>
                                         </a>
                                         <form method="POST" style="display:inline;" onsubmit="return confirm('Remover este ingrediente?')">
                                             <input type="hidden" name="acao" value="deletar">
                                             <input type="hidden" name="id" value="<?php echo $i['id']; ?>">
-                                            <button type="submit" class="btn btn-sm btn-danger">
+                                            <button type="submit" class="gpr-btn-icon excluir">
                                                 <i class="fas fa-trash"></i>
                                             </button>
                                         </form>

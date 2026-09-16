@@ -6687,5 +6687,170 @@ ___________
     transform: scale(1.3);
 }
  
+/* ==========================================================================
+   SITE PÚBLICO — MODAL DE PRODUTO (adicionar ao carrinho)
+   Usado na página de doces (e reaproveitável em salgados/bolos).
+   Reaproveita classes que já existem no style_pda.css:
+     .quantity-btn, .quantity-input, .add-to-carrinho-btn, .unavailable-badge
+   ========================================================================== */
+
+.pm-modal .modal-content {
+    border-radius: 26px;
+    border: none;
+    overflow: hidden;
+    font-family: 'Poppins', Arial, sans-serif;
+}
+
+.pm-body {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.pm-imagem {
+    flex: 1 1 320px;
+    min-width: 280px;
+    min-height: 320px;
+    position: relative;
+    background: #f7dde6;
+}
+
+.pm-imagem img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* no modal o badge de indisponível fica à esquerda (o botão de fechar ocupa a direita) */
+.pm-imagem .unavailable-badge {
+    left: 16px;
+    right: auto;
+}
+
+.pm-fechar {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.92);
+    color: #521928;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 5;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    transition: 0.2s ease;
+}
+
+.pm-fechar:hover {
+    background: #ffffff;
+    transform: scale(1.06);
+}
+
+.pm-info {
+    flex: 1 1 320px;
+    min-width: 280px;
+    padding: 2.2rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.pm-titulo {
+    font-family: 'Poppins', Arial, sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #291815;
+    margin-bottom: 0.6rem;
+}
+
+.pm-descricao {
+    color: #756a6a;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 1.2rem;
+}
+
+.pm-preco-row,
+.pm-quantidade-row,
+.pm-total-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.9rem 0;
+    border-bottom: 1px solid #f4e4ea;
+}
+
+.pm-preco-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: #a08a86;
+}
+
+.pm-preco-unit {
+    font-family: 'Poppins', Arial, sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #d65a7d;
+}
+
+.pm-stepper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.pm-total-row {
+    border-bottom: none;
+    padding-top: 1.1rem;
+    margin-top: 0.2rem;
+}
+
+.pm-total-valor {
+    font-family: 'Poppins', Arial, sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #521928;
+}
+
+.pm-btn-add {
+    margin-top: 1.4rem;
+    width: 100%;
+}
+
+.pm-aviso-login {
+    margin-top: 0.8rem;
+    font-size: 0.85rem;
+    color: #a83232;
+    text-align: center;
+}
+
+.pm-aviso-login a {
+    color: #d65a7d;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+/* ── Responsivo ── */
+
+@media (max-width: 576px) {
+    .pm-imagem {
+        min-height: 220px;
+        flex-basis: 100%;
+    }
+
+    .pm-info {
+        padding: 1.6rem;
+    }
+
+    .pm-titulo {
+        font-size: 1.3rem;
+    }
+}
 
 
