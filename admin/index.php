@@ -56,14 +56,12 @@ require_once(DBAPI);
                 
                 <hr style="border-color: rgba(255,255,255,0.2); margin: 20px 0;">
                 
-                <a href="<?php echo BASEURL; ?>inc/logout.php" style="color: #FBB6CE;">
-                    <i class="fas fa-sign-out-alt"></i> Sair
+                <a href="<?php echo BASEURL; ?>index.php" style="color: #FBB6CE;">
+                    <i class="fas fa-home"></i> Voltar ao site
                 </a>
             </div>
 
             <div class="col-md-10 main-content">
-                
-                
 
                 <div class="header-admin">
                     <div>
@@ -86,16 +84,9 @@ require_once(DBAPI);
                             </strong>
                         </div>
 
-                        <!-- DROPDOWN DO USUÁRIO ADMIN -->
-                        <div class="nav-dropdown" style="display:inline-block;">
-                            <a href="#" class="nav-dropdown-link" style="display:flex; align-items:center; gap:8px;">
-                                <i class="fa-regular fa-circle-user"></i>
-                                <span>Olá, <?php echo htmlspecialchars($_SESSION['nome']); ?></span>
-                            </a>
-                            <ul class="nav-dropdown-menu" style="min-width:150px;">
-                                <li><a href="<?php echo BASEURL; ?>index.php"><i class="fas fa-home"></i> Voltar ao Site</a></li>
-                                <li><a href="<?php echo BASEURL; ?>inc/logout.php"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
-                            </ul>
+                        <div class="botoesheaderadmin">
+                            <a href="<?php echo BASEURL; ?>minha_conta.php"><span><i class="fa-regular fa-circle-user"></i>  Minha Conta</span></a>
+                            <a href="<?php echo BASEURL; ?>inc/logout.php"><i class="fas fa-sign-out-alt"></i> Sair</a>
                         </div>
                     </div>
                 </div>

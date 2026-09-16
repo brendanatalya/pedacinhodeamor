@@ -202,7 +202,7 @@ close_database($conn);
                                         <?php if ($baixo): ?>
                                             <span class="badge bg-danger rounded-pill">Baixo</span>
                                         <?php else: ?>
-                                            <span class="badge bg-success rounded-pill">OK</span>
+                                            <span class="badge bg-verde rounded-pill">OK</span>
                                         <?php endif; ?>
                                     </td>
                                     <td>
