@@ -1103,9 +1103,8 @@ body {
 /* card de informação padronizado com o .alert-rosa já usado no carrinho */
 .info-card {
     background: #f8f0f2;
-    border-left: 4px solid var(--primary-color);
     padding: 12px;
-    border-radius: 4px;
+    border-radius: 6px;
     margin-bottom: 20px;
     font-size: 0.9rem;
     color: #521928;
@@ -4498,7 +4497,7 @@ ___________
   --sucesso-bg: #eaf5ec;
   --erro: #b23a3a;
   --erro-bg: #fdecec;
-  --fonte-titulo: 'Cormorant Garamond', serif;
+  --fonte-titulo: 'Poppins', serif;
   --fonte-corpo: 'Poppins', sans-serif;
 }
 
@@ -4606,7 +4605,7 @@ ___________
  
 .skip-item-box {
   background: var(--bg-suave);
-  border: 1px dashed var(--rosa);
+  border: 1px solid var(--rosa);
   border-radius: 10px;
   padding: 12px 15px;
   margin-bottom: 20px;
@@ -4874,22 +4873,7 @@ ___________
   to { opacity: 0; }
 }
  
-/* ---------- INFO CARD ---------- */
- 
-.info-card {
-  background: var(--bg-suave);
-  border-left: 4px solid var(--rosa);
-  padding: 12px;
-  border-radius: 6px;
-  margin-bottom: 20px;
-  font-size: 0.9rem;
-  color: var(--marrom);
-}
- 
-.info-card i {
-  color: var(--rosa);
-  margin-right: 6px;
-}
+
  
 /* =========================================================
    RESPONSIVIDADE
@@ -6471,4 +6455,237 @@ ___________
         text-align: center;
     }
 }
+
+/* ==========================================================================
+   ADMIN — DASHBOARD / MODAL DE PEDIDO (redesign)
+   Mesma linguagem visual das outras páginas do admin:
+     - fundo:            #FDF9F9
+     - texto:            #5A433D / #4A332D
+     - texto apagado:    #8A736E / #705853
+     - acento vinho:     #8C475E / #530f2b / #813044
+     - acento dourado:   #c2a26c
+     - fonte:            'Plus Jakarta Sans', sans-serif (herdada do body)
+   Reaproveita classes já existentes no style_pda.css:
+     .badge-pendente / .badge-confirmado / .badge-preparacao /
+     .badge-pronto / .badge-entregue / .badge-cancelado
+     .badge-retirada / .badge-entrega
+   ========================================================================== */
+
+/* ── Botão "ver" na tabela de últimos pedidos ── */
+
+.dash-btn-ver {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 9px;
+    background: #530f2b;
+    color: #fff !important;
+    text-decoration: none;
+    font-size: 12px;
+    border: none;
+    cursor: pointer;
+    transition: background .2s ease, transform .2s ease;
+}
+
+.dash-btn-ver:hover {
+    background: #3d0b20;
+    transform: translateY(-1px);
+}
+
+/* ── Modal ── */
+
+#modalPedido .modal-content {
+    border-radius: 22px;
+    border: none;
+    overflow: hidden;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.mp-header {
+    background: linear-gradient(135deg, #7c263d 0%, #530f2b 60%, #3a0e18 100%);
+    padding: 24px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.mp-header h5 {
+    margin: 0;
+    color: #fff;
+    font-weight: 700;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.mp-header .btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%);
+    opacity: .8;
+}
+
+.mp-header .btn-close:hover {
+    opacity: 1;
+}
+
+.mp-body {
+    padding: 26px 28px;
+    background: #fff;
+}
+
+.mp-subtitulo {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .4px;
+    text-transform: uppercase;
+    color: #8A736E;
+    margin-bottom: 4px;
+    display: block;
+}
+
+.mp-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+    margin-bottom: 18px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid #FAF2F2;
+}
+
+.mp-grid.mp-grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.mp-valor {
+    font-size: 14.5px;
+    font-weight: 600;
+    color: #4A332D;
+}
+
+.mp-obs-box {
+    background: #FDF5F5;
+    border: 1px solid #FAF2F2;
+    border-radius: 14px;
+    padding: 14px 16px;
+    margin-bottom: 18px;
+}
+
+.mp-obs-box p {
+    margin: 4px 0 0;
+    color: #4A332D;
+    font-size: 13.5px;
+}
+
+.mp-itens-titulo {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #4A332D;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.mp-itens-titulo i {
+    color: #c2a26c;
+}
+
+.mp-tabela {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 8px;
+}
+
+.mp-tabela thead th {
+    text-align: left;
+    font-size: 10.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .4px;
+    color: #8A736E;
+    padding: 0 12px 6px;
+}
+
+.mp-tabela thead th.text-center { text-align: center; }
+.mp-tabela thead th.text-end { text-align: right; }
+
+.mp-tabela tbody tr {
+    background: #FDF9F9;
+}
+
+.mp-tabela tbody td {
+    padding: 10px 12px;
+    font-size: 13px;
+    color: #4A332D;
+    border-top: 1px solid #FAF2F2;
+    border-bottom: 1px solid #FAF2F2;
+}
+
+.mp-tabela tbody td:first-child {
+    border-left: 1px solid #FAF2F2;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.mp-tabela tbody td:last-child {
+    border-right: 1px solid #FAF2F2;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.mp-tabela .text-center { text-align: center; }
+.mp-tabela .text-end { text-align: right; }
+
+.mp-total-row td {
+    background: #FDF5F5 !important;
+    font-weight: 700;
+    color: #521928;
+    border-top: 2px solid #f4c0d1 !important;
+}
+
+.mp-total-valor {
+    color: #8C475E;
+    font-size: 15px;
+}
+
+/* ── Responsivo ── */
+
+@media (max-width: 576px) {
+    .mp-header,
+    .mp-body {
+        padding: 18px;
+    }
+
+    .mp-grid,
+    .mp-grid.mp-grid-4 {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .mp-tabela {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}
+
+#carrossel .dots .swiper-pagination-bullet {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    opacity: 1;
+    margin: 0 4px !important;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+ 
+#carrossel .dots .swiper-pagination-bullet-active {
+    background: #ffffff;
+    transform: scale(1.3);
+}
+ 
+
 

@@ -66,29 +66,36 @@ close_database($conn);
                 </div>
             </section>
 
-            <section class="carrossel">
-                <!--carrossel-->
+             <section class="sobre-nos">
                 <div class="container-xxl">
-                    <div style="margin-bottom: 40px;">
-                        <p class="carrossel-subtitulo">Ficou com curiosidade?</p>
-                        <h2 class="carrossel-titulo">Tenha um <em>gostinho</em> do que temos</h2>
+                    <div style="margin-bottom: 40px; text-align: center;">
+                        <p class="carrossel-subtitulo">Nosso diferencial</p>
+                        <h2 class="carrossel-titulo">De onde vem tanta <em>qualidade</em>?</h2>
                     </div>
-                    <div class="carrosselofc" id="carrossel" tabindex="0">
-                        <div class="slides">
-                            <img src="<?php echo BASEURL; ?>imagens/bolocarrossel.jpg" alt="Imagem 1">
-                            <img src="<?php echo BASEURL; ?>imagens/salgadoscarrossel.jpg" alt="Imagem 2">
-                            <img src="<?php echo BASEURL; ?>imagens/copinhocarrossel.jpg" alt="Imagem 3">
+ 
+                    <div class="sobre">
+                        <div class="sobre-foto">
+                            <img src="<?php echo BASEURL; ?>imagens/boloindex.jpg" alt="Bolo">
                         </div>
-                        <button class="prev carrossel-btnprev">
-                            <i class="fa-solid fa-angle-left"></i>
-                        </button>
-                        <button class="next carrossel-btnnext">
-                            <i class="fa-solid fa-angle-right"></i>
-                        </button>
-                        <div class="dots"></div>
+                        <div class="sobre-texto">
+                            <p>
+                                Tudo na Pedacinho de Amor começa do mesmo jeitinho: com calma, ingredientes
+                                escolhidos a dedo e uma receita testada até chegar no ponto certo. Nada de
+                                produção em massa — cada bolo, doce e salgado é preparado em lotes pequenos,
+                                do jeito que a gente faria para a nossa própria família.
+                            </p>
+                            <p>
+                                Usamos frutas frescas, manteiga de verdade e chocolate de qualidade, sem
+                                misturas prontas nem atalhos. O recheio é feito na hora, a massa descansa o
+                                tempo que precisa, e cada detalhe da decoração é finalizado à mão — por isso
+                                nenhum doce sai exatamente igual ao outro.
+                            </p>
+                        </div>
                     </div>
+
                 </div>
             </section>
+ 
 
             <!-- transição de cor-->
             <div style="height: 100px; background: linear-gradient(to bottom, #fdf2f4, #fde0e5);"></div>
@@ -109,7 +116,7 @@ close_database($conn);
                                 <div class="campeoes-card" style="background-image: url('<?php echo BASEURL; ?>imagens/torta.jpg');">
                                     <div class="campeoes-card-body">
                                         <span>Tortas</span>
-                                        <a class="btn-confira" href="<?php echo BASEURL; ?>paginas/cardapio.php">Confira</a>
+                                        <a class="btn-confira" href="<?php echo BASEURL; ?>paginas/salgados.php">Confira</a>
                                     </div>
                                 </div>
                             </div>
@@ -117,7 +124,7 @@ close_database($conn);
                                  <div class="campeoes-card" style="background-image: url('<?php echo BASEURL; ?>imagens/salgados.jpg');">
                                     <div class="campeoes-card-body">
                                         <span>Salgados</span>
-                                        <a class="btn-confira" href="<?php echo BASEURL; ?>paginas/cardapio.php">Confira</a>
+                                        <a class="btn-confira" href="<?php echo BASEURL; ?>paginas/salgados.php">Confira</a>
                                     </div>
                                 </div>
                             </div>
@@ -125,7 +132,7 @@ close_database($conn);
                                 <div class="campeoes-card" style="background-image: url('<?php echo BASEURL; ?>imagens/bolos.jpg');">
                                     <div class="campeoes-card-body">
                                         <span>Bolos</span>
-                                        <a class="btn-confira" href="<?php echo BASEURL; ?>paginas/cardapio.php">Confira</a>
+                                        <a class="btn-confira" href="<?php echo BASEURL; ?>paginas/doces.php">Confira</a>
                                     </div>
                                 </div>
                             </div>
@@ -133,7 +140,7 @@ close_database($conn);
                                 <div class="campeoes-card" style="background-image: url('<?php echo BASEURL; ?>imagens/cones.jpg');">
                                     <div class="campeoes-card-body">
                                         <span>Cones</span>
-                                        <a class="btn-confira" href="<?php echo BASEURL; ?>paginas/cardapio.php">Confira</a>
+                                        <a class="btn-confira" href="<?php echo BASEURL; ?>paginas/doces.php">Confira</a>
                                     </div>
                                 </div>
                             </div>

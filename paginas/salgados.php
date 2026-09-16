@@ -97,15 +97,10 @@ $botoes = [
     <?php include_once ABSPATH . 'inc/header.php'; ?>
 
     <main>
-        <section class="doces-hero" style="background-image:url('../imagens/doce3.webp');">
-            <div class="doces-hero__overlay"></div>
-            <div class="doces-hero__content">
-                <h1>SALGADOS</h1>
-                <p>Assados e fritos com muito carinho!</p>
+        <div class="container my-5">
+            <div class="text-center mb-5">
+                <h2 class="section-title">SALGADOS</h2>
             </div>
-        </section>
-
-        <div class="container">
 
             <?php if ($cartMessage): ?>
                 <div class="alert alert-success mt-3"><?php echo htmlspecialchars($cartMessage); ?></div>
@@ -141,7 +136,7 @@ $botoes = [
                 <div class="col produto-item" data-sub="<?php echo htmlspecialchars($sub); ?>">
                     <div class="product-card <?php echo !$p['disponivel'] ? 'unavailable' : ''; ?>">
                         <?php if (!empty($p['imagem_referencia'])): ?>
-                            <img src="<?php echo BASEURL . htmlspecialchars($p['imagem_referencia']); ?>"
+                            <img src="<?php echo BASEURL . "imagens/" . htmlspecialchars($p['imagem_referencia']); ?>"
                                  alt="<?php echo htmlspecialchars($p['nome']); ?>">
                         <?php endif; ?>
                         <div class="product-info">
