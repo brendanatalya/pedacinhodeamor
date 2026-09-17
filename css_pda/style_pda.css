@@ -3559,12 +3559,12 @@ ___________
 
 
   /*index.php - pedidos*/
-  .badge-pendente { background-color: #ffc107; }
-  .badge-confirmado { background-color: #17a2b8; }
-  .badge-preparacao { background-color: #fd7e14; }
-  .badge-pronto { background-color: #20c997; }
-  .badge-entregue { background-color: #28a745; }
-  .badge-cancelado { background-color: #dc3545; }
+  .badge-pendente { background-color: #777777; }
+  .badge-confirmado { background-color: #558ccd; }
+  .badge-preparacao { background-color: #35a3a7; }
+  .badge-pronto { background-color: #199f77; }
+  .badge-entregue { background-color: #136d53; }
+  .badge-cancelado { background-color: #7d0101; }
 
   /*index.php - clientes*/
   .card-cliente {
@@ -3665,7 +3665,7 @@ ___________
       padding-bottom: 10px;
       margin-bottom: 15px;
   }
-  .badge-retirada { background-color: #28a745; }
+  .badge-retirada { background-color: #8f1a5a; }
   .badge-entrega { background-color: #007bff; }
 
 
