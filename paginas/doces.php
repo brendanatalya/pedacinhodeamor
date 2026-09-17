@@ -76,57 +76,6 @@ $produtos_json = array_map(function ($p) {
     <link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/produto-modal.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-    <style>
-        .subcategoria-bar {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
-        }
-        .sub-btn {
-            border: 2px solid #ffb3d9;
-            background: #fff;
-            color: #7a2f2f;
-            padding: 7px 18px;
-            border-radius: 30px;
-            font-size: 0.88rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .sub-btn:hover  { background: #ffdcec; }
-        .sub-btn.ativo  { background: #7a2f2f; border-color: #7a2f2f; color: #fff; }
-
-        .produtos-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 24px;
-            margin-bottom: 2rem;
-        }
-        .produto-item[data-hidden="true"] { display: none; }
-
-        .sem-produtos { display: none; color: #888; font-style: italic; padding: 1rem 0 2rem; }
-        .sem-produtos.visivel { display: block; }
-
-        .nav-cardapio {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.75rem;
-            margin: 2rem 0 1rem;
-        }
-        .nav-cardapio a {
-            padding: 10px 24px;
-            border-radius: 30px;
-            font-weight: 700;
-            font-size: 0.95rem;
-            text-decoration: none;
-            border: 2px solid #7a2f2f;
-            color: #7a2f2f;
-            transition: 0.2s;
-        }
-        .nav-cardapio a.ativo,
-        .nav-cardapio a:hover { background: #7a2f2f; color: #fff; }
-    </style>
 </head>
 <body>
 
@@ -249,6 +198,7 @@ $produtos_json = array_map(function ($p) {
 
     <?php include_once ABSPATH . 'inc/footer.php'; ?>
 
+    <script src="<?php echo BASEURL; ?>js/bootstrap/bootstrap.bundle.min.js"></script>
     <script>
         // ── Dados dos produtos, prontos para o modal usar sem precisar de outra requisição ──
         const PRODUTOS = <?php echo json_encode($produtos_json, JSON_UNESCAPED_UNICODE); ?>;
@@ -256,7 +206,12 @@ $produtos_json = array_map(function ($p) {
 
         let produtoModalAtual = null;
         const modalProdutoEl = document.getElementById('modalProduto');
-        const modalProdutoInstance = modalProdutoEl ? new bootstrap.Modal(modalProdutoEl) : null;
+        let modalProdutoInstance = null;
+        if (modalProdutoEl && typeof bootstrap !== 'undefined') {
+            modalProdutoInstance = new bootstrap.Modal(modalProdutoEl);
+        } else if (modalProdutoEl) {
+            console.error('Bootstrap JS não carregou — o modal de produto não vai funcionar.');
+        }
 
         function formatarMoeda(valor) {
             return valor.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });

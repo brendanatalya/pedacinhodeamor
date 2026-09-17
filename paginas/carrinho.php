@@ -13,9 +13,7 @@ $availableItems = [];
 $unavailableItems = [];
 $total = 0;
 
-// ──────────────────────────────────────────────────────────────
-// PROCESSAR PRODUTOS NORMAIS
-// ──────────────────────────────────────────────────────────────
+
 foreach ($cart as $product_id => $qty) {
     $produto = find_product(intval($product_id));
     if (!$produto) {
@@ -38,9 +36,7 @@ foreach ($cart as $product_id => $qty) {
     }
 }
 
-// ──────────────────────────────────────────────────────────────
-// CALCULAR QUANTIDADES
-// ──────────────────────────────────────────────────────────────
+
 $qtd_normais = !empty($cart) ? array_sum($cart) : 0;
 $qtd_personalizados = 0;
 
@@ -93,7 +89,7 @@ if (!empty($cartMessage)) {
                                     
                                     <?php if (!empty($produto['imagem_referencia'])): ?>
                                         <img 
-                                            src="<?php echo BASEURL . htmlspecialchars($produto['imagem_referencia']); ?>" 
+                                            src="<?php echo BASEURL . "imagens/" . htmlspecialchars($produto['imagem_referencia']); ?>" 
                                             alt="<?php echo htmlspecialchars($produto['nome']); ?>"
                                             class="carrinho-item-img"
                                         >
@@ -112,7 +108,6 @@ if (!empty($cartMessage)) {
                                             R$ <?php echo number_format($produto['preco'], 2, ',', '.'); ?>
                                         </p>
 
-                                        <!-- CONTROLE DE QUANTIDADE -->
                                         <div class="carrinho-item-qtd">
                                             <form action="update_carrinho.php" method="POST" class="d-inline">
                                                 <input type="hidden" name="product_id" value="<?php echo $produto['id']; ?>">
@@ -124,7 +119,6 @@ if (!empty($cartMessage)) {
                                                     class="quantity-btn btn-minus"
                                                     aria-label="Diminuir quantidade"
                                                 >
-                                                    −
                                                 </button>
                                             </form>
                                             
@@ -151,12 +145,11 @@ if (!empty($cartMessage)) {
                                             </form>
                                         </div>
 
-                                        <!-- SUBTOTAL -->
                                         <p class="produto-subtotal">
                                             Subtotal: <strong>R$ <?php echo number_format($produto['subtotal'], 2, ',', '.'); ?></strong>
                                         </p>
 
-                                        <!-- REMOVER PRODUTO -->
+
                                         <form action="update_carrinho.php" method="POST" class="d-inline">
                                             <input type="hidden" name="product_id" value="<?php echo $produto['id']; ?>">
                                             <button 
@@ -175,7 +168,6 @@ if (!empty($cartMessage)) {
                         </section>
                     <?php endif; ?>
 
-                    <!-- PRODUTOS PERSONALIZADOS -->
                     <?php if (!empty($cart_personalizado)): ?>
                         <section class="personalizados-section mt-4">
                             <h3>Produtos Personalizados (Sob Encomenda)</h3>
@@ -185,7 +177,7 @@ if (!empty($cartMessage)) {
                                     
                                     <?php if (!empty($item['imagem_path'])): ?>
                                         <img 
-                                            src="<?php echo '../' . htmlspecialchars($item['imagem_path']); ?>"
+                                            src="<?php echo BASEURL . "imagens/" . htmlspecialchars($item['imagem_path']); ?>"
                                             alt="Referência do produto personalizado"
                                             class="carrinho-item-img"
                                             style="width:80px;height:80px;object-fit:cover;border-radius:8px;"
@@ -333,7 +325,7 @@ if (!empty($cartMessage)) {
                                     
                                     <?php if (!empty($produto['imagem_referencia'])): ?>
                                         <img 
-                                            src="<?php echo BASEURL . htmlspecialchars($produto['imagem_referencia']); ?>" 
+                                            src="<?php echo BASEURL . "imagens/" . htmlspecialchars($produto['imagem_referencia']); ?>" 
                                             alt="<?php echo htmlspecialchars($produto['nome']); ?>"
                                             class="carrinho-item-img"
                                         >
