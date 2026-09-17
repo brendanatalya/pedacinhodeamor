@@ -3355,9 +3355,6 @@ ___________
 
 /* ── Seção de personalizados ── */
 
-.personalizados-section .carrinho-item {
-    border-left: 4px solid #d65a7d;
-}
 
 .personalizados-section .carrinho-item-info h4 {
     color: #813044;
