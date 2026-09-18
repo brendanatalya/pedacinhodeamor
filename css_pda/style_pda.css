@@ -74,6 +74,11 @@ body {
 /* parte dos feedbacks ----  arrumar essas bosta de botao pra nao ficar em cima do texto essas bosta */
 /* ── feedbacks ─────────────────────────────────────────────── */
 
+a {
+    text-decoration: none;
+    color: #000;
+}
+
 .feedback-card {
   width: 100%;
   border: 1px solid rgba(255,255,255,0.3);
@@ -1333,7 +1338,7 @@ body {
 
         /* index.php - produtos */
     .badge-disponivel { background-color: #119e8b; }
-    .badge-indisponivel { background-color: #dc3545; }
+    .badge-indisponivel { background-color: #952b35; }
 
     .bg-pink{
         background-color:#d885af;

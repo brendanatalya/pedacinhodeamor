@@ -39,7 +39,7 @@ close_database($conn);
     <body>
         <?php include 'inc/header.php'; ?>
         <main>
-             <section class="index-bemvindo" style="background: url('./imagens/boloindex.jpg') no-repeat center center; background-size: cover;">
+             <section class="index-bemvindo" style="background: url('./imagens/boloindexinicio.jpg') no-repeat center center; background-size: cover;">
                 <!-- bloco de bem vindo do site -->
                 <div class="bemvindo-fundo"></div>
 
