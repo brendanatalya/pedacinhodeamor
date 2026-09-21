@@ -164,13 +164,12 @@ try {
     }
 
     // ─── 5) Montar mensagem WhatsApp ──────────────────────────────────────────
-    $msg_wpp  = "🛒 *Novo Pedido #$id_pedido*\n";
-    $msg_wpp .= "📅 Entrega: " . date('d/m/Y', strtotime($data_entrega));
+    $msg_wpp  = " *Novo Pedido #$id_pedido*\n";
+    $msg_wpp .= " Entrega: " . date('d/m/Y', strtotime($data_entrega));
     if ($hora_entrega) $msg_wpp .= " às $hora_entrega";
-    $msg_wpp .= "\n🚚 Tipo: " . ucfirst($tipo_entrega) . "\n\n";
-
+ 
     if (!empty($itens_pedido)) {
-        $msg_wpp .= "🧁 *Itens:*\n";
+        $msg_wpp .= " *Itens:*\n";
         foreach ($itens_pedido as $item) {
             $msg_wpp .= "  • {$item['quantidade']}x {$item['nome_produto']} — R$ " . number_format($item['subtotal'], 2, ',', '.') . "\n";
         }
@@ -178,7 +177,7 @@ try {
     }
 
     if (!empty($personalizados)) {
-        $msg_wpp .= "🎨 *Personalizados:*\n";
+        $msg_wpp .= " *Personalizados:*\n";
         foreach ($personalizados as $idx => $p) {
             $msg_wpp .= "  " . ($idx + 1) . ") " . ucfirst($p['tipo']) . " — " . $p['tema'] . "\n";
             $msg_wpp .= "     Sabor: " . $p['sabor'] . "\n";
@@ -192,8 +191,8 @@ try {
         }
     }
 
-    if ($observacoes)            $msg_wpp .= "📝 Obs: $observacoes\n";
-    if (!empty($avisos_estoque)) $msg_wpp .= "\n🔴 *Atenção estoque:*\n" . implode("\n", $avisos_estoque) . "\n";
+    if ($observacoes)            $msg_wpp .= " Obs: $observacoes\n";
+    if (!empty($avisos_estoque)) $msg_wpp .= "\n *Atenção estoque:*\n" . implode("\n", $avisos_estoque) . "\n";
 
     $msg_wpp .= "\n💰 *Total: R$ " . number_format($total, 2, ',', '.') . "*";
 
