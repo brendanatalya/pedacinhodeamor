@@ -51,6 +51,18 @@ $botoes = [
     'docinho'    => 'Docinhos',
     'outro'      => 'Outros',
 ];
+
+// ── Dados dos produtos para o modal (JS) ──────────────────────────────────────
+$produtos_json = array_map(function ($p) {
+    return [
+        'id'         => (int) $p['id'],
+        'nome'       => $p['nome'],
+        'descricao'  => $p['descricao'] ?? 'Delicioso produto artesanal',
+        'preco'      => (float) $p['preco'],
+        'imagem'     => !empty($p['imagem_referencia']) ? (BASEURL . 'imagens/' . $p['imagem_referencia']) : '',
+        'disponivel' => (bool) $p['disponivel'],
+    ];
+}, $todos);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -61,75 +73,23 @@ $botoes = [
     <link rel="icon" type="image/x-icon" href="../imagens/icon.png">
     <link rel="stylesheet" href="../css_pda/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/style_pda.css">
+    <link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/produto-modal.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-    <<style>
-        .subcategoria-bar {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
-        }
-        .sub-btn {
-            border: 2px solid #ffb3d9;
-            background: #fff;
-            color: #7a2f2f;
-            padding: 7px 18px;
-            border-radius: 30px;
-            font-size: 0.88rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .sub-btn:hover  { background: #ffdcec; }
-        .sub-btn.ativo  { background: #7a2f2f; border-color: #7a2f2f; color: #fff; }
-
-        .produtos-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 24px;
-            margin-bottom: 2rem;
-        }
-        .produto-item[data-hidden="true"] { display: none; }
-
-        .sem-produtos { display: none; color: #888; font-style: italic; padding: 1rem 0 2rem; }
-        .sem-produtos.visivel { display: block; }
-
-        .nav-cardapio {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.75rem;
-            margin: 2rem 0 1rem;
-        }
-        .nav-cardapio a {
-            padding: 10px 24px;
-            border-radius: 30px;
-            font-weight: 700;
-            font-size: 0.95rem;
-            text-decoration: none;
-            border: 2px solid #7a2f2f;
-            color: #7a2f2f;
-            transition: 0.2s;
-        }
-        .nav-cardapio a.ativo,
-        .nav-cardapio a:hover { background: #7a2f2f; color: #fff; }
-    </style>
 </head>
 <body>
 
     <?php include_once ABSPATH . 'inc/header.php'; ?>
 
     <main>
-        <section class="doces-hero" style="background-image:url('../imagens/doce3.webp');">
-            <div class="doces-hero__overlay"></div>
-            <div class="doces-hero__content">
-                <h1>DOCES</h1>
-                <p>Tudo feito com carinho para adoçar seus momentos!</p>
+
+        
+
+        <div class="container my-5">
+            <div class="text-center mb-5">
+                <h2 class="section-title">DOCES</h2>
             </div>
-        </section>
-
-        <div class="container">
-
+            
             <?php if ($cartMessage): ?>
                 <div class="alert alert-success mt-3"><?php echo htmlspecialchars($cartMessage); ?></div>
             <?php endif; ?>
@@ -162,7 +122,7 @@ $botoes = [
                 <div class="col produto-item" data-sub="<?php echo htmlspecialchars($sub); ?>">
                     <div class="product-card <?php echo !$p['disponivel'] ? 'unavailable' : ''; ?>">
                         <?php if (!empty($p['imagem_referencia'])): ?>
-                            <img src="<?php echo BASEURL . htmlspecialchars($p['imagem_referencia']); ?>"
+                            <img src="<?php echo BASEURL . "imagens/" . htmlspecialchars($p['imagem_referencia']); ?>"
                                  alt="<?php echo htmlspecialchars($p['nome']); ?>">
                         <?php endif; ?>
                         <div class="product-info">
@@ -172,16 +132,11 @@ $botoes = [
                             <?php if (!$p['disponivel']): ?>
                                 <div class="unavailable-badge">Indisponível</div>
                             <?php endif; ?>
-                            <form action="add_carrinho.php" method="POST">
-                                <input type="hidden" name="product_id" value="<?php echo $p['id']; ?>">
-                                <input type="hidden" name="quantity"   value="1">
-                                <input type="hidden" name="redirect"
-                                       value="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>">
-                                <button type="submit" class="add-to-carrinho-btn"
-                                        <?php echo (!$usuario_logado || !$p['disponivel']) ? 'disabled' : ''; ?>>
-                                    <i class="fas fa-shopping-cart"></i> Adicionar ao Carrinho
-                                </button>
-                            </form>
+                            <button type="button" class="add-to-carrinho-btn"
+                                    onclick="abrirModalProduto(<?php echo (int) $p['id']; ?>)"
+                                    <?php echo (!$usuario_logado || !$p['disponivel']) ? 'disabled' : ''; ?>>
+                                <i class="fas fa-shopping-cart"></i> Adicionar ao Carrinho
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -191,37 +146,167 @@ $botoes = [
         </div>
     </main>
 
+    <!-- Modal de Produto -->
+    <div class="modal fade pm-modal" id="modalProduto" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <button type="button" class="pm-fechar" data-bs-dismiss="modal" aria-label="Fechar">
+                    <i class="fas fa-times"></i>
+                </button>
+
+                <div class="pm-body">
+                    <div class="pm-imagem">
+                        <img id="pmImagem" src="" alt="">
+                        <div class="unavailable-badge" id="pmIndisponivel" style="display:none;">Indisponível</div>
+                    </div>
+
+                    <div class="pm-info">
+                        <h3 class="pm-titulo" id="pmNome"></h3>
+                        <p class="pm-descricao" id="pmDescricao"></p>
+
+                        <div class="pm-preco-row">
+                            <span class="pm-preco-label">Preço unitário</span>
+                            <span class="pm-preco-unit" id="pmPrecoUnit"></span>
+                        </div>
+
+                        <div class="pm-quantidade-row">
+                            <span class="pm-preco-label">Quantidade</span>
+                            <div class="pm-stepper">
+                                <button type="button" class="quantity-btn" onclick="alterarQuantidadeModal(-1)">-</button>
+                                <input type="number" class="quantity-input" id="pmQuantidade" value="1" min="1" oninput="atualizarTotalModal()">
+                                <button type="button" class="quantity-btn" onclick="alterarQuantidadeModal(1)">+</button>
+                            </div>
+                        </div>
+
+                        <div class="pm-total-row">
+                            <span class="pm-preco-label">Total</span>
+                            <span class="pm-total-valor" id="pmTotal"></span>
+                        </div>
+
+                        <button type="button" class="add-to-carrinho-btn pm-btn-add" id="pmBtnAdicionar" onclick="adicionarAoCarrinhoModal()">
+                            <i class="fas fa-shopping-cart"></i> Adicionar ao Carrinho
+                        </button>
+
+                        <?php if (!$usuario_logado): ?>
+                            <p class="pm-aviso-login">Faça <a href="../index.php">login</a> para adicionar ao carrinho.</p>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <?php include_once ABSPATH . 'inc/footer.php'; ?>
 
+    <script src="<?php echo BASEURL; ?>js/bootstrap/bootstrap.bundle.min.js"></script>
     <script>
-        // ── Adicionar ao carrinho via AJAX (sem recarregar a página) ────────
-        // Progressive enhancement: se o JS falhar por algum motivo, o form
-        // ainda funciona normalmente (add_carrinho.php trata isso também).
-        document.querySelectorAll('form[action="add_carrinho.php"]').forEach(form => {
-            form.addEventListener('submit', async function (e) {
-                e.preventDefault();
+        // ── Dados dos produtos, prontos para o modal usar sem precisar de outra requisição ──
+        const PRODUTOS = <?php echo json_encode($produtos_json, JSON_UNESCAPED_UNICODE); ?>;
+        const usuarioLogado = <?php echo $usuario_logado ? 'true' : 'false'; ?>;
 
-                const btn = form.querySelector('button[type="submit"]');
-                const btnHtmlOriginal = btn.innerHTML;
-                btn.disabled = true;
-                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Adicionando...';
+        let produtoModalAtual = null;
+        const modalProdutoEl = document.getElementById('modalProduto');
+        let modalProdutoInstance = null;
+        if (modalProdutoEl && typeof bootstrap !== 'undefined') {
+            modalProdutoInstance = new bootstrap.Modal(modalProdutoEl);
+        } else if (modalProdutoEl) {
+            console.error('Bootstrap JS não carregou — o modal de produto não vai funcionar.');
+        }
 
-                try {
-                    const resp = await fetch(form.action, {
-                        method: 'POST',
-                        headers: { 'X-Requested-With': 'XMLHttpRequest' },
-                        body: new FormData(form)
-                    });
-                    const data = await resp.json();
-                    mostrarToast(data.mensagem, data.sucesso);
-                } catch (err) {
-                    mostrarToast('Não foi possível adicionar o produto. Tente novamente.', false);
-                } finally {
-                    btn.disabled = false;
-                    btn.innerHTML = btnHtmlOriginal;
-                }
-            });
-        });
+        function formatarMoeda(valor) {
+            return valor.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
+        function abrirModalProduto(id) {
+            const produto = PRODUTOS.find(p => p.id === id);
+            if (!produto || !modalProdutoInstance) return;
+
+            produtoModalAtual = produto;
+
+            const imagemEl = document.getElementById('pmImagem');
+            imagemEl.src = produto.imagem;
+            imagemEl.alt = produto.nome;
+
+            document.getElementById('pmNome').textContent = produto.nome;
+            document.getElementById('pmDescricao').textContent = produto.descricao;
+            document.getElementById('pmPrecoUnit').textContent = 'R$ ' + formatarMoeda(produto.preco);
+            document.getElementById('pmQuantidade').value = 1;
+
+            const indisponivelEl   = document.getElementById('pmIndisponivel');
+            const btnAdicionar     = document.getElementById('pmBtnAdicionar');
+            const quantidadeInput  = document.getElementById('pmQuantidade');
+
+            if (!produto.disponivel) {
+                indisponivelEl.style.display = 'block';
+                btnAdicionar.disabled = true;
+                quantidadeInput.disabled = true;
+            } else if (!usuarioLogado) {
+                indisponivelEl.style.display = 'none';
+                btnAdicionar.disabled = true;
+                quantidadeInput.disabled = false;
+            } else {
+                indisponivelEl.style.display = 'none';
+                btnAdicionar.disabled = false;
+                quantidadeInput.disabled = false;
+            }
+
+            atualizarTotalModal();
+            modalProdutoInstance.show();
+        }
+
+        function alterarQuantidadeModal(delta) {
+            const input = document.getElementById('pmQuantidade');
+            let valor = parseInt(input.value, 10) || 1;
+            valor = Math.max(1, valor + delta);
+            input.value = valor;
+            atualizarTotalModal();
+        }
+
+        function atualizarTotalModal() {
+            if (!produtoModalAtual) return;
+
+            const input = document.getElementById('pmQuantidade');
+            let qtd = parseInt(input.value, 10);
+            if (!qtd || qtd < 1) {
+                qtd = 1;
+                input.value = 1;
+            }
+
+            const total = produtoModalAtual.preco * qtd;
+            document.getElementById('pmTotal').textContent = 'R$ ' + formatarMoeda(total);
+        }
+
+        async function adicionarAoCarrinhoModal() {
+            if (!produtoModalAtual) return;
+
+            const btn = document.getElementById('pmBtnAdicionar');
+            const qtd = parseInt(document.getElementById('pmQuantidade').value, 10) || 1;
+            const htmlOriginal = btn.innerHTML;
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Adicionando...';
+
+            const formData = new FormData();
+            formData.append('product_id', produtoModalAtual.id);
+            formData.append('quantity', qtd);
+            formData.append('redirect', window.location.href);
+
+            try {
+                const resp = await fetch('add_carrinho.php', {
+                    method: 'POST',
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                    body: formData
+                });
+                const data = await resp.json();
+                mostrarToast(data.mensagem, data.sucesso);
+                if (data.sucesso) modalProdutoInstance.hide();
+            } catch (err) {
+                mostrarToast('Não foi possível adicionar o produto. Tente novamente.', false);
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = htmlOriginal;
+            }
+        }
 
         function mostrarToast(mensagem, sucesso) {
             const toast = document.createElement('div');

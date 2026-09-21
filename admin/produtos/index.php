@@ -1,11 +1,13 @@
 <?php 
 if (!isset($_SESSION)) session_start();
 
+include dirname(__DIR__, 2) . '/config.php';
+
 if (empty($_SESSION['logado']) || $_SESSION['tipo'] !== 'admin') {
-header('Location: ' . BASEURL . 'index.php');    exit;
+    header('Location: ' . BASEURL . 'index.php');
+    exit;
 }
 
-include dirname(__DIR__, 2) . '/config.php';
 require_once(DBAPI);
 
 $mensagem = '';
@@ -70,21 +72,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt = $conn->prepare("UPDATE produtos SET nome = ?, descricao = ?, preco = ?, tipo = ?, disponivel = ?, imagem_referencia = ? WHERE id = ?");
             $stmt->execute([$nome, $descricao, $preco, $tipo, $disponivel, $imagem, $id]);
             $mensagem = 'Produto atualizado com sucesso!';
-            $tipo_mensagem = 'success';
+            $tipo_mensagem = 'sucesso';
         }
         
         elseif ($acao === 'deletar') {
             $stmt = $conn->prepare("DELETE FROM produtos WHERE id = ?");
             $stmt->execute([$_POST['id']]);
             $mensagem = 'Produto deletado com sucesso!';
-            $tipo_mensagem = 'success';
+            $tipo_mensagem = 'sucesso';
         }
         
         elseif ($acao === 'alternar_disponibilidade') {
             $stmt = $conn->prepare("UPDATE produtos SET disponivel = NOT disponivel WHERE id = ?");
             $stmt->execute([$_POST['id']]);
             $mensagem = 'Status de disponibilidade alterado!';
-            $tipo_mensagem = 'success';
+            $tipo_mensagem = 'sucesso';
         }
 
         elseif ($acao === 'vincular_ingrediente') {
@@ -95,14 +97,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ");
             $stmt->execute([$_POST['id_produto'], $_POST['id_ingrediente'], $_POST['qtd_necessaria']]);
             $mensagem = 'Ingrediente vinculado!';
-            $tipo_mensagem = 'success';
+            $tipo_mensagem = 'sucesso';
         }
 
         elseif ($acao === 'remover_ingrediente') {
             $stmt = $conn->prepare("DELETE FROM produto_ingrediente WHERE id_produto = ? AND id_ingrediente = ?");
             $stmt->execute([$_POST['id_produto'], $_POST['id_ingrediente']]);
             $mensagem = 'Ingrediente removido!';
-            $tipo_mensagem = 'success';
+            $tipo_mensagem = 'sucesso';
         }
         
         close_database($conn);
@@ -148,6 +150,14 @@ if (isset($_GET['editar'])) {
 
     close_database($conn);
 }
+
+// Cor de badge por tipo de produto (classes definidas no CSS do admin)
+const TIPO_BADGE = [
+    'doce'          => 'bg-pink',
+    'salgado'       => 'bg-gold',
+    'bolo'          => 'bg-wine',
+    'personalizado' => 'bg-plum',
+];
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -155,48 +165,48 @@ if (isset($_GET['editar'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciar Produtos - Admin</title>
-<link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/bootstrap/bootstrap.min.css">    <link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/style_pda.css">
+    <link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/style_pda.css">
+    <link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/produtos-admin.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body style="background-color: #f8f9fa;">
+<body>
 <div class="container-fluid p-4">
-    
+
+    <div class="gpr-toolbar">
+        <h4><i class="fas fa-birthday-cake"></i> Gerenciar Produtos</h4>
+        <span class="gpr-total"><?php echo count($produtos); ?> cadastrados</span>
+    </div>
+
     <?php if ($mensagem): ?>
-        <div class="alert alert-<?php echo $tipo_mensagem; ?> alert-dismissible fade show" role="alert">
-            <?php echo htmlspecialchars($mensagem); ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <div class="gpr-alert mc-alert alert-<?php echo $tipo_mensagem; ?>" role="alert">
+            <span><?php echo htmlspecialchars($mensagem); ?></span>
+            <button type="button" onclick="this.parentElement.remove()" aria-label="Fechar">&times;</button>
         </div>
     <?php endif; ?>
 
     <?php if (isset($_GET['novo']) && $produto_edicao): ?>
-        <div class="alert alert-success border-0 shadow-sm d-flex align-items-center gap-3 mb-3" style="border-left: 5px solid #198754 !important; border-radius: 12px;">
-            <div style="font-size: 2rem; line-height:1;">🎉</div>
+        <div class="gpr-onboarding">
+            <div class="emoji">🎉</div>
             <div>
-                <strong>Produto "<?php echo htmlspecialchars($produto_edicao['nome']); ?>" criado com sucesso!</strong><br>
-                <span class="text-muted small">Agora vincule os ingredientes que ele consome para o desconto automático do estoque funcionar.</span>
+                <strong>Produto "<?php echo htmlspecialchars($produto_edicao['nome']); ?>" criado com sucesso!</strong>
+                <span>Agora vincule os ingredientes que ele consome para o desconto automático do estoque funcionar.</span>
             </div>
         </div>
-        <!-- Passos visuais -->
-        <div class="d-flex align-items-center gap-2 mb-4">
-            <div class="d-flex align-items-center gap-2 px-3 py-2 rounded-pill" style="background:#d1e7dd; font-size:.85rem;">
-                <i class="fas fa-check-circle text-success"></i> <strong>1. Produto criado</strong>
-            </div>
-            <div style="flex:1; height:2px; background:#dee2e6;"></div>
-            <div class="d-flex align-items-center gap-2 px-3 py-2 rounded-pill" style="background:#fff3cd; font-size:.85rem;">
-                <i class="fas fa-mortar-pestle text-warning"></i> <strong>2. Vincular ingredientes</strong> ← você está aqui
-            </div>
-            <div style="flex:1; height:2px; background:#dee2e6;"></div>
-            <div class="d-flex align-items-center gap-2 px-3 py-2 rounded-pill" style="background:#f8f9fa; font-size:.85rem; color:#aaa;">
-                <i class="fas fa-check"></i> 3. Pronto para vender
-            </div>
+        <div class="gpr-steps">
+            <div class="gpr-step feito"><i class="fas fa-check-circle"></i> 1. Produto criado</div>
+            <div class="gpr-step-linha"></div>
+            <div class="gpr-step atual"><i class="fas fa-mortar-pestle"></i> 2. Vincular ingredientes</div>
+            <div class="gpr-step-linha"></div>
+            <div class="gpr-step futuro"><i class="fas fa-check"></i> 3. Pronto para vender</div>
         </div>
     <?php endif; ?>
 
-    <div class="row">
+    <div class="gpr-grid">
 
         <!-- FORMULÁRIO -->
-        <div class="col-md-4">
-            <div class="form-section">
+        <div>
+            <div class="gpr-card">
                 <h5><?php echo $produto_edicao ? 'Editar Produto' : 'Adicionar Novo Produto'; ?></h5>
                 <form method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="acao" value="<?php echo $produto_edicao ? 'editar' : 'adicionar'; ?>">
@@ -204,28 +214,28 @@ if (isset($_GET['editar'])) {
                         <input type="hidden" name="id" value="<?php echo $produto_edicao['id']; ?>">
                     <?php endif; ?>
 
-                    <div class="mb-3">
-                        <label class="form-label">Nome do Produto</label>
-                        <input type="text" name="nome" class="form-control" required 
+                    <div class="gpr-campo">
+                        <label class="form-label-custom">Nome do Produto</label>
+                        <input type="text" name="nome" class="form-control-custom" required 
                             value="<?php echo $produto_edicao ? htmlspecialchars($produto_edicao['nome']) : ''; ?>">
                     </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">Descrição</label>
-                        <textarea name="descricao" class="form-control" rows="3"><?php 
+                    <div class="gpr-campo">
+                        <label class="form-label-custom">Descrição</label>
+                        <textarea name="descricao" class="form-control-custom" rows="3"><?php 
                             echo $produto_edicao ? htmlspecialchars($produto_edicao['descricao']) : ''; 
                         ?></textarea>
                     </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">Preço (R$)</label>
-                        <input type="text" name="preco" id="preco" class="form-control" placeholder="R$ 0,00" required
+                    <div class="gpr-campo">
+                        <label class="form-label-custom">Preço (R$)</label>
+                        <input type="text" name="preco" id="preco" class="form-control-custom" placeholder="R$ 0,00" required
                             value="<?php echo $produto_edicao ? 'R$ ' . number_format($produto_edicao['preco'], 2, ',', '.') : ''; ?>">
                     </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">Tipo</label>
-                        <select name="tipo" class="form-control" required>
+                    <div class="gpr-campo">
+                        <label class="form-label-custom">Tipo</label>
+                        <select name="tipo" class="form-control-custom" required>
                             <option value="">Selecione...</option>
                             <option value="salgado" <?php echo ($produto_edicao && $produto_edicao['tipo'] === 'salgado') ? 'selected' : ''; ?>>Salgado</option>
                             <option value="doce" <?php echo ($produto_edicao && $produto_edicao['tipo'] === 'doce') ? 'selected' : ''; ?>>Doce</option>
@@ -234,33 +244,33 @@ if (isset($_GET['editar'])) {
                         </select>
                     </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">Imagem do Produto</label>
-                        <input type="file" name="imagem" class="form-control" accept="image/*">
+                    <div class="gpr-campo">
+                        <label class="form-label-custom">Imagem do Produto</label>
+                        <input type="file" name="imagem" class="form-control-custom" accept="image/*">
                         <?php if ($produto_edicao && !empty($produto_edicao['imagem_referencia'])): ?>
-                            <div class="mt-2">
-                                <img src="<?php echo BASEURL . "imagens/" . $produto_edicao['imagem_referencia']; ?>" width="120" style="border-radius:10px;">
+                            <div class="gpr-imagem-preview">
+                                <img src="<?php echo BASEURL . "imagens/" . $produto_edicao['imagem_referencia']; ?>">
                             </div>
                         <?php endif; ?>
                     </div>
 
-                    <div class="mb-3 form-check">
-                        <input type="checkbox" name="disponivel" class="form-check-input" id="disponivel"
+                    <div class="gpr-check">
+                        <input type="checkbox" name="disponivel" id="disponivel"
                             <?php echo (!$produto_edicao || $produto_edicao['disponivel']) ? 'checked' : ''; ?>>
-                        <label class="form-check-label" for="disponivel">Disponível para venda</label>
+                        <label for="disponivel">Disponível para venda</label>
                     </div>
 
-                    <button type="submit" class="btn btn-primary w-100 mb-2">
+                    <button type="submit" class="gpr-btn-primary">
                         <i class="fas fa-save"></i> <?php echo $produto_edicao ? 'Atualizar' : 'Adicionar'; ?>
                     </button>
                     
                     <?php if ($produto_edicao): ?>
                         <?php if (isset($_GET['novo'])): ?>
-                            <a href="<?php echo BASEURL; ?>admin/produtos/" class="btn btn-success w-100 mt-1">
+                            <a href="<?php echo BASEURL; ?>admin/produtos/" class="gpr-btn-concluir">
                                 <i class="fas fa-check"></i> Concluir e voltar à lista
                             </a>
                         <?php else: ?>
-                            <a href="<?php echo BASEURL; ?>admin/produtos/" class="btn btn-secondary w-100">
+                            <a href="<?php echo BASEURL; ?>admin/produtos/" class="contabotao contabotao-ghost">
                                 <i class="fas fa-times"></i> Cancelar
                             </a>
                         <?php endif; ?>
@@ -270,21 +280,20 @@ if (isset($_GET['editar'])) {
 
             <!-- SEÇÃO DE INGREDIENTES (só no modo editar) -->
             <?php if ($produto_edicao): ?>
-            <div class="form-section mt-3 <?php echo isset($_GET['novo']) ? 'border border-warning border-2' : ''; ?>" 
-                 style="<?php echo isset($_GET['novo']) ? 'box-shadow: 0 0 0 3px #fff3cd;' : ''; ?>">
-                <h6 class="d-flex align-items-center gap-2">
-                    <i class="fas fa-mortar-pestle <?php echo isset($_GET['novo']) ? 'text-warning' : ''; ?>"></i>
+            <div class="gpr-card <?php echo isset($_GET['novo']) ? 'gpr-card-destaque' : ''; ?>">
+                <h6>
+                    <i class="fas fa-mortar-pestle"></i>
                     Ingredientes da Receita
                     <?php if (isset($_GET['novo'])): ?>
-                        <span class="badge bg-warning text-dark ms-1" style="font-size:.7rem;">Configure agora</span>
+                        <span class="gpr-tag-suave">Configure agora</span>
                     <?php else: ?>
-                        <span class="badge bg-secondary ms-1" style="font-size:.7rem;"><?php echo count($ingredientes_vinculados); ?> vinculado(s)</span>
+                        <span class="gpr-tag-neutra"><?php echo count($ingredientes_vinculados); ?> vinculado(s)</span>
                     <?php endif; ?> 
                 </h6>
 
                 <?php if (!empty($ingredientes_vinculados)): ?>
-                    <table class="table table-sm align-middle mb-3">
-                        <thead class="table-light">
+                    <table class="table-custom w-100 mb-3">
+                        <thead>
                             <tr>
                                 <th>Ingrediente</th>
                                 <th>Qtd</th>
@@ -303,7 +312,7 @@ if (isset($_GET['editar'])) {
                                             <input type="hidden" name="acao" value="remover_ingrediente">
                                             <input type="hidden" name="id_produto" value="<?php echo $produto_edicao['id']; ?>">
                                             <input type="hidden" name="id_ingrediente" value="<?php echo $iv['id_ingrediente']; ?>">
-                                            <button type="submit" class="btn btn-sm btn-danger">
+                                            <button type="submit" class="gpr-btn-remover" title="Remover">
                                                 <i class="fas fa-times"></i>
                                             </button>
                                         </form>
@@ -313,17 +322,17 @@ if (isset($_GET['editar'])) {
                         </tbody>
                     </table>
                 <?php else: ?>
-                    <p class="text-muted small">Nenhum ingrediente vinculado ainda.</p>
+                    <p class="gpr-vazio-texto">Nenhum ingrediente vinculado ainda.</p>
                 <?php endif; ?>
 
                 <!-- Adicionar vínculo -->
-                <form method="POST" class="row g-2 align-items-end mt-1">
+                <form method="POST" class="gpr-ing-form">
                     <input type="hidden" name="acao" value="vincular_ingrediente">
                     <input type="hidden" name="id_produto" value="<?php echo $produto_edicao['id']; ?>">
 
-                    <div class="col-6">
-                        <label class="form-label small">Ingrediente</label>
-                        <select name="id_ingrediente" class="form-control form-control-sm" required>
+                    <div>
+                        <label class="form-label-custom" style="font-size:.75rem;">Ingrediente</label>
+                        <select name="id_ingrediente" class="gpr-input-sm" required>
                             <option value="">Selecione...</option>
                             <?php foreach ($ingredientes_disponiveis as $ing): ?>
                                 <option value="<?php echo $ing['id']; ?>">
@@ -333,30 +342,28 @@ if (isset($_GET['editar'])) {
                         </select>
                     </div>
 
-                    <div class="col-4">
-                        <label class="form-label small">Quantidade</label>
-                        <input type="number" name="qtd_necessaria" class="form-control form-control-sm"
+                    <div>
+                        <label class="form-label-custom" style="font-size:.75rem;">Quantidade</label>
+                        <input type="number" name="qtd_necessaria" class="gpr-input-sm"
                             step="0.001" min="0.001" required placeholder="0,000">
                     </div>
 
-                    <div class="col-2">
-                        <button type="submit" class="btn btn-sm btn-primary w-100">
-                            <i class="fas fa-plus"></i>
-                        </button>
-                    </div>
+                    <button type="submit" class="gpr-btn-add" title="Vincular">
+                        <i class="fas fa-plus"></i>
+                    </button>
                 </form>
             </div>
             <?php endif; ?>
         </div>
 
         <!-- LISTA DE PRODUTOS -->
-        <div class="col-md-8">
-            <div class="form-section">
-                <h5>Produtos Cadastrados (<?php echo count($produtos); ?>)</h5>
-                
-                <div class="table-responsive">
-                    <table class="table table-hover table-produtos">
-                        <thead class="table-light">
+        <div>
+            <div class="gpr-table-card">
+                <h5 style="padding-top:14px;">Produtos Cadastrados</h5>
+
+                <?php if ($produtos): ?>
+                    <table class="gpr-table">
+                        <thead>
                             <tr>
                                 <th>Imagem</th>
                                 <th>ID</th>
@@ -369,29 +376,20 @@ if (isset($_GET['editar'])) {
                         </thead>
                         <tbody>
                             <?php foreach ($produtos as $p): ?>
-                                <?php
-                                    $corTipo = 'bg-secondary';
-                                    if ($p['tipo'] == 'doce') $corTipo = 'bg-pink';
-                                    elseif ($p['tipo'] == 'salgado') $corTipo = 'bg-warning text-dark';
-                                    elseif ($p['tipo'] == 'bolo') $corTipo = 'bg-danger';
-                                    elseif ($p['tipo'] == 'personalizado') $corTipo = 'bg-primary';
-                                ?>
+                                <?php $corTipo = TIPO_BADGE[$p['tipo']] ?? 'gpr-tag-neutra'; ?>
                                 <tr>
                                     <td>
                                         <?php if (!empty($p['imagem_referencia'])): ?>
                                             <img src="<?php echo BASEURL . "imagens/" . $p['imagem_referencia']; ?>"
-                                                width="70" height="70"
+                                                class="gpr-thumb"
                                                 data-bs-toggle="modal"
-                                                data-bs-target="#modalImagem<?php echo $p['id']; ?>"
-                                                style="object-fit:cover; border-radius:12px; border:2px solid #eee; cursor:pointer; transition:0.3s;"
-                                                onmouseover="this.style.transform='scale(1.08)'"
-                                                onmouseout="this.style.transform='scale(1)'">
+                                                data-bs-target="#modalImagem<?php echo $p['id']; ?>">
 
                                             <div class="modal fade" id="modalImagem<?php echo $p['id']; ?>" tabindex="-1">
                                                 <div class="modal-dialog modal-dialog-centered modal-lg">
                                                     <div class="modal-content" style="background:transparent;border:none;">
                                                         <div class="text-end mb-2">
-                                                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">
+                                                            <button type="button" class="gpr-modal-fechar" data-bs-dismiss="modal">
                                                                 <i class="fas fa-times"></i>
                                                             </button>
                                                         </div>
@@ -402,54 +400,53 @@ if (isset($_GET['editar'])) {
                                                 </div>
                                             </div>
                                         <?php else: ?>
-                                            <div style="width:70px;height:70px;background:#f1f1f1;border-radius:12px;display:flex;align-items:center;justify-content:center;color:#999;">
+                                            <div class="gpr-thumb-vazio">
                                                 <i class="fas fa-image"></i>
                                             </div>
                                         <?php endif; ?>
                                     </td>
-                                    <td><small>#<?php echo $p['id']; ?></small></td>
+                                    <td>#<?php echo $p['id']; ?></td>
                                     <td><strong><?php echo htmlspecialchars($p['nome']); ?></strong></td>
-                                    <td><span class="badge <?php echo $corTipo; ?> p-2"><?php echo ucfirst($p['tipo']); ?></span></td>
-                                    <td><strong>R$ <?php echo number_format($p['preco'], 2, ',', '.'); ?></strong></td>
+                                    <td><span class="badge <?php echo $corTipo; ?>"><?php echo ucfirst($p['tipo']); ?></span></td>
+                                    <td class="gpr-preco">R$ <?php echo number_format($p['preco'], 2, ',', '.'); ?></td>
                                     <td>
                                         <span class="badge <?php echo $p['disponivel'] ? 'badge-disponivel' : 'badge-indisponivel'; ?>">
                                             <?php echo $p['disponivel'] ? 'Disponível' : 'Indisponível'; ?>
                                         </span>
                                     </td>
                                     <td>
-                                        <a href="?editar=<?php echo $p['id']; ?>" class="btn btn-sm btn-warning" title="Editar">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
+                                        <div class="gpr-acoes">
+                                            <a href="?editar=<?php echo $p['id']; ?>" class="gpr-btn-icon editar" title="Editar">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
 
-                                        <form method="POST" style="display:inline;" onsubmit="return confirm('Tem certeza?')">
-                                            <input type="hidden" name="acao" value="alternar_disponibilidade">
-                                            <input type="hidden" name="id" value="<?php echo $p['id']; ?>">
-                                            <button type="submit" class="btn btn-sm btn-outline-secondary">
-                                                <i class="fas fa-<?php echo $p['disponivel'] ? 'eye' : 'eye-slash'; ?>"></i>
-                                            </button>
-                                        </form>
+                                            <form method="POST" onsubmit="return confirm('Tem certeza?')">
+                                                <input type="hidden" name="acao" value="alternar_disponibilidade">
+                                                <input type="hidden" name="id" value="<?php echo $p['id']; ?>">
+                                                <button type="submit" class="gpr-btn-icon alternar" title="Alternar disponibilidade">
+                                                    <i class="fas fa-<?php echo $p['disponivel'] ? 'eye' : 'eye-slash'; ?>"></i>
+                                                </button>
+                                            </form>
 
-                                        <form method="POST" style="display:inline;" onsubmit="return confirm('Deletar este produto?')">
-                                            <input type="hidden" name="acao" value="deletar">
-                                            <input type="hidden" name="id" value="<?php echo $p['id']; ?>">
-                                            <button type="submit" class="btn btn-sm btn-danger">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        </form>
+                                            <form method="POST" onsubmit="return confirm('Deletar este produto?')">
+                                                <input type="hidden" name="acao" value="deletar">
+                                                <input type="hidden" name="id" value="<?php echo $p['id']; ?>">
+                                                <button type="submit" class="gpr-btn-icon excluir" title="Excluir">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
-
-                            <?php if (empty($produtos)): ?>
-                                <tr>
-                                    <td colspan="7" class="text-center text-muted py-4">
-                                        <i class="fas fa-info-circle"></i> Nenhum produto cadastrado ainda.
-                                    </td>
-                                </tr>
-                            <?php endif; ?>
                         </tbody>
                     </table>
-                </div>
+                <?php else: ?>
+                    <div class="gpr-vazio">
+                        <i class="fas fa-info-circle"></i>
+                        Nenhum produto cadastrado ainda.
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
     </div>

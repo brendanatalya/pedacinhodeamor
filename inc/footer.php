@@ -266,7 +266,7 @@ if (feedbackscarrossel) {
     <div class="footer-logo">
       <img src="<?php echo BASEURL; ?>imagens/logo.png" alt="Logo Pedacinho de Amor" style="max-width: 300px;">
       <p>Confeitaria artesanal, produtos feitos com o carinho de quem ama o que faz.</p>
-      <p>CNPJ: 12.345.678/0001-90</p>
+      <!-- <p>CNPJ: 12.345.678/0001-90</p> -->
 
       <div class="footer-icones">
         <a href="https://www.instagram.com/_pedacinhodeamor_o?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank"><i class="fa-brands fa-instagram"></i></a>
@@ -275,9 +275,9 @@ if (feedbackscarrossel) {
 
     <div class="footer-contato">
       <h3>Contato</h3>
-      <p><i class="fa-solid fa-location-dot"></i> Rua das Flores, 123<br>Centro · São Paulo</p>
-      <p><i class="fa-solid fa-phone"></i> (11) 9 8765-4321</p>
-      <p><i class="fa-regular fa-envelope"></i> ola@pedacinhodeamor.com.br</p>
+      <p><i class="fa-solid fa-location-dot"></i>Parque São Bento - Sorocaba</p>
+      <p><i class="fa-solid fa-phone"></i> (15) 99855-8073</p>
+    <!--<p><i class="fa-regular fa-envelope"></i> ola@pedacinhodeamor.com.br</p>-->
     </div>
 
   </div>

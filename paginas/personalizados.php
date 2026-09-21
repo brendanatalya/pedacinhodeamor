@@ -112,14 +112,6 @@ $opcoes_salgado = [
             </div>
         <?php endif; ?>
 
-        <section class="doces-hero" style="background-image:url('../imagens/doce3.webp');">
-            <div class="doces-hero__overlay"></div>
-            <div class="doces-hero__content">
-                <h1>PERSONALIZADOS</h1>
-                <p>Monte seu produto do jeito que você quiser!</p>
-            </div>
-        </section>
-
         <div class="container my-5">
             <div class="text-center mb-5">
                 <h2 class="section-title">Monte seu Produto Personalizado</h2>
@@ -556,10 +548,10 @@ $opcoes_salgado = [
             if (indexAtual === tipos.length - 1) {
                 btnProximo.innerHTML = '<i class="fas fa-check me-2"></i> Concluído';
                 btnProximo.classList.remove('btn-proximo');
-                btnProximo.classList.add('btn-concluir');
+                btnProximo.classList.add('btn-primary');
             } else {
                 btnProximo.innerHTML = 'Próximo <i class="fas fa-arrow-right ms-2"></i>';
-                btnProximo.classList.remove('btn-concluir');
+                btnProximo.classList.remove('btn-primary');
                 btnProximo.classList.add('btn-proximo');
             }
         }
