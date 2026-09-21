@@ -6,10 +6,8 @@ if (!isset($_SESSION)) {
 require_once 'config.php';
 require_once ABSPATH . 'inc/database.php';
 require_once DBAPI; 
-include(HEADER_TEMPLATE);
-
 if (empty($_SESSION['logado'])) {
-    header('Location: index.php');
+    header('Location: ' . BASEURL . 'index.php');
     exit;
 }
 
@@ -17,7 +15,7 @@ $userId = intval($_SESSION['id'] ?? 0);
 $user = find('usuarios', $userId);
 
 if (!$user) {
-    header('Location: index.php');
+    header('Location: ' . BASEURL . 'index.php');
     exit;
 }
 
@@ -35,15 +33,18 @@ $pedidos = $stmtPedidos->fetchAll(PDO::FETCH_ASSOC);
 $nome = $user['nome'] ?? $_SESSION['nome'] ?? 'Cliente';
 $email = $user['email'] ?? $_SESSION['email'] ?? '';
 $endereco = $user['endereco'] ?? '';
+$cpf = $user['cpf'] ?? '';
+$telefone = $user['telefone'] ?? '';
 $message = $_SESSION['message'] ?? '';
 $type = $_SESSION['type'] ?? '';
 
 unset($_SESSION['message'], $_SESSION['type']);
 
-include 'inc/modal.php';
+include(HEADER_TEMPLATE);
 ?>
 
 <body>
+    <?php include 'inc/modal.php'; ?>
     <div class="minhaconta">
         <aside class="minhaconta-sidebar">
         
@@ -144,6 +145,20 @@ include 'inc/modal.php';
                                 <!-- PHP: value="<?php echo htmlspecialchars($nome); ?>" -->
                                 <input type="text" id="inp-nome" name="nome" class="conta-campoinput" value="<?php echo htmlspecialchars($nome); ?>" required>
                             </div>
+
+                            <div class="conta-campo">
+                                <label class="conta-campolabel" for="inp-cpf">
+                                    <i class="fas fa-id-card"></i> CPF
+                                </label>
+                                <input type="text" id="inp-cpf" name="cpf" class="conta-campoinput" value="<?php echo htmlspecialchars($cpf); ?>" inputmode="numeric" maxlength="14" required>
+                            </div>
+
+                            <div class="conta-campo">
+                                <label class="conta-campolabel" for="inp-telefone">
+                                    <i class="fas fa-phone"></i> Telefone / WhatsApp
+                                </label>
+                                <input type="tel" id="inp-telefone" name="telefone" class="conta-campoinput" value="<?php echo htmlspecialchars($telefone); ?>" required>
+                            </div>
                 
                             <div class="conta-campo">
                                 <label class="conta-campolabel" for="inp-email">
@@ -162,7 +177,7 @@ include 'inc/modal.php';
                         </div>
                 
                         <div class="conta-formactions">
-                            <button data-bs-toggle="modal" data-bs-target="#modalAlt" class="contabotao cocontabotao-rosa">
+                            <button type="submit" class="contabotao contabotao-rosa">
                                 <i class="fas fa-floppy-disk"></i>
                                 Salvar Alterações
                             </button>
@@ -260,7 +275,7 @@ include 'inc/modal.php';
                                     <i class="fas fa-lock"></i> Senha Atual
                                 </label>
                                 <div class="senha-wrap">
-                                    <input type="password" id="senhaAtual" name="senha_atual" class="conta-campoinput" placeholder="Sua senha atual">
+                                    <input type="password" id="senhaAtual" name="senha_atual" class="conta-campoinput" placeholder="Sua senha atual" autocomplete="current-password" required>
                                     <button type="button" class="mc-pw-eye" onclick="togglePw('senhaAtual',this)">
                                         <i class="fas fa-eye"></i>
                                     </button>
@@ -272,7 +287,7 @@ include 'inc/modal.php';
                                     <i class="fas fa-lock-open"></i> Nova Senha
                                 </label>
                                 <div class="senha-wrap">
-                                    <input type="password" id="novaSenha" name="nova_senha" class="conta-campoinput" placeholder="Mínimo 6 caracteres">
+                                    <input type="password" id="novaSenha" name="nova_senha" class="conta-campoinput" placeholder="Mínimo 8 caracteres, com maiúscula, número e símbolo" autocomplete="new-password" minlength="8" required>
                                     <button type="button" class="mc-pw-eye" onclick="togglePw('novaSenha',this)">
                                     <i class="fas fa-eye"></i>
                                     </button>
@@ -284,7 +299,7 @@ include 'inc/modal.php';
                                     <i class="fas fa-check-double"></i> Confirmar Nova Senha
                                 </label>
                                 <div class="senha-wrap">
-                                    <input type="password" id="confirmarSenha" name="confirmar_senha" class="conta-campoinput" placeholder="Repita a nova senha">
+                                    <input type="password" id="confirmarSenha" name="confirmar_senha" class="conta-campoinput" placeholder="Repita a nova senha" autocomplete="new-password" minlength="8" required>
                                     <button type="button" class="mc-pw-eye" onclick="togglePw('confirmarSenha',this)">
                                     <i class="fas fa-eye"></i>
                                     </button>

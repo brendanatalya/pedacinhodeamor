@@ -85,7 +85,6 @@ $opcoes_salgado = [
     ]
 ];
 ?>
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -97,10 +96,6 @@ $opcoes_salgado = [
     <link rel="stylesheet" href="<?php echo BASEURL; ?>css_pda/style_pda.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-=======
-
-
->>>>>>> 5ced7e463d8c55c39db5d96d60fbcc74f07a00f6
 <body>
 
     <?php include_once ABSPATH . 'inc/header.php'; ?>

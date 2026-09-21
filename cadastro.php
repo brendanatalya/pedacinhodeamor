@@ -13,16 +13,47 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-$name = trim($_POST['name'] ?? '');
+$name = trim($_POST['nome'] ?? $_POST['name'] ?? '');
+$cpf = preg_replace('/\D/', '', $_POST['cpf'] ?? '');
+$telefone = trim($_POST['telefone'] ?? '');
+$endereco = trim($_POST['endereco'] ?? '');
 $email = strtolower(trim($_POST['email'] ?? ''));
 $email_confirm = strtolower(trim($_POST['email_confirm'] ?? ''));
 $password = $_POST['password'] ?? '';
 $password_confirm = $_POST['password_confirm'] ?? '';
 
-if (!$name || !$email || !$email_confirm || !$password || !$password_confirm) {
+if (!$name || !$cpf || !$telefone || !$email || !$email_confirm || !$password || !$password_confirm) {
     echo json_encode([
         'success' => false,
         'message' => 'Preencha todos os campos do cadastro.'
+    ]);
+    exit;
+}
+
+function cpfValido($cpf) {
+    // Remove qualquer caractere que não seja número
+    $cpf = preg_replace('/[^0-9]/', '', $cpf);
+
+    if (strlen($cpf) !== 11 || preg_match('/^(\d)\1{10}$/', $cpf)) {
+        return false;
+    }
+    for ($posicao = 9; $posicao < 11; $posicao++) {
+        $soma = 0;
+        for ($indice = 0; $indice < $posicao; $indice++) {
+            $soma += (int) $cpf[$indice] * (($posicao + 1) - $indice);
+        }
+        $digito = ((10 * $soma) % 11) % 10;
+        if ((int) $cpf[$posicao] !== $digito) {
+            return false;
+        }
+    }
+    return true;
+}
+
+if (!cpfValido($cpf)) {
+    echo json_encode([
+        'success' => false,
+        'message' => 'Digite um CPF válido.'
     ]);
     exit;
 }
@@ -93,10 +124,10 @@ if (!$database) {
 }
 
 try {
-    $check = $database->prepare('SELECT id FROM usuarios WHERE email = ? LIMIT 1');
-    $check->execute([$email]);
+    $checkEmail = $database->prepare('SELECT id FROM usuarios WHERE email = ? LIMIT 1');
+    $checkEmail->execute([$email]);
 
-    if ($check->fetch()) {
+    if ($checkEmail->fetch()) {
         echo json_encode([
             'success' => false,
             'message' => 'Este e-mail já está cadastrado. Faça login ou use outro e-mail.'
@@ -104,9 +135,20 @@ try {
         exit;
     }
 
+    $checkCpf = $database->prepare('SELECT id FROM usuarios WHERE cpf = ? LIMIT 1');
+    $checkCpf->execute([$cpf]);
+
+    if ($checkCpf->fetch()) {
+        echo json_encode([
+            'success' => false,
+            'message' => 'Este CPF já está cadastrado. Verifique os dados e tente novamente.'
+        ]);
+        exit;
+    }
+
     $password_hash = password_hash($password, PASSWORD_DEFAULT);
-    $insert = $database->prepare('INSERT INTO usuarios (nome, email, senha, tipo) VALUES (?, ?, ?, ?)');
-    $insert->execute([$name, $email, $password_hash, 'cliente']);
+    $insert = $database->prepare('INSERT INTO usuarios (nome, email, cpf, telefone, endereco, senha, tipo) VALUES (?, ?, ?, ?, ?, ?, ?)');
+    $insert->execute([$name, $email, $cpf, $telefone, $endereco ?: null, $password_hash, 'cliente']);
 
     $_SESSION['id'] = $database->lastInsertId();
     $_SESSION['nome'] = $name;
@@ -120,9 +162,10 @@ try {
     ]);
     exit;
 } catch (Exception $e) {
+    error_log('Erro no cadastro: ' . $e->getMessage());
     echo json_encode([
         'success' => false,
-        'message' => 'Erro ao cadastrar: ' . $e->getMessage()
+        'message' => 'Não foi possível concluir o cadastro. Tente novamente.'
     ]);
     exit;
 }

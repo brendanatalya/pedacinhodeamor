@@ -1,7 +1,6 @@
 <?php
 session_start();
 include '../../config.php';
-include HEADER_TEMPLATE;
 
 // Se chegou aqui sem dados, redireciona para home
 if (!isset($_GET['email'])) {
@@ -11,6 +10,7 @@ if (!isset($_GET['email'])) {
 
 $email = htmlspecialchars($_GET['email']);
 $email_oculto = substr($email, 0, 3) . '***' . substr(strrchr($email, '@'), 0);
+include HEADER_TEMPLATE;
 ?>
 
 <div style="min-height: 60vh; display: flex; align-items: center; justify-content: center; background: #f8f9fa;">

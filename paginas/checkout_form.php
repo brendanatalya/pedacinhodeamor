@@ -3,7 +3,6 @@ if (!isset($_SESSION)) session_start();
 include '../config.php';
 require_once ABSPATH . 'inc/database.php';
 require_once DBAPI; 
-include(HEADER_TEMPLATE);
 
 // Precisa estar logado como cliente
 if (empty($_SESSION['logado']) || $_SESSION['tipo'] !== 'cliente') {
@@ -43,6 +42,7 @@ if (empty($cart_items) && empty($cart_personalizado)) {
     header('Location: ' . BASEURL . 'paginas/carrinho.php');
     exit;
 }
+include(HEADER_TEMPLATE);
 ?>
 
 <body>

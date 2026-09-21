@@ -134,20 +134,23 @@ document.getElementById('formAvaliacao').addEventListener('submit', function(e) 
                         <p class="login-link">Não tem conta? <span id="switchCadastro">Cadastrar</span></p>
                     </form>
 
-                    <form id="cadastroForm" action="<?php echo BASEURL; ?>cadastro.php" method="POST" style="display:none;" onsubmit="return validarSenha()">
+                    <form id="cadastroForm" action="<?php echo BASEURL; ?>cadastro.php" method="POST" style="display:none;">
                         <div id="cadastroError" style="color: #ff4d4d; font-size: 0.95rem; text-align: center; display: none; margin-bottom: 15px; padding: 10px; background-color: #ffe0e0; border-radius: 4px;"></div>
                         
-                        <input type="text" name="name" placeholder="Nome completo" required>
+                        <input type="text" name="nome" placeholder="Nome completo" autocomplete="name" required>
+                        <input type="text" name="cpf" placeholder="CPF" inputmode="numeric" maxlength="14" autocomplete="off" required>
+                        <input type="tel" name="telefone" placeholder="Telefone / WhatsApp" autocomplete="tel" required>
                         <input type="email" name="email" placeholder="E-mail" required>
                         <input type="email" name="email_confirm" placeholder="Confirmar E-mail" required>
+                        <input type="text" name="endereco" placeholder="Endereço para entrega (opcional)" autocomplete="street-address">
                         
                         <div class="input-group-auth">
-                            <input type="password" name="password" id="passCad" placeholder="Senha" required>
+                            <input type="password" name="password" id="passCad" placeholder="Senha (mínimo 8 caracteres)" autocomplete="new-password" minlength="8" required>
                             <i class="fas fa-eye toggle-password" onclick="togglePassword('passCad', this)"></i>
                         </div>
 
                         <div class="input-group-auth">
-                            <input type="password" name="password_confirm" id="passCadConfirm" placeholder="Confirmar senha" required>
+                            <input type="password" name="password_confirm" id="passCadConfirm" placeholder="Confirmar senha" autocomplete="new-password" minlength="8" required>
                             <i class="fas fa-eye toggle-password" onclick="togglePassword('passCadConfirm', this)"></i>
                         </div>
 
